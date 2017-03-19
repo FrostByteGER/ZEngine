@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SFML_Game
 {
-    class Program
+    public interface ITickableInterface
     {
-        static void Main(string[] args)
-        {
-        }
+        void Tick(uint deltaTime);
     }
 }
