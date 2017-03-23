@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -18,6 +19,8 @@ namespace SFML_Engine.Engine
         private Time DeltaTime;
 
         private bool RequestTermination;
+
+        private List<Level> Levels;
 
 
         public Engine(uint engineWindowWidth, uint engineWindowHeight, string gameName)
@@ -61,24 +64,23 @@ namespace SFML_Engine.Engine
 
             Time currentTime = EngineLoopClock.Restart();
             double accumulator = 0.0;
-            double dt = 0.01;
-            double t = 0.0;
+            double timestep = 1.0/100.0;
+            double time = 0.0;
             while (!RequestTermination)
             {
+
                 Time newTime = EngineLoopClock.ElapsedTime;
-                Time frameTime = newTime - currentTime;
-                if (frameTime.AsSeconds() > 0.25f)
-                {
-                    //frameTime = 0.25;
-                }
+                double frameTime = newTime.AsSeconds() - currentTime.AsSeconds();
                 currentTime = newTime;
 
-                accumulator += frameTime.AsSeconds();
-                while (accumulator >= dt)
+                accumulator += frameTime;
+
+
+                while (accumulator >= timestep)
                 {
                     //Physics
-                    t += dt;
-                    accumulator -= dt;
+                    time += timestep;
+                    accumulator -= timestep;
                 }
 
                 EngineWindow.Clear();
