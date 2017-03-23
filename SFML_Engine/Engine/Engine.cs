@@ -28,6 +28,7 @@ namespace SFML_Engine.Engine
             EngineWindowWidth = engineWindowWidth;
             EngineWindowHeight = engineWindowHeight;
             GameName = gameName;
+            Levels = new List<Level>();
 
         }
 
@@ -42,6 +43,7 @@ namespace SFML_Engine.Engine
         {
             EngineClock = new Clock();
             EngineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
+            EngineWindow.SetVerticalSyncEnabled(false);
 
         }
 
@@ -78,7 +80,12 @@ namespace SFML_Engine.Engine
 
                 while (accumulator >= timestep)
                 {
+                    Console.WriteLine("Engine Tick!");
                     //Physics
+                    foreach (Level level in Levels)
+                    {
+                        level.LevelTick(DeltaTime.AsSeconds());
+                    }
                     time += timestep;
                     accumulator -= timestep;
                 }
@@ -88,7 +95,7 @@ namespace SFML_Engine.Engine
                 EngineWindow.Draw(cs);
                 EngineWindow.Display();
 
-                DeltaTime = EngineLoopClock.ElapsedTime;
+                DeltaTime = EngineLoopClock.Restart();
             }
 
             ShutdownEngine();
@@ -97,6 +104,11 @@ namespace SFML_Engine.Engine
         private void ShutdownEngine()
         {
             Console.WriteLine("Shutting down Engine!");
+        }
+
+        public void RegisterLevel(ref Level level)
+        {
+            Levels.Add(level);
         }
 
     }

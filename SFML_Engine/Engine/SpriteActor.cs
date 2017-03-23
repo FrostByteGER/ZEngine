@@ -5,9 +5,9 @@ namespace SFML_Engine.Engine
     class SpriteActor : ITickableInterface
     {
 
-        public void Tick(uint deltaTime)
+        public void Tick(double deltaTime)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Actor Tick!");
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ITickableInterface
     {
-        void Tick(uint deltaTime);
+        void Tick(double deltaTime);
     }
 }
