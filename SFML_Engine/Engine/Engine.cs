@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
-namespace SFML_Game.Game
+namespace SFML_Engine.Engine
 {
-    class Engine
+    public class Engine
     {
 
         private uint EngineWindowHeight;
@@ -61,11 +57,29 @@ namespace SFML_Game.Game
         {
             EngineLoopClock = new Clock();
             CircleShape cs = new CircleShape(100.0f);
-            cs.FillColor = Color.Green;
+            cs.FillColor = Color.Magenta;
+
+            Time currentTime = EngineLoopClock.Restart();
+            double accumulator = 0.0;
+            double dt = 0.01;
+            double t = 0.0;
             while (!RequestTermination)
             {
-                EngineLoopClock.Restart();
+                Time newTime = EngineLoopClock.ElapsedTime;
+                Time frameTime = newTime - currentTime;
+                if (frameTime.AsSeconds() > 0.25f)
+                {
+                    //frameTime = 0.25;
+                }
+                currentTime = newTime;
 
+                accumulator += frameTime.AsSeconds();
+                while (accumulator >= dt)
+                {
+                    //Physics
+                    t += dt;
+                    accumulator -= dt;
+                }
 
                 EngineWindow.Clear();
                 EngineWindow.DispatchEvents();

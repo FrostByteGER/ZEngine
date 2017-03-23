@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Game", "SFML_Game\SFML_Game.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\SFML_Engine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Pong", "SFML_Pong\SFML_Pong.csproj", "{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.ActiveCfg = Release|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.Build.0 = Release|x64
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x64.Build.0 = Debug|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x64.ActiveCfg = Release|Any CPU
+		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

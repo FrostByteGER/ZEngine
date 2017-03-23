@@ -1,9 +1,4 @@
-﻿using System;
-using SFML.Graphics;
-using SFML.Window;
-using SFML_Game.Game;
-
-namespace SFML_Game
+﻿namespace SFML_Engine.Engine
 {
     class Start
     {
