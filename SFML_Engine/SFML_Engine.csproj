@@ -98,6 +98,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\IMovable.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />

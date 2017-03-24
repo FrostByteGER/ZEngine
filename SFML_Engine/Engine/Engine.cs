@@ -40,7 +40,7 @@ namespace SFML_Engine.Engine
             EngineWindowHeight = engineWindowHeight;
             GameName = gameName;
             Levels = new List<Level>();
-            VSyncEnabled = false;
+            VSyncEnabled = true;
         }
 
         public void StartEngine()
