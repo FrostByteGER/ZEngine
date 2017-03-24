@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -16,11 +17,21 @@ namespace SFML_Engine.Engine
         private RenderWindow EngineWindow;
         private Clock EngineClock;
         private Clock EngineLoopClock;
+        private Clock FPSClock;
         private Time DeltaTime;
+        private Time FPSStartTime;
+        private Time FPSPassedTime;
+        private uint FramesRendered;
+        private double FPS;
+
+        private const float FPSUpdateValue = 1.0f;
 
         private bool RequestTermination;
+        private bool VSyncEnabled;
 
         private List<Level> Levels;
+
+
 
 
         public Engine(uint engineWindowWidth, uint engineWindowHeight, string gameName)
@@ -29,7 +40,7 @@ namespace SFML_Engine.Engine
             EngineWindowHeight = engineWindowHeight;
             GameName = gameName;
             Levels = new List<Level>();
-
+            VSyncEnabled = false;
         }
 
         public void StartEngine()
@@ -43,7 +54,7 @@ namespace SFML_Engine.Engine
         {
             EngineClock = new Clock();
             EngineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
-            EngineWindow.SetVerticalSyncEnabled(false);
+            EngineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 
         }
 
@@ -60,23 +71,39 @@ namespace SFML_Engine.Engine
 
         private void EngineTick()
         {
+            FPSClock = new Clock();
             EngineLoopClock = new Clock();
             CircleShape cs = new CircleShape(100.0f);
             cs.FillColor = Color.Magenta;
 
-            Time currentTime = EngineLoopClock.Restart();
+            
             double accumulator = 0.0;
             double timestep = 1.0/100.0;
             double time = 0.0;
+            Time currentTime = Time.Zero;
+            FPSStartTime = Time.Zero;
+            FPSPassedTime = Time.Zero;
+            FPSClock.Restart();
+            EngineLoopClock.Restart();
             while (!RequestTermination)
             {
 
                 Time newTime = EngineLoopClock.ElapsedTime;
-                double frameTime = newTime.AsSeconds() - currentTime.AsSeconds();
+                DeltaTime = newTime - currentTime;
                 currentTime = newTime;
 
-                accumulator += frameTime;
 
+                Console.WriteLine(DeltaTime.AsSeconds() + " " + newTime.AsSeconds() + " " + currentTime.AsSeconds() + " " + FramesRendered);
+
+                accumulator += DeltaTime.AsSeconds();
+
+                FPSPassedTime = FPSClock.ElapsedTime;
+                if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
+                {
+                    FPSStartTime = FPSPassedTime;
+                    EngineWindow.SetTitle(VSyncEnabled ? FramesRendered.ToString() : (FramesRendered / DeltaTime.AsSeconds()).ToString());
+                    FramesRendered = 0;
+                }
 
                 while (accumulator >= timestep)
                 {
@@ -94,8 +121,7 @@ namespace SFML_Engine.Engine
                 EngineWindow.DispatchEvents();
                 EngineWindow.Draw(cs);
                 EngineWindow.Display();
-
-                DeltaTime = EngineLoopClock.Restart();
+                FramesRendered++;
             }
 
             ShutdownEngine();
@@ -110,6 +136,5 @@ namespace SFML_Engine.Engine
         {
             Levels.Add(level);
         }
-
     }
 }
