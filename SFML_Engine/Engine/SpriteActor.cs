@@ -3,9 +3,14 @@ using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-    class SpriteActor : ITickableInterface ,IMovable
+    class SpriteActor : ITickableInterface ,IMovable ,IPhysicsProperties
     {
         public Vector2f GetAcceleration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float GetMass()
         {
             throw new NotImplementedException();
         }
@@ -21,6 +26,11 @@ namespace SFML_Engine.Engine
         }
 
         public void SetAcceleration(Vector2f acceleration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMass(float mass)
         {
             throw new NotImplementedException();
         }
