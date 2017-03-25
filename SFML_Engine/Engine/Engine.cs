@@ -4,6 +4,7 @@ using System.Threading;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SFML_Engine.Engine.Physics;
 
 namespace SFML_Engine.Engine
 {
@@ -30,6 +31,7 @@ namespace SFML_Engine.Engine
         private bool VSyncEnabled;
 
         private List<Level> Levels;
+        private PhysicsEngine PhysicsEngine;
 
 
 
@@ -55,6 +57,8 @@ namespace SFML_Engine.Engine
             EngineClock = new Clock();
             EngineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
             EngineWindow.SetVerticalSyncEnabled(VSyncEnabled);
+
+            PhysicsEngine = new PhysicsEngine();
 
         }
 
@@ -108,7 +112,8 @@ namespace SFML_Engine.Engine
                 while (accumulator >= timestep)
                 {
                     Console.WriteLine("Engine Tick!");
-                    //Physics
+                    PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds());
+
                     foreach (Level level in Levels)
                     {
                         level.LevelTick(DeltaTime.AsSeconds());

@@ -1,6 +1,6 @@
 ﻿namespace SFML_Engine.Engine
 {
-    class Start
+    public class Start
     {
         public static void Main(string[] args)
         {

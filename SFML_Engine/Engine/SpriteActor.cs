@@ -3,7 +3,7 @@ using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-    class SpriteActor : ITickableInterface ,IMovable ,IPhysicsProperties
+    public class SpriteActor : ITickable ,IMovable ,IPhysicsProperties
     {
 
         public bool Movable { get; set; }
@@ -14,7 +14,7 @@ namespace SFML_Engine.Engine
 
         public float Mass { get; set; }
 
-        public void Tick(double deltaTime)
+        public void Tick(float deltaTime)
         {
             Console.WriteLine("Actor Tick!");
         }

@@ -7,24 +7,24 @@ namespace SFML_Engine.Engine
     public class Level
     {
 
-        private List<ITickableInterface> Actors;
+        private List<ITickable> Actors;
 
         public Level()
         {
-            Actors = new List<ITickableInterface>();
+            Actors = new List<ITickable>();
         }
 
 
-        internal void LevelTick(double deltaTime)
+        internal void LevelTick(float deltaTime)
         {
             Console.WriteLine("Level Tick!");
-            foreach (ITickableInterface actor in Actors)
+            foreach (ITickable actor in Actors)
             {
                 actor.Tick(deltaTime);
             }
         }
 
-        public void RegisterActor(ITickableInterface actor)
+        public void RegisterActor(ITickable actor)
         {
             Actors.Add(actor);
         }
