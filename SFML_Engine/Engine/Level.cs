@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SFML.Graphics;
 
 namespace SFML_Engine.Engine
@@ -21,6 +22,15 @@ namespace SFML_Engine.Engine
             foreach (ITickable actor in Actors)
             {
                 actor.Tick(deltaTime);
+            }
+        }
+
+        internal void LevelDraw(ref RenderWindow renderWindow)
+        {
+            var actors = Actors.Cast<Drawable>().ToList();
+            foreach (var actor in actors)
+            {
+                renderWindow.Draw(actor);
             }
         }
 

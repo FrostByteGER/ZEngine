@@ -24,12 +24,12 @@ namespace SFML_Engine.Engine
         private Time FPSStartTime;
         private Time FPSPassedTime;
         private uint FramesRendered;
-        private double FPS;
+        public double FPS { get; private set; }
 
         private const float FPSUpdateValue = 1.0f;
 
-        private bool RequestTermination;
-        private bool VSyncEnabled;
+        public bool RequestTermination { get; set; }
+        public bool VSyncEnabled { get; set; }
 
         private List<Level> Levels;
         private PhysicsEngine PhysicsEngine;
@@ -78,8 +78,6 @@ namespace SFML_Engine.Engine
         {
             FPSClock = new Clock();
             EngineLoopClock = new Clock();
-            CircleShape cs = new CircleShape(100.0f);
-            cs.FillColor = Color.Magenta;
 
             
             double accumulator = 0.0;
@@ -106,7 +104,8 @@ namespace SFML_Engine.Engine
                 if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
                 {
                     FPSStartTime = FPSPassedTime;
-                    EngineWindow.SetTitle(VSyncEnabled ? FramesRendered.ToString() : (FramesRendered / DeltaTime.AsSeconds()).ToString());
+                    FPS = VSyncEnabled ? FramesRendered : (FramesRendered / DeltaTime.AsSeconds());
+                    EngineWindow.SetTitle(FPS.ToString());
                     FramesRendered = 0;
                 }
 
@@ -126,7 +125,10 @@ namespace SFML_Engine.Engine
 
                 EngineWindow.Clear();
                 EngineWindow.DispatchEvents();
-                EngineWindow.Draw(cs);
+                foreach (Level level in Levels)
+                {
+                    level.LevelDraw(ref EngineWindow);
+                }
                 EngineWindow.Display();
                 FramesRendered++;
             }
