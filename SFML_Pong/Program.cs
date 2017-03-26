@@ -17,9 +17,12 @@ namespace SFML_Pong
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
             Texture t = new Texture("Assets/SFML_Pong/Goku.png");
             var actor = new SpriteActor(t);
+            var pc = new PlayerController(actor);
             Level.RegisterActor(actor);
             engine.RegisterLevel(ref Level);
+            engine.RegisterPlayer(ref pc);
             engine.StartEngine();
+            Console.ReadLine();
         }
     }
 }

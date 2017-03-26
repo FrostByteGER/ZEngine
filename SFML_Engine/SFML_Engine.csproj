@@ -95,12 +95,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Actor.cs" />
     <Compile Include="Engine\BoxShape.cs" />
+    <Compile Include="Engine\GameMode.cs" />
+    <Compile Include="Engine\IActorable.cs" />
     <Compile Include="Engine\ICollidable.cs" />
     <Compile Include="Engine\IMovable.cs" />
     <Compile Include="Engine\IPhysicsProperties.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
+    <Compile Include="Engine\PlayerController.cs" />
     <Compile Include="Engine\Shape.cs" />
     <Compile Include="Engine\SphereShape.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
@@ -127,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
+    <Folder Include="Engine\IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets" Condition="Exists('..\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets')" />

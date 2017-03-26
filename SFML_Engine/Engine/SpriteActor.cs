@@ -4,7 +4,7 @@ using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-    public class SpriteActor : Sprite, ITickable, IMovable, IPhysicsProperties, ICollidable
+    public class SpriteActor : Sprite, IActorable
     {
 
         public SpriteActor()
@@ -37,6 +37,7 @@ namespace SFML_Engine.Engine
         public void Tick(float deltaTime)
         {
             Console.WriteLine("Actor Tick!");
+            //Position = new Vector2f(Position.X + 10.0f * deltaTime, Position.Y);
         }
     }
 }

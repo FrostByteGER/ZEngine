@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using System;
+using SFML.Graphics;
 
 namespace SFML_Engine.Engine
 {
@@ -12,6 +13,7 @@ namespace SFML_Engine.Engine
             Level.RegisterActor(actor);
             engine.RegisterLevel(ref Level);
             engine.StartEngine();
+            Console.ReadLine();
         }
     }
 }
