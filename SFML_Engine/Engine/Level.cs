@@ -7,7 +7,7 @@ namespace SFML_Engine.Engine
     public class Level
     {
 
-        private List<ITickable> Actors;
+        public List<ITickable> Actors{ get; set; }
 
         public Level()
         {

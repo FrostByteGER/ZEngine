@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using SFML.Graphics;
 using SFML.System;
@@ -112,10 +113,11 @@ namespace SFML_Engine.Engine
                 while (accumulator >= timestep)
                 {
                     Console.WriteLine("Engine Tick!");
-                    PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds());
-
                     foreach (Level level in Levels)
                     {
+                        //TODO: Change this to be more performance friendly
+                        var actors = level.Actors.Cast<IMovable>().ToList();
+                        PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds(), ref actors);
                         level.LevelTick(DeltaTime.AsSeconds());
                     }
                     time += timestep;

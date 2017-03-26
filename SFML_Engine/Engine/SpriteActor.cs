@@ -3,9 +3,9 @@ using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-    public class SpriteActor : ITickable ,IMovable ,IPhysicsProperties
+    public class SpriteActor : ITickable, IMovable, IPhysicsProperties, ICollidable
     {
-
+        public Shape CollisionShape { get; set; }
         public bool Movable { get; set; }
 
         public Vector2f Velocity { get; set; }
@@ -18,8 +18,5 @@ namespace SFML_Engine.Engine
         {
             Console.WriteLine("Actor Tick!");
         }
-
-
-        
     }
 }
