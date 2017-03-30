@@ -38,7 +38,43 @@ namespace SFML_Engine.Engine
         private void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
         {
             Console.WriteLine("PlayerController: " + Name + "-" + ID + " Input Event: " + keyEventArgs.Code + " pressed!");
-            PlayerPawn.Position = new Vector2f(Position.X + 10.0f, Position.Y); //TODO
+
+
+            if (keyEventArgs.Code == Keyboard.Key.A)
+            {
+                PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
+
+            }
+
+            if (keyEventArgs.Code == Keyboard.Key.D)
+            {
+                PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
+
+            }
+
+            if (keyEventArgs.Code == Keyboard.Key.W)
+            {
+                PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
+
+            }
+
+            if (keyEventArgs.Code == Keyboard.Key.S)
+            {
+                PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
+
+            }
+
+            if (keyEventArgs.Code == Keyboard.Key.Q)
+            {
+                PlayerPawn.Rotation -= 10.0f;
+
+            }
+
+            if (keyEventArgs.Code == Keyboard.Key.E)
+            {
+                PlayerPawn.Rotation += 10.0f;
+
+            }
         }
 
         public void Tick(float deltaTime)
