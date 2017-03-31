@@ -5,6 +5,7 @@ using System.Threading;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
 
 namespace SFML_Engine.Engine
@@ -41,6 +42,7 @@ namespace SFML_Engine.Engine
 
         public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
         public PhysicsEngine PhysicsEngine { get; private set; }
+		public InputManager InputManager { get; set; }
 
 
 
@@ -67,8 +69,11 @@ namespace SFML_Engine.Engine
             engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
             engineWindow.Closed += OnEngineWindowClose;
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
+			engineWindow.SetKeyRepeatEnabled(true);
 
             PhysicsEngine = new PhysicsEngine();
+			InputManager = new InputManager();
+			InputManager.RegisterEngineInput(ref engineWindow);
 
         }
 
@@ -96,9 +101,9 @@ namespace SFML_Engine.Engine
             FPSStartTime = Time.Zero;
             FPSPassedTime = Time.Zero;
             PlayerController pc1 = new PlayerController();
-            RegisterPlayer(ref pc1);
+            RegisterPlayer(pc1);
             PlayerController pc2 = new PlayerController();
-            RegisterPlayer(ref pc2);
+            RegisterPlayer(pc2);
             FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
@@ -109,7 +114,7 @@ namespace SFML_Engine.Engine
                 currentTime = newTime;
 
 
-                Console.WriteLine(DeltaTime.AsSeconds() + " " + newTime.AsSeconds() + " " + currentTime.AsSeconds() + " " + FramesRendered);
+                //Console.WriteLine(DeltaTime.AsSeconds() + " " + newTime.AsSeconds() + " " + currentTime.AsSeconds() + " " + FramesRendered);
 
                 accumulator += DeltaTime.AsSeconds();
 
@@ -124,7 +129,7 @@ namespace SFML_Engine.Engine
 
                 while (accumulator >= timestep)
                 {
-                    Console.WriteLine("Engine Tick!");
+                    //Console.WriteLine("Engine Tick!");
                     foreach (var level in Levels)
                     {
                         var actors = level.Actors;
@@ -164,19 +169,19 @@ namespace SFML_Engine.Engine
 
 
 
-        public void RegisterLevel(ref Level level)
+        public void RegisterLevel(Level level)
         {
             level.Engine = this;
             Levels.Add(level);
         }
 
-        public void RegisterPlayer(ref PlayerController pc)
+        public void RegisterPlayer(PlayerController pc)
         {
             Players.Add(pc);
             pc.ID = (uint) Players.Count - 1;
-            if (pc.ID == 0)
+            if (pc.ID == 0) //TODO: Remove
             {
-                pc.RegisterInput(ref engineWindow);
+                pc.RegisterInput(this);
             }
         }
     }

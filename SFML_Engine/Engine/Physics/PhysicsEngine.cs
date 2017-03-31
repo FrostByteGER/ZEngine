@@ -14,7 +14,7 @@ namespace SFML_Engine.Engine.Physics
 
         internal void PhysicsTick(float deltaTime, ref List<Transformable> actors)
         {
-            Console.WriteLine("Physics Tick");
+            //Console.WriteLine("Physics Tick");
         }
 
         private void moveActors(float deltaTime, ref List<Transformable> actors)

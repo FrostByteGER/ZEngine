@@ -14,5 +14,15 @@ namespace SFML_Engine.Engine
         {
             throw new System.NotImplementedException();
         }
+
+	    public void Move(float x, float y)
+	    {
+		    throw new System.NotImplementedException();
+	    }
+
+	    public void Move(Vector2f position)
+	    {
+		    throw new System.NotImplementedException();
+	    }
     }
 }

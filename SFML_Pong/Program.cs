@@ -19,8 +19,8 @@ namespace SFML_Pong
             var actor = new SpriteActor(t);
             var pc = new PlayerController(actor);
             Level.RegisterActor(actor);
-            engine.RegisterLevel(ref Level);
-            engine.RegisterPlayer(ref pc);
+            engine.RegisterLevel(Level);
+            engine.RegisterPlayer(pc);
             engine.StartEngine();
             Console.ReadLine();
         }

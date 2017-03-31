@@ -2,6 +2,7 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SFML_Engine.Engine.IO;
 
 namespace SFML_Engine.Engine
 {
@@ -15,6 +16,8 @@ namespace SFML_Engine.Engine
 
         public SpriteActor PlayerPawn { get; set; }
 
+		private InputManager Input { get; set; }
+
         public PlayerController()
         {
         }
@@ -24,10 +27,11 @@ namespace SFML_Engine.Engine
             PlayerPawn = playerPawn;
         }
 
-        public void RegisterInput(ref RenderWindow engineWindow)
+        public void RegisterInput(Engine engine)
         {
-            engineWindow.KeyPressed += OnKeyPressed;
-            engineWindow.KeyReleased += OnKeyReleased;
+	        Input = engine.InputManager;
+            engine.InputManager.KeyPressed += OnKeyPressed;
+			engine.InputManager.KeyReleased += OnKeyReleased;
         }
 
         private void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
@@ -37,40 +41,39 @@ namespace SFML_Engine.Engine
 
         private void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
         {
-            Console.WriteLine("PlayerController: " + Name + "-" + ID + " Input Event: " + keyEventArgs.Code + " pressed!");
+           Console.WriteLine("PlayerController: " + Name + "-" + ID + " Input Event: " + keyEventArgs.Code + " pressed!");
 
-
-            if (keyEventArgs.Code == Keyboard.Key.A)
+            if (Input.APressed)
             {
                 PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
 
             }
 
-            if (keyEventArgs.Code == Keyboard.Key.D)
+            if (Input.DPressed)
             {
                 PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
 
             }
 
-            if (keyEventArgs.Code == Keyboard.Key.W)
+            if (Input.WPressed)
             {
                 PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
 
             }
 
-            if (keyEventArgs.Code == Keyboard.Key.S)
+            if (Input.SPressed)
             {
                 PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
 
             }
 
-            if (keyEventArgs.Code == Keyboard.Key.Q)
+            if (Input.QPressed)
             {
                 PlayerPawn.Rotation -= 10.0f;
 
             }
 
-            if (keyEventArgs.Code == Keyboard.Key.E)
+            if (Input.EPressed)
             {
                 PlayerPawn.Rotation += 10.0f;
 

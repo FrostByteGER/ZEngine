@@ -24,7 +24,7 @@ namespace SFML_Engine.Engine
 
         internal void LevelTick(float deltaTime)
         {
-            Console.WriteLine("Level Tick!");
+            //Console.WriteLine("Level Tick!");
             foreach (var actor in Actors)
             {
                 var tickableActor = actor as ITickable;
