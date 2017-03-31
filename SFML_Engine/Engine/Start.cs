@@ -11,7 +11,7 @@ namespace SFML_Engine.Engine
             var Level = new Level();
             var actor = new SpriteActor();
             Level.RegisterActor(actor);
-            engine.RegisterLevel(ref Level);
+            engine.RegisterLevel(Level);
             engine.StartEngine();
             Console.ReadLine();
         }

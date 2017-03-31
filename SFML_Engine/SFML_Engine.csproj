@@ -101,6 +101,7 @@
     <Compile Include="Engine\IActorable.cs" />
     <Compile Include="Engine\ICollidable.cs" />
     <Compile Include="Engine\IMovable.cs" />
+    <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\IPhysicsProperties.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
@@ -131,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="Engine\IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets" Condition="Exists('..\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets')" />
