@@ -40,6 +40,7 @@ namespace SFML_Engine.Engine
                 if (drawableActor != null)
                 {
                     renderWindow.Draw(drawableActor);
+
                 }
             }
         }
