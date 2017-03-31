@@ -39,7 +39,8 @@ namespace SFML_Engine.Engine
                 var drawableActor = actor as Drawable;
                 if (drawableActor != null)
                 {
-                    renderWindow.Draw(drawableActor);
+
+					renderWindow.Draw(drawableActor);
 
                 }
             }
