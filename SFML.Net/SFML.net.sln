@@ -3,33 +3,47 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\SFML_Engine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-window", "src\Window\sfml-window.csproj", "{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Pong", "SFML_Pong\SFML_Pong.csproj", "{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-graphics", "src\Graphics\sfml-graphics.csproj", "{46786269-57B9-48E7-AA4F-8F4D84609FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-window", "SFML.Net\src\Window\sfml-window.csproj", "{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-audio", "src\Audio\sfml-audio.csproj", "{0B202C4D-A457-47FE-84A3-031DD878C6BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-graphics", "SFML.Net\src\Graphics\sfml-graphics.csproj", "{46786269-57B9-48E7-AA4F-8F4D84609FE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opengl", "examples\opengl\opengl.csproj", "{160AE11E-138A-4B77-9642-EA74F9A79B4D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-audio", "SFML.Net\src\Audio\sfml-audio.csproj", "{0B202C4D-A457-47FE-84A3-031DD878C6BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "window", "examples\window\window.csproj", "{C1FBB9AF-B69A-4D06-9BDC-EAC7606296FF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opengl", "SFML.Net\examples\opengl\opengl.csproj", "{160AE11E-138A-4B77-9642-EA74F9A79B4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sound", "examples\sound\sound.csproj", "{16E177F3-A0FF-4091-8521-562E0EBAA3AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "window", "SFML.Net\examples\window\window.csproj", "{C1FBB9AF-B69A-4D06-9BDC-EAC7606296FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sound_capture", "examples\sound_capture\sound_capture.csproj", "{F2F48990-F81E-41BA-AD01-168F6178C807}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sound", "SFML.Net\examples\sound\sound.csproj", "{16E177F3-A0FF-4091-8521-562E0EBAA3AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shader", "examples\shader\shader.csproj", "{9D4738F7-34EA-433A-A765-AF85A52A174D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sound_capture", "SFML.Net\examples\sound_capture\sound_capture.csproj", "{F2F48990-F81E-41BA-AD01-168F6178C807}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shader", "SFML.Net\examples\shader\shader.csproj", "{9D4738F7-34EA-433A-A765-AF85A52A174D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-system", "SFML.Net\src\System\sfml-system.csproj", "{31D24303-F6A9-4D53-BB03-A73EDCB3186D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-system", "src\System\sfml-system.csproj", "{31D24303-F6A9-4D53-BB03-A73EDCB3186D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BE4B1F06-496A-461D-AC50-FC096BB3E8F1}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "visualbasic", "SFML.Net\examples\visualbasic\visualbasic.vbproj", "{98552080-F688-46B4-A2FF-1AC7C50ECBE8}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "visualbasic", "examples\visualbasic\visualbasic.vbproj", "{98552080-F688-46B4-A2FF-1AC7C50ECBE8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {A7583891-5462-4035-B9CF-0AFDCB2EF42B}
+	EndProjectSection
 EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "sfml", "SFML.Net\doc\sfml.shfbproj", "{C1140035-B151-4058-8B70-B23A3D5F612F}"
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "sfml", "doc\sfml.shfbproj", "{C1140035-B151-4058-8B70-B23A3D5F612F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{31D24303-F6A9-4D53-BB03-A73EDCB3186D} = {31D24303-F6A9-4D53-BB03-A73EDCB3186D}
 		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F} = {D17DE83D-A592-461F-8AF2-53F9E22E1D0F}
@@ -38,6 +52,16 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "sfml", "SFML.Net\doc\sfml.s
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{18C13F25-64BD-4884-A33C-D1DFD486EFBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphnode.SFML.Net.Build", "src\Build\Graphnode.SFML.Net.Build.csproj", "{A7583891-5462-4035-B9CF-0AFDCB2EF42B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{31D24303-F6A9-4D53-BB03-A73EDCB3186D} = {31D24303-F6A9-4D53-BB03-A73EDCB3186D}
+		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F} = {D17DE83D-A592-461F-8AF2-53F9E22E1D0F}
+		{0B202C4D-A457-47FE-84A3-031DD878C6BE} = {0B202C4D-A457-47FE-84A3-031DD878C6BE}
+		{46786269-57B9-48E7-AA4F-8F4D84609FE6} = {46786269-57B9-48E7-AA4F-8F4D84609FE6}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{59FB3C0D-262E-4849-B4BE-C7B1A7CDE682}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,38 +75,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.ActiveCfg = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.Build.0 = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x86.ActiveCfg = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x86.Build.0 = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.ActiveCfg = Release|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.Build.0 = Release|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x86.ActiveCfg = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x86.Build.0 = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x64.ActiveCfg = Debug|x64
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x64.Build.0 = Debug|x64
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Debug|x86.Build.0 = Debug|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x64.ActiveCfg = Release|x64
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x64.Build.0 = Release|x64
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x86.ActiveCfg = Release|Any CPU
-		{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}.Release|x86.Build.0 = Release|Any CPU
 		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -253,6 +245,22 @@ Global
 		{C1140035-B151-4058-8B70-B23A3D5F612F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C1140035-B151-4058-8B70-B23A3D5F612F}.Release|x64.ActiveCfg = Release|Any CPU
 		{C1140035-B151-4058-8B70-B23A3D5F612F}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Debug|x86.Build.0 = Debug|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|x64.Build.0 = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -265,5 +273,6 @@ Global
 		{9D4738F7-34EA-433A-A765-AF85A52A174D} = {BE4B1F06-496A-461D-AC50-FC096BB3E8F1}
 		{98552080-F688-46B4-A2FF-1AC7C50ECBE8} = {BE4B1F06-496A-461D-AC50-FC096BB3E8F1}
 		{C1140035-B151-4058-8B70-B23A3D5F612F} = {18C13F25-64BD-4884-A33C-D1DFD486EFBA}
+		{A7583891-5462-4035-B9CF-0AFDCB2EF42B} = {59FB3C0D-262E-4849-B4BE-C7B1A7CDE682}
 	EndGlobalSection
 EndGlobal

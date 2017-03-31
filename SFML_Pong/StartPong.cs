@@ -13,11 +13,11 @@ namespace SFML_Pong
     {
         static void Main(string[] args)
         {
-            Engine engine = new Engine(800, 600, "Pong");
+            var engine = new Engine(800, 600, "Pong");
             var Level = new Level();
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
-            Texture t = new Texture("Assets/SFML_Pong/Goku.png");
-			Texture t2 = new Texture("Assets/SFML_Pong/Goku_MLG.png");
+            var t = new Texture("Assets/SFML_Pong/Goku.png");
+			var t2 = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 			var actor = new SpriteActor(t);
 			var actor2 = new SpriteActor(t2);
 			//actor.Position = new Vector2f(50,0);
