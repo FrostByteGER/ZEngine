@@ -286,4 +286,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# Custom Ignores
 SFML.Net/.gitignore
+SFML.Net/doc/build/**
+SFML.Net/docs/**
