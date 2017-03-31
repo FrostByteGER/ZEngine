@@ -7,13 +7,25 @@ namespace SFML_Engine.Engine
     public class SpriteActor : Sprite, IActorable
     {
 
+	    public bool SnapOriginToCenter { get; set; } = true;
+
         public SpriteActor()
         {
+	        if (SnapOriginToCenter)
+	        {
+		        FloatRect bounds = GetGlobalBounds();
+				Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
+	        }
         }
 
         public SpriteActor(Texture texture) : base(texture)
         {
-        }
+			if (SnapOriginToCenter)
+			{
+				FloatRect bounds = GetGlobalBounds();
+				Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
+			}
+		}
 
         public SpriteActor(Texture texture, IntRect rectangle) : base(texture, rectangle)
         {

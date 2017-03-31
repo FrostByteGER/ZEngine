@@ -16,7 +16,7 @@ namespace SFML_Engine.Engine
 
         public SpriteActor PlayerPawn { get; set; }
 
-		private InputManager Input { get; set; }
+		public InputManager Input { get; set; }
 
         public PlayerController()
         {
@@ -34,53 +34,17 @@ namespace SFML_Engine.Engine
 			engine.InputManager.KeyReleased += OnKeyReleased;
         }
 
-        private void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
-        {
-            Console.WriteLine("PlayerController: " + Name + "-" +  ID + " Input Event: " + keyEventArgs.Code + " released!");
-        }
-
-        private void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
+        protected virtual void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
         {
            Console.WriteLine("PlayerController: " + Name + "-" + ID + " Input Event: " + keyEventArgs.Code + " pressed!");
-
-            if (Input.APressed)
-            {
-                PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
-
-            }
-
-            if (Input.DPressed)
-            {
-                PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
-
-            }
-
-            if (Input.WPressed)
-            {
-                PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-
-            }
-
-            if (Input.SPressed)
-            {
-                PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
-
-            }
-
-            if (Input.QPressed)
-            {
-                PlayerPawn.Rotation -= 10.0f;
-
-            }
-
-            if (Input.EPressed)
-            {
-                PlayerPawn.Rotation += 10.0f;
-
-            }
         }
 
-        public void Tick(float deltaTime)
+		protected virtual void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
+		{
+			Console.WriteLine("PlayerController: " + Name + "-" + ID + " Input Event: " + keyEventArgs.Code + " released!");
+		}
+
+		public void Tick(float deltaTime)
         {
             if (PlayerPawn != null)
             {

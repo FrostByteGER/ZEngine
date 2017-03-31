@@ -33,12 +33,14 @@ namespace SFML_Engine.Engine
         private uint FramesRendered { get; set; }
         public double FPS { get; private set; }
 
-        public float FPSUpdateValue { get; } = 1.0f;
+	    public uint FPSLimit { get; private set; } = 1000;
+
+        public float FPSUpdateValue { get; } = 1f;
 
         public bool RequestTermination { get; set; }
-        public bool VSyncEnabled { get; set; }
+	    public bool VSyncEnabled { get; set; } = true;
 
-        public List<Level> Levels { get; private set; }
+        public List<Level> Levels { get; private set; } = new List<Level>();
 
         public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
         public PhysicsEngine PhysicsEngine { get; private set; }
@@ -52,8 +54,6 @@ namespace SFML_Engine.Engine
             EngineWindowWidth = engineWindowWidth;
             EngineWindowHeight = engineWindowHeight;
             GameName = gameName;
-            Levels = new List<Level>();
-            VSyncEnabled = true;
             InitEngine();
         }
 
@@ -69,6 +69,7 @@ namespace SFML_Engine.Engine
             engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
             engineWindow.Closed += OnEngineWindowClose;
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
+			engineWindow.SetFramerateLimit(FPSLimit);
 			engineWindow.SetKeyRepeatEnabled(true);
 
             PhysicsEngine = new PhysicsEngine();
@@ -100,10 +101,6 @@ namespace SFML_Engine.Engine
             Time currentTime = Time.Zero;
             FPSStartTime = Time.Zero;
             FPSPassedTime = Time.Zero;
-            PlayerController pc1 = new PlayerController();
-            RegisterPlayer(pc1);
-            PlayerController pc2 = new PlayerController();
-            RegisterPlayer(pc2);
             FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
@@ -114,20 +111,23 @@ namespace SFML_Engine.Engine
                 currentTime = newTime;
 
 
-                //Console.WriteLine(DeltaTime.AsSeconds() + " " + newTime.AsSeconds() + " " + currentTime.AsSeconds() + " " + FramesRendered);
 
                 accumulator += DeltaTime.AsSeconds();
 
                 FPSPassedTime = FPSClock.ElapsedTime;
-                if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
+
+				Console.WriteLine("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + 1.0f / DeltaTime.AsSeconds());
+				FPS = VSyncEnabled ? FramesRendered : 1.0f / DeltaTime.AsSeconds();
+
+				if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
                 {
                     FPSStartTime = FPSPassedTime;
-                    FPS = VSyncEnabled ? FramesRendered : FramesRendered / DeltaTime.AsSeconds();
-                    engineWindow.SetTitle(FPS.ToString());
-                    FramesRendered = 0;
+					engineWindow.SetTitle("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + FPS);
+
+					FramesRendered = 0;
                 }
 
-                while (accumulator >= timestep)
+				while (accumulator >= timestep)
                 {
                     //Console.WriteLine("Engine Tick!");
                     foreach (var level in Levels)
@@ -179,9 +179,10 @@ namespace SFML_Engine.Engine
         {
             Players.Add(pc);
             pc.ID = (uint) Players.Count - 1;
-            if (pc.ID == 0) //TODO: Remove
+			pc.RegisterInput(this);
+			if (pc.ID == 0) //TODO: Remove
             {
-                pc.RegisterInput(this);
+                //pc.RegisterInput(this);
             }
         }
     }
