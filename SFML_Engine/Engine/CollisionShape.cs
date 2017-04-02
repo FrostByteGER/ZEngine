@@ -2,7 +2,7 @@
 
 namespace SFML_Engine.Engine
 {
-    public class Shape : Transformable
+    public class CollisionShape : Transformable
     {
 
     }

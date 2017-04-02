@@ -5,7 +5,7 @@ namespace SFML_Engine.Engine
 {
     public class Actor : Transformable, IActorable 
     {
-        public Shape CollisionShape { get; set; }
+        public CollisionShape CollisionShape { get; set; }
         public bool Movable { get; set; }
         public Vector2f Velocity { get; set; }
         public Vector2f Acceleration { get; set; }

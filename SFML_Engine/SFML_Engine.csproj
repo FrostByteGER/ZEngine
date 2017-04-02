@@ -84,21 +84,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Actor.cs" />
-    <Compile Include="Engine\BoxShape.cs" />
+    <Compile Include="Engine\BoxCollisionShape.cs" />
     <Compile Include="Engine\GameMode.cs" />
-    <Compile Include="Engine\IActorable.cs" />
-    <Compile Include="Engine\ICollidable.cs" />
-    <Compile Include="Engine\IMovable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
-    <Compile Include="Engine\IPhysicsProperties.cs" />
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\PlayerController.cs" />
-    <Compile Include="Engine\Shape.cs" />
-    <Compile Include="Engine\SphereShape.cs" />
+    <Compile Include="Engine\CollisionShape.cs" />
+    <Compile Include="Engine\SphereCollisionShape.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />
-    <Compile Include="Engine\ITickable.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

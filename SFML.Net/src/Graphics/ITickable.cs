@@ -1,4 +1,4 @@
-﻿namespace SFML_Engine.Engine
+﻿namespace SFML.Graphics
 {
     public interface ITickable
     {

@@ -1,13 +1,6 @@
 ﻿using SFML.System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
 
-namespace SFML_Engine.Engine
+namespace SFML.Graphics
 {
     public interface IMovable
     {

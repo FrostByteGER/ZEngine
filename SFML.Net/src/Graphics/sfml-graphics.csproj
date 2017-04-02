@@ -50,6 +50,7 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="Actor.cs" />
     <Compile Include="BlendMode.cs" />
     <Compile Include="CircleShape.cs" />
     <Compile Include="Color.cs" />
@@ -58,7 +59,12 @@
     <Compile Include="Drawable.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="Glyph.cs" />
+    <Compile Include="IActorable.cs" />
+    <Compile Include="ICollidable.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="IMovable.cs" />
+    <Compile Include="IPhysicsProperties.cs" />
+    <Compile Include="ITickable.cs" />
     <Compile Include="PrimitiveType.cs" />
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
+using Actor = SFML.Actor;
 
 namespace SFML_Pong
 {
@@ -15,11 +16,12 @@ namespace SFML_Pong
         {
             var engine = new Engine(800, 600, "Pong");
             var Level = new Level();
-            Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
             var t = new Texture("Assets/SFML_Pong/Goku.png");
 			var t2 = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 			var actor = new SpriteActor(t);
 			var actor2 = new SpriteActor(t2);
+
+	        var test = (Actor) actor;
 			//actor.Position = new Vector2f(50,0);
 			actor2.Position = new Vector2f(650, 0);
 			actor2.Scale = new Vector2f(-actor2.Scale.X, actor2.Scale.Y);

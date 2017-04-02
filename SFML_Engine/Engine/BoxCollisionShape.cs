@@ -2,20 +2,20 @@
 
 namespace SFML_Engine.Engine
 {
-    public class BoxShape : Shape
+    public class BoxCollisionShape : CollisionShape
     {
         public Vector2f BoxExtent{ get; set; }
 
-        public BoxShape()
+        public BoxCollisionShape()
         {
         }
 
-        public BoxShape(Vector2f boxExtent)
+        public BoxCollisionShape(Vector2f boxExtent)
         {
             BoxExtent = boxExtent;
         }
 
-        public BoxShape(float boxExtentX, float boxExtentY)
+        public BoxCollisionShape(float boxExtentX, float boxExtentY)
         {
             BoxExtent = new Vector2f(boxExtentX, boxExtentY);
         }

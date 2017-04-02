@@ -1,16 +1,16 @@
 ﻿namespace SFML_Engine.Engine
 {
-    public class SphereShape : Shape
+    public class SphereCollisionShape : CollisionShape
     {
         
         public float SphereRadius { get; set; }
 
-        public SphereShape()
+        public SphereCollisionShape()
         {
             SphereRadius = 1.0f;
         }
 
-        public SphereShape(float sphereRadius)
+        public SphereCollisionShape(float sphereRadius)
         {
             SphereRadius = sphereRadius;
         }

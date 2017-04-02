@@ -1,4 +1,6 @@
-﻿namespace SFML_Engine.Engine
+﻿using SFML.Graphics;
+
+namespace SFML_Engine.Engine
 {
     public class GameMode : ITickable
     {
