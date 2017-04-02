@@ -8,10 +8,10 @@ namespace SFML_Engine.Engine.Physics
     public class PhysicsEngine
     {
 
-        public readonly float Gravity = 9.81f;
+        public readonly Vector2f Gravity = new Vector2f(0.0f ,-9.81f);
 		public bool hasGravity = false;
 
-        private Dictionary<string, List<Transformable>> ActerGroups = new Dictionary<string, List<Transformable>>();
+        private Dictionary<string, List<Actor>> ActerGroups = new Dictionary<string, List<Actor>>();
 
 		private Dictionary<string, List<string>> CollidablePartner = new Dictionary<string, List<string>>();
 
@@ -20,59 +20,73 @@ namespace SFML_Engine.Engine.Physics
 
 		//var accounts = new Dictionary<string, double>();
 
-		internal void PhysicsTick(float deltaTime, ref List<Transformable> actors)
+		internal void PhysicsTick(float deltaTime, ref List<Actor> actors)
         {
-            Console.WriteLine("Physics Tick");
+			//Console.WriteLine("Physics Tick"); Debug
 
-			//Collision
+			// move Actors
 
-			moveActors(deltaTime, ref actors);
+			//Vector2f VelocityTemp;
 
-			
+			foreach (Actor actor in actors)
+			{
+				//var OneActor = actor as IActorable;
 
-        }
+				if (actor != null)
+				{
+					if (actor.Movable)
+					{
+						actor.Move(actor.Velocity);
 
-        private void moveActors(float deltaTime, ref List<Transformable> actors)
-        {
-
-            Vector2f VelocityTemp;
-
-            foreach (var actor in actors)
-            {
-                var OneActor = actor as IActorable;
-                //tickableActor?.Tick(deltaTime);
-
-                if (OneActor != null)
-                {
-                    if (OneActor.Movable)
-                    {
-						OneActor.Move(OneActor.Velocity);
-
-						//increase Velocity.x/.y by Acceleration.x/.y
-
-						//OneActor.Move(x,y);
 						if (hasGravity)
 						{
-							//addGravity
+							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
 						}
-                    }
-                }
-            }
-        }
+					}
+				}
+			}
 
-		public void addActorToGroup(string groupName, Transformable actor)
+			//Collision / Overlap
+
+			foreach (string groupNameActive in ActerGroups.Keys )
+			{
+				if (OverlapPartner.ContainsKey(groupNameActive))
+				{
+					foreach (string groupNamePassive in OverlapPartner[groupNameActive])
+					{
+
+						foreach (Actor activeActor in ActerGroups[groupNameActive])
+						{
+							foreach (Actor passiveActor in ActerGroups[groupNamePassive])
+							{
+
+								//TODO Colliding
+								if (isOverlaping(activeActor.CollisionShape, passiveActor.CollisionShape))
+								{
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		//ActerGroup
+
+		public void addActorToGroup(string groupName, Actor actor)
 		{
 			if (ActerGroups.ContainsKey(groupName)) {
 				ActerGroups[groupName].Add(actor);
 			}
 			else
 			{
-				ActerGroups.Add(groupName,new List<Transformable>());
+				ActerGroups.Add(groupName,new List<Actor>());
 				ActerGroups[groupName].Add(actor);
 			}
 		}
 
-		public bool subActorFromGroup(string groupName, Transformable actor)
+		public bool subActorFromGroup(string groupName, Actor actor)
 		{
 			if (ActerGroups.ContainsKey(groupName))
 			{
@@ -85,7 +99,7 @@ namespace SFML_Engine.Engine.Physics
 		{
 			if (!ActerGroups.ContainsKey(groupName))
 			{
-				ActerGroups.Add(groupName, new List<Transformable>());
+				ActerGroups.Add(groupName, new List<Actor>());
 				return true;
 			}
 
@@ -115,6 +129,8 @@ namespace SFML_Engine.Engine.Physics
 			return false;
 		}
 
+		// OverlapPartner
+
 		public bool addOverlapPartners(string activ, string passive)
 		{
 			if (ActerGroups.ContainsKey(activ) && ActerGroups.ContainsKey(passive))
@@ -132,7 +148,21 @@ namespace SFML_Engine.Engine.Physics
 			return false;
 		}
 
-		//TODO
+		public bool subOverlapPartners(string activ, string passive)
+		{
+			if (!OverlapPartner.ContainsKey(activ))
+			{
+				if (!OverlapPartner[activ].Contains(passive))
+				{
+					return true;
+				}
+				return OverlapPartner[activ].Remove(passive);			
+			}
+			return true;
+		}
+
+		//CollidPartner
+
 		public bool addCollidPartner(string activ, string passive)
 		{
 			if (ActerGroups.ContainsKey(activ) && ActerGroups.ContainsKey(passive))
@@ -151,14 +181,91 @@ namespace SFML_Engine.Engine.Physics
 			return false;
 		}
 
-		private void overlapActor()
+		public bool subCollidPartner(string activ, string passive)
 		{
-
+			if (!CollidablePartner.ContainsKey(activ))
+			{
+				if (!CollidablePartner[activ].Contains(passive))
+				{
+					return true;
+				}
+				return CollidablePartner[activ].Remove(passive);
+			}
+			return true;
 		}
 
-		private void collidActor()
-		{
-			
+		//Overlap
+		//TODO
+		private bool isOverlaping(Shape activeShape, Shape passiveShape)
+		{	
+
+			// Box
+			if (activeShape.GetType() == typeof(BoxShape))
+			{
+
+				BoxShape activeTemp = (BoxShape)activeShape;
+
+				//Box/Box
+				if (passiveShape.GetType() == typeof(BoxShape))
+				{
+					BoxShape passiveTemp = (BoxShape)passiveShape;
+
+					if (activeTemp.Position.X < passiveTemp.Position.X + passiveTemp.BoxExtent.X &&
+						activeTemp.Position.X + activeTemp.BoxExtent.X > passiveTemp.Position.X &&
+						activeTemp.Position.Y < passiveTemp.Position.Y + passiveTemp.BoxExtent.Y &&
+						activeTemp.Position.Y + activeTemp.BoxExtent.Y > passiveTemp.Position.Y
+						)
+					{
+						return true;
+					}
+
+				}//Box/Shere
+				else if (passiveShape.GetType() == typeof(BoxShape))
+				{
+
+				}
+
+			}//Shere
+			else if (activeShape.GetType() == typeof(SphereShape))
+			{
+				SphereShape activeTemp = (SphereShape)activeShape;
+
+				//Shere/Box
+				if (passiveShape.GetType() == typeof(BoxShape))
+				{
+					BoxShape passiveTemp = (BoxShape)passiveShape;
+
+					if (false)
+					{
+						return true;
+					}
+
+				}//Shere/Shere
+				else if (passiveShape.GetType() == typeof(BoxShape))
+				{
+					SphereShape passiveTemp = (SphereShape)passiveShape;
+
+					// distance^2
+					float distance = ((activeShape.Position.X-passiveTemp.Position.X)* (activeShape.Position.X - passiveTemp.Position.X) + (activeShape.Position.Y - passiveTemp.Position.Y) * (activeShape.Position.Y - passiveTemp.Position.Y));
+
+					if (distance < (activeTemp.SphereRadius*activeTemp.SphereRadius) + (passiveTemp.SphereRadius*passiveTemp.SphereRadius))
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		//Collid
+
+		//extra
+
+		private Vector2f addVectorfToVectorf(Vector2f v1, Vector2f v2)
+		{ 
+			return v1 + v2;
+
 		}
 	}
 }
