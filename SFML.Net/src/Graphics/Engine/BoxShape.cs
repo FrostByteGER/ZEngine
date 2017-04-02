@@ -1,21 +1,21 @@
 ﻿using SFML.System;
 
-namespace SFML_Engine.Engine
+namespace SFML.Graphics.Engine
 {
-    public class BoxCollisionShape : CollisionShape
+    public class BoxShape : CollisionShape
     {
         public Vector2f BoxExtent{ get; set; }
 
-        public BoxCollisionShape()
+        public BoxShape()
         {
         }
 
-        public BoxCollisionShape(Vector2f boxExtent)
+        public BoxShape(Vector2f boxExtent)
         {
             BoxExtent = boxExtent;
         }
 
-        public BoxCollisionShape(float boxExtentX, float boxExtentY)
+        public BoxShape(float boxExtentX, float boxExtentY)
         {
             BoxExtent = new Vector2f(boxExtentX, boxExtentY);
         }

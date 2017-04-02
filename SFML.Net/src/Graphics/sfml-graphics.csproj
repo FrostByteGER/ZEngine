@@ -50,21 +50,24 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="Actor.cs" />
+    <Compile Include="Engine\Actor.cs" />
     <Compile Include="BlendMode.cs" />
     <Compile Include="CircleShape.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ConvexShape.cs" />
     <Compile Include="Drawable.cs" />
+    <Compile Include="Engine\BoxShape.cs" />
+    <Compile Include="Engine\CollisionShape.cs" />
+    <Compile Include="Engine\SphereShape.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="Glyph.cs" />
-    <Compile Include="IActorable.cs" />
-    <Compile Include="ICollidable.cs" />
+    <Compile Include="Engine\IActorable.cs" />
+    <Compile Include="Engine\ICollidable.cs" />
     <Compile Include="Image.cs" />
-    <Compile Include="IMovable.cs" />
-    <Compile Include="IPhysicsProperties.cs" />
-    <Compile Include="ITickable.cs" />
+    <Compile Include="Engine\IMovable.cs" />
+    <Compile Include="Engine\IPhysicsProperties.cs" />
+    <Compile Include="Engine\ITickable.cs" />
     <Compile Include="PrimitiveType.cs" />
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>

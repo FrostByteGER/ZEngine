@@ -68,7 +68,7 @@
       <Name>sfml-system</Name>
     </ProjectReference>
     <ProjectReference Include="..\Window\sfml-window.csproj">
-      <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
+      <Project>{d17de83d-a592-461f-8af2-53f9e22e1d0f}</Project>
       <Name>sfml-window</Name>
     </ProjectReference>
   </ItemGroup>

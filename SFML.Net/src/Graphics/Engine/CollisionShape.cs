@@ -1,6 +1,4 @@
-﻿using SFML.Graphics;
-
-namespace SFML_Engine.Engine
+﻿namespace SFML.Graphics.Engine
 {
     public class CollisionShape : Transformable
     {

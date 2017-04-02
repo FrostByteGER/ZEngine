@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML.Graphics;
+using SFML.Graphics.Engine;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Physics
@@ -196,7 +197,7 @@ namespace SFML_Engine.Engine.Physics
 
 		//Overlap
 		//TODO
-		private bool isOverlaping(Shape activeShape, Shape passiveShape)
+		private bool isOverlaping(CollisionShape activeShape, CollisionShape passiveShape)
 		{	
 
 			// Box

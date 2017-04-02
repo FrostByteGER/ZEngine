@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SFML.Graphics;
+using SFML.Graphics.Engine;
 using SFML.Window;
 
 namespace SFML_Engine.Engine
@@ -9,7 +10,7 @@ namespace SFML_Engine.Engine
     public class Level
     {
 
-        public List<Transformable> Actors{ get; set; } = new List<Transformable>();
+        public List<Actor> Actors{ get; set; } = new List<Actor>();
 
         public Engine Engine { get; set; }
 
@@ -27,8 +28,7 @@ namespace SFML_Engine.Engine
             //Console.WriteLine("Level Tick!");
             foreach (var actor in Actors)
             {
-                var tickableActor = actor as ITickable;
-                tickableActor?.Tick(deltaTime);
+                actor.Tick(deltaTime);
             }
         }
 
@@ -39,14 +39,12 @@ namespace SFML_Engine.Engine
                 var drawableActor = actor as Drawable;
                 if (drawableActor != null)
                 {
-
 					renderWindow.Draw(drawableActor);
-
                 }
             }
         }
 
-        public void RegisterActor(Transformable actor)
+        public void RegisterActor(Actor actor)
         {
             Actors.Add(actor);
 

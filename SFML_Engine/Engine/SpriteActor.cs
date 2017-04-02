@@ -1,10 +1,11 @@
 ﻿using System;
 using SFML.Graphics;
+using SFML.Graphics.Engine;
 using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-    public class SpriteActor : Sprite, IActorable
+    public class SpriteActor : Sprite
     {
 
 	    public bool SnapOriginToCenter { get; set; } = true;
@@ -34,17 +35,6 @@ namespace SFML_Engine.Engine
         public SpriteActor(Sprite copy) : base(copy)
         {
         }
-
-        public CollisionShape CollisionShape { get; set; }
-        public bool Movable { get; set; }
-
-        public Vector2f Velocity { get; set; }
-
-        public Vector2f Acceleration { get; set; }
-
-        public float Mass { get; set; }
-
-        
 
         public void Tick(float deltaTime)
         {

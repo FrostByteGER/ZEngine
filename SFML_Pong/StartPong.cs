@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using Actor = SFML.Actor;
+using Actor = SFML.Graphics.Engine.Actor;
 
 namespace SFML_Pong
 {

@@ -1,6 +1,7 @@
 using System;
 using System.Security;
 using System.Runtime.InteropServices;
+using SFML.Graphics.Engine;
 using SFML.Window;
 
 namespace SFML
