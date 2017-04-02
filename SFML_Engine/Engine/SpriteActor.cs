@@ -38,7 +38,8 @@ namespace SFML_Engine.Engine
 
         public override void Tick(float deltaTime)
         {
-            //Console.WriteLine("Actor Tick!");
+			base.Tick(deltaTime);
+			//Console.WriteLine("Actor Tick!");
             //Position = new Vector2f(Position.X + 10.0f * deltaTime, Position.Y);
         }
 

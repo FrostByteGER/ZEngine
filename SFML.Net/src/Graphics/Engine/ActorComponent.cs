@@ -1,9 +1,12 @@
-﻿namespace SFML.Graphics.Engine
+﻿using System;
+
+namespace SFML.Graphics.Engine
 {
 	public class ActorComponent : Transformable, ITickable
 	{
-		public void Tick(float deltaTime)
+		public virtual void Tick(float deltaTime)
 		{
+			Console.WriteLine("Component Tick");
 		}
 	}
 }

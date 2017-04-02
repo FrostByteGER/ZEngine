@@ -19,6 +19,7 @@ namespace SFML_Pong
             var t = new Texture("Assets/SFML_Pong/Goku.png");
 			var t2 = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 			var actor = new SpriteActor(t);
+	        actor.Components.Add(new SFML.Graphics.Engine.ActorComponent());
 			var actor2 = new SpriteActor(t2);
 
 	        var test = (Actor) actor;
