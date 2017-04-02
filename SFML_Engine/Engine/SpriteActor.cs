@@ -36,18 +36,18 @@ namespace SFML_Engine.Engine
         {
         }
 
-        public void Tick(float deltaTime)
+        public override void Tick(float deltaTime)
         {
             //Console.WriteLine("Actor Tick!");
             //Position = new Vector2f(Position.X + 10.0f * deltaTime, Position.Y);
         }
 
-	    public void Move(float x, float y)
+	    public override void Move(float x, float y)
 	    {
 		    Position = new Vector2f(x,y);
 	    }
 
-	    public void Move(Vector2f position)
+	    public override void Move(Vector2f position)
 	    {
 		    Position = position;
 	    }

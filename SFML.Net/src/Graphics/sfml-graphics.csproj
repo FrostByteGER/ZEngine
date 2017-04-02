@@ -57,6 +57,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="ConvexShape.cs" />
     <Compile Include="Drawable.cs" />
+    <Compile Include="Engine\ActorComponent.cs" />
     <Compile Include="Engine\BoxShape.cs" />
     <Compile Include="Engine\CollisionShape.cs" />
     <Compile Include="Engine\SphereShape.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SFML.System;
 
 namespace SFML.Graphics.Engine
@@ -11,6 +12,8 @@ namespace SFML.Graphics.Engine
 		public Vector2f Velocity { get; set; }
 		public Vector2f Acceleration { get; set; }
 		public float Mass { get; set; }
+
+		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 
 		public Actor()
 		{
@@ -34,6 +37,10 @@ namespace SFML.Graphics.Engine
 
 		public virtual void Tick(float deltaTime)
 		{
+			foreach (var component in Components)
+			{
+				component.Tick(deltaTime);
+			}
 		}
 	}
 }

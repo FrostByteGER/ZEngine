@@ -38,7 +38,7 @@ namespace SFML_Engine.Engine
         public float FPSUpdateValue { get; } = 1f;
 
         public bool RequestTermination { get; set; }
-	    public bool VSyncEnabled { get; set; } = true;
+	    public bool VSyncEnabled { get; set; } = false;
 
         public List<Level> Levels { get; private set; } = new List<Level>();
 
@@ -117,7 +117,7 @@ namespace SFML_Engine.Engine
                 FPSPassedTime = FPSClock.ElapsedTime;
 
 				Console.WriteLine("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + 1.0f / DeltaTime.AsSeconds());
-				FPS = VSyncEnabled ? FramesRendered : 1.0f / DeltaTime.AsSeconds();
+				FPS = 1.0f / DeltaTime.AsSeconds();
 
 				if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
                 {
