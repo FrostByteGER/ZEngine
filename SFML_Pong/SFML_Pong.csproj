@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PongGameMode.cs" />
     <Compile Include="PongPlayerController.cs" />
     <Compile Include="StartPong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

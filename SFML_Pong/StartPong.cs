@@ -6,33 +6,32 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using Actor = SFML.Graphics.Engine.Actor;
+using Actor = SFML_Engine.Engine.Actor;
 
 namespace SFML_Pong
 {
-    class StartPong
+    public sealed class StartPong
     {
-        static void Main(string[] args)
+	    public static void Main(string[] args)
         {
             var engine = new Engine(800, 600, "Pong");
             var Level = new Level();
-            var t = new Texture("Assets/SFML_Pong/Goku.png");
-			var t2 = new Texture("Assets/SFML_Pong/Goku_MLG.png");
-			var actor = new SpriteActor(t);
-	        actor.Components.Add(new SFML.Graphics.Engine.ActorComponent());
-			var actor2 = new SpriteActor(t2);
+            var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
+			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
+			var leftPad = new SpriteActor(leftPadTexture);
+	        leftPad.Components.Add(new ActorComponent());
+	        var rightPad = new SpriteActor(rightPadTexture) {Position = new Vector2f(650, 0)};
+	        rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 
-	        var test = (Actor) actor;
-			//actor.Position = new Vector2f(50,0);
-			actor2.Position = new Vector2f(650, 0);
-			actor2.Scale = new Vector2f(-actor2.Scale.X, actor2.Scale.Y);
-			var pc = new PongPlayerController(actor);
-			var pc2 = new PongPlayerController(actor2);
-            Level.RegisterActor(actor);
-			Level.RegisterActor(actor2);
+	        var ball = new SpriteActor();
+			var leftPadController = new PongPlayerController(leftPad);
+			var rightPadController = new PongPlayerController(rightPad);
+            Level.RegisterActor(leftPad);
+			Level.RegisterActor(rightPad);
+	        Level.RegisterActor(ball);
             engine.RegisterLevel(Level);
-            engine.RegisterPlayer(pc);
-			engine.RegisterPlayer(pc2);
+            engine.RegisterPlayer(leftPadController);
+			engine.RegisterPlayer(rightPadController);
             engine.StartEngine();
             Console.ReadLine();
         }

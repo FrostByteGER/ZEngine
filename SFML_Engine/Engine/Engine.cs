@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -38,13 +39,15 @@ namespace SFML_Engine.Engine
         public float FPSUpdateValue { get; } = 1f;
 
         public bool RequestTermination { get; set; }
-	    public bool VSyncEnabled { get; set; } = false;
+	    public bool VSyncEnabled { get; set; } = true;
 
         public List<Level> Levels { get; private set; } = new List<Level>();
 
         public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
         public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
+
+	    public Queue<Event> EngineEvents { get; private set; } = new Queue<Event>();
 
 
 
@@ -147,6 +150,12 @@ namespace SFML_Engine.Engine
                     level.LevelDraw(ref engineWindow);
                 }
                 engineWindow.Display();
+
+				// Execute all pending events in the Queue
+	            while (EngineEvents.Count > 0)
+	            {
+		            EngineEvents.Dequeue().ExecuteEvent();
+	            }
                 FramesRendered++;
             }
 
@@ -185,5 +194,10 @@ namespace SFML_Engine.Engine
                 //pc.RegisterInput(this);
             }
         }
+
+	    public void RegisterEvent(Event e)
+	    {
+		    EngineEvents.Enqueue(e);
+	    }
     }
 }

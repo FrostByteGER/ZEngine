@@ -3,7 +3,7 @@ using SFML.Graphics;
 
 namespace SFML_Engine.Engine
 {
-    public class Start
+    internal sealed class Start
     {
         public static void Main(string[] args)
         {

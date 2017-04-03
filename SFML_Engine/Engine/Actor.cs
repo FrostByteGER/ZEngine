@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.System;
 
-namespace SFML.Graphics.Engine
+namespace SFML_Engine.Engine
 {
 	public class Actor : Transformable, IActorable
 	{
 
 		public CollisionShape CollisionShape { get; set; }
-		public bool Movable { get; set; }
+		public bool Movable { get; set; } = true;
 		public Vector2f Velocity { get; set; }
 		public Vector2f Acceleration { get; set; }
-		public float Mass { get; set; }
+		public float Mass { get; set; } = 0.0f;
 
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 
@@ -29,10 +30,12 @@ namespace SFML.Graphics.Engine
 
 		public virtual void Move(float x, float y)
 		{
+			Position = new Vector2f(x, y);
 		}
 
 		public virtual void Move(Vector2f position)
 		{
+			Position = position;
 		}
 
 		public virtual void Tick(float deltaTime)

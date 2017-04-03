@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using SFML.Graphics.Engine;
 using SFML.Window;
 using SFML.System;
 
@@ -14,7 +13,7 @@ namespace SFML
         /// Base class for textured shapes with outline
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public abstract class Shape : Actor, Drawable
+        public abstract class Shape : Transformable, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

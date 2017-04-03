@@ -1,15 +1,16 @@
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
-using SFML.Graphics.Engine;
-using SFML.Window;
+using System.Security;
+using SFML.Graphics;
 
-namespace SFML
+namespace SFML_Engine.Engine
 {
     namespace Graphics
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// CARBON COPY OF SPRITE CLASS IN sfml-graphics PROJECT!
+        /// 
         /// This class defines a sprite : texture, transformations,
         /// color, and draw on screen
         /// </summary>

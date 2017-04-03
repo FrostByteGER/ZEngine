@@ -1,6 +1,6 @@
 ﻿using SFML.System;
 
-namespace SFML.Graphics.Engine
+namespace SFML_Engine.Engine
 {
     public interface IMovable
     {

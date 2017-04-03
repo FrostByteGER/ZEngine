@@ -22,24 +22,27 @@ namespace SFML_Pong
 			{
 				if (Input.APressed)
 				{
-					PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
+					//PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
+					PlayerPawn.Velocity += new Vector2f(-10.0f, 0);
 
 				}
 
 				if (Input.DPressed)
 				{
-					PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
+					//PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
+					PlayerPawn.Velocity += new Vector2f(10.0f, 0);
 
 				}
 				if (Input.WPressed)
 				{
-					PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-
+					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
+					PlayerPawn.Velocity += new Vector2f(0.0f, -10.0f);
 				}
 
 				if (Input.SPressed)
 				{
-					PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
+					//PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
+					PlayerPawn.Velocity += new Vector2f(0.0f, 10.0f);
 
 				}
 
@@ -58,26 +61,28 @@ namespace SFML_Pong
 			{
 				if (Input.LeftPressed)
 				{
-					PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
+					//PlayerPawn.Position += new Vector2f(-10.0f, 0.0f);
+					PlayerPawn.Velocity += new Vector2f(-10.0f, 0);
 
 				}
 
 				if (Input.RightPressed)
 				{
-					PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
+					//PlayerPawn.Position += new Vector2f(10.0f, 0.0f);
+					PlayerPawn.Velocity += new Vector2f(10.0f, 0);
 
 				}
 
 				if (Input.UpPressed)
 				{
-					PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-
+					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
+					PlayerPawn.Velocity += new Vector2f(0.0f, -10.0f);
 				}
 
 				if (Input.DownPressed)
 				{
-					PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
-
+					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
+					PlayerPawn.Velocity += new Vector2f(0.0f, 10.0f);
 				}
 
 				if (Input.OPressed)

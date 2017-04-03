@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML.Graphics;
-using SFML.Graphics.Engine;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Physics
@@ -9,7 +8,7 @@ namespace SFML_Engine.Engine.Physics
     public class PhysicsEngine
     {
 
-        public readonly Vector2f Gravity = new Vector2f(0.0f ,-9.81f);
+        public readonly Vector2f Gravity = new Vector2f(0.0f ,9.81f);
 		public bool hasGravity = false;
 
         private Dictionary<string, List<Actor>> ActerGroups = new Dictionary<string, List<Actor>>();
@@ -37,7 +36,7 @@ namespace SFML_Engine.Engine.Physics
 				{
 					if (actor.Movable)
 					{
-						actor.Move(actor.Velocity);
+						actor.Move(actor.Position += actor.Velocity * deltaTime);
 
 						if (hasGravity)
 						{

@@ -1,7 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
-using SFML.Graphics.Engine;
 using SFML.System;
+using SFML_Engine.Engine.Graphics;
 
 namespace SFML_Engine.Engine
 {

@@ -112,7 +112,7 @@ namespace SFML
             public Shader Shader;
 
             // Return a marshalled version of the instance, that can directly be passed to the C API
-            internal MarshalData Marshal()
+            public MarshalData Marshal()
             {
                 MarshalData data = new MarshalData();
                 data.blendMode = BlendMode;
@@ -124,7 +124,7 @@ namespace SFML
             }
 
             [StructLayout(LayoutKind.Sequential)]
-            internal struct MarshalData
+            public struct MarshalData
             {
                 public BlendMode blendMode;
                 public Transform transform;

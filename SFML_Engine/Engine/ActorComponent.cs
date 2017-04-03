@@ -1,6 +1,7 @@
 ﻿using System;
+using SFML.Graphics;
 
-namespace SFML.Graphics.Engine
+namespace SFML_Engine.Engine
 {
 	public class ActorComponent : Transformable, ITickable
 	{

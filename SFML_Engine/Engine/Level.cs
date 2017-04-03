@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SFML.Graphics;
-using SFML.Graphics.Engine;
 using SFML.Window;
 
 namespace SFML_Engine.Engine
@@ -30,6 +29,8 @@ namespace SFML_Engine.Engine
             {
                 actor.Tick(deltaTime);
             }
+
+	        GameMode.Tick(deltaTime);
         }
 
         internal void LevelDraw(ref RenderWindow renderWindow)
