@@ -22,16 +22,10 @@ namespace SFML_Engine.Engine.Physics
 
 		internal void PhysicsTick(float deltaTime, ref List<Actor> actors)
         {
-			//Console.WriteLine("Physics Tick"); Debug
-
 			// move Actors
-
-			//Vector2f VelocityTemp;
 
 			foreach (Actor actor in actors)
 			{
-				//var OneActor = actor as IActorable;
-
 				if (actor != null)
 				{
 					if (actor.Movable)
@@ -41,6 +35,10 @@ namespace SFML_Engine.Engine.Physics
 						if (hasGravity)
 						{
 							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
+						}
+						else
+						{
+							actor.Velocity = actor.Velocity + actor.Acceleration * deltaTime;
 						}
 					}
 				}
@@ -54,16 +52,202 @@ namespace SFML_Engine.Engine.Physics
 				{
 					foreach (string groupNamePassive in OverlapPartner[groupNameActive])
 					{
-
 						foreach (Actor activeActor in ActerGroups[groupNameActive])
 						{
 							foreach (Actor passiveActor in ActerGroups[groupNamePassive])
 							{
-
-								//TODO Colliding
-								if (isOverlaping(activeActor, passiveActor))
+								//Box/Shere
+								if (passiveActor.CollisionShape.GetType() != activeActor.CollisionShape.GetType())
 								{
+									BoxShape box;
+									SphereShape shere;
 
+									Actor boxActor;
+									Actor shereActor;
+
+									if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
+									{
+										box = (BoxShape)passiveActor.CollisionShape;
+										shere = (SphereShape)activeActor.CollisionShape;
+
+										boxActor = passiveActor;
+										shereActor = activeActor;
+									}
+									else
+									{
+										box = (BoxShape)activeActor.CollisionShape;
+										shere = (SphereShape)passiveActor.CollisionShape;
+
+										boxActor = activeActor;
+										shereActor = passiveActor;
+									}
+
+									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - shere.getMid(shereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - shere.getMid(shereActor.Position).X));
+									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - shere.getMid(shereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - shere.getMid(shereActor.Position).Y));
+
+									//bounce from eage
+									if (shere.SphereRadius * shere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
+									{
+
+										double normTempAdd = distanceX + distanceY;
+										double normTempOld = shereActor.Velocity.X + shereActor.Velocity.Y;
+
+										// temp
+										shereActor.Velocity = new Vector2f((float)((shereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((shereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
+
+									}//right
+									else if (boxActor.Position.X < shere.getMid(shereActor.Position).X + shere.SphereRadius && boxActor.Position.X > shere.getMid(shereActor.Position).X &&
+										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									{
+										activeActor.IsOverlaping(passiveActor);
+
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
+
+												activeActor.AfterCollision(passiveActor);
+
+											}
+										}
+									}//left
+									else if (boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X - shere.SphereRadius && boxActor.Position.X + box.BoxExtent.X < shere.getMid(shereActor.Position).X &&
+										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									{
+										activeActor.IsOverlaping(passiveActor);
+
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
+
+												activeActor.AfterCollision(passiveActor);
+
+											}
+										}
+									}//top
+									else if (boxActor.Position.Y < shere.getMid(shereActor.Position).Y + shere.SphereRadius && boxActor.Position.Y > shere.getMid(shereActor.Position).Y &&
+										boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X)
+									{
+										activeActor.IsOverlaping(passiveActor);
+
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
+
+												activeActor.AfterCollision(passiveActor);
+
+											}
+										}
+									}//bottem
+									else if (boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y - shere.SphereRadius && boxActor.Position.Y + box.BoxExtent.Y < shere.getMid(shereActor.Position).Y &&
+										boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X)
+									{
+										activeActor.IsOverlaping(passiveActor);
+
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
+
+												activeActor.AfterCollision(passiveActor);
+
+											}
+										}
+									}//isInside
+									else if (boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X &&
+										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									{
+										activeActor.IsOverlaping(passiveActor);
+
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												//TODO Shere is inside Box
+
+												activeActor.AfterCollision(passiveActor);
+
+											}
+										}
+									}	
+								}
+
+								//Box/Box
+								if (activeActor.CollisionShape.GetType() == typeof(BoxShape))
+								{
+									BoxShape activeTemp = (BoxShape)activeActor.CollisionShape;
+
+									if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
+									{
+										BoxShape passiveTemp = (BoxShape)passiveActor.CollisionShape;
+
+										if (activeTemp.Position.X < passiveTemp.Position.X + passiveTemp.BoxExtent.X &&
+											activeTemp.Position.X + activeTemp.BoxExtent.X > passiveTemp.Position.X &&
+											activeTemp.Position.Y < passiveTemp.Position.Y + passiveTemp.BoxExtent.Y &&
+											activeTemp.Position.Y + activeTemp.BoxExtent.Y > passiveTemp.Position.Y
+											)
+										{
+											activeActor.IsOverlaping(passiveActor);
+
+											if (CollidablePartner.ContainsKey(groupNameActive))
+											{
+												if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+												{
+													activeActor.BeforeCollision(passiveActor);
+
+													//TODO 
+
+													activeActor.AfterCollision(passiveActor);
+
+												}
+											}
+										}
+									}
+								}//Shere/Shere
+								else if (activeActor.CollisionShape.GetType() == typeof(SphereShape))
+								{
+									SphereShape activeTemp = (SphereShape)activeActor.CollisionShape;
+									if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
+									{
+										SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
+
+										// distance^2
+										double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereRadius) - (passiveTemp.Position.X + passiveTemp.SphereRadius), 2f) +
+														Math.Pow((activeTemp.Position.Y + activeTemp.SphereRadius) - (passiveTemp.Position.Y + passiveTemp.SphereRadius), 2f);
+
+										if (distance < (activeTemp.SphereRadius * activeTemp.SphereRadius) + (passiveTemp.SphereRadius * passiveTemp.SphereRadius))
+										{
+											activeActor.IsOverlaping(passiveActor);
+
+											if (CollidablePartner.ContainsKey(groupNameActive))
+											{
+												if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+												{
+													activeActor.BeforeCollision(passiveActor);
+
+													//TODO 
+
+													activeActor.AfterCollision(passiveActor);
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -162,7 +346,6 @@ namespace SFML_Engine.Engine.Physics
 		}
 
 		//CollidPartner
-
 		public bool addCollidPartner(string activ, string passive)
 		{
 			if (ActerGroups.ContainsKey(activ) && ActerGroups.ContainsKey(passive))
@@ -176,6 +359,9 @@ namespace SFML_Engine.Engine.Physics
 				{
 					CollidablePartner[activ].Add(passive);
 				}
+
+				addOverlapPartners(activ, passive);
+
 				return true;
 			}
 			return false;
@@ -189,12 +375,13 @@ namespace SFML_Engine.Engine.Physics
 				{
 					return true;
 				}
+				subCollidPartner(activ, passive);
 				return CollidablePartner[activ].Remove(passive);
 			}
 			return true;
 		}
 
-		//Overlap
+		//Overlap not used
 		private bool isOverlaping(Actor activeActor, Actor passiveActor)
 		{
 			//Box/Shere

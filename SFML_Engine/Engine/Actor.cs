@@ -45,5 +45,15 @@ namespace SFML_Engine.Engine
 				component.Tick(deltaTime);
 			}
 		}
+
+		public void AfterCollision(Actor actor)
+		{
+		}
+		public void BeforeCollision(Actor actor)
+		{
+		}
+		public void IsOverlaping(Actor actor)
+		{
+		}
 	}
 }
