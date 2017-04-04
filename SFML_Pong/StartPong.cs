@@ -15,15 +15,33 @@ namespace SFML_Pong
 	    public static void Main(string[] args)
         {
             var engine = new Engine(800, 600, "Pong");
-            var Level = new Level();
+	        var physics = engine.PhysicsEngine;
+	        physics.AddGroup("Pads");
+			physics.AddGroup("Balls");
+
+			var Level = new Level();
             var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
 			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
+	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
 			var leftPad = new SpriteActor(leftPadTexture);
-	        leftPad.Components.Add(new ActorComponent());
+	        leftPad.ActorName = "Left Pad";
+	        leftPad.CollisionShape = new BoxShape(leftPadTexture.Size.X, leftPadTexture.Size.Y);
 	        var rightPad = new SpriteActor(rightPadTexture) {Position = new Vector2f(650, 0)};
+	        rightPad.ActorName = "Right Pad";
 	        rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
+	        rightPad.CollisionShape = new BoxShape(rightPadTexture.Size.X, rightPadTexture.Size.Y);
 
-	        var ball = new SpriteActor();
+			var ball = new SpriteActor(ballTexture);
+	        ball.ActorName = "Ball";
+	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
+	        ball.Position = new Vector2f(400,300);
+
+	        physics.AddActorToGroup("Pads",leftPad);
+	        physics.AddActorToGroup("Pads", rightPad);
+	        physics.AddActorToGroup("Balls", ball);
+	        physics.AddCollidablePartner("Pads", "Balls");
+
+
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);
             Level.RegisterActor(leftPad);

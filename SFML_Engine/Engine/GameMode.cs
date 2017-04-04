@@ -12,7 +12,7 @@ namespace SFML_Engine.Engine
 		}
         public virtual void Tick(float deltaTime)
         {
-	        Console.WriteLine("GameMode Tick");
+	        //Console.WriteLine("GameMode Tick");
         }
 
 	    public virtual void EndGame()

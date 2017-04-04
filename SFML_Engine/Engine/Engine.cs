@@ -119,13 +119,13 @@ namespace SFML_Engine.Engine
 
                 FPSPassedTime = FPSClock.ElapsedTime;
 
-				Console.WriteLine("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + 1.0f / DeltaTime.AsSeconds());
+				//Console.WriteLine("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(1.0f / DeltaTime.AsSeconds()));
 				FPS = 1.0f / DeltaTime.AsSeconds();
 
 				if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
                 {
                     FPSStartTime = FPSPassedTime;
-					engineWindow.SetTitle("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + FPS);
+					engineWindow.SetTitle("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(FPS));
 
 					FramesRendered = 0;
                 }

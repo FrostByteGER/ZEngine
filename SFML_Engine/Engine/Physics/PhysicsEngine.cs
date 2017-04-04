@@ -9,9 +9,9 @@ namespace SFML_Engine.Engine.Physics
     {
 
         public readonly Vector2f Gravity = new Vector2f(0.0f ,9.81f);
-		public bool hasGravity = false;
+		public bool GlobalGravityEnabled{ get; set; } = false;
 
-        private Dictionary<string, List<Actor>> ActerGroups = new Dictionary<string, List<Actor>>();
+        private Dictionary<string, List<Actor>> ActorGroups = new Dictionary<string, List<Actor>>();
 
 		private Dictionary<string, List<string>> CollidablePartner = new Dictionary<string, List<string>>();
 
@@ -32,7 +32,7 @@ namespace SFML_Engine.Engine.Physics
 					{
 						actor.Move(actor.Position += actor.Velocity * deltaTime);
 
-						if (hasGravity)
+						if (GlobalGravityEnabled)
 						{
 							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
 						}
@@ -46,58 +46,58 @@ namespace SFML_Engine.Engine.Physics
 
 			//Collision / Overlap
 
-			foreach (string groupNameActive in ActerGroups.Keys )
+			foreach (string groupNameActive in ActorGroups.Keys )
 			{
 				if (OverlapPartner.ContainsKey(groupNameActive))
 				{
 					foreach (string groupNamePassive in OverlapPartner[groupNameActive])
 					{
-						foreach (Actor activeActor in ActerGroups[groupNameActive])
+						foreach (Actor activeActor in ActorGroups[groupNameActive])
 						{
-							foreach (Actor passiveActor in ActerGroups[groupNamePassive])
+							foreach (Actor passiveActor in ActorGroups[groupNamePassive])
 							{
 								//Box/Shere
 								if (passiveActor.CollisionShape.GetType() != activeActor.CollisionShape.GetType())
 								{
 									BoxShape box;
-									SphereShape shere;
+									SphereShape sphere;
 
 									Actor boxActor;
-									Actor shereActor;
+									Actor sphereActor;
 
 									if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
 									{
 										box = (BoxShape)passiveActor.CollisionShape;
-										shere = (SphereShape)activeActor.CollisionShape;
+										sphere = (SphereShape)activeActor.CollisionShape;
 
 										boxActor = passiveActor;
-										shereActor = activeActor;
+										sphereActor = activeActor;
 									}
 									else
 									{
 										box = (BoxShape)activeActor.CollisionShape;
-										shere = (SphereShape)passiveActor.CollisionShape;
+										sphere = (SphereShape)passiveActor.CollisionShape;
 
 										boxActor = activeActor;
-										shereActor = passiveActor;
+										sphereActor = passiveActor;
 									}
 
-									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - shere.getMid(shereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - shere.getMid(shereActor.Position).X));
-									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - shere.getMid(shereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - shere.getMid(shereActor.Position).Y));
+									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
+									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
 
 									//bounce from eage
-									if (shere.SphereRadius * shere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
+									if (sphere.SphereRadius * sphere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
 									{
 
 										double normTempAdd = distanceX + distanceY;
-										double normTempOld = shereActor.Velocity.X + shereActor.Velocity.Y;
+										double normTempOld = sphereActor.Velocity.X + sphereActor.Velocity.Y;
 
 										// temp
-										shereActor.Velocity = new Vector2f((float)((shereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((shereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
+										sphereActor.Velocity = new Vector2f((float)((sphereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((sphereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
 
 									}//right
-									else if (boxActor.Position.X < shere.getMid(shereActor.Position).X + shere.SphereRadius && boxActor.Position.X > shere.getMid(shereActor.Position).X &&
-										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									else if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X + sphere.SphereRadius && boxActor.Position.X > sphere.getMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 										activeActor.IsOverlaping(passiveActor);
 
@@ -107,17 +107,17 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
 
-												shereActor.Acceleration = new Vector2f(-shereActor.Acceleration.X, shereActor.Acceleration.Y);
+												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
 									}//left
-									else if (boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X - shere.SphereRadius && boxActor.Position.X + box.BoxExtent.X < shere.getMid(shereActor.Position).X &&
-										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									else if (boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X - sphere.SphereRadius && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 										activeActor.IsOverlaping(passiveActor);
 
@@ -127,17 +127,17 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
 
-												shereActor.Acceleration = new Vector2f(-shereActor.Acceleration.X, shereActor.Acceleration.Y);
+												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
 									}//top
-									else if (boxActor.Position.Y < shere.getMid(shereActor.Position).Y + shere.SphereRadius && boxActor.Position.Y > shere.getMid(shereActor.Position).Y &&
-										boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X)
+									else if (boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y + sphere.SphereRadius && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y &&
+										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlaping(passiveActor);
 
@@ -147,17 +147,17 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
 
-												shereActor.Acceleration = new Vector2f(shereActor.Acceleration.X, -shereActor.Acceleration.Y);
+												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
 									}//bottem
-									else if (boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y - shere.SphereRadius && boxActor.Position.Y + box.BoxExtent.Y < shere.getMid(shereActor.Position).Y &&
-										boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X)
+									else if (boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y - sphere.SphereRadius && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y &&
+										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlaping(passiveActor);
 
@@ -167,17 +167,17 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
 
-												shereActor.Acceleration = new Vector2f(shereActor.Acceleration.X, -shereActor.Acceleration.Y);
+												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
 									}//isInside
-									else if (boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X &&
-										boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y)
+									else if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 										activeActor.IsOverlaping(passiveActor);
 
@@ -266,47 +266,47 @@ namespace SFML_Engine.Engine.Physics
 
 		//ActerGroup
 
-		public void addActorToGroup(string groupName, Actor actor)
+		public void AddActorToGroup(string groupName, Actor actor)
 		{
-			if (ActerGroups.ContainsKey(groupName)) {
-				ActerGroups[groupName].Add(actor);
+			if (ActorGroups.ContainsKey(groupName)) {
+				ActorGroups[groupName].Add(actor);
 			}
 			else
 			{
-				ActerGroups.Add(groupName,new List<Actor>());
-				ActerGroups[groupName].Add(actor);
+				ActorGroups.Add(groupName,new List<Actor>());
+				ActorGroups[groupName].Add(actor);
 			}
 		}
 
-		public bool subActorFromGroup(string groupName, Actor actor)
+		public bool RemoveActorFromGroup(string groupName, Actor actor)
 		{
-			if (ActerGroups.ContainsKey(groupName))
+			if (ActorGroups.ContainsKey(groupName))
 			{
-				return ActerGroups[groupName].Remove(actor);
+				return ActorGroups[groupName].Remove(actor);
 			}
 			return false;
 		}
 
-		public bool addGroup(string groupName)
+		public bool AddGroup(string groupName)
 		{
-			if (!ActerGroups.ContainsKey(groupName))
+			if (!ActorGroups.ContainsKey(groupName))
 			{
-				ActerGroups.Add(groupName, new List<Actor>());
+				ActorGroups.Add(groupName, new List<Actor>());
 				return true;
 			}
 
 			return false;
 		}
 
-		public bool subGroup(string groupName, bool save = true)
+		public bool RemoveGroup(string groupName, bool save = true)
 		{
-			if (ActerGroups.ContainsKey(groupName))
+			if (ActorGroups.ContainsKey(groupName))
 			{
 				if (save)
 				{
-					if (ActerGroups[groupName].Count == 0)
+					if (ActorGroups[groupName].Count == 0)
 					{
-						return ActerGroups.Remove(groupName);
+						return ActorGroups.Remove(groupName);
 					}
 					else
 					{
@@ -315,7 +315,7 @@ namespace SFML_Engine.Engine.Physics
 				}
 				else
 				{
-					return ActerGroups.Remove(groupName);
+					return ActorGroups.Remove(groupName);
 				}
 			}
 			return false;
@@ -323,9 +323,9 @@ namespace SFML_Engine.Engine.Physics
 
 		// OverlapPartner
 
-		public bool addOverlapPartners(string activ, string passive)
+		public bool AddOverlapPartners(string activ, string passive)
 		{
-			if (ActerGroups.ContainsKey(activ) && ActerGroups.ContainsKey(passive))
+			if (ActorGroups.ContainsKey(activ) && ActorGroups.ContainsKey(passive))
 			{
 				if (!OverlapPartner.ContainsKey(activ))
 				{
@@ -340,7 +340,7 @@ namespace SFML_Engine.Engine.Physics
 			return false;
 		}
 
-		public bool subOverlapPartners(string activ, string passive)
+		public bool RemoveOverlapPartners(string activ, string passive)
 		{
 			if (!OverlapPartner.ContainsKey(activ))
 			{
@@ -354,9 +354,9 @@ namespace SFML_Engine.Engine.Physics
 		}
 
 		//CollidPartner
-		public bool addCollidPartner(string activ, string passive)
+		public bool AddCollidablePartner(string activ, string passive)
 		{
-			if (ActerGroups.ContainsKey(activ) && ActerGroups.ContainsKey(passive))
+			if (ActorGroups.ContainsKey(activ) && ActorGroups.ContainsKey(passive))
 			{
 				if (!CollidablePartner.ContainsKey(activ))
 				{
@@ -368,14 +368,14 @@ namespace SFML_Engine.Engine.Physics
 					CollidablePartner[activ].Add(passive);
 				}
 
-				addOverlapPartners(activ, passive);
+				AddOverlapPartners(activ, passive);
 
 				return true;
 			}
 			return false;
 		}
 
-		public bool subCollidPartner(string activ, string passive)
+		public bool RemoveCollidablePartner(string activ, string passive)
 		{
 			if (!CollidablePartner.ContainsKey(activ))
 			{
@@ -383,52 +383,52 @@ namespace SFML_Engine.Engine.Physics
 				{
 					return true;
 				}
-				subCollidPartner(activ, passive);
+				RemoveCollidablePartner(activ, passive);
 				return CollidablePartner[activ].Remove(passive);
 			}
 			return true;
 		}
 
 		//Overlap not used
-		private bool isOverlaping(Actor activeActor, Actor passiveActor)
+		private bool IsOverlapping(Actor activeActor, Actor passiveActor)
 		{
 			//Box/Shere
 			if (passiveActor.CollisionShape.GetType() != activeActor.CollisionShape.GetType())
 			{
 				BoxShape box;
-				SphereShape shere;
+				SphereShape sphere;
 
 				Actor boxActor;
-				Actor shereActor;
+				Actor sphereActor;
 
 				if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
 				{
 					box = (BoxShape)passiveActor.CollisionShape;
-					shere = (SphereShape)activeActor.CollisionShape;
+					sphere = (SphereShape)activeActor.CollisionShape;
 
 					boxActor = passiveActor;
-					shereActor = activeActor;
+					sphereActor = activeActor;
 				}
 				else
 				{
 					box = (BoxShape)activeActor.CollisionShape;
-					shere = (SphereShape)passiveActor.CollisionShape;
+					sphere = (SphereShape)passiveActor.CollisionShape;
 
 					boxActor = activeActor;
-					shereActor = passiveActor;
+					sphereActor = passiveActor;
 				}
 
-				double distanceX = Math.Min(Math.Abs(boxActor.Position.X - shere.getMid(shereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - shere.getMid(shereActor.Position).X));
-				double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - shere.getMid(shereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - shere.getMid(shereActor.Position).Y));
+				double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
+				double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
 
-				if (shere.SphereRadius * shere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
+				if (sphere.SphereRadius * sphere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
 				{
 					return true;
 				}
-				else if ((boxActor.Position.X < shere.getMid(shereActor.Position).X && boxActor.Position.Y > shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < shere.getMid(shereActor.Position).Y) ||
-						(boxActor.Position.X + box.BoxExtent.X > shere.getMid(shereActor.Position).X && boxActor.Position.Y > shere.getMid(shereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < shere.getMid(shereActor.Position).Y) ||
-													(boxActor.Position.Y < shere.getMid(shereActor.Position).Y && boxActor.Position.X > shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < shere.getMid(shereActor.Position).X) ||
-						(boxActor.Position.Y + box.BoxExtent.Y > shere.getMid(shereActor.Position).Y && boxActor.Position.X > shere.getMid(shereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < shere.getMid(shereActor.Position).X)
+				else if ((boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y) ||
+						(boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y) ||
+													(boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X) ||
+						(boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X)
 						)
 				{
 					return true;
