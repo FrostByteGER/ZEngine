@@ -109,6 +109,8 @@ namespace SFML_Engine.Engine.Physics
 
 												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
 
+												shereActor.Acceleration = new Vector2f(-shereActor.Acceleration.X, shereActor.Acceleration.Y);
+
 												activeActor.AfterCollision(passiveActor);
 
 											}
@@ -126,6 +128,8 @@ namespace SFML_Engine.Engine.Physics
 												activeActor.BeforeCollision(passiveActor);
 
 												shereActor.Velocity = new Vector2f(-shereActor.Velocity.X, shereActor.Velocity.Y);
+
+												shereActor.Acceleration = new Vector2f(-shereActor.Acceleration.X, shereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
@@ -145,6 +149,8 @@ namespace SFML_Engine.Engine.Physics
 
 												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
 
+												shereActor.Acceleration = new Vector2f(shereActor.Acceleration.X, -shereActor.Acceleration.Y);
+
 												activeActor.AfterCollision(passiveActor);
 
 											}
@@ -162,6 +168,8 @@ namespace SFML_Engine.Engine.Physics
 												activeActor.BeforeCollision(passiveActor);
 
 												shereActor.Velocity = new Vector2f(shereActor.Velocity.X, -shereActor.Velocity.Y);
+
+												shereActor.Acceleration = new Vector2f(shereActor.Acceleration.X, -shereActor.Acceleration.Y);
 
 												activeActor.AfterCollision(passiveActor);
 
