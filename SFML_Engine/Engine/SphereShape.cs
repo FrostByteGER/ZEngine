@@ -1,4 +1,6 @@
-﻿namespace SFML_Engine.Engine
+﻿using SFML.System;
+
+namespace SFML_Engine.Engine
 {
     public class SphereShape : CollisionShape
     {
@@ -14,5 +16,11 @@
         {
             SphereRadius = sphereRadius;
         }
+
+		public Vector2f getMid(Vector2f actorPosition)
+		{
+			return new Vector2f(actorPosition.X + SphereRadius, actorPosition.Y + SphereRadius);
+		}
+
     }
 }
