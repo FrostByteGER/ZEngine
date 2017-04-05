@@ -83,31 +83,28 @@ namespace SFML_Engine.Engine.Physics
 									}
 
 									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
-									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
+									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.Y - sphere.getMid(sphereActor.Position).Y));
 
-									Console.WriteLine(boxActor.Position.X + " " + sphereActor.Position.X);
-									
 									//bounce from eage
-									if (sphere.SphereDiameter * sphere.SphereDiameter > distanceX * distanceX + distanceY * distanceY)
+									if ((sphere.SphereDiameter/2) * (sphere.SphereDiameter / 2) > distanceX * distanceX + distanceY * distanceY)
 									{
-
+										Console.WriteLine("do");
 										double normTempX = distanceX / (distanceX + distanceY);
 										double normTempY = distanceY / (distanceX + distanceY);
 
 										//dumb Temp
-										if (boxActor.Position.X > sphere.getMid(sphereActor.Position).X)
+										if (boxActor.Position.X + box.BoxExtent.X/2f > sphere.getMid(sphereActor.Position).X)
 										{
 											normTempX *= -1;
 										}
-										if (boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y)
+										if (boxActor.Position.Y + box.BoxExtent.Y/2f > sphere.getMid(sphereActor.Position).Y)
 										{
 											normTempY *= -1;
 										}
 
+										float sphereSpeed = sphereActor.Velocity.X + sphereActor.Velocity.Y + boxActor.Velocity.X + boxActor.Velocity.Y;
 
-										float sphereSpeed = sphereActor.Velocity.X + sphereActor.Velocity.Y;
-
-										//sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
+										sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
 
 										// temp
 										//sphereActor.Velocity = new Vector2f((float)((sphereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((sphereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
