@@ -26,15 +26,19 @@ namespace SFML_Pong
 			var leftPad = new SpriteActor(leftPadTexture);
 	        leftPad.ActorName = "Left Pad";
 	        leftPad.CollisionShape = new BoxShape(leftPadTexture.Size.X, leftPadTexture.Size.Y);
+			leftPad.CollisionShape.show = true;
+
 	        var rightPad = new SpriteActor(rightPadTexture) {Position = new Vector2f(650, 0)};
 	        rightPad.ActorName = "Right Pad";
 	        rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 	        rightPad.CollisionShape = new BoxShape(rightPadTexture.Size.X, rightPadTexture.Size.Y);
+			rightPad.CollisionShape.show = true;
 
 			var ball = new SpriteActor(ballTexture);
 	        ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
 	        ball.Position = new Vector2f(400,300);
+			ball.CollisionShape.show = true;
 
 	        physics.AddActorToGroup("Pads",leftPad);
 	        physics.AddActorToGroup("Pads", rightPad);

@@ -4,6 +4,6 @@ namespace SFML_Engine.Engine
 {
     public class CollisionShape : Transformable
     {
-		bool show { get; set; } = false;
+		public bool show { get; set; } = false;
 	}
 }

@@ -51,15 +51,15 @@ namespace SFML_Engine.Engine
 
 		public void AfterCollision(Actor actor)
 		{
-			Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			//Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 		public void BeforeCollision(Actor actor)
 		{
-			Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			//Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 		public void IsOverlaping(Actor actor)
 		{
-			Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			//Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 	}
 }

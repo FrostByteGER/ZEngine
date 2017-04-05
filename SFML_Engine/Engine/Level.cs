@@ -37,9 +37,30 @@ namespace SFML_Engine.Engine
         {
             foreach (var actor in Actors)
             {
-                var drawableActor = actor as Drawable;
+                var drawableActor = actor as SpriteActor;
                 if (drawableActor != null)
                 {
+					if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
+					{
+						BoxShape box = (BoxShape)drawableActor.CollisionShape;
+
+						RectangleShape hit = new RectangleShape(new SFML.System.Vector2f(box.BoxExtent.X, box.BoxExtent.Y));
+
+						hit.Position = actor.Position;
+
+						renderWindow.Draw(hit);
+					}
+					else if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
+					{
+						SphereShape sphere = (SphereShape)drawableActor.CollisionShape;
+
+						RectangleShape hit = new RectangleShape(new SFML.System.Vector2f(sphere.SphereDiameter, sphere.SphereDiameter));
+
+						hit.Position = actor.Position;
+
+						renderWindow.Draw(hit);
+					}
+
 					renderWindow.Draw(drawableActor);
                 }
             }

@@ -15,7 +15,7 @@ namespace SFML_Engine.Engine
 	        if (SnapOriginToCenter)
 	        {
 		        FloatRect bounds = GetGlobalBounds();
-				Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
+				//Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
 	        }
         }
 
@@ -24,7 +24,7 @@ namespace SFML_Engine.Engine
 			if (SnapOriginToCenter)
 			{
 				FloatRect bounds = GetGlobalBounds();
-				Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
+				//Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
 			}
 		}
 

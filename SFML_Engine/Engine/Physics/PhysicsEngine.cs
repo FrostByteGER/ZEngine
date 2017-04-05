@@ -85,20 +85,39 @@ namespace SFML_Engine.Engine.Physics
 									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
 									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
 
+									Console.WriteLine(boxActor.Position.X + " " + sphereActor.Position.X);
+									
 									//bounce from eage
-									if (sphere.SphereRadius * sphere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
+									if (sphere.SphereDiameter * sphere.SphereDiameter > distanceX * distanceX + distanceY * distanceY)
 									{
 
-										double normTempAdd = distanceX + distanceY;
-										double normTempOld = sphereActor.Velocity.X + sphereActor.Velocity.Y;
+										double normTempX = distanceX / (distanceX + distanceY);
+										double normTempY = distanceY / (distanceX + distanceY);
+
+										//dumb Temp
+										if (boxActor.Position.X > sphere.getMid(sphereActor.Position).X)
+										{
+											normTempX *= -1;
+										}
+										if (boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y)
+										{
+											normTempY *= -1;
+										}
+
+
+										float sphereSpeed = sphereActor.Velocity.X + sphereActor.Velocity.Y;
+
+										//sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
 
 										// temp
-										sphereActor.Velocity = new Vector2f((float)((sphereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((sphereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
+										//sphereActor.Velocity = new Vector2f((float)((sphereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((sphereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
 
-									}//right
-									else if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X + sphere.SphereRadius && boxActor.Position.X > sphere.getMid(sphereActor.Position).X &&
+									}//box comes from right 
+									if (boxActor.Position.X < sphereActor.Position.X + sphere.SphereDiameter && boxActor.Position.X > sphereActor.Position.X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
+
+										Console.WriteLine("test");
 										activeActor.IsOverlaping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
@@ -116,15 +135,15 @@ namespace SFML_Engine.Engine.Physics
 												{
 													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
-													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 												}
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
-									}//left
-									else if (boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X - sphere.SphereRadius && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X &&
+									}//box comes from left
+									else if (boxActor.Position.X + box.BoxExtent.X > sphereActor.Position.X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 										activeActor.IsOverlaping(passiveActor);
@@ -145,15 +164,15 @@ namespace SFML_Engine.Engine.Physics
 												{
 													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
-													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 												}
 
 												activeActor.AfterCollision(passiveActor);
 
 											}
 										}
-									}//top
-									else if (boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y + sphere.SphereRadius && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y &&
+									}//box comes from bottem
+									else if (boxActor.Position.Y < sphereActor.Position.Y + sphere.SphereDiameter && boxActor.Position.Y > sphereActor.Position.Y &&
 										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlaping(passiveActor);
@@ -181,8 +200,8 @@ namespace SFML_Engine.Engine.Physics
 
 											}
 										}
-									}//bottem
-									else if (boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y - sphere.SphereRadius && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y &&
+									}//box comes from top
+									else if (boxActor.Position.Y + box.BoxExtent.Y > sphereActor.Position.Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y &&
 										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlaping(passiveActor);
@@ -271,10 +290,10 @@ namespace SFML_Engine.Engine.Physics
 										SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
 
 										// distance^2
-										double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereRadius) - (passiveTemp.Position.X + passiveTemp.SphereRadius), 2f) +
-														Math.Pow((activeTemp.Position.Y + activeTemp.SphereRadius) - (passiveTemp.Position.Y + passiveTemp.SphereRadius), 2f);
+										double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereDiameter) - (passiveTemp.Position.X + passiveTemp.SphereDiameter), 2f) +
+														Math.Pow((activeTemp.Position.Y + activeTemp.SphereDiameter) - (passiveTemp.Position.Y + passiveTemp.SphereDiameter), 2f);
 
-										if (distance < (activeTemp.SphereRadius * activeTemp.SphereRadius) + (passiveTemp.SphereRadius * passiveTemp.SphereRadius))
+										if (distance < (activeTemp.SphereDiameter * activeTemp.SphereDiameter) + (passiveTemp.SphereDiameter * passiveTemp.SphereDiameter))
 										{
 											activeActor.IsOverlaping(passiveActor);
 
@@ -456,7 +475,7 @@ namespace SFML_Engine.Engine.Physics
 				double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
 				double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
 
-				if (sphere.SphereRadius * sphere.SphereRadius > distanceX * distanceX + distanceY * distanceY)
+				if (sphere.SphereDiameter * sphere.SphereDiameter > distanceX * distanceX + distanceY * distanceY)
 				{
 					return true;
 				}
@@ -498,10 +517,10 @@ namespace SFML_Engine.Engine.Physics
 					SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
 
 					// distance^2
-					double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereRadius ) - (passiveTemp.Position.X + passiveTemp.SphereRadius) , 2f)+
-									Math.Pow((activeTemp.Position.Y + activeTemp.SphereRadius ) - (passiveTemp.Position.Y + passiveTemp.SphereRadius), 2f);
+					double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereDiameter ) - (passiveTemp.Position.X + passiveTemp.SphereDiameter) , 2f)+
+									Math.Pow((activeTemp.Position.Y + activeTemp.SphereDiameter ) - (passiveTemp.Position.Y + passiveTemp.SphereDiameter), 2f);
 
-					if (distance < (activeTemp.SphereRadius*activeTemp.SphereRadius) + (passiveTemp.SphereRadius*passiveTemp.SphereRadius))
+					if (distance < (activeTemp.SphereDiameter*activeTemp.SphereDiameter) + (passiveTemp.SphereDiameter*passiveTemp.SphereDiameter))
 					{
 						return true;
 					}
