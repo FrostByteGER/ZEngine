@@ -106,10 +106,18 @@ namespace SFML_Engine.Engine.Physics
 											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
 											{
 												activeActor.BeforeCollision(passiveActor);
+												if (sphereActor.Velocity.X > 0)
+												{
+													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
-												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
+												else
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
-												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
 
 												activeActor.AfterCollision(passiveActor);
 
@@ -127,9 +135,18 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
+												if (sphereActor.Velocity.X < 0)
+												{
+													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
-												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
+												else
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
+
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
 
 												activeActor.AfterCollision(passiveActor);
 
@@ -147,9 +164,18 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
+												if (sphereActor.Velocity.Y > 0)
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
 
-												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+												}
+												else
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, sphereActor.Velocity.Y + boxActor.Velocity.Y);
+
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
 
 												activeActor.AfterCollision(passiveActor);
 
@@ -167,9 +193,18 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
+												if (sphereActor.Velocity.Y < 0)
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
 
-												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+												}
+												else
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, sphereActor.Velocity.Y + boxActor.Velocity.Y);
+
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+												}
 
 												activeActor.AfterCollision(passiveActor);
 
