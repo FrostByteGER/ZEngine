@@ -107,7 +107,7 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
 												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 
@@ -127,7 +127,7 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X + boxActor.Velocity.X, sphereActor.Velocity.Y);
 
 												sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
 
@@ -147,7 +147,7 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
 
 												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
 
@@ -167,7 +167,7 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
-												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
+												sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
 
 												sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
 
