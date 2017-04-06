@@ -276,7 +276,8 @@ namespace SFML_Engine.Engine.Physics
 												{
 													activeActor.BeforeCollision(passiveActor);
 													//X
-													if ((Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) < (activeTemp.BoxExtent.X + passiveTemp.BoxExtent.X)/2f)
+													if ((Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) < (activeTemp.BoxExtent.X + passiveTemp.BoxExtent.X)/2f &&
+															(Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) > Math.Max(activeTemp.BoxExtent.X/2f,  passiveTemp.BoxExtent.X/2f))
 													{
 														if (activeActor.Movable)
 														{
@@ -305,7 +306,8 @@ namespace SFML_Engine.Engine.Physics
 															}
 														}
 													}//Y
-													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f)
+													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f &&
+														(Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) > Math.Max(activeTemp.BoxExtent.Y/2f, passiveTemp.BoxExtent.Y/2f))
 													{
 														if (activeActor.Movable)
 														{
