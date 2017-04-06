@@ -262,8 +262,6 @@ namespace SFML_Engine.Engine.Physics
 											activeTemp.BoxExtent.Y + activeActor.Position.Y > passiveActor.Position.Y
 											)
 										{
-
-											Console.WriteLine(activeActor.ActorName+" do "+ passiveActor.ActorName);
 											activeActor.IsOverlaping(passiveActor);
 
 											if (CollidablePartner.ContainsKey(groupNameActive))
