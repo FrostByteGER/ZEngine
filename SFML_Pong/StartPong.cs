@@ -8,7 +8,7 @@ namespace SFML_Pong
     {
 	    public static void Main(string[] args)
         {
-            var engine = new Engine(840, 640, "Pong");
+            var engine = new Engine(800, 600, "Pong");
 	        var physics = engine.PhysicsEngine;
 	        physics.AddGroup("Pads");
 			physics.AddGroup("Balls");

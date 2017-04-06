@@ -64,10 +64,20 @@ namespace SFML_Engine.Engine
 
 		public override bool Equals(object obj)
 		{
-			if (obj != null || obj is typeof(Actor))
-			{
-				
-			}
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((Actor) obj);
+		}
+
+		protected bool Equals(Actor other)
+		{
+			return ID == other.ID;
+		}
+
+		public override int GetHashCode()
+		{
+			return (int) ID;
 		}
 	}
 }
