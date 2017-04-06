@@ -91,6 +91,7 @@
     <Compile Include="Engine\GameMode.cs" />
     <Compile Include="Engine\IActorable.cs" />
     <Compile Include="Engine\ICollidable.cs" />
+    <Compile Include="Engine\IGameInterface.cs" />
     <Compile Include="Engine\IMovable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\IPhysicsProperties.cs" />

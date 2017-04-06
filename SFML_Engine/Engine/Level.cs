@@ -6,14 +6,14 @@ using SFML.Window;
 
 namespace SFML_Engine.Engine
 {
-    public class Level
+    public class Level : IGameInterface
     {
 
         public List<Actor> Actors{ get; set; } = new List<Actor>();
 
         public Engine Engine { get; set; }
 
-        public GameMode GameMode { get; private set; } = new GameMode();
+        public GameMode GameMode { get; set; } = new GameMode();
 
         internal bool LevelTicking { get; set; }
 
@@ -68,8 +68,46 @@ namespace SFML_Engine.Engine
 
         public void RegisterActor(Actor actor)
         {
-            Actors.Add(actor);
+	        actor.ID = Engine.ActorIDCounter;
+	        ++Engine.ActorIDCounter;
+			Actors.Add(actor);
 
         }
-    }
+
+	    public void OnGameStart()
+	    {
+			GameMode.LevelReference = this;
+		    GameMode.OnGameStart();
+	    }
+
+	    public void OnGamePause()
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public void OnGameEnd()
+	    {
+			GameMode.OnGameEnd();
+		}
+
+	    public Actor FindActorInLevel(string name)
+	    {
+		    return Actors.Find(x => x.ActorName == name);
+	    }
+
+	    public Actor FindActorInLevel(uint id)
+	    {
+		    return Actors.Find(x => x.ID == id);
+		}
+
+	    public List<Actor> FindActorsInLevel(string name)
+	    {
+		    return Actors.FindAll(x => x.ActorName == name);
+		}
+
+	    public List<Actor> FindActorsInLevel(Type actor)
+	    {
+		    return Actors.FindAll(x => x.GetType() == actor);
+		}
+	}
 }

@@ -115,7 +115,7 @@ namespace SFML_Engine.Engine.Physics
 									{
 
 										Console.WriteLine("test");
-										activeActor.IsOverlaping(passiveActor);
+										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
@@ -143,7 +143,7 @@ namespace SFML_Engine.Engine.Physics
 									else if (boxActor.Position.X + box.BoxExtent.X > sphereActor.Position.X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
-										activeActor.IsOverlaping(passiveActor);
+										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
@@ -172,7 +172,7 @@ namespace SFML_Engine.Engine.Physics
 									else if (boxActor.Position.Y < sphereActor.Position.Y + sphere.SphereDiameter && boxActor.Position.Y > sphereActor.Position.Y &&
 										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
-										activeActor.IsOverlaping(passiveActor);
+										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
@@ -201,7 +201,7 @@ namespace SFML_Engine.Engine.Physics
 									else if (boxActor.Position.Y + box.BoxExtent.Y > sphereActor.Position.Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y &&
 										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
 									{
-										activeActor.IsOverlaping(passiveActor);
+										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
@@ -230,7 +230,7 @@ namespace SFML_Engine.Engine.Physics
 									else if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
-										activeActor.IsOverlaping(passiveActor);
+										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
@@ -262,7 +262,7 @@ namespace SFML_Engine.Engine.Physics
 											activeTemp.BoxExtent.Y + activeActor.Position.Y > passiveActor.Position.Y
 											)
 										{
-											activeActor.IsOverlaping(passiveActor);
+											activeActor.IsOverlapping(passiveActor);
 
 											if (CollidablePartner.ContainsKey(groupNameActive))
 											{
@@ -292,7 +292,7 @@ namespace SFML_Engine.Engine.Physics
 
 										if (distance < (activeTemp.SphereDiameter * activeTemp.SphereDiameter) + (passiveTemp.SphereDiameter * passiveTemp.SphereDiameter))
 										{
-											activeActor.IsOverlaping(passiveActor);
+											activeActor.IsOverlapping(passiveActor);
 
 											if (CollidablePartner.ContainsKey(groupNameActive))
 											{

@@ -6,27 +6,35 @@ namespace SFML_Pong
 	public class PongGameMode : GameMode
 	{
 
-		public uint PlayerOneScore { get; set; } = 0;
-		public uint PlayerTwoScore { get; set; } = 0;
+		public PongPlayerController Player1 { get; set; }
+		public PongPlayerController Player2 { get; set; }
 		public uint WinScore { get; set; } = 3;
 
-		public override void StartGame()
+		public override void OnGameStart()
 		{
-			base.StartGame();
+			base.OnGameStart();
+			Player1 = LevelReference.Engine.Players[0] as PongPlayerController;
+			Player2 = LevelReference.Engine.Players[1] as PongPlayerController;
+		}
+
+		public override void OnGamePause()
+		{
+			base.OnGamePause();
+		}
+
+		public override void OnGameEnd()
+		{
+			base.OnGameEnd();
 		}
 
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			if (PlayerOneScore == WinScore ^ PlayerTwoScore == WinScore)
+			if (Player1.Score == WinScore ^ Player2.Score == WinScore)
 			{
-				EndGame();
+				Console.WriteLine("GAME OVER!");
 			}
 		}
 
-		public override void EndGame()
-		{
-			base.EndGame();
-		}
 	}
 }
