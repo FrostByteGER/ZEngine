@@ -34,12 +34,12 @@ namespace SFML_Engine.Engine
         private uint FramesRendered { get; set; }
         public double FPS { get; private set; }
 
-	    public uint FPSLimit { get; private set; } = 1000;
+	    public uint FPSLimit { get; private set; } = 120;
 
         public float FPSUpdateValue { get; } = 1f;
 
         public bool RequestTermination { get; set; }
-	    public bool VSyncEnabled { get; set; } = true;
+	    public bool VSyncEnabled { get; set; } = false;
 
         public List<Level> Levels { get; private set; } = new List<Level>();
 
@@ -48,6 +48,8 @@ namespace SFML_Engine.Engine
 		public InputManager InputManager { get; set; }
 
 	    public Queue<Event> EngineEvents { get; private set; } = new Queue<Event>();
+
+	    public uint ActorIDCounter { get; set; } = 0;
 
 
 
@@ -104,7 +106,11 @@ namespace SFML_Engine.Engine
             Time currentTime = Time.Zero;
             FPSStartTime = Time.Zero;
             FPSPassedTime = Time.Zero;
-            FPSClock.Restart();
+	        foreach (var level in Levels)
+	        {
+		        level.OnGameStart();
+	        }
+	        FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
             {
@@ -158,8 +164,11 @@ namespace SFML_Engine.Engine
 	            }
                 FramesRendered++;
             }
-
-            ShutdownEngine();
+	        foreach (var level in Levels)
+	        {
+		        level.OnGameEnd();
+	        }
+			ShutdownEngine();
         }
 
         private void ShutdownEngine()

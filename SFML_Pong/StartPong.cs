@@ -19,7 +19,12 @@ namespace SFML_Pong
 			var leftBorder = new SpriteActor();
 			var rightBorder = new SpriteActor();
 
-	        topBorder.ActorName = "Top Border";
+			topBorder.Movable = false;
+	        bottomBorder.Movable = false;
+	        leftBorder.Movable = false;
+	        rightBorder.Movable = false;
+
+			topBorder.ActorName = "Top Border";
 			bottomBorder.ActorName = "Bottom Border";
 			leftBorder.ActorName = "Left Border";
 			rightBorder.ActorName = "Right Border";
@@ -47,18 +52,21 @@ namespace SFML_Pong
 	        leftPad.ActorName = "Left Pad";
 	        leftPad.Position = new Vector2f(30, 30);
 	        leftPad.CollisionShape = new BoxShape(20, 175);
+	        leftPad.CollisionShape.Origin = leftPad.Origin;
 			leftPad.CollisionShape.show = true;
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
 	        rightPad.ActorName = "Right Pad";
 	        rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 	        rightPad.CollisionShape = new BoxShape(20, 175);
+	        rightPad.CollisionShape.Origin = rightPad.Origin;
 			rightPad.CollisionShape.show = true;
 
-			var ball = new SpriteActor(ballTexture);
+			var ball = new PongBall(ballTexture);
 	        ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
-	        ball.Position = new Vector2f(400,250);
+	        ball.CollisionShape.Origin = ball.Origin;
+			ball.Position = new Vector2f(400,250);
 			ball.Velocity = new Vector2f(100,0);
 			ball.CollisionShape.show = true;
 
@@ -78,14 +86,19 @@ namespace SFML_Pong
 
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);
-            level.RegisterActor(leftPad);
+	        leftPadController.Name = "Player 1";
+	        rightPadController.Name = "Player 2";
+
+	        engine.RegisterLevel(level);
+
+			level.RegisterActor(leftPad);
 			level.RegisterActor(rightPad);
 	        level.RegisterActor(ball);
 			level.RegisterActor(topBorder);
 			level.RegisterActor(bottomBorder);
 			level.RegisterActor(leftBorder);
 			level.RegisterActor(rightBorder);
-			engine.RegisterLevel(level);
+	        level.GameMode = new PongGameMode();
             engine.RegisterPlayer(leftPadController);
 			engine.RegisterPlayer(rightPadController);
             engine.StartEngine();

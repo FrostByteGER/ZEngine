@@ -6,6 +6,8 @@ namespace SFML_Pong
 {
 	public class PongPlayerController : PlayerController
 	{
+
+		public uint Score { get; set; } = 0;
 		public PongPlayerController()
 		{
 
@@ -104,5 +106,7 @@ namespace SFML_Pong
 		{
 			base.OnKeyReleased(sender, keyEventArgs);
 		}
+
+
 	}
 }

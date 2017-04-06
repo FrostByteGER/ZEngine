@@ -7,7 +7,7 @@ namespace SFML_Engine.Engine
 {
 	public class Actor : Transformable, IActorable
 	{
-		public uint ID { get; private set; } = 0;
+		public uint ID { get; internal set; } = 0;
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; }
 		public bool Movable { get; set; } = true;
@@ -49,17 +49,17 @@ namespace SFML_Engine.Engine
 			}
 		}
 
-		public void AfterCollision(Actor actor)
+		public virtual void AfterCollision(Actor actor)
 		{
-			//Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
-		public void BeforeCollision(Actor actor)
+		public virtual void BeforeCollision(Actor actor)
 		{
-			//Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
-		public void IsOverlaping(Actor actor)
+		public virtual void IsOverlapping(Actor actor)
 		{
-			//Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 	}
 }

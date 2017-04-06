@@ -6,7 +6,7 @@
 
 		void AfterCollision(Actor actor);
 		void BeforeCollision(Actor actor);
-		void IsOverlaping(Actor actor);
+		void IsOverlapping(Actor actor);
 
 	}
 
