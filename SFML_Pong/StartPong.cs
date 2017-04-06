@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using Actor = SFML_Engine.Engine.Actor;
-
 namespace SFML_Pong
 {
     public sealed class StartPong
@@ -19,7 +13,7 @@ namespace SFML_Pong
 	        physics.AddGroup("Pads");
 			physics.AddGroup("Balls");
 
-			var Level = new Level();
+			var level = new Level();
             var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
 			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
@@ -37,7 +31,8 @@ namespace SFML_Pong
 			var ball = new SpriteActor(ballTexture);
 	        ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
-	        ball.Position = new Vector2f(400,300);
+	        ball.Position = new Vector2f(400,150);
+			ball.Velocity = new Vector2f(100,0);
 			ball.CollisionShape.show = true;
 
 	        physics.AddActorToGroup("Pads",leftPad);
@@ -48,10 +43,10 @@ namespace SFML_Pong
 
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);
-            Level.RegisterActor(leftPad);
-			Level.RegisterActor(rightPad);
-	        Level.RegisterActor(ball);
-            engine.RegisterLevel(Level);
+            level.RegisterActor(leftPad);
+			level.RegisterActor(rightPad);
+	        level.RegisterActor(ball);
+            engine.RegisterLevel(level);
             engine.RegisterPlayer(leftPadController);
 			engine.RegisterPlayer(rightPadController);
             engine.StartEngine();

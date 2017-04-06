@@ -54,7 +54,7 @@ namespace SFML_Engine.Engine
 					{
 						SphereShape sphere = (SphereShape)drawableActor.CollisionShape;
 
-						RectangleShape hit = new RectangleShape(new SFML.System.Vector2f(sphere.SphereDiameter, sphere.SphereDiameter));
+						CircleShape hit = new CircleShape(sphere.SphereDiameter/2.0f);
 
 						hit.Position = actor.Position;
 

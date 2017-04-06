@@ -102,7 +102,7 @@ namespace SFML_Engine.Engine.Physics
 											normTempY *= -1;
 										}
 
-										float sphereSpeed = sphereActor.Velocity.X + sphereActor.Velocity.Y + boxActor.Velocity.X + boxActor.Velocity.Y;
+										float sphereSpeed = -(sphereActor.Velocity.X + sphereActor.Velocity.Y) + boxActor.Velocity.X + boxActor.Velocity.Y;
 
 										sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
 
