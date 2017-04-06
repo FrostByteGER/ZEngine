@@ -88,7 +88,7 @@ namespace SFML_Engine.Engine.Physics
 									//bounce from eage
 									if ((sphere.SphereDiameter/2) * (sphere.SphereDiameter / 2) > distanceX * distanceX + distanceY * distanceY)
 									{
-										Console.WriteLine("do");
+										
 										double normTempX = distanceX / (distanceX + distanceY);
 										double normTempY = distanceY / (distanceX + distanceY);
 
@@ -256,12 +256,14 @@ namespace SFML_Engine.Engine.Physics
 									{
 										BoxShape passiveTemp = (BoxShape)passiveActor.CollisionShape;
 
-										if (activeTemp.Position.X < passiveTemp.Position.X + passiveTemp.BoxExtent.X &&
-											activeTemp.Position.X + activeTemp.BoxExtent.X > passiveTemp.Position.X &&
-											activeTemp.Position.Y < passiveTemp.Position.Y + passiveTemp.BoxExtent.Y &&
-											activeTemp.Position.Y + activeTemp.BoxExtent.Y > passiveTemp.Position.Y
+										if (activeActor.Position.X < passiveActor.Position.X + passiveTemp.BoxExtent.X &&
+											activeActor.Position.X + activeTemp.BoxExtent.X > passiveActor.Position.X &&
+											activeActor.Position.Y < passiveActor.Position.Y + passiveTemp.BoxExtent.Y &&
+											activeTemp.BoxExtent.Y + activeActor.Position.Y > passiveActor.Position.Y
 											)
 										{
+
+											Console.WriteLine(activeActor.ActorName+" do "+ passiveActor.ActorName);
 											activeActor.IsOverlaping(passiveActor);
 
 											if (CollidablePartner.ContainsKey(groupNameActive))
