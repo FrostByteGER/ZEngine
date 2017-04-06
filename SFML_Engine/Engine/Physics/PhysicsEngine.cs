@@ -282,7 +282,7 @@ namespace SFML_Engine.Engine.Physics
 								else if (activeActor.CollisionShape.GetType() == typeof(SphereShape))
 								{
 									SphereShape activeTemp = (SphereShape)activeActor.CollisionShape;
-									if (passiveActor.CollisionShape.GetType() == typeof(BoxShape))
+									if (passiveActor.CollisionShape.GetType() == typeof(SphereShape))
 									{
 										SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
 
