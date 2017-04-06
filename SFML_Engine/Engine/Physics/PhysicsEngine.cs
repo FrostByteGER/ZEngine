@@ -305,7 +305,7 @@ namespace SFML_Engine.Engine.Physics
 															}
 														}
 													}//Y
-													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y) / 2f)
+													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f)
 													{
 														if (activeActor.Movable)
 														{

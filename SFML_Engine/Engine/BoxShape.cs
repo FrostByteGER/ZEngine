@@ -22,7 +22,7 @@ namespace SFML_Engine.Engine
 
 		public Vector2f getMid(Vector2f position)
 		{
-			return position + new Vector2f(BoxExtent.X/2f, BoxExtent.Y/2f);
+			return new Vector2f(position.X + BoxExtent.X/2f, position.Y + BoxExtent.Y/2f);
 		}
     }
 }
