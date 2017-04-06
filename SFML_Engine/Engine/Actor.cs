@@ -61,5 +61,13 @@ namespace SFML_Engine.Engine
 		{
 			Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj != null || obj is typeof(Actor))
+			{
+				
+			}
+		}
 	}
 }
