@@ -2,6 +2,8 @@
 {
     public interface IPhysicsProperties
     {
-        float Mass { get; set;}
-    }
+		float Mass { get; set; }
+		bool hasGravity { get; set; }
+
+	}
 }

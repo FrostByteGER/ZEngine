@@ -8,7 +8,7 @@ namespace SFML_Pong
     {
 	    public static void Main(string[] args)
         {
-            var engine = new Engine(800, 600, "Pong");
+            var engine = new Engine(840, 640, "Pong");
 	        var physics = engine.PhysicsEngine;
 	        physics.AddGroup("Pads");
 			physics.AddGroup("Balls");
@@ -83,7 +83,6 @@ namespace SFML_Pong
 			physics.AddCollidablePartner("Pads", "Balls");
 	        physics.AddCollidablePartner("Balls", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
-
 
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);

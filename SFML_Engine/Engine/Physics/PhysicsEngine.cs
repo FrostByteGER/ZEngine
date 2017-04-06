@@ -32,7 +32,7 @@ namespace SFML_Engine.Engine.Physics
 					{
 						actor.Move(actor.Position += actor.Velocity * deltaTime);
 
-						if (GlobalGravityEnabled)
+						if (GlobalGravityEnabled && actor.hasGravity)
 						{
 							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
 						}
@@ -56,6 +56,12 @@ namespace SFML_Engine.Engine.Physics
 						{
 							foreach (Actor passiveActor in ActorGroups[groupNamePassive])
 							{
+
+								if (System.Object.ReferenceEquals(activeActor, passiveActor))
+								{
+									continue;
+								}
+
 								//Box/Shere
 								if (passiveActor.CollisionShape.GetType() != activeActor.CollisionShape.GetType())
 								{
@@ -269,11 +275,68 @@ namespace SFML_Engine.Engine.Physics
 												if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
 												{
 													activeActor.BeforeCollision(passiveActor);
+													//X
+													if ((Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) < (activeTemp.BoxExtent.X + passiveTemp.BoxExtent.X)/2f &&
+															(Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) > Math.Max(activeTemp.BoxExtent.X/2f,  passiveTemp.BoxExtent.X/2f))
+													{
+														if (activeActor.Movable)
+														{
+															if (passiveActor.Movable)
+															{
+																float temp = activeActor.Velocity.X;
 
-													//TODO 
+																activeActor.Velocity = new Vector2f(passiveActor.Velocity.X*(activeActor.Mass/passiveActor.Mass), activeActor.Velocity.Y);
+																passiveActor.Velocity = new Vector2f(temp* (passiveActor.Mass/activeActor.Mass), passiveActor.Velocity.Y);
+															}
+															else
+															{
+																activeActor.Velocity = new Vector2f(-activeActor.Velocity.X, activeActor.Velocity.Y);
+															}
+														}
+														else
+														{
+															if (passiveActor.Movable)
+															{
+																passiveActor.Velocity = new Vector2f(-passiveActor.Velocity.X, passiveActor.Velocity.Y);
+															}
+															else
+															{
+																activeActor.Velocity = new Vector2f(0, activeActor.Velocity.Y);
+																passiveActor.Velocity = new Vector2f(0, passiveActor.Velocity.Y);
+															}
+														}
+													}//Y
+													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f &&
+														(Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) > Math.Max(activeTemp.BoxExtent.Y/2f, passiveTemp.BoxExtent.Y/2f))
+													{
+														if (activeActor.Movable)
+														{
+															if (passiveActor.Movable)
+															{
+																float temp = activeActor.Velocity.Y;
 
+																activeActor.Velocity = new Vector2f(activeActor.Velocity.X, passiveActor.Velocity.Y * (activeActor.Mass / passiveActor.Mass));
+																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, temp * (passiveActor.Mass / activeActor.Mass));
+															}
+															else
+															{
+																activeActor.Velocity = new Vector2f(activeActor.Velocity.X, -activeActor.Velocity.Y);
+															}
+														}
+														else
+														{
+															if (passiveActor.Movable)
+															{
+																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, -passiveActor.Velocity.Y);
+															}
+															else
+															{
+																activeActor.Velocity = new Vector2f(activeActor.Velocity.X ,0);
+																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, 0);
+															}
+														}
+													}
 													activeActor.AfterCollision(passiveActor);
-
 												}
 											}
 										}
