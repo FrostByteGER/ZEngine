@@ -19,5 +19,10 @@ namespace SFML_Engine.Engine
         {
             BoxExtent = new Vector2f(boxExtentX, boxExtentY);
         }
+
+		public Vector2f getMid(Vector2f position)
+		{
+			return position + new Vector2f(BoxExtent.X/2f, BoxExtent.Y/2f);
+		}
     }
 }
