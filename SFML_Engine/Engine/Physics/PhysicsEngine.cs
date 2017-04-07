@@ -8,7 +8,7 @@ namespace SFML_Engine.Engine.Physics
     public class PhysicsEngine
     {
 
-        public readonly Vector2f Gravity = new Vector2f(0.0f ,9.81f);
+        public readonly Vector2f Gravity = new Vector2f(0.0f, 9.81f);
 		public bool GlobalGravityEnabled{ get; set; } = false;
 
         private Dictionary<string, List<Actor>> ActorGroups = new Dictionary<string, List<Actor>>();

@@ -12,7 +12,7 @@ namespace SFML_Engine.Engine
 		public CollisionShape CollisionShape { get; set; }
 		public bool Movable { get; set; } = true;
 		public Vector2f Velocity { get; set; }
-		public float MaxVelocity { get; set; } = -1f;
+		public float MaxVelocity { get; set; } = 50f;
 		public Vector2f Acceleration { get; set; }
 		public float MaxAcceleration { get; set; } = .1f;
 		public float Mass { get; set; } = 1.0f;
