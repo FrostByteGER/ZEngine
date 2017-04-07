@@ -382,9 +382,22 @@ namespace SFML_Engine.Engine.Physics
 			{
 				if (actor != null)
 				{
-					if (actor.Velocity.X + actor.Velocity.Y > actor.MaxVelocity)
+					if (Math.Abs(actor.Velocity.X) + Math.Abs(actor.Velocity.Y) > actor.MaxVelocity && actor.MaxVelocity > 0)
 					{
-						actor.Velocity = new Vector2f((actor.Velocity.X / (actor.Velocity.X + actor.Velocity.Y)) * actor.MaxVelocity, (actor.Velocity.Y / () / (actor.Velocity.X + actor.Velocity.Y)) * actor.MaxVelocity);
+
+						int x = 1;
+						int y = 1;
+
+						if (actor.Velocity.X < 0)
+						{
+							x = -1;
+						}
+						if (actor.Velocity.Y < 0)
+						{
+							y = -1;
+						}
+
+						actor.Velocity = new Vector2f(actor.Velocity.X / (actor.Velocity.X + actor.Velocity.Y) * actor.MaxVelocity * x, actor.Velocity.Y / (actor.Velocity.X + actor.Velocity.Y) * actor.MaxVelocity * y);
 
 					}
 				}
