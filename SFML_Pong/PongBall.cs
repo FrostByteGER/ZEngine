@@ -37,8 +37,9 @@ namespace SFML_Pong
 		{
 			base.AfterCollision(actor);
 			if (actor.ActorName == "Left Border" || actor.ActorName == "Right Border")
-			{
-				Console.WriteLine("COLLISION!!!!");
+			{				
+				
+				
 			}
 		}
 

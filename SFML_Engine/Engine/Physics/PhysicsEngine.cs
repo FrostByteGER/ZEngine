@@ -40,9 +40,6 @@ namespace SFML_Engine.Engine.Physics
 						{
 							actor.Velocity = actor.Velocity + actor.Acceleration * deltaTime;
 						}
-
-						//Vector2f temp = new Vector2f(actor.Velocity.X / (actor.Velocity.X+actor.Velocity.Y), actor.Velocity.Y/() / (actor.Velocity.X + actor.Velocity.Y));
-
 					}
 				}
 			}
@@ -286,10 +283,13 @@ namespace SFML_Engine.Engine.Physics
 
 																activeActor.Velocity = new Vector2f(passiveActor.Velocity.X*(activeActor.Mass/passiveActor.Mass), activeActor.Velocity.Y);
 																passiveActor.Velocity = new Vector2f(temp* (passiveActor.Mass/activeActor.Mass), passiveActor.Velocity.Y);
+
+																//TODO Acceleration
 															}
 															else
 															{
 																activeActor.Velocity = new Vector2f(-activeActor.Velocity.X, activeActor.Velocity.Y);
+																activeActor.Acceleration = new Vector2f(-activeActor.Acceleration.X, activeActor.Acceleration.Y);
 															}
 														}
 														else
@@ -297,11 +297,15 @@ namespace SFML_Engine.Engine.Physics
 															if (passiveActor.Movable)
 															{
 																passiveActor.Velocity = new Vector2f(-passiveActor.Velocity.X, passiveActor.Velocity.Y);
+																passiveActor.Acceleration = new Vector2f(-passiveActor.Acceleration.X, passiveActor.Acceleration.Y);
 															}
 															else
 															{
 																activeActor.Velocity = new Vector2f(0, activeActor.Velocity.Y);
 																passiveActor.Velocity = new Vector2f(0, passiveActor.Velocity.Y);
+
+																activeActor.Acceleration = new Vector2f(0, activeActor.Acceleration.Y);
+																passiveActor.Acceleration = new Vector2f(0, passiveActor.Acceleration.Y);
 															}
 														}
 													}//Y
@@ -316,10 +320,14 @@ namespace SFML_Engine.Engine.Physics
 
 																activeActor.Velocity = new Vector2f(activeActor.Velocity.X, passiveActor.Velocity.Y * (activeActor.Mass / passiveActor.Mass));
 																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, temp * (passiveActor.Mass / activeActor.Mass));
+
+																//TODO Acceleration
+
 															}
 															else
 															{
 																activeActor.Velocity = new Vector2f(activeActor.Velocity.X, -activeActor.Velocity.Y);
+																activeActor.Acceleration = new Vector2f(activeActor.Acceleration.X, -activeActor.Acceleration.Y);
 															}
 														}
 														else
@@ -327,11 +335,15 @@ namespace SFML_Engine.Engine.Physics
 															if (passiveActor.Movable)
 															{
 																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, -passiveActor.Velocity.Y);
+																passiveActor.Acceleration = new Vector2f(passiveActor.Acceleration.X, -passiveActor.Acceleration.Y);
 															}
 															else
 															{
 																activeActor.Velocity = new Vector2f(activeActor.Velocity.X ,0);
 																passiveActor.Velocity = new Vector2f(passiveActor.Velocity.X, 0);
+
+																activeActor.Acceleration = new Vector2f(activeActor.Acceleration.X, 0);
+																passiveActor.Acceleration = new Vector2f(passiveActor.Acceleration.X, 0);
 															}
 														}
 													}

@@ -15,6 +15,7 @@ namespace SFML_Engine.Engine
 		public float MaxVelocity { get; set; } = -1.0f;
 		public Vector2f Acceleration { get; set; }
 		public float MaxAcceleration { get; set; } = -1f;
+		public float friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		public bool hasGravity { get; set; } = false;

@@ -34,11 +34,10 @@ namespace SFML_Pong
 
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
+
 			base.OnKeyPressed(sender, keyEventArgs);
 			if (ID == 0)
 			{
-				Console.WriteLine(PlayerPawn.Velocity);
-
 				if (Input.WPressed)
 				{
 					
@@ -78,6 +77,7 @@ namespace SFML_Pong
 					}
 				}
 			}
+			Console.WriteLine(PlayerPawn.ActorName+" "+PlayerPawn.Velocity);
 		}
 	}
 }
