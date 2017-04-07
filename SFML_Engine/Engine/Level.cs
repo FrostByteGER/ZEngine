@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using SFML.Graphics;
-using SFML.Window;
+using SFML.System;
+using CircleShape = SFML_Engine.Engine.SFML.Graphics.CircleShape;
+using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
 
 namespace SFML_Engine.Engine
 {
-    public class Level : IGameInterface
+	public class Level : IGameInterface
     {
 
 	    public uint LevelID { get; internal set; } = 0;
@@ -45,7 +46,7 @@ namespace SFML_Engine.Engine
 					{
 						BoxShape box = (BoxShape)drawableActor.CollisionShape;
 
-						RectangleShape hit = new RectangleShape(new SFML.System.Vector2f(box.BoxExtent.X, box.BoxExtent.Y));
+						RectangleShape hit = new RectangleShape(new Vector2f(box.BoxExtent.X, box.BoxExtent.Y));
 
 						hit.Position = actor.Position;
 

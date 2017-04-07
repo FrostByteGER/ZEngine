@@ -39,6 +39,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -100,8 +102,13 @@
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\PlayerController.cs" />
     <Compile Include="Engine\Physics\SphereShape.cs" />
+    <Compile Include="Engine\SFML\CircleShape.cs" />
+    <Compile Include="Engine\SFML\ConvexShape.cs" />
+    <Compile Include="Engine\SFML\RectangleShape.cs" />
+    <Compile Include="Engine\SFML\Shape.cs" />
+    <Compile Include="Engine\SFML\Text.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
-    <Compile Include="Engine\Sprite.cs" />
+    <Compile Include="Engine\SFML\Sprite.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Start.cs" />

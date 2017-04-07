@@ -189,7 +189,7 @@ namespace SFML_Engine.Engine
                 sfSprite_destroy(CPointer);
             }
 
-            private Texture myTexture = null;
+            private Texture myTexture;
 
             #region Imports
 
