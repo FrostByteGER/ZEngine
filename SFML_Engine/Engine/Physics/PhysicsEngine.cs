@@ -40,6 +40,9 @@ namespace SFML_Engine.Engine.Physics
 						{
 							actor.Velocity = actor.Velocity + actor.Acceleration * deltaTime;
 						}
+
+						//Vector2f temp = new Vector2f(actor.Velocity.X / (actor.Velocity.X+actor.Velocity.Y), actor.Velocity.Y/() / (actor.Velocity.X + actor.Velocity.Y));
+
 					}
 				}
 			}
@@ -112,15 +115,11 @@ namespace SFML_Engine.Engine.Physics
 
 										sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
 
-										// temp
-										//sphereActor.Velocity = new Vector2f((float)((sphereActor.Velocity.X / normTempOld) + (distanceX / normTempAdd)) / 2, (float)((sphereActor.Velocity.Y / normTempOld) + (distanceY / normTempAdd)) / 2);
-
 									}//box comes from right 
 									if (boxActor.Position.X < sphereActor.Position.X + sphere.SphereDiameter && boxActor.Position.X > sphereActor.Position.X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 
-										Console.WriteLine("test");
 										activeActor.IsOverlapping(passiveActor);
 
 										if (CollidablePartner.ContainsKey(groupNameActive))
@@ -373,6 +372,20 @@ namespace SFML_Engine.Engine.Physics
 								}
 							}
 						}
+					}
+				}
+			}
+
+			//Max Velocity
+
+			foreach (Actor actor in actors)
+			{
+				if (actor != null)
+				{
+					if (actor.Velocity.X + actor.Velocity.Y > actor.MaxVelocity)
+					{
+						actor.Velocity = new Vector2f((actor.Velocity.X / (actor.Velocity.X + actor.Velocity.Y)) * actor.MaxVelocity, (actor.Velocity.Y / () / (actor.Velocity.X + actor.Velocity.Y)) * actor.MaxVelocity);
+
 					}
 				}
 			}
