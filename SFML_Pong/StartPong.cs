@@ -50,6 +50,7 @@ namespace SFML_Pong
 	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
 			var leftPad = new SpriteActor();
 	        leftPad.ActorName = "Left Pad";
+	        leftPad.MaxVelocity = 50.0f;
 	        leftPad.Position = new Vector2f(30, 30);
 	        leftPad.CollisionShape = new BoxShape(20, 175);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
@@ -57,7 +58,8 @@ namespace SFML_Pong
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
 	        rightPad.ActorName = "Right Pad";
-	        rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
+			rightPad.MaxVelocity = 50.0f;
+			rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 	        rightPad.CollisionShape = new BoxShape(20, 175);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
 			rightPad.CollisionShape.show = true;
