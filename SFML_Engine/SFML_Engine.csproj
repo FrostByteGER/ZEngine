@@ -100,7 +100,7 @@
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\PlayerController.cs" />
     <Compile Include="Engine\Physics\SphereShape.cs" />
-    <Compile Include="Engine\EngineMath.cs" />
+    <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />

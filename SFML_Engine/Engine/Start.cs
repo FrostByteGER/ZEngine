@@ -7,7 +7,11 @@ namespace SFML_Engine.Engine
     {
         public static void Main(string[] args)
         {
-            Engine engine = new Engine(800, 600, "Engine");
+	        Engine engine = Engine.Instance;
+	        engine.EngineWindowWidth = 800;
+	        engine.EngineWindowHeight = 600;
+	        engine.GameName = "Engine";
+			engine.InitEngine();
             var Level = new Level();
             var actor = new SpriteActor();
 			var actor2 = new SpriteActor();

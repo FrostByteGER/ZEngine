@@ -9,13 +9,14 @@ namespace SFML_Engine.Engine
     public class Level : IGameInterface
     {
 
+	    public uint LevelID { get; internal set; } = 0;
         public List<Actor> Actors{ get; set; } = new List<Actor>();
 
         public Engine Engine { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
 
-        internal bool LevelTicking { get; set; }
+	    internal bool LevelTicking { get; set; } = false;
 
         public Level()
         {
@@ -78,19 +79,23 @@ namespace SFML_Engine.Engine
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
+			//TODO: Call OnGameStart event on all preregistered actors
 	    }
 
 	    public void OnGamePause()
 	    {
 		    throw new NotImplementedException();
+			//TODO: Call OnGamePause event on all actors
 	    }
 
 	    public void OnGameEnd()
 	    {
 			GameMode.OnGameEnd();
-		}
+		    LevelTicking = false;
+		    //TODO: Call OnGamePause event on all actors
+	    }
 
-	    public Actor FindActorInLevel(string name)
+		public Actor FindActorInLevel(string name)
 	    {
 		    return Actors.Find(x => x.ActorName == name);
 	    }

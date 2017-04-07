@@ -25,6 +25,7 @@ namespace SFML_Pong
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
+			Console.WriteLine("GameMode ending");
 		}
 
 		public override void Tick(float deltaTime)
@@ -33,6 +34,7 @@ namespace SFML_Pong
 			if (Player1.Score == WinScore ^ Player2.Score == WinScore)
 			{
 				Console.WriteLine("GAME OVER!");
+				Engine.Instance.ShutdownLevel(0);
 			}
 		}
 

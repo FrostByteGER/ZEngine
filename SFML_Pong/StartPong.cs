@@ -8,11 +8,16 @@ namespace SFML_Pong
     {
 	    public static void Main(string[] args)
         {
-            var engine = new Engine(800, 600, "Pong");
-	        var physics = engine.PhysicsEngine;
+			Engine engine = Engine.Instance;
+			engine.EngineWindowWidth = 800;
+			engine.EngineWindowHeight = 600;
+			engine.GameName = "Pong";
+			engine.InitEngine();
+			var physics = engine.PhysicsEngine;
 	        physics.AddGroup("Pads");
 			physics.AddGroup("Balls");
 	        physics.AddGroup("Borders");
+			physics.AddGroup("SoftBorders");
 
 			var topBorder = new SpriteActor();
 	        var bottomBorder = new SpriteActor();
@@ -50,7 +55,7 @@ namespace SFML_Pong
 	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
 			var leftPad = new SpriteActor();
 	        leftPad.ActorName = "Left Pad";
-	        leftPad.MaxVelocity = 50.0f;
+	        leftPad.MaxVelocity = 200.0f;
 	        leftPad.Position = new Vector2f(30, 30);
 	        leftPad.CollisionShape = new BoxShape(20, 175);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
@@ -58,7 +63,7 @@ namespace SFML_Pong
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
 	        rightPad.ActorName = "Right Pad";
-			rightPad.MaxVelocity = 50.0f;
+			rightPad.MaxVelocity = 200.0f;
 			rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 	        rightPad.CollisionShape = new BoxShape(20, 175);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
@@ -69,6 +74,7 @@ namespace SFML_Pong
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
 	        ball.CollisionShape.Origin = ball.Origin;
 			ball.Position = new Vector2f(400,250);
+	        ball.MaxVelocity = 200.0f;
 			ball.Velocity = new Vector2f(100,0);
 			ball.CollisionShape.show = true;
 
@@ -78,13 +84,14 @@ namespace SFML_Pong
 
 			physics.AddActorToGroup("Borders", topBorder);
 			physics.AddActorToGroup("Borders", bottomBorder);
-			physics.AddActorToGroup("Borders", leftBorder);
-			physics.AddActorToGroup("Borders", rightBorder);
+			physics.AddActorToGroup("SoftBorders", leftBorder);
+			physics.AddActorToGroup("SoftBorders", rightBorder);
 
 
 			physics.AddCollidablePartner("Pads", "Balls");
 	        physics.AddCollidablePartner("Balls", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
+	        physics.AddOverlapPartners("Balls", "SoftBorders");
 
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);

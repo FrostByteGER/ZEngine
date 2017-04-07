@@ -11,12 +11,18 @@ using SFML_Engine.Engine.Physics;
 
 namespace SFML_Engine.Engine
 {
-    public class Engine
+
+	public class Engine
     {
 
-        public uint EngineWindowHeight { get; private set; }
-        public uint EngineWindowWidth { get; private set; }
-        public string GameName { get; private set; }
+		private static Engine instance;
+
+		public static Engine Instance => instance ?? (instance = new Engine());
+
+
+	    public uint EngineWindowHeight { get; set; }
+        public uint EngineWindowWidth { get; set; }
+        public string GameName { get; set; }
         private RenderWindow engineWindow;
 
         public RenderWindow EngineWindow
@@ -50,17 +56,15 @@ namespace SFML_Engine.Engine
 	    public Queue<Event> EngineEvents { get; private set; } = new Queue<Event>();
 
 	    public uint ActorIDCounter { get; set; } = 0;
+		public uint LevelIDCounter { get; set; } = 0;
 
 
 
 
-        public Engine(uint engineWindowWidth, uint engineWindowHeight, string gameName)
-        {
-            EngineWindowWidth = engineWindowWidth;
-            EngineWindowHeight = engineWindowHeight;
-            GameName = gameName;
-            InitEngine();
-        }
+		private Engine()
+	    {
+		    
+	    }
 
         public void StartEngine()
         {
@@ -68,7 +72,7 @@ namespace SFML_Engine.Engine
             InitEngineLoop();
         }
 
-        private void InitEngine()
+        public void InitEngine()
         {
             EngineClock = new Clock();
             engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameName);
@@ -109,6 +113,7 @@ namespace SFML_Engine.Engine
 	        foreach (var level in Levels)
 	        {
 		        level.OnGameStart();
+		        level.LevelTicking = true;
 	        }
 	        FPSClock.Restart();
             EngineLoopClock.Restart();
@@ -141,6 +146,10 @@ namespace SFML_Engine.Engine
                     //Console.WriteLine("Engine Tick!");
                     foreach (var level in Levels)
                     {
+	                    if (!level.LevelTicking)
+	                    {
+		                    continue;
+	                    }
                         var actors = level.Actors;
                         PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds(), ref actors);
                         level.LevelTick(DeltaTime.AsSeconds());
@@ -185,12 +194,19 @@ namespace SFML_Engine.Engine
 
         }
 
+	    public void ShutdownLevel(uint levelID)
+	    {
+		    FindLevel(levelID).OnGameEnd();
+	    }
+
 
 
         public void RegisterLevel(Level level)
         {
             level.Engine = this;
-            Levels.Add(level);
+			level.LevelID = LevelIDCounter;
+			++LevelIDCounter;
+			Levels.Add(level);
         }
 
         public void RegisterPlayer(PlayerController pc)
@@ -208,5 +224,10 @@ namespace SFML_Engine.Engine
 	    {
 		    EngineEvents.Enqueue(e);
 	    }
-    }
+
+		public Level FindLevel(uint id)
+		{
+			return Levels.Find(x => x.LevelID == id);
+		}
+	}
 }

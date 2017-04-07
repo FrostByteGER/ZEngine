@@ -5,7 +5,7 @@ using SFML.System;
 
 namespace SFML_Engine.Engine
 {
-	public class Actor : Transformable, IActorable
+	public class Actor : Transformable, IActorable, IGameInterface
 	{
 		public uint ID { get; internal set; } = 0;
 		public string ActorName { get; set; } = "Actor";
@@ -17,7 +17,7 @@ namespace SFML_Engine.Engine
 		public float MaxAcceleration { get; set; } = .1f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
-		public bool hasGravity { get; set; } = false;
+		public bool hasGravity { get; set; } = false; 
 
 		public Actor()
 		{
@@ -78,6 +78,21 @@ namespace SFML_Engine.Engine
 		public override int GetHashCode()
 		{
 			return (int) ID;
+		}
+
+		public void OnGameStart()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGamePause()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGameEnd()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

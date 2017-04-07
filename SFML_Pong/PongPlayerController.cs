@@ -41,41 +41,54 @@ namespace SFML_Pong
 
 				if (Input.WPressed)
 				{
-					
-					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-					//float velocityY = PlayerPawn.Velocity.Y -10.0f;
-					//velocityY = Math.Abs(velocityY).Clamp(0.0f, PlayerPawn.MaxVelocity);
-					//Console.WriteLine(velocityY);
-					PlayerPawn.Velocity += new Vector2f(0.0f, -10.0f);
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -100.0f);
 				}
 
 				if (Input.SPressed)
 				{
-					//PlayerPawn.Position += new Vector2f(0.0f, 10.0f);
-					//float velocityY = PlayerPawn.Velocity.Y + 10.0f;
-					//velocityY = Math.Abs(velocityY).Clamp(0.0f, PlayerPawn.MaxVelocity);
-					//Console.WriteLine(velocityY);
-					PlayerPawn.Velocity += new Vector2f(0.0f, 10.0f);
-
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 100.0f);
 				}
 			}else if (ID == 1)
 			{
 				if (Input.UpPressed)
 				{
-					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-					if (Math.Abs(PlayerPawn.Velocity.Y) < PlayerPawn.MaxVelocity)
-					{
-						PlayerPawn.Velocity += new Vector2f(0.0f, -10.0f);
-					}
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -100.0f);
 				}
 
 				if (Input.DownPressed)
 				{
-					//PlayerPawn.Position += new Vector2f(0.0f, -10.0f);
-					if (Math.Abs(PlayerPawn.Velocity.Y) < PlayerPawn.MaxVelocity)
-					{
-						PlayerPawn.Velocity += new Vector2f(0.0f, 10.0f);
-					}
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 100.0f);
+				}
+			}
+		}
+
+		protected override void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
+		{
+			base.OnKeyReleased(sender, keyEventArgs);
+			if (ID == 0)
+			{
+				Console.WriteLine(PlayerPawn.Velocity);
+
+				if (Input.WPressed)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+				}
+
+				if (Input.SPressed)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+				}
+			}
+			else if (ID == 1)
+			{
+				if (Input.UpPressed)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+				}
+
+				if (Input.DownPressed)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
 				}
 			}
 		}

@@ -8,7 +8,6 @@ namespace SFML_Pong
 {
 	public class PongBall : SpriteActor
 	{
-
 		public Actor LastPlayerCollision { get; set; }
 		public PongBall()
 		{
@@ -36,9 +35,10 @@ namespace SFML_Pong
 		public override void AfterCollision(Actor actor)
 		{
 			base.AfterCollision(actor);
-			if (actor.ActorName == "Left Border" || actor.ActorName == "Right Border")
+			if (actor.ActorName == "Left Pad" || actor.ActorName == "Right Pad")
 			{
-				Console.WriteLine("COLLISION!!!!");
+				LastPlayerCollision = actor;
+				Console.WriteLine("COLLISION WITH: " + actor.ActorName);
 			}
 		}
 
@@ -49,7 +49,22 @@ namespace SFML_Pong
 
 		public override void IsOverlapping(Actor actor)
 		{
-			base.IsOverlapping(actor);
+			var engine = Engine.Instance;
+			if (actor.ActorName == "Left Border")
+			{
+				PongPlayerController player = engine.Players[1] as PongPlayerController;
+				if (player != null) ++player.Score;
+			}else if (actor.ActorName == "Right Border")
+			{
+				PongPlayerController player = engine.Players[0] as PongPlayerController;
+				if (player != null) ++player.Score;
+			}
+			else
+			{
+				return;
+			}
+			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
+			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity));
 		}
 	}
 }
