@@ -34,11 +34,11 @@ namespace SFML_Engine.Engine.Physics
 
 						if (GlobalGravityEnabled && actor.hasGravity)
 						{
-							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
+							actor.Velocity = (actor.Velocity + (Gravity + actor.Acceleration)*deltaTime) * (1-actor.friction);
 						}
 						else
 						{
-							actor.Velocity = actor.Velocity + actor.Acceleration * deltaTime;
+							actor.Velocity = (actor.Velocity + actor.Acceleration * deltaTime) * (1 - actor.friction);
 						}
 					}
 				}

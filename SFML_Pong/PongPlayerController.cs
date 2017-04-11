@@ -47,6 +47,7 @@ namespace SFML_Pong
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 100.0f);
 				}
+
 			}else if (ID == 1)
 			{
 				if (Input.UpPressed)
@@ -68,26 +69,30 @@ namespace SFML_Pong
 			{
 				Console.WriteLine(PlayerPawn.Velocity);
 
-				if (Input.WPressed)
+				if (!Input.WPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 
-				if (Input.SPressed)
+				if (!Input.SPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 			}
 			else if (ID == 1)
 			{
-				if (Input.UpPressed)
+				if (!Input.UpPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 
-				if (Input.DownPressed)
+				if (!Input.DownPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 			}
 			Console.WriteLine(PlayerPawn.ActorName+" "+PlayerPawn.Velocity);
