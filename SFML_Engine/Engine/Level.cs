@@ -12,6 +12,7 @@ namespace SFML_Engine.Engine
 
 	    public uint LevelID { get; internal set; } = 0;
         public List<Actor> Actors{ get; set; } = new List<Actor>();
+		private List<Actor> RemoveActer { get; set;} = new List<Actor>();
 
         public Engine Engine { get; set; }
 
@@ -42,6 +43,11 @@ namespace SFML_Engine.Engine
                 var drawableActor = actor as SpriteActor;
                 if (drawableActor != null)
                 {
+					if (actor.deled)
+					{
+						RemoveActer.Add(actor);
+						continue;
+					}
 					if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{
 						BoxShape box = (BoxShape)drawableActor.CollisionShape;
@@ -66,7 +72,18 @@ namespace SFML_Engine.Engine
 					renderWindow.Draw(drawableActor);
                 }
             }
-        }
+
+			//Remove Acter from Game 
+			foreach (var actor in RemoveActer)
+			{
+				Engine.PhysicsEngine.RemoveActorFromGroup(actor);
+
+				Console.WriteLine(Actors.Remove(actor));
+				
+			}
+
+			RemoveActer.Clear();
+		}
 
         public void RegisterActor(Actor actor)
         {

@@ -71,6 +71,7 @@
     <Compile Include="PongBall.cs" />
     <Compile Include="PongGameMode.cs" />
     <Compile Include="PongPlayerController.cs" />
+    <Compile Include="PowerUP.cs" />
     <Compile Include="StartPong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

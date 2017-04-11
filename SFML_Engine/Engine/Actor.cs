@@ -19,10 +19,15 @@ namespace SFML_Engine.Engine
 		public float friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
-		public bool hasGravity { get; set; } = false; 
+		public bool hasGravity { get; set; } = false;
+
+		public bool deled = false;
 
 		public Actor()
 		{
+
+			// System.Object.ReferenceEquals(activeActor, passiveActor)
+			
 		}
 
 		public Actor(Transformable transformable) : base(transformable)
@@ -66,6 +71,7 @@ namespace SFML_Engine.Engine
 
 		public override bool Equals(object obj)
 		{
+			return System.Object.ReferenceEquals(this, obj);
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
@@ -96,5 +102,6 @@ namespace SFML_Engine.Engine
 		{
 			throw new NotImplementedException();
 		}
+
 	}
 }
