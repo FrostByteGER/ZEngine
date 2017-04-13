@@ -69,7 +69,7 @@ namespace SFML_Pong
 				return;
 			}
 			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
-			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity));
+			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int)MaxVelocity/2, (int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity / 2,(int)MaxVelocity));
 		}
 	}
 }
