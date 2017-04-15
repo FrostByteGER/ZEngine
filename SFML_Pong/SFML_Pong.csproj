@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -57,8 +60,29 @@
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="sfmlnet-audio-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-audio-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-graphics-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-system-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-system-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-window-2.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,24 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFML.Net\src\Audio\sfml-audio.csproj">
-      <Project>{0b202c4d-a457-47fe-84a3-031dd878c6be}</Project>
-      <Name>sfml-audio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFML.Net\src\Graphics\sfml-graphics.csproj">
-      <Project>{46786269-57b9-48e7-aa4f-8f4d84609fe6}</Project>
-      <Name>sfml-graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFML.Net\src\System\sfml-system.csproj">
-      <Project>{31d24303-f6a9-4d53-bb03-a73edcb3186d}</Project>
-      <Name>sfml-system</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFML.Net\src\Window\sfml-window.csproj">
-      <Project>{d17de83d-a592-461f-8af2-53f9e22e1d0f}</Project>
-      <Name>sfml-window</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFML_Engine\SFML_Engine.csproj">
       <Project>{ef9a6890-9b4b-4610-9d7d-9734784b9b7e}</Project>
       <Name>SFML_Engine</Name>
@@ -112,4 +121,11 @@ robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /
 robocopy "$(ProjectDir)Assets" "Assets\$(ProjectName)" /COPY:DAT /DCOPY:T /E
 if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets'))" />
+  </Target>
 </Project>
