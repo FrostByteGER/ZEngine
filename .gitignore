@@ -288,6 +288,4 @@ __pycache__/
 *.xsd.cs
 
 # Custom Ignores
-SFML.Net/.gitignore
-SFML.Net/doc/build/**
-SFML.Net/docs/**
+SFML_Engine/*.dll
