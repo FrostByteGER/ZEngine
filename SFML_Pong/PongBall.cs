@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Graphics;
+using Sprite = SFML_Engine.Engine.Graphics.Sprite;
 
 namespace SFML_Pong
 {
