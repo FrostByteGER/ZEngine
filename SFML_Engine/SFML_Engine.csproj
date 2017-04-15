@@ -163,10 +163,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rmdir "Assets" /s /q
-mkdir "Assets\Engine"
-robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /E
-if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
