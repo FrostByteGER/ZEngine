@@ -34,11 +34,11 @@ namespace SFML_Engine.Engine.Physics
 
 						if (GlobalGravityEnabled && actor.hasGravity)
 						{
-							actor.Velocity = actor.Velocity + (Gravity + actor.Acceleration)*deltaTime;
+							actor.Velocity = (actor.Velocity + (Gravity + actor.Acceleration)*deltaTime) * (1-actor.friction);
 						}
 						else
 						{
-							actor.Velocity = actor.Velocity + actor.Acceleration * deltaTime;
+							actor.Velocity = (actor.Velocity + actor.Acceleration * deltaTime) * (1 - actor.friction);
 						}
 					}
 				}
@@ -364,12 +364,13 @@ namespace SFML_Engine.Engine.Physics
 									{
 										SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
 
-										// distance^2
-										double distance = Math.Pow((activeTemp.Position.X + activeTemp.SphereDiameter) - (passiveTemp.Position.X + passiveTemp.SphereDiameter), 2f) +
-														Math.Pow((activeTemp.Position.Y + activeTemp.SphereDiameter) - (passiveTemp.Position.Y + passiveTemp.SphereDiameter), 2f);
+										double distance =	Math.Pow((activeTemp.getMid(activeActor.Position) - passiveTemp.getMid(passiveActor.Position)).X, 2f) +
+															Math.Pow((activeTemp.getMid(activeActor.Position) - passiveTemp.getMid(passiveActor.Position)).Y, 2f);
 
-										if (distance < (activeTemp.SphereDiameter * activeTemp.SphereDiameter) + (passiveTemp.SphereDiameter * passiveTemp.SphereDiameter))
+										if (distance < Math.Pow(activeTemp.SphereDiameter / 2f, 2f) + Math.Pow(passiveTemp.SphereDiameter / 2f, 2f))
 										{
+
+											Console.WriteLine(activeActor.ActorName + " " + passiveActor.ActorName);
 											activeActor.IsOverlapping(passiveActor);
 
 											if (CollidablePartner.ContainsKey(groupNameActive))
@@ -432,6 +433,18 @@ namespace SFML_Engine.Engine.Physics
 				ActorGroups.Add(groupName,new List<Actor>());
 				ActorGroups[groupName].Add(actor);
 			}
+		}
+
+		public bool RemoveActorFromGroup(Actor actor)
+		{
+			foreach (string listName in ActorGroups.Keys)
+			{
+				if (ActorGroups[listName].Contains(actor))
+				{
+					ActorGroups[listName].Remove(actor);
+				}
+			}
+			return true;
 		}
 
 		public bool RemoveActorFromGroup(string groupName, Actor actor)

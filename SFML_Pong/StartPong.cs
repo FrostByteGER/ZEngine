@@ -60,6 +60,7 @@ namespace SFML_Pong
 	        leftPad.CollisionShape = new BoxShape(20, 175);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
 			leftPad.CollisionShape.show = true;
+			leftPad.friction = 0.01f;
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
 	        rightPad.ActorName = "Right Pad";
@@ -68,9 +69,11 @@ namespace SFML_Pong
 	        rightPad.CollisionShape = new BoxShape(20, 175);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
 			rightPad.CollisionShape.show = true;
+			rightPad.friction = 0.01f;
 
-			var ball = new PongBall(ballTexture);
-	        ball.ActorName = "Ball";
+			//var ball = new PongBall(ballTexture);
+			var ball = new PongBall();
+			ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
 	        ball.CollisionShape.Origin = ball.Origin;
 			ball.Position = new Vector2f(400,250);
@@ -81,6 +84,7 @@ namespace SFML_Pong
 	        physics.AddActorToGroup("Pads",leftPad);
 	        physics.AddActorToGroup("Pads", rightPad);
 	        physics.AddActorToGroup("Balls", ball);
+			physics.AddGroup("PowerUP");
 
 			physics.AddActorToGroup("Borders", topBorder);
 			physics.AddActorToGroup("Borders", bottomBorder);
@@ -92,6 +96,7 @@ namespace SFML_Pong
 	        physics.AddCollidablePartner("Balls", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
 	        physics.AddOverlapPartners("Balls", "SoftBorders");
+			physics.AddOverlapPartners("Balls", "PowerUP");
 
 			var leftPadController = new PongPlayerController(leftPad);
 			var rightPadController = new PongPlayerController(rightPad);

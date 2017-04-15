@@ -10,6 +10,9 @@ namespace SFML_Pong
 		public PongPlayerController Player2 { get; set; }
 		public uint WinScore { get; set; } = 3;
 
+		public float PowerUPSpawnTimer = 0.0f;
+		public float PowerUPSpawnFrequency = 20f;
+
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
@@ -36,7 +39,29 @@ namespace SFML_Pong
 				Console.WriteLine("GAME OVER!");
 				Engine.Instance.ShutdownLevel(0);
 			}
-		}
 
+			if (PowerUPSpawnTimer >= PowerUPSpawnFrequency)
+			{
+				PowerUP powerUP = new PowerUP();
+				powerUP.ActorName = "PowerUP";
+
+				SphereShape ss = new SphereShape(10f);
+
+				ss.show = true;
+				//ss.SphereDiameter = 10f;
+
+				powerUP.CollisionShape = ss;
+
+				powerUP.Position = new SFML.System.Vector2f((float) (60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float) (60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
+
+				LevelReference.Actors.Add(powerUP);
+
+				// TODO add to PhysicsEngine
+				LevelReference.Engine.PhysicsEngine.AddActorToGroup("PowerUP", powerUP);
+
+				PowerUPSpawnTimer = 0f;
+			}
+			PowerUPSpawnTimer += deltaTime;
+		}
 	}
 }
