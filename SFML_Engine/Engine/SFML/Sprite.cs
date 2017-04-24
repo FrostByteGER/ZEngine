@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.Graphics;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {

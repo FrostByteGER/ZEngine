@@ -2,8 +2,10 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using SFML_Engine.Engine.Graphics;
-using Sprite = SFML_Engine.Engine.Graphics.Sprite;
+using SFML_Engine.Engine.Events;
+using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
+using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Pong
 {
@@ -69,6 +71,11 @@ namespace SFML_Pong
 				return;
 			}
 			//engine.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+			//var testActor = new PongBall {CollisionShape = new SphereShape(100.0f)};
+			//testActor.CollisionShape.Origin = testActor.Origin;
+			//testActor.Position = new Vector2f(EngineMath.EngineRandom.Next(0, 2) * 200, 250);
+			//testActor.CollisionShape.ShowCollisionShape = true;
+			//engine.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, testActor, 0)));
 
 			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
 			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int)MaxVelocity/2, (int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity / 2,(int)MaxVelocity));

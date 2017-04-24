@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Utility
 {
 	public static class EngineMath
 	{

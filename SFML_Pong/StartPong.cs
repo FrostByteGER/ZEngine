@@ -2,6 +2,8 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Physics;
+
 namespace SFML_Pong
 {
     public sealed class StartPong
@@ -44,10 +46,10 @@ namespace SFML_Pong
 			leftBorder.CollisionShape = new BoxShape(20, 600);
 			rightBorder.CollisionShape = new BoxShape(20, 600);
 
-			topBorder.CollisionShape.show = true;
-			bottomBorder.CollisionShape.show = true;
-			leftBorder.CollisionShape.show = true;
-			rightBorder.CollisionShape.show = true;
+			topBorder.CollisionShape.ShowCollisionShape = true;
+			bottomBorder.CollisionShape.ShowCollisionShape = true;
+			leftBorder.CollisionShape.ShowCollisionShape = true;
+			rightBorder.CollisionShape.ShowCollisionShape = true;
 
 			var level = new Level();
             //var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
@@ -59,7 +61,7 @@ namespace SFML_Pong
 	        leftPad.Position = new Vector2f(30, 30);
 	        leftPad.CollisionShape = new BoxShape(20, 175);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
-			leftPad.CollisionShape.show = true;
+			leftPad.CollisionShape.ShowCollisionShape = true;
 			leftPad.friction = 0.01f;
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
@@ -68,7 +70,7 @@ namespace SFML_Pong
 			rightPad.Scale = new Vector2f(-rightPad.Scale.X, rightPad.Scale.Y);
 	        rightPad.CollisionShape = new BoxShape(20, 175);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
-			rightPad.CollisionShape.show = true;
+			rightPad.CollisionShape.ShowCollisionShape = true;
 			rightPad.friction = 0.01f;
 
 			//var ball = new PongBall(ballTexture);
@@ -79,7 +81,7 @@ namespace SFML_Pong
 			ball.Position = new Vector2f(400,250);
 	        ball.MaxVelocity = 200.0f;
 			ball.Velocity = new Vector2f(100,0);
-			ball.CollisionShape.show = true;
+			ball.CollisionShape.ShowCollisionShape = true;
 
 	        physics.AddActorToGroup("Pads",leftPad);
 	        physics.AddActorToGroup("Pads", rightPad);

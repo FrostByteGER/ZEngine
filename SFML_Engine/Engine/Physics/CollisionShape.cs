@@ -1,9 +1,11 @@
 ﻿using SFML.Graphics;
+using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Physics
 {
     public class CollisionShape : Transformable
     {
-		public bool show { get; set; } = false;
-	}
+		public bool ShowCollisionShape { get; set; } = false;
+	    public Color CollisionShapeColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
+    }
 }

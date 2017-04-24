@@ -1,12 +1,11 @@
 ﻿using System;
 using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine.Graphics;
-using Sprite = SFML_Engine.Engine.Graphics.Sprite;
+using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Engine.Engine
 {
-    public class SpriteActor : Sprite
+    public class SpriteActor : SFML.Graphics.Sprite
     {
 
 	    public bool SnapOriginToCenter { get; set; } = true;

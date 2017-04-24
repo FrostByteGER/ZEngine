@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
+using SFML_Engine.Engine.Physics;
 using CircleShape = SFML_Engine.Engine.SFML.Graphics.CircleShape;
 using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
 
@@ -43,23 +44,25 @@ namespace SFML_Engine.Engine
                 var drawableActor = actor as SpriteActor;
                 if (drawableActor != null)
                 {
-					if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
+					if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{
 						BoxShape box = (BoxShape)drawableActor.CollisionShape;
 
 						RectangleShape hit = new RectangleShape(new Vector2f(box.BoxExtent.X, box.BoxExtent.Y));
 
 						hit.Position = actor.Position;
+						hit.FillColor = box.CollisionShapeColor;
 
 						renderWindow.Draw(hit);
 					}
-					else if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
+					else if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
 					{
 						SphereShape sphere = (SphereShape)drawableActor.CollisionShape;
 
 						CircleShape hit = new CircleShape(sphere.SphereDiameter/2.0f);
 
 						hit.Position = actor.Position;
+						hit.FillColor = sphere.CollisionShapeColor;
 
 						renderWindow.Draw(hit);
 					}
@@ -82,19 +85,22 @@ namespace SFML_Engine.Engine
 
         public void RegisterActor(Actor actor)
         {
-	        actor.ID = Engine.ActorIDCounter;
+			actor.ID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
 	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
+			Console.WriteLine("Trying to register Actor: " + actor.ActorName + " ID: " + actor.ID);
 			Actors.Add(actor);
         }
 
 		public bool UnregisterActor(Actor actor)
 		{
+			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + " ID: " + actor.ID);
 			return Actors.Remove(actor);
 		}
 
 		public int UnregisterActor(uint actorID)
 		{
+			Console.WriteLine("Trying to remove Actor with ID: " + actorID);
 			return Actors.RemoveAll(actor => actor.ID == actorID); // Guaranteed to be unique
 		}
 

@@ -1,6 +1,6 @@
 ﻿using SFML.System;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Physics
 {
     public class BoxShape : CollisionShape
     {

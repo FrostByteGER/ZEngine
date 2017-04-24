@@ -1,5 +1,7 @@
 ﻿using System;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Pong
 {
@@ -47,7 +49,7 @@ namespace SFML_Pong
 
 				SphereShape ss = new SphereShape(10f);
 
-				ss.show = true;
+				ss.ShowCollisionShape = true;
 				//ss.SphereDiameter = 10f;
 
 				powerUP.CollisionShape = ss;

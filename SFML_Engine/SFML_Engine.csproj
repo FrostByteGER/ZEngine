@@ -116,6 +116,8 @@
     <Compile Include="Engine\Actor.cs" />
     <Compile Include="Engine\ActorComponent.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
+    <Compile Include="Engine\Events\SpawnActorEvent.cs" />
+    <Compile Include="Engine\Events\SpawnActorEventParams.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
