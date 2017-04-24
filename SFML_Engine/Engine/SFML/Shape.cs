@@ -8,12 +8,14 @@ namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Base class for textured shapes with outline
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public abstract class Shape : Actor, Drawable
+		////////////////////////////////////////////////////////////
+		/// CARBON COPY OF SHAPE CLASS IN sfml-graphics PROJECT!
+		/// 
+		/// <summary>
+		/// Base class for textured shapes with outline
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		public abstract class Shape : Actor, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

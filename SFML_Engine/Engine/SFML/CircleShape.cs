@@ -5,12 +5,14 @@ namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Specialized shape representing a circle
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public class CircleShape : Shape
+		////////////////////////////////////////////////////////////
+		/// CARBON COPY OF CIRCLESHAPE CLASS IN sfml-graphics PROJECT!
+		/// 
+		/// <summary>
+		/// Specialized shape representing a circle
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		public class CircleShape : Shape
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

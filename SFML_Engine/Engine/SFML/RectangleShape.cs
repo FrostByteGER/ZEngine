@@ -4,12 +4,14 @@ namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Specialized shape representing a rectangle
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public class RectangleShape : Shape
+		////////////////////////////////////////////////////////////
+		/// CARBON COPY OF RECTANGLESHAPE CLASS IN sfml-graphics PROJECT!
+		/// 
+		/// <summary>
+		/// Specialized shape representing a rectangle
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		public class RectangleShape : Shape
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

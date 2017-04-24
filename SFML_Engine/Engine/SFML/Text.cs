@@ -9,15 +9,18 @@ namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// This class defines a graphical 2D text, that can be drawn on screen
-        /// </summary>
-        /// <remarks>
-        /// See also the note on coordinates and undistorted rendering in SFML.Graphics.Transformable.
-        /// </remarks>
-        ////////////////////////////////////////////////////////////
-        public class Text : Transformable, Drawable
+		////////////////////////////////////////////////////////////
+		///
+		/// CARBON COPY OF TEXT CLASS IN sfml-graphics PROJECT!
+		/// 
+		/// <summary>
+		/// This class defines a graphical 2D text, that can be drawn on screen
+		/// </summary>
+		/// <remarks>
+		/// See also the note on coordinates and undistorted rendering in SFML.Graphics.Transformable.
+		/// </remarks>
+		////////////////////////////////////////////////////////////
+		public class Text : Transformable, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

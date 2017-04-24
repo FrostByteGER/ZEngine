@@ -5,12 +5,14 @@ namespace SFML_Engine.Engine.SFML
 {
     namespace Graphics
     {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Specialized shape representing a convex polygon
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public class ConvexShape : Shape
+		////////////////////////////////////////////////////////////
+		/// CARBON COPY OF CONVEXSHAPE CLASS IN sfml-graphics PROJECT!
+		/// 
+		/// <summary>
+		/// Specialized shape representing a convex polygon
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		public class ConvexShape : Shape
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
