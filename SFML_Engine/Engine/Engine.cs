@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
 
@@ -24,8 +25,8 @@ namespace SFML_Engine.Engine
 
         public RenderWindow EngineWindow
         {
-            get { return engineWindow; }
-            private set { engineWindow = value; }
+            get => engineWindow;
+	        private set => engineWindow = value;
         }
 
         public Clock EngineClock { get; private set; }
@@ -50,7 +51,7 @@ namespace SFML_Engine.Engine
         public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 
-	    public Queue<Event> EngineEvents { get; private set; } = new Queue<Event>();
+	    public Queue<EngineEvent> EngineEvents { get; private set; } = new Queue<EngineEvent>();
 
 	    public uint ActorIDCounter { get; set; } = 0;
 		public uint LevelIDCounter { get; set; } = 0;
@@ -166,8 +167,12 @@ namespace SFML_Engine.Engine
 				// Execute all pending events in the Queue
 	            while (EngineEvents.Count > 0)
 	            {
-		            EngineEvents.Dequeue().ExecuteEvent();
-	            }
+		            var engineEvent = EngineEvents.Dequeue();
+		            if (!engineEvent.Revoked)
+					{
+						engineEvent.ExecuteEvent();
+					}
+				}
                 FramesRendered++;
             }
 	        foreach (var level in Levels)
@@ -206,7 +211,17 @@ namespace SFML_Engine.Engine
 			Levels.Add(level);
         }
 
-        public void RegisterPlayer(PlayerController pc)
+	    public bool UnregisterLevel(Level level)
+	    {
+		    return Levels.Remove(level);
+	    }
+
+		public int UnregisterLevel(uint levelID)
+		{
+			return Levels.RemoveAll(level => level.LevelID == levelID); // Guaranteed to be unique
+		}
+
+		public void RegisterPlayer(PlayerController pc)
         {
             Players.Add(pc);
             pc.ID = (uint) Players.Count - 1;
@@ -217,7 +232,17 @@ namespace SFML_Engine.Engine
             }
         }
 
-	    public void RegisterEvent(Event e)
+		public bool UnegisterPlayer(PlayerController pc)
+		{
+			return Players.Remove(pc);
+		}
+
+		public int UnregisterPlayer(uint playerID)
+		{
+			return Players.RemoveAll(player => player.ID == playerID); // Guaranteed to be unique
+		}
+
+		public void RegisterEvent(EngineEvent e)
 	    {
 		    EngineEvents.Enqueue(e);
 	    }

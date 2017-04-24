@@ -43,11 +43,6 @@ namespace SFML_Engine.Engine
                 var drawableActor = actor as SpriteActor;
                 if (drawableActor != null)
                 {
-					if (actor.deled)
-					{
-						RemoveActer.Add(actor);
-						continue;
-					}
 					if (drawableActor.CollisionShape.show && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{
 						BoxShape box = (BoxShape)drawableActor.CollisionShape;
@@ -89,11 +84,21 @@ namespace SFML_Engine.Engine
         {
 	        actor.ID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
+	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
 			Actors.Add(actor);
-
         }
 
-	    public void OnGameStart()
+		public bool UnregisterActor(Actor actor)
+		{
+			return Actors.Remove(actor);
+		}
+
+		public int UnregisterActor(uint actorID)
+		{
+			return Actors.RemoveAll(actor => actor.ID == actorID); // Guaranteed to be unique
+		}
+
+		public void OnGameStart()
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();

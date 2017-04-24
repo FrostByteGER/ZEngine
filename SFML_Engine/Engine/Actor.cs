@@ -8,6 +8,7 @@ namespace SFML_Engine.Engine
 	public class Actor : Transformable, IActorable, IGameInterface
 	{
 		public uint ID { get; internal set; } = 0;
+		public int LevelID { get; internal set; } = -1;
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; }
 		public bool Movable { get; set; } = true;
@@ -21,7 +22,7 @@ namespace SFML_Engine.Engine
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		public bool hasGravity { get; set; } = false;
 
-		public bool deled = false;
+		public bool MarkedForRemoval = false;
 
 		public Actor()
 		{
@@ -71,7 +72,6 @@ namespace SFML_Engine.Engine
 
 		public override bool Equals(object obj)
 		{
-			return System.Object.ReferenceEquals(this, obj);
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;

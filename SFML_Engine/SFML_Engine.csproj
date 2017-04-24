@@ -115,9 +115,10 @@
   <ItemGroup>
     <Compile Include="Engine\Actor.cs" />
     <Compile Include="Engine\ActorComponent.cs" />
+    <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
-    <Compile Include="Engine\Event.cs" />
+    <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\GameMode.cs" />
     <Compile Include="Engine\IActorable.cs" />
     <Compile Include="Engine\Physics\ICollidable.cs" />
@@ -130,6 +131,8 @@
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\PlayerController.cs" />
     <Compile Include="Engine\Physics\SphereShape.cs" />
+    <Compile Include="Engine\Events\RemoveActorEvent.cs" />
+    <Compile Include="Engine\Events\RemoveActorParams.cs" />
     <Compile Include="Engine\SFML\CircleShape.cs" />
     <Compile Include="Engine\SFML\ConvexShape.cs" />
     <Compile Include="Engine\SFML\RectangleShape.cs" />

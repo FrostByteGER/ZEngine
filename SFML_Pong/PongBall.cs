@@ -62,13 +62,14 @@ namespace SFML_Pong
 			}
 			else
 			{
-				if (actor.GetType() == typeof(PowerUP) && !actor.deled)
+				if (actor.GetType() == typeof(PowerUP))
 				{
 					actor.IsOverlapping(this);
-					actor.deled = true;
 				}
 				return;
 			}
+			//engine.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+
 			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
 			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int)MaxVelocity/2, (int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity / 2,(int)MaxVelocity));
 		}
