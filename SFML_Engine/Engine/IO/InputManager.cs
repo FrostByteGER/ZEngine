@@ -121,14 +121,14 @@ namespace SFML_Engine.Engine.IO
 		}
 
 	    public void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
-			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoysticButtonPressed
-			, EventHandler<JoystickButtonEventArgs> onJoysticButtonReleased, EventHandler<JoystickMoveEventArgs> onJoysticButtonMoved)
+			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
+			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
 	    {
-			JoystickConnected += OnJoystickConnected;
-			JoystickDisconnected += OnJoystickDisconnected;
-			JoystickButtonPressed += OnJoystickButtonPressed;
-			JoystickButtonReleased += OnJoystickButtonReleased;
-			JoystickMoved += OnJoystickMoved;
+			JoystickConnected += onJoystickConnected;
+			JoystickDisconnected += onJoystickDisconnected;
+			JoystickButtonPressed += onJoystickButtonPressed;
+			JoystickButtonReleased += onJoystickButtonReleased;
+			JoystickMoved += onJoystickMoved;
 		}
 
 		public void RegisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
