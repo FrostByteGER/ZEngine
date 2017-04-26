@@ -7,6 +7,7 @@ namespace SFML_Engine.Engine.Events
 		public RemoveActorEvent(T parameters) : base(parameters)
 		{
 			parameters.RemovableActor.MarkedForRemoval = true;
+			parameters.RemovableActor.Visible = false;
 		}
 
 		public override void ExecuteEvent()

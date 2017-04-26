@@ -5,7 +5,7 @@ using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Engine.Engine
 {
-    public class SpriteActor : SFML.Graphics.Sprite
+    public class SpriteActor : Sprite
     {
 
 	    public bool SnapOriginToCenter { get; set; } = true;

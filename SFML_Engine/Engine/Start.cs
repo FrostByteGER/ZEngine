@@ -10,7 +10,6 @@ namespace SFML_Engine.Engine
 	        Engine engine = Engine.Instance;
 	        engine.EngineWindowWidth = 800;
 	        engine.EngineWindowHeight = 600;
-	        engine.GameName = "Engine";
 			engine.InitEngine();
             var Level = new Level();
             var actor = new SpriteActor();

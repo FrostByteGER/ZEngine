@@ -54,10 +54,15 @@ namespace SFML_Engine.Engine.Physics
 					{
 						foreach (Actor activeActor in ActorGroups[groupNameActive])
 						{
+							if (activeActor.MarkedForRemoval)
+							{
+								continue;
+							}
 							foreach (Actor passiveActor in ActorGroups[groupNamePassive])
 							{
 
-								if (System.Object.ReferenceEquals(activeActor, passiveActor))
+								// If both actors are one and the same or the passive one is marked for removal, then continue
+								if (activeActor.Equals(passiveActor) || passiveActor.MarkedForRemoval)
 								{
 									continue;
 								}
@@ -644,13 +649,23 @@ namespace SFML_Engine.Engine.Physics
 			return false;
 		}
 
-		//Collid
-
-		//extra
-
-		private Vector2f addVectorfToVectorf(Vector2f v1, Vector2f v2)
-		{
-			return v1 + v2;
-		}
+	    internal void Shutdown()
+	    {
+		    foreach (var list in ActorGroups)
+		    {
+			    list.Value.Clear();
+		    }
+		    ActorGroups.Clear();
+		    foreach (var col in CollidablePartner)
+		    {
+			    col.Value.Clear();
+		    }
+		    CollidablePartner.Clear();
+			foreach (var overlap in OverlapPartner)
+			{
+				overlap.Value.Clear();
+			}
+		    OverlapPartner.Clear();
+	    }
 	}
 }

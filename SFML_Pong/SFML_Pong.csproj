@@ -70,6 +70,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SFML_Pong.StartPong</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-audio-2.dll</HintPath>
@@ -83,6 +86,7 @@
     <Reference Include="sfmlnet-window-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -92,7 +96,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameInfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>GameInfo.settings</DependentUpon>
+    </Compile>
     <Compile Include="PongBall.cs" />
+    <Compile Include="PongGameInfo.cs" />
     <Compile Include="PongGameMode.cs" />
     <Compile Include="PongPlayerController.cs" />
     <Compile Include="PowerUP.cs" />
@@ -101,6 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Packages.cfg" />
+    <None Include="GameInfo.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>GameInfo.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +126,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\DragonBall4Star.png" />
     <Content Include="Assets\Goku.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

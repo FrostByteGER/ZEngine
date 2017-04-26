@@ -16,6 +16,7 @@ namespace SFML_Pong
 
 		public PongPlayerController(SpriteActor playerPawn) : base(playerPawn)
 		{
+
 		}
 
 		public override void RegisterInput(Engine engine)
@@ -40,24 +41,28 @@ namespace SFML_Pong
 			{
 				if (Input.WPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, -150.0f);
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
+					//PlayerPawn.Velocity = new Vector2f(0.0f, -400.0f);
 				}
 
 				if (Input.SPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 150.0f);
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
+					//PlayerPawn.Velocity = new Vector2f(0.0f, 400.0f);
 				}
 
 			}else if (ID == 1)
 			{
 				if (Input.UpPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, -150.0f);
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
+					//PlayerPawn.Velocity = new Vector2f(0.0f, -400.0f);
 				}
 
 				if (Input.DownPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 150.0f);
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
+					//PlayerPawn.Velocity = new Vector2f(0.0f, 400.0f);
 				}
 			}
 		}
@@ -72,13 +77,13 @@ namespace SFML_Pong
 				if (!Input.WPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-					//PlayerPawn.Velocity = new Vector2f(0f, 0f);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 
 				if (!Input.SPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-					//PlayerPawn.Velocity = new Vector2f(0f, 0f);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 			}
 			else if (ID == 1)
@@ -86,13 +91,13 @@ namespace SFML_Pong
 				if (!Input.UpPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-					//PlayerPawn.Velocity = new Vector2f(0f, 0f);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 
 				if (!Input.DownPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-					//PlayerPawn.Velocity = new Vector2f(0f, 0f);
+					PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 			}
 			Console.WriteLine(PlayerPawn.ActorName+" "+PlayerPawn.Velocity);

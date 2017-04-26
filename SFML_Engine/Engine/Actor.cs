@@ -3,6 +3,7 @@ using SFML.System;
 using SFML_Engine.Engine.Physics;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SFML_Engine.Engine
 {
@@ -24,7 +25,9 @@ namespace SFML_Engine.Engine
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		public bool HasGravity { get; set; } = false;
 
-		public bool MarkedForRemoval = false;
+		public bool MarkedForRemoval { get; internal set; } = false;
+		public bool Visible { get; set; } = true;
+
 
 		public Actor()
 		{			
@@ -38,7 +41,14 @@ namespace SFML_Engine.Engine
 		{
 		}
 
+
+
 		public virtual void Move(float x, float y)
+		{
+			Position = new Vector2f(x, y);
+		}
+
+		public void MoveAbsolute(float x, float y)
 		{
 			Position = new Vector2f(x, y);
 		}
@@ -46,6 +56,51 @@ namespace SFML_Engine.Engine
 		public virtual void Move(Vector2f position)
 		{
 			Position = position;
+		}
+
+		public void MoveAbsolute(Vector2f position)
+		{
+			Position = position;
+		}
+
+		public void Rotate(float angle)
+		{
+			Rotation += angle;
+		}
+
+		public void Rotate(Quaternion angle)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RotateAbsolute(float angle)
+		{
+			Rotation = angle;
+		}
+
+		public void RotateAbsolute(Quaternion angle)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ScaleActor(float x, float y)
+		{
+			base.Scale += new Vector2f(x, y);
+		}
+
+		public void ScaleActor(Vector2f scale)
+		{
+			base.Scale += scale;
+		}
+
+		public void ScaleAbsolute(float x, float y)
+		{
+			base.Scale = new Vector2f(x, y);
+		}
+
+		public void ScaleAbsolute(Vector2f scale)
+		{
+			base.Scale = scale;
 		}
 
 		public virtual void Tick(float deltaTime)

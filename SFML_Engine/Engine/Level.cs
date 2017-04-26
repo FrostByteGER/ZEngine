@@ -46,7 +46,7 @@ namespace SFML_Engine.Engine
             foreach (var actor in Actors)
             {
                 var drawableActor = actor as SpriteActor;
-                if (drawableActor != null)
+                if (drawableActor != null && drawableActor.Visible)
                 {
 					if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{

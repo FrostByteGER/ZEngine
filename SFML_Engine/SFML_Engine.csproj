@@ -105,6 +105,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -115,10 +116,13 @@
   <ItemGroup>
     <Compile Include="Engine\Actor.cs" />
     <Compile Include="Engine\ActorComponent.cs" />
+    <Compile Include="Engine\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorEventParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
+    <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\IO\ConfigReader.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
@@ -126,7 +130,7 @@
     <Compile Include="Engine\IActorable.cs" />
     <Compile Include="Engine\Physics\ICollidable.cs" />
     <Compile Include="Engine\IGameInterface.cs" />
-    <Compile Include="Engine\Physics\IMovable.cs" />
+    <Compile Include="Engine\Physics\ITransformable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
     <Compile Include="Engine\ITickable.cs" />
@@ -147,10 +151,21 @@
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EngineInfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>EngineInfo.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Config.cfg" />
+    <None Include="Assets\Packages.cfg" />
     <None Include="packages.config" />
+    <None Include="EngineInfo.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>EngineInfo.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
@@ -164,9 +179,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

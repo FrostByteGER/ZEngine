@@ -11,6 +11,8 @@ namespace SFML_Pong
 {
 	public class PongBall : SpriteActor
 	{
+
+
 		public Actor LastPlayerCollision { get; set; }
 		public PongBall()
 		{

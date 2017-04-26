@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFML.Graphics;
 using SFML_Engine.Engine;
 using SFML.System;
 using SFML_Engine.Engine.Events;
@@ -25,6 +26,7 @@ namespace SFML_Pong
 				PongBall ball = (PongBall)actor;
 
 				SphereShape ss = (SphereShape)ball.CollisionShape;
+				Texture t = ball.Texture;
 
 				Random r = new Random();
 
