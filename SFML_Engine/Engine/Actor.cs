@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Physics;
+using System;
+using System.Collections.Generic;
 
 namespace SFML_Engine.Engine
 {
 	public class Actor : Transformable, IActorable, IGameInterface
 	{
-		public uint ID { get; internal set; } = 0;
+		public uint ActorID { get; internal set; } = 0;
 		public int LevelID { get; internal set; } = -1;
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; }
@@ -81,12 +81,12 @@ namespace SFML_Engine.Engine
 
 		protected bool Equals(Actor other)
 		{
-			return ID == other.ID;
+			return ActorID == other.ActorID;
 		}
 
 		public override int GetHashCode()
 		{
-			return (int) ID;
+			return (int) ActorID;
 		}
 
 		public void OnGameStart()
@@ -102,6 +102,12 @@ namespace SFML_Engine.Engine
 		public void OnGameEnd()
 		{
 			throw new NotImplementedException();
+		}
+
+		public ActorInformation GenerateActorInformation()
+		{
+			return new ActorInformation(ActorID, LevelID, Position, Rotation, Scale, Origin, Movable, Velocity, MaxVelocity,
+				Acceleration, MaxAcceleration, Mass, friction, hasGravity);
 		}
 
 	}

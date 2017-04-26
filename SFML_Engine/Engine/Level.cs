@@ -85,23 +85,23 @@ namespace SFML_Engine.Engine
 
         public void RegisterActor(Actor actor)
         {
-			actor.ID = Engine.ActorIDCounter;
+			actor.ActorID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
 	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
-			Console.WriteLine("Trying to register Actor: " + actor.ActorName + " ID: " + actor.ID);
+			Console.WriteLine("Trying to register Actor: " + actor.ActorName + " ActorID: " + actor.ActorID);
 			Actors.Add(actor);
         }
 
 		public bool UnregisterActor(Actor actor)
 		{
-			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + " ID: " + actor.ID);
+			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + " ActorID: " + actor.ActorID);
 			return Actors.Remove(actor);
 		}
 
 		public int UnregisterActor(uint actorID)
 		{
-			Console.WriteLine("Trying to remove Actor with ID: " + actorID);
-			return Actors.RemoveAll(actor => actor.ID == actorID); // Guaranteed to be unique
+			Console.WriteLine("Trying to remove Actor with ActorID: " + actorID);
+			return Actors.RemoveAll(actor => actor.ActorID == actorID); // Guaranteed to be unique
 		}
 
 		public void OnGameStart()
@@ -131,7 +131,7 @@ namespace SFML_Engine.Engine
 
 	    public Actor FindActorInLevel(uint id)
 	    {
-		    return Actors.Find(x => x.ID == id);
+		    return Actors.Find(x => x.ActorID == id);
 		}
 
 	    public List<Actor> FindActorsInLevel(string name)

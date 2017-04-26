@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
@@ -39,7 +40,10 @@ namespace SFML_Pong
 			if (Player1.Score == WinScore ^ Player2.Score == WinScore)
 			{
 				Console.WriteLine("GAME OVER!");
-				Engine.Instance.ShutdownLevel(0);
+				//Thread.Sleep(3000);
+				Console.WriteLine("RESTARTING GAME!");
+				Player1.Score = 0;
+				Player2.Score = 0;
 			}
 
 			if (PowerUPSpawnTimer >= PowerUPSpawnFrequency)
