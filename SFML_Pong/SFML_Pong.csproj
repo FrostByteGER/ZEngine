@@ -72,16 +72,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-system-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-system-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-system-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.5\lib\sfmlnet-window-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -122,11 +122,11 @@ robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /
 robocopy "$(ProjectDir)Assets" "Assets\$(ProjectName)" /COPY:DAT /DCOPY:T /E
 if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets')" />
+  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.5\build\TriNityGER.SFML.Net.targets'))" />
+    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets'))" />
   </Target>
 </Project>
