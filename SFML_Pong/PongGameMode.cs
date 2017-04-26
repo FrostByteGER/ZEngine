@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
@@ -14,7 +15,7 @@ namespace SFML_Pong
 		public uint WinScore { get; set; } = 3;
 
 		public float PowerUPSpawnTimer = 0.0f;
-		public float PowerUPSpawnFrequency = 20f;
+		public float PowerUPSpawnFrequency = 1f;
 
 		public override void OnGameStart()
 		{
@@ -60,7 +61,7 @@ namespace SFML_Pong
 
 				powerUP.Position = new SFML.System.Vector2f((float) (60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float) (60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
 
-				LevelReference.Actors.Add(powerUP);
+				Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this,powerUP,LevelReference.LevelID)));
 
 				// TODO add to PhysicsEngine
 				LevelReference.Engine.PhysicsEngine.AddActorToGroup("PowerUP", powerUP);

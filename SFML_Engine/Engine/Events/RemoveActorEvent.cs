@@ -11,8 +11,13 @@ namespace SFML_Engine.Engine.Events
 
 		public override void ExecuteEvent()
 		{
-			var actor = Parameters.RemovableActor;
-			Engine.Instance.FindLevel((uint) actor.LevelID).UnregisterActor(actor);
+			if (Parameters.RemovableActor != null)
+			{
+				var actor = Parameters.RemovableActor;
+				Engine.Instance.FindLevel((uint)actor.LevelID).UnregisterActor(actor);
+				return;
+			}
+			Console.WriteLine("Failed to Remove Actor");
 		}
 	}
 }

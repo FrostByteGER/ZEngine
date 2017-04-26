@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Physics;
@@ -12,10 +13,11 @@ namespace SFML_Engine.Engine
     {
 
 	    public uint LevelID { get; internal set; } = 0;
-        public List<Actor> Actors{ get; set; } = new List<Actor>();
-	    public CircleShape CollisionSphere { get; set; } = new CircleShape(10.0f);
-	    public RectangleShape CollisionBox { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
-		private List<Actor> RemoveActer { get; set;} = new List<Actor>();
+
+	    internal List<Actor> Actors { get; set; } = new List<Actor>();
+
+	    public CircleShape CollisionCircle { get; set; } = new CircleShape(10.0f);
+	    public RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
 
         public Engine Engine { get; set; }
 
@@ -48,37 +50,26 @@ namespace SFML_Engine.Engine
                 {
 					if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{
-						CollisionBox.Size = ((BoxShape)drawableActor.CollisionShape).BoxExtent;
+						CollisionRectangle.Size = ((BoxShape)drawableActor.CollisionShape).BoxExtent;
 
-						CollisionBox.Position = actor.Position;
-						CollisionBox.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+						CollisionRectangle.Position = actor.Position;
+						CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
 
-						renderWindow.Draw(CollisionBox);
+						renderWindow.Draw(CollisionRectangle);
 					}
 					else if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
 					{
-						CollisionSphere.Radius = ((SphereShape)drawableActor.CollisionShape).SphereDiameter / 2.0f;
+						CollisionCircle.Radius = ((SphereShape)drawableActor.CollisionShape).SphereDiameter / 2.0f;
 
-						CollisionSphere.Position = actor.Position;
-						CollisionSphere.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+						CollisionCircle.Position = actor.Position;
+						CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
 
-						renderWindow.Draw(CollisionSphere);
+						renderWindow.Draw(CollisionCircle);
 					}
 
 					renderWindow.Draw(drawableActor);
                 }
             }
-
-			//Remove Acter from Game 
-			foreach (var actor in RemoveActer)
-			{
-				Engine.PhysicsEngine.RemoveActorFromGroup(actor);
-
-				Console.WriteLine(Actors.Remove(actor));
-				
-			}
-
-			RemoveActer.Clear();
 		}
 
         public void RegisterActor(Actor actor)
@@ -141,5 +132,10 @@ namespace SFML_Engine.Engine
 	    {
 		    return Actors.FindAll(x => x.GetType() == actor);
 		}
+
+	    public ReadOnlyCollection<Actor> GetActors()
+	    {
+		    return Actors.AsReadOnly();
+	    }
 	}
 }

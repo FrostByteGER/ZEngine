@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML_Engine.Engine;
 using SFML.System;
+using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 
 namespace SFML_Pong
@@ -19,7 +20,7 @@ namespace SFML_Pong
 
 		public override void IsOverlapping(Actor actor)
 		{
-			if (actor.GetType() == typeof(PongBall))
+			if (!MarkedForRemoval && actor.GetType() == typeof(PongBall))
 			{
 				PongBall ball = (PongBall)actor;
 
@@ -49,7 +50,7 @@ namespace SFML_Pong
 				}
 
 				Console.WriteLine("Overlap");
-			
+				Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
 			}
 		}
 	}

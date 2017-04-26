@@ -8,6 +8,7 @@ namespace SFML_Engine.Engine
 {
 	public class Actor : Transformable, IActorable, IGameInterface
 	{
+
 		public uint ActorID { get; internal set; } = 0;
 		public int LevelID { get; internal set; } = -1;
 		public string ActorName { get; set; } = "Actor";
@@ -18,18 +19,15 @@ namespace SFML_Engine.Engine
 		public Vector2f Acceleration { get; set; }
 		public float MaxAcceleration { get; set; } = -1f;
 
-		public float friction = 0.0f;
+		public float Friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
-		public bool hasGravity { get; set; } = false;
+		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval = false;
 
 		public Actor()
-		{
-
-			// System.Object.ReferenceEquals(activeActor, passiveActor)
-			
+		{			
 		}
 
 		public Actor(Transformable transformable) : base(transformable)
@@ -107,7 +105,7 @@ namespace SFML_Engine.Engine
 		public ActorInformation GenerateActorInformation()
 		{
 			return new ActorInformation(ActorID, LevelID, Position, Rotation, Scale, Origin, Movable, Velocity, MaxVelocity,
-				Acceleration, MaxAcceleration, Mass, friction, hasGravity);
+				Acceleration, MaxAcceleration, Mass, Friction, HasGravity);
 		}
 
 	}

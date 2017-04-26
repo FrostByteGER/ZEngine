@@ -33,7 +33,9 @@ namespace SFML_Engine.Engine
         public Clock EngineLoopClock { get; private set; }
         public Clock FPSClock { get; private set; }
         public Time DeltaTime { get; private set; }
-        private Time FPSStartTime { get; set; }
+	    public float Timestep { get; set; } = 1.0f / 100.0f;
+
+		private Time FPSStartTime { get; set; }
         public Time FPSPassedTime { get; set; }
         private uint FramesRendered { get; set; }
         public double FPS { get; private set; }
@@ -103,7 +105,6 @@ namespace SFML_Engine.Engine
 
             
             double accumulator = 0.0;
-            double timestep = 1.0/100.0;
             double time = 0.0;
             Time currentTime = Time.Zero;
             FPSStartTime = Time.Zero;
@@ -138,8 +139,8 @@ namespace SFML_Engine.Engine
 
 					FramesRendered = 0;
                 }
-
-				while (accumulator >= timestep)
+	            var test = 1;
+				while (accumulator >= Timestep)
                 {
                     //Console.WriteLine("Engine Tick!");
                     foreach (var level in Levels)
@@ -152,8 +153,10 @@ namespace SFML_Engine.Engine
                         PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds(), ref actors);
                         level.LevelTick(DeltaTime.AsSeconds());
                     }
-                    time += timestep;
-                    accumulator -= timestep;
+                    time += Timestep;
+                    accumulator -= Timestep;
+					Console.WriteLine(test);
+	                ++test;
                 }
 
                 engineWindow.Clear();
@@ -182,7 +185,7 @@ namespace SFML_Engine.Engine
 			ShutdownEngine();
         }
 
-        private void ShutdownEngine()
+	    private void ShutdownEngine()
         {
             Console.WriteLine("Shutting down Engine!");
         }

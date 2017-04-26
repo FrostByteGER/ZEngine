@@ -62,7 +62,7 @@ namespace SFML_Pong
 	        leftPad.CollisionShape = new BoxShape(20, 175);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
 			leftPad.CollisionShape.ShowCollisionShape = true;
-			leftPad.friction = 0.01f;
+			leftPad.Friction = 0.01f;
 
 	        var rightPad = new SpriteActor() {Position = new Vector2f(750, 30)};
 	        rightPad.ActorName = "Right Pad";
@@ -71,7 +71,7 @@ namespace SFML_Pong
 	        rightPad.CollisionShape = new BoxShape(20, 175);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
 			rightPad.CollisionShape.ShowCollisionShape = true;
-			rightPad.friction = 0.01f;
+			rightPad.Friction = 0.01f;
 
 			//var ball = new PongBall(ballTexture);
 			var ball = new PongBall();
