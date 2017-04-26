@@ -1,5 +1,4 @@
-﻿using System;
-using SFML.System;
+﻿using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 

@@ -77,27 +77,34 @@ namespace SFML_Engine.Engine
 			actor.ActorID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
 	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
-			Console.WriteLine("Trying to register Actor: " + actor.ActorName + " ActorID: " + actor.ActorID);
+			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
 			Actors.Add(actor);
         }
 
 		public bool UnregisterActor(Actor actor)
 		{
-			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + " ActorID: " + actor.ActorID);
-			return Actors.Remove(actor);
+			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
+			actor.OnActorDestroy();
+			var removal = Actors.Remove(actor);
+			removal = Engine.PhysicsEngine.RemoveActorFromGroups(actor);
+			return removal;
 		}
 
-		public int UnregisterActor(uint actorID)
+		public bool UnregisterActor(uint actorID)
 		{
-			Console.WriteLine("Trying to remove Actor with ActorID: " + actorID);
-			return Actors.RemoveAll(actor => actor.ActorID == actorID); // Guaranteed to be unique
+			Console.WriteLine("Trying to remove Actor with ActorID: #" + actorID);
+			var actor = FindActorInLevel(actorID);
+			return UnregisterActor(actor);
 		}
 
 		public void OnGameStart()
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
-			//TODO: Call OnGameStart event on all preregistered actors
+		    foreach (var actor in Actors)
+		    {
+			    actor.OnGameStart();
+		    }
 	    }
 
 	    public void OnGamePause()
@@ -110,8 +117,11 @@ namespace SFML_Engine.Engine
 	    {
 			GameMode.OnGameEnd();
 		    LevelTicking = false;
-		    //TODO: Call OnGamePause event on all actors
-	    }
+			foreach (var actor in Actors)
+			{
+				actor.OnGameEnd();
+			}
+		}
 
 		public Actor FindActorInLevel(string name)
 	    {

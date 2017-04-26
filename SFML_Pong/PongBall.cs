@@ -2,8 +2,6 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using SFML_Engine.Engine.Events;
-using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
@@ -58,15 +56,23 @@ namespace SFML_Pong
 			if (actor.ActorName == "Left Border")
 			{
 				PongPlayerController player = engine.Players[1] as PongPlayerController;
-				if (player != null) ++player.Score;
+				if (player != null)
+				{
+					++player.Score;
+					Console.WriteLine("Score for Player 2!!!");
+				}
 			}else if (actor.ActorName == "Right Border")
 			{
 				PongPlayerController player = engine.Players[0] as PongPlayerController;
-				if (player != null) ++player.Score;
+				if (player != null)
+				{
+					Console.WriteLine("Score for Player 1!!!");
+					++player.Score;
+				}
 			}
 			else
 			{
-				if (actor.GetType() == typeof(PowerUP))
+				if (actor.GetType() == typeof(PowerUp))
 				{
 					actor.IsOverlapping(this);
 				}
@@ -74,7 +80,7 @@ namespace SFML_Pong
 			}
 
 			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
-			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int)MaxVelocity/2, (int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity / 2,(int)MaxVelocity));
+			Velocity = new Vector2f(EngineMath.EngineRandom.Next(-(int)MaxVelocity, (int) MaxVelocity), EngineMath.EngineRandom.Next(-(int)MaxVelocity,(int)MaxVelocity));
 		}
 	}
 }

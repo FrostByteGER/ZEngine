@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFML_Engine.Engine.Events
+﻿namespace SFML_Engine.Engine.Events
 {
 	public class SpawnActorEvent<T> : EngineEvent<T> where T : SpawnActorEventParams
 	{
