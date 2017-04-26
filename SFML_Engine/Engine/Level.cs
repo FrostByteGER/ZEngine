@@ -13,6 +13,8 @@ namespace SFML_Engine.Engine
 
 	    public uint LevelID { get; internal set; } = 0;
         public List<Actor> Actors{ get; set; } = new List<Actor>();
+	    public CircleShape CollisionSphere { get; set; } = new CircleShape(10.0f);
+	    public RectangleShape CollisionBox { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
 		private List<Actor> RemoveActer { get; set;} = new List<Actor>();
 
         public Engine Engine { get; set; }
@@ -46,25 +48,21 @@ namespace SFML_Engine.Engine
                 {
 					if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 					{
-						BoxShape box = (BoxShape)drawableActor.CollisionShape;
+						CollisionBox.Size = ((BoxShape)drawableActor.CollisionShape).BoxExtent;
 
-						RectangleShape hit = new RectangleShape(new Vector2f(box.BoxExtent.X, box.BoxExtent.Y));
+						CollisionBox.Position = actor.Position;
+						CollisionBox.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
 
-						hit.Position = actor.Position;
-						hit.FillColor = box.CollisionShapeColor;
-
-						renderWindow.Draw(hit);
+						renderWindow.Draw(CollisionBox);
 					}
 					else if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
 					{
-						SphereShape sphere = (SphereShape)drawableActor.CollisionShape;
+						CollisionSphere.Radius = ((SphereShape)drawableActor.CollisionShape).SphereDiameter / 2.0f;
 
-						CircleShape hit = new CircleShape(sphere.SphereDiameter/2.0f);
+						CollisionSphere.Position = actor.Position;
+						CollisionSphere.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
 
-						hit.Position = actor.Position;
-						hit.FillColor = sphere.CollisionShapeColor;
-
-						renderWindow.Draw(hit);
+						renderWindow.Draw(CollisionSphere);
 					}
 
 					renderWindow.Draw(drawableActor);
