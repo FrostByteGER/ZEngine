@@ -158,13 +158,13 @@ namespace SFML_Engine.Engine
 		                    continue;
 	                    }
                         var actors = level.Actors;
-                        PhysicsEngine.PhysicsTick(DeltaTime.AsSeconds(), ref actors);
+                        PhysicsEngine.PhysicsTick(Timestep, ref actors);
                         level.LevelTick(DeltaTime.AsSeconds());
                     }
                     time += Timestep;
                     accumulator -= Timestep;
-					Console.WriteLine(test);
-	                ++test;
+					//Console.WriteLine(test);
+	                //++test;
                 }
 
                 engineWindow.Clear();

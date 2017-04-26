@@ -72,12 +72,6 @@ namespace SFML_Pong
 				}
 				return;
 			}
-			//engine.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
-			//var testActor = new PongBall {CollisionShape = new SphereShape(100.0f)};
-			//testActor.CollisionShape.Origin = testActor.Origin;
-			//testActor.Position = new Vector2f(EngineMath.EngineRandom.Next(0, 2) * 200, 250);
-			//testActor.CollisionShape.ShowCollisionShape = true;
-			//engine.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, testActor, 0)));
 
 			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
 			Velocity = new Vector2f(EngineMath.EngineRandom.Next((int)MaxVelocity/2, (int) MaxVelocity), EngineMath.EngineRandom.Next((int)MaxVelocity / 2,(int)MaxVelocity));

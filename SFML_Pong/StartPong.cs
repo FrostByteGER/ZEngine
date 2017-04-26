@@ -57,7 +57,7 @@ namespace SFML_Pong
             var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
 			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
-			var leftPad = new SpriteActor(leftPadTexture);
+			var leftPad = new SpriteActor();
 	        leftPad.ActorName = "Left Pad";
 	        leftPad.MaxVelocity = 700.0f;
 	        leftPad.Position = new Vector2f(30, 30);
@@ -66,7 +66,7 @@ namespace SFML_Pong
 			leftPad.CollisionShape.ShowCollisionShape = true;
 			leftPad.Friction = 0.01f;
 
-		    var rightPad = new SpriteActor(rightPadTexture);
+		    var rightPad = new SpriteActor();
 		    rightPad.Position = new Vector2f(650, 30);
 	        rightPad.ActorName = "Right Pad";
 			rightPad.MaxVelocity = 700.0f;
@@ -75,13 +75,13 @@ namespace SFML_Pong
 			rightPad.CollisionShape.ShowCollisionShape = true;
 			rightPad.Friction = 0.01f;
 
-			var ball = new PongBall(ballTexture);
+			var ball = new PongBall();
 			ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
 	        ball.CollisionShape.Origin = ball.Origin;
 			ball.Position = new Vector2f(400,250);
-	        ball.MaxVelocity = 200.0f;
-			ball.Velocity = new Vector2f(100,0);
+	        ball.MaxVelocity = 500.0f;
+			ball.Velocity = new Vector2f(250,0);
 			ball.CollisionShape.ShowCollisionShape = true;
 
 	        physics.AddActorToGroup("Pads",leftPad);
