@@ -4,13 +4,12 @@ using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Utility;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
+using SFML_Engine.Engine.Physics;
 
 namespace SFML_Pong
 {
 	public class PongBall : SpriteActor
 	{
-
-
 		public Actor LastPlayerCollision { get; set; }
 		public PongBall()
 		{
@@ -42,6 +41,24 @@ namespace SFML_Pong
 			{
 				LastPlayerCollision = actor;
 				Console.WriteLine("COLLISION WITH: " + actor.ActorName);
+
+				if (this.CollisionShape.GetType() == typeof(SphereShape) && actor.CollisionShape.GetType() == typeof(BoxShape))
+				{
+					SphereShape cs = (SphereShape)this.CollisionShape;
+					BoxShape bc = (BoxShape)actor.CollisionShape;
+
+					Vector2f norm = cs.GetMid(this.Position) - bc.GetMid(actor.Position);
+
+					norm = new Vector2f(norm.X/(Math.Abs(norm.X) + Math.Abs(norm.Y)), norm.Y/ (Math.Abs(norm.X) + Math.Abs(norm.Y)));
+
+					this.Velocity = new Vector2f(norm.X * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)), norm.Y * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)));
+					this.Acceleration = new Vector2f(norm.X * Math.Abs(Acceleration.X + Acceleration.Y), norm.Y * Math.Abs(Acceleration.X + Acceleration.Y));
+
+				}
+				
+
+
+
 			}
 		}
 
