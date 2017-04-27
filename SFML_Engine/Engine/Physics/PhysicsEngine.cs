@@ -95,30 +95,69 @@ namespace SFML_Engine.Engine.Physics
 
 									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
 									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.Y - sphere.getMid(sphereActor.Position).Y));
-
-									//bounce from eage
-									if ((sphere.SphereDiameter/2) * (sphere.SphereDiameter / 2) > distanceX * distanceX + distanceY * distanceY)
+									
+									//isInside
+									if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
-										
-										double normTempX = distanceX / (distanceX + distanceY);
-										double normTempY = distanceY / (distanceX + distanceY);
+										activeActor.IsOverlapping(passiveActor);
 
-										//dumb Temp
-										if (boxActor.Position.X + box.BoxExtent.X/2f > sphere.getMid(sphereActor.Position).X)
+										if (CollidablePartner.ContainsKey(groupNameActive))
 										{
-											normTempX *= -1;
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
+												activeActor.BeforeCollision(passiveActor);
+
+												//TODO Shere is inside Box
+												/**
+												if (sphere.getMid(sphereActor.Position).X > box.getMid(boxActor.Position).X && sphereActor.Velocity.X < 0)
+												{
+													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													Console.WriteLine("test1");
+												}
+												else if (sphere.getMid(sphereActor.Position).X < box.getMid(boxActor.Position).X && sphereActor.Velocity.X > 0)
+												{
+													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
+													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
+													Console.WriteLine("test2");
+												}
+
+												if (sphere.getMid(sphereActor.Position).Y > box.getMid(boxActor.Position).Y && sphereActor.Velocity.Y < 0)
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+													Console.WriteLine("test3");
+
+												}
+												else if (sphere.getMid(sphereActor.Position).Y < box.getMid(boxActor.Position).Y && sphereActor.Velocity.Y > 0)
+												{
+													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
+													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
+													Console.WriteLine("test4");
+												}
+												**/
+												
+												Vector2f norm = sphere.getMid(sphereActor.Position) - box.getMid(boxActor.Position);
+
+												Console.WriteLine("Sphere " + sphere.getMid(sphereActor.Position) + " Box " + box.getMid(boxActor.Position));
+
+												norm = new Vector2f(norm.X / Math.Abs(norm.X + norm.Y), norm.Y / Math.Abs(norm.X + norm.Y));
+
+												Console.WriteLine("Box " + boxActor.Velocity + " Sphere " + sphereActor.Velocity + " Norm " + norm);
+
+												sphereActor.Velocity = new Vector2f(Math.Abs(sphereActor.Velocity.X + sphereActor.Velocity.Y) * norm.X, Math.Abs(sphereActor.Velocity.X + sphereActor.Velocity.Y) * norm.Y);
+												sphereActor.Acceleration = new Vector2f(Math.Abs(sphereActor.Acceleration.X + sphereActor.Acceleration.Y) * norm.X, Math.Abs(sphereActor.Acceleration.X + sphereActor.Acceleration.Y) * norm.Y);
+
+												Console.WriteLine("Box " + boxActor.Velocity + " Sphere " + sphereActor.Velocity + " Norm " + norm + " after");
+												Console.WriteLine();
+
+												activeActor.AfterCollision(passiveActor);
+												
+											}
 										}
-										if (boxActor.Position.Y + box.BoxExtent.Y/2f > sphere.getMid(sphereActor.Position).Y)
-										{
-											normTempY *= -1;
-										}
-
-										float sphereSpeed = Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y) + Math.Abs(boxActor.Velocity.X) + Math.Abs(boxActor.Velocity.Y);
-
-										sphereActor.Velocity = new Vector2f((float)normTempX*sphereSpeed, (float)normTempY*sphereSpeed);
-
 									}//box comes from right 
-									if (boxActor.Position.X < sphereActor.Position.X + sphere.SphereDiameter && boxActor.Position.X > sphereActor.Position.X &&
+									else if (boxActor.Position.X < sphereActor.Position.X + sphere.SphereDiameter && boxActor.Position.X > sphereActor.Position.X &&
 										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
 									{
 
@@ -233,25 +272,29 @@ namespace SFML_Engine.Engine.Physics
 
 											}
 										}
-									}//isInside
-									else if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X &&
-										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
+									}//bounce from eage
+									else if ((sphere.SphereDiameter / 2) * (sphere.SphereDiameter / 2) > distanceX * distanceX + distanceY * distanceY)
 									{
-										activeActor.IsOverlapping(passiveActor);
 
-										if (CollidablePartner.ContainsKey(groupNameActive))
+										double normTempX = distanceX / Math.Abs(distanceX + distanceY);
+										double normTempY = distanceY / Math.Abs(distanceX + distanceY);
+
+										//dumb Temp
+										
+										if (boxActor.Position.X + box.BoxExtent.X / 2f > sphere.getMid(sphereActor.Position).X)
 										{
-											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
-											{
-												activeActor.BeforeCollision(passiveActor);
-
-												//TODO Shere is inside Box
-
-												activeActor.AfterCollision(passiveActor);
-
-											}
+											normTempX *= -1;
 										}
-									}	
+										if (boxActor.Position.Y + box.BoxExtent.Y / 2f > sphere.getMid(sphereActor.Position).Y)
+										{
+											normTempY *= -1;
+										}
+										
+										float sphereSpeed = Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y) + Math.Abs(boxActor.Velocity.X) + Math.Abs(boxActor.Velocity.Y);
+
+										sphereActor.Velocity = new Vector2f((float)normTempX * sphereSpeed, (float)normTempY * sphereSpeed);
+
+									}
 								}
 
 								//Box/Box
