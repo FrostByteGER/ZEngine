@@ -68,7 +68,8 @@ namespace SFML_Pong
 
 				}else if (!LastPlayerCollision.Equals(actor))
 				{
-					this.Velocity = new Vector2f(Velocity.X * 1.05f, Velocity.Y * 1.05f);
+					this.Velocity = new Vector2f(Velocity.X * 1.05f, Velocity.Y * 1.01f);
+					this.MaxVelocity *= 1.01f;
 				}
 
 				
