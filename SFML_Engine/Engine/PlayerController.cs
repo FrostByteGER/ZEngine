@@ -1,6 +1,4 @@
-﻿using System;
-using SFML.Graphics;
-using SFML.System;
+﻿using SFML.Graphics;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
 
@@ -68,27 +66,27 @@ namespace SFML_Engine.Engine
 
 		protected virtual void OnJoystickConnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Connected: ActorID: " + joystickConnectEventArgs.JoystickId);
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Connected: JoystickID: " + joystickConnectEventArgs.JoystickId);
 		}
 
 		protected virtual void OnJoystickDisconnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Disconnected: ActorID: " + joystickConnectEventArgs.JoystickId);
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Disconnected: JoystickID: " + joystickConnectEventArgs.JoystickId);
 		}
 
 		protected virtual void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Pressed: ActorID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Pressed: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
 		}
 
 		protected virtual void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Released: ActorID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Released: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
 		}
 
 		protected virtual void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Moved: ActorID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Moved: JoystickID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
 		}
 
 		protected virtual void OnTouchBegan(object sender, TouchEventArgs touchEventArgs)

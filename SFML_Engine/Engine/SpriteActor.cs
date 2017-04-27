@@ -1,5 +1,4 @@
-﻿using System;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using SFML.Graphics;
 
 namespace SFML_Engine.Engine
 {

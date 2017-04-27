@@ -10,7 +10,13 @@
 		public virtual uint GameMinorVersion { get; protected set; } = 0;
 		public virtual uint GameHotfixVersion { get; protected set; } = 0;
 
-		//public string GameFullName = GameName + " " + GameVersionPrefix + GameMajorVersion + "." + GameMinorVersion + "." + GameHotfixVersion + GameVersionSuffix;
+		public string GameFullName = "GENERATE_ME";
+
+		public virtual string GenerateFullGameName()
+		{
+			GameFullName = GameName + " " + GameVersionPrefix + GameMajorVersion + "." + GameMinorVersion + "." + GameHotfixVersion + GameVersionSuffix;
+			return GameFullName;
+		}
 
 	}
 }

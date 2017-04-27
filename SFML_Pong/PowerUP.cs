@@ -1,57 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
-using SFML_Engine.Engine;
-using SFML.System;
+﻿using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
-using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Pong
 {
-	class PowerUP : SpriteActor
+	public class PowerUp : SpriteActor
 	{
-
-		public PowerUP()
-		{
-			
-		}
-
 		public override void IsOverlapping(Actor actor)
 		{
 			if (!MarkedForRemoval && actor.GetType() == typeof(PongBall))
 			{
-				PongBall ball = (PongBall)actor;
+				var ball = (PongBall)actor;
 
-				SphereShape ss = (SphereShape)ball.CollisionShape;
-				Texture t = ball.Texture;
 
-				Random r = new Random();
-
-				if (ss.SphereDiameter < 30)
+				if (ball.Scale.X < 2.0f || ball.Scale.Y < 2.0f)
 				{
-					ss.SphereDiameter += 10;
-					ball.Position = new Vector2f(ball.Position.X - 5, ball.Position.Y - 5);
+					ball.ScaleActor(.1f, .1f);
 				}
-				else if(ss.SphereDiameter > 100)
+				else if(ball.Scale.X >= 2.0f || ball.Scale.Y >= 2.0f)
 				{
-					ss.SphereDiameter -= 10;
-					ball.Position = new Vector2f(ball.Position.X + 5, ball.Position.Y + 5);
+					ball.ScaleActor(-.1f, -.1f);
 				}
-				else if(r.NextDouble() > 0.5f)
+				else if(EngineMath.EngineRandom.NextDouble() > 0.5f)
 				{
-					ss.SphereDiameter += 10;
-					ball.Position = new Vector2f(ball.Position.X - 5, ball.Position.Y - 5);
+					ball.ScaleActor(.1f, .1f);
 				}
 				else
 				{
-					ss.SphereDiameter -= 10;
-					ball.Position = new Vector2f(ball.Position.X + 5, ball.Position.Y + 5);
+					ball.ScaleActor(-.1f, -.1f);
 				}
-
-				Console.WriteLine("Overlap");
 				Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
 			}
 		}

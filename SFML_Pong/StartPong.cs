@@ -2,7 +2,6 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
-using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Physics;
 
 namespace SFML_Pong
@@ -75,9 +74,10 @@ namespace SFML_Pong
 			rightPad.CollisionShape.ShowCollisionShape = true;
 			rightPad.Friction = 0.01f;
 
-			var ball = new PongBall();
+			var ball = new PongBall(ballTexture);
 			ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
+			ball.Color = new Color(ball.Color.R, ball.Color.G, ball.Color.B, 60);
 	        ball.CollisionShape.Origin = ball.Origin;
 			ball.Position = new Vector2f(400,250);
 	        ball.MaxVelocity = 500.0f;

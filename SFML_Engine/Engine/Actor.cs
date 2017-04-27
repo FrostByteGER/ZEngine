@@ -14,6 +14,7 @@ namespace SFML_Engine.Engine
 		public int LevelID { get; internal set; } = -1;
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; }
+		public FloatRect ActorBounds { get; set; } = new FloatRect();
 		public bool Movable { get; set; } = true;
 		public Vector2f Velocity { get; set; }
 		public float MaxVelocity { get; set; } = -1.0f;
@@ -28,9 +29,8 @@ namespace SFML_Engine.Engine
 		public bool MarkedForRemoval { get; internal set; } = false;
 		public bool Visible { get; set; } = true;
 
-
 		public Actor()
-		{			
+		{
 		}
 
 		public Actor(Transformable transformable) : base(transformable)
@@ -45,27 +45,32 @@ namespace SFML_Engine.Engine
 
 		public virtual void Move(float x, float y)
 		{
-			Position = new Vector2f(x, y);
+			Position += new Vector2f(x, y);
+			CollisionShape.Move(new Vector2f(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
 			Position = new Vector2f(x, y);
+			CollisionShape.MoveAbsolute(new Vector2f(x, y));
 		}
 
 		public virtual void Move(Vector2f position)
 		{
-			Position = position;
+			Position += position;
+			CollisionShape.Move(position);
 		}
 
 		public void MoveAbsolute(Vector2f position)
 		{
 			Position = position;
+			CollisionShape.MoveAbsolute(position);
 		}
 
 		public void Rotate(float angle)
 		{
 			Rotation += angle;
+			CollisionShape.Rotate(angle);
 		}
 
 		public void Rotate(Quaternion angle)
@@ -76,6 +81,7 @@ namespace SFML_Engine.Engine
 		public void RotateAbsolute(float angle)
 		{
 			Rotation = angle;
+			CollisionShape.RotateAbsolute(angle);
 		}
 
 		public void RotateAbsolute(Quaternion angle)
@@ -86,21 +92,25 @@ namespace SFML_Engine.Engine
 		public void ScaleActor(float x, float y)
 		{
 			base.Scale += new Vector2f(x, y);
+			CollisionShape.ScaleActor(new Vector2f(x, y));
 		}
 
 		public void ScaleActor(Vector2f scale)
 		{
 			base.Scale += scale;
+			CollisionShape.ScaleActor(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
 			base.Scale = new Vector2f(x, y);
+			CollisionShape.ScaleAbsolute(new Vector2f(x, y));
 		}
 
 		public void ScaleAbsolute(Vector2f scale)
 		{
 			base.Scale = scale;
+			CollisionShape.ScaleAbsolute(scale);
 		}
 
 		public virtual void Tick(float deltaTime)
@@ -142,19 +152,19 @@ namespace SFML_Engine.Engine
 			return (int) ActorID;
 		}
 
-		public void OnGameStart()
+		public virtual void OnGameStart()
 		{
-			throw new NotImplementedException();
+			
 		}
 
-		public void OnGamePause()
+		public virtual void OnGamePause()
 		{
-			throw new NotImplementedException();
+			
 		}
 
-		public void OnGameEnd()
+		public virtual void OnGameEnd()
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		public ActorInformation GenerateActorInformation()
@@ -163,5 +173,14 @@ namespace SFML_Engine.Engine
 				Acceleration, MaxAcceleration, Mass, Friction, HasGravity);
 		}
 
+		public virtual void OnActorDestroy()
+		{
+			Console.WriteLine("DESTROYING ACTOR: " + ActorName + "-" + ActorID);
+		}
+
+		public string GenerateFullName()
+		{
+			return ActorName + "-" + ActorID;
+		}
 	}
 }

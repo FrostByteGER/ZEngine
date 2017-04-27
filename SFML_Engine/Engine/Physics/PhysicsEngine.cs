@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SFML.Graphics;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Physics
@@ -30,7 +29,7 @@ namespace SFML_Engine.Engine.Physics
 				{
 					if (actor.Movable)
 					{
-						actor.Move(actor.Position += actor.Velocity * deltaTime);
+						actor.MoveAbsolute(actor.Position += actor.Velocity * deltaTime);
 
 						if (GlobalGravityEnabled && actor.HasGravity)
 						{
@@ -92,55 +91,26 @@ namespace SFML_Engine.Engine.Physics
 										boxActor = activeActor;
 										sphereActor = passiveActor;
 									}
+									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.GetMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.GetMid(sphereActor.Position).X));
+									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.GetMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.Y - sphere.GetMid(sphereActor.Position).Y));
 
-									double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
-									double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.Y - sphere.getMid(sphereActor.Position).Y));
 									
 									//isInside
-									if (boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X &&
-										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
-									{
+									if (boxActor.Position.X < sphere.GetMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.GetMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.GetMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.GetMid(sphereActor.Position).Y)
+									{ 
+
 										activeActor.IsOverlapping(passiveActor);
 
-										if (CollidablePartner.ContainsKey(groupNameActive))
+										if (boxActor.Position.Y + box.BoxExtent.Y/2f > sphere.GetMid(sphereActor.Position).Y)
 										{
 											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
 											{
 												activeActor.BeforeCollision(passiveActor);
-
-												//TODO Shere is inside Box
-												/**
-												if (sphere.getMid(sphereActor.Position).X > box.getMid(boxActor.Position).X && sphereActor.Velocity.X < 0)
-												{
-													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
-													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
-													Console.WriteLine("test1");
-												}
-												else if (sphere.getMid(sphereActor.Position).X < box.getMid(boxActor.Position).X && sphereActor.Velocity.X > 0)
-												{
-													sphereActor.Velocity = new Vector2f(-sphereActor.Velocity.X, sphereActor.Velocity.Y);
-													sphereActor.Acceleration = new Vector2f(-sphereActor.Acceleration.X, sphereActor.Acceleration.Y);
-													Console.WriteLine("test2");
-												}
-
-												if (sphere.getMid(sphereActor.Position).Y > box.getMid(boxActor.Position).Y && sphereActor.Velocity.Y < 0)
-												{
-													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
-													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
-													Console.WriteLine("test3");
-
-												}
-												else if (sphere.getMid(sphereActor.Position).Y < box.getMid(boxActor.Position).Y && sphereActor.Velocity.Y > 0)
-												{
-													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y);
-													sphereActor.Acceleration = new Vector2f(sphereActor.Acceleration.X, -sphereActor.Acceleration.Y);
-													Console.WriteLine("test4");
-												}
-												**/
 												
-												Vector2f norm = sphere.getMid(sphereActor.Position) - box.getMid(boxActor.Position);
+												Vector2f norm = sphere.GetMid(sphereActor.Position) - box.GetMid(boxActor.Position);
 
-												Console.WriteLine("Sphere " + sphere.getMid(sphereActor.Position) + " Box " + box.getMid(boxActor.Position));
+												Console.WriteLine("Sphere " + sphere.GetMid(sphereActor.Position) + " Box " + box.GetMid(boxActor.Position));
 
 												norm = new Vector2f(norm.X / Math.Abs(norm.X + norm.Y), norm.Y / Math.Abs(norm.X + norm.Y));
 
@@ -158,7 +128,7 @@ namespace SFML_Engine.Engine.Physics
 										}
 									}//box comes from right 
 									else if (boxActor.Position.X < sphereActor.Position.X + sphere.SphereDiameter && boxActor.Position.X > sphereActor.Position.X &&
-										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
+										boxActor.Position.Y < sphere.GetMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.GetMid(sphereActor.Position).Y)
 									{
 
 										activeActor.IsOverlapping(passiveActor);
@@ -186,8 +156,8 @@ namespace SFML_Engine.Engine.Physics
 											}
 										}
 									}//box comes from left
-									else if (boxActor.Position.X + box.BoxExtent.X > sphereActor.Position.X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X &&
-										boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y)
+									else if (boxActor.Position.X + box.BoxExtent.X > sphereActor.Position.X && boxActor.Position.X + box.BoxExtent.X < sphere.GetMid(sphereActor.Position).X &&
+										boxActor.Position.Y < sphere.GetMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y > sphere.GetMid(sphereActor.Position).Y)
 									{
 										activeActor.IsOverlapping(passiveActor);
 
@@ -216,7 +186,7 @@ namespace SFML_Engine.Engine.Physics
 										}
 									}//box comes from bottem
 									else if (boxActor.Position.Y < sphereActor.Position.Y + sphere.SphereDiameter && boxActor.Position.Y > sphereActor.Position.Y &&
-										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
+										boxActor.Position.X < sphere.GetMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.GetMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlapping(passiveActor);
 
@@ -244,8 +214,8 @@ namespace SFML_Engine.Engine.Physics
 											}
 										}
 									}//box comes from top
-									else if (boxActor.Position.Y + box.BoxExtent.Y > sphereActor.Position.Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y &&
-										boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X)
+									else if (boxActor.Position.Y + box.BoxExtent.Y > sphereActor.Position.Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.GetMid(sphereActor.Position).Y &&
+										boxActor.Position.X < sphere.GetMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X > sphere.GetMid(sphereActor.Position).X)
 									{
 										activeActor.IsOverlapping(passiveActor);
 
@@ -281,11 +251,11 @@ namespace SFML_Engine.Engine.Physics
 
 										//dumb Temp
 										
-										if (boxActor.Position.X + box.BoxExtent.X / 2f > sphere.getMid(sphereActor.Position).X)
+										if (boxActor.Position.X + box.BoxExtent.X / 2f > sphere.GetMid(sphereActor.Position).X)
 										{
 											normTempX *= -1;
 										}
-										if (boxActor.Position.Y + box.BoxExtent.Y / 2f > sphere.getMid(sphereActor.Position).Y)
+										if (boxActor.Position.Y + box.BoxExtent.Y / 2f > sphere.GetMid(sphereActor.Position).Y)
 										{
 											normTempY *= -1;
 										}
@@ -320,8 +290,8 @@ namespace SFML_Engine.Engine.Physics
 												{
 													activeActor.BeforeCollision(passiveActor);
 													//X
-													if ((Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) < (activeTemp.BoxExtent.X + passiveTemp.BoxExtent.X)/2f &&
-															(Math.Abs(activeTemp.getMid(activeActor.Position).X - passiveTemp.getMid(passiveActor.Position).X)) > Math.Max(activeTemp.BoxExtent.X/2f,  passiveTemp.BoxExtent.X/2f))
+													if ((Math.Abs(activeTemp.GetMid(activeActor.Position).X - passiveTemp.GetMid(passiveActor.Position).X)) < (activeTemp.BoxExtent.X + passiveTemp.BoxExtent.X)/2f &&
+															(Math.Abs(activeTemp.GetMid(activeActor.Position).X - passiveTemp.GetMid(passiveActor.Position).X)) > Math.Max(activeTemp.BoxExtent.X/2f,  passiveTemp.BoxExtent.X/2f))
 													{
 														if (activeActor.Movable)
 														{
@@ -377,8 +347,8 @@ namespace SFML_Engine.Engine.Physics
 															}
 														}
 													}//Y
-													if ((Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f &&
-														(Math.Abs(activeTemp.getMid(activeActor.Position).Y - passiveTemp.getMid(passiveActor.Position).Y)) > Math.Max(activeTemp.BoxExtent.Y/2f, passiveTemp.BoxExtent.Y/2f))
+													if ((Math.Abs(activeTemp.GetMid(activeActor.Position).Y - passiveTemp.GetMid(passiveActor.Position).Y)) < (activeTemp.BoxExtent.Y + passiveTemp.BoxExtent.Y)/2f &&
+														(Math.Abs(activeTemp.GetMid(activeActor.Position).Y - passiveTemp.GetMid(passiveActor.Position).Y)) > Math.Max(activeTemp.BoxExtent.Y/2f, passiveTemp.BoxExtent.Y/2f))
 													{
 														if (activeActor.Movable)
 														{
@@ -448,8 +418,8 @@ namespace SFML_Engine.Engine.Physics
 									{
 										SphereShape passiveTemp = (SphereShape)passiveActor.CollisionShape;
 
-										double distance =	Math.Pow((activeTemp.getMid(activeActor.Position) - passiveTemp.getMid(passiveActor.Position)).X, 2f) +
-															Math.Pow((activeTemp.getMid(activeActor.Position) - passiveTemp.getMid(passiveActor.Position)).Y, 2f);
+										double distance =	Math.Pow((activeTemp.GetMid(activeActor.Position) - passiveTemp.GetMid(passiveActor.Position)).X, 2f) +
+															Math.Pow((activeTemp.GetMid(activeActor.Position) - passiveTemp.GetMid(passiveActor.Position)).Y, 2f);
 
 										if (distance < Math.Pow(activeTemp.SphereDiameter / 2f, 2f) + Math.Pow(passiveTemp.SphereDiameter / 2f, 2f))
 										{
@@ -519,16 +489,27 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public bool RemoveActorFromGroup(Actor actor)
+		public bool RemoveActorFromGroups(Actor actor)
 		{
-			foreach (string listName in ActorGroups.Keys)
+			bool removal = false;
+			foreach (var listName in ActorGroups.Keys)
 			{
 				if (ActorGroups[listName].Contains(actor))
 				{
-					ActorGroups[listName].Remove(actor);
+					removal = ActorGroups[listName].Remove(actor);
 				}
 			}
-			return true;
+			return removal;
+		}
+
+		public int RemoveActorFromGroups(uint actorID)
+		{
+			int removal = 0;
+			foreach (var listName in ActorGroups.Keys)
+			{
+				removal = ActorGroups[listName].RemoveAll(actor => actor.ActorID == actorID);
+			}
+			return removal;
 		}
 
 		public bool RemoveActorFromGroup(string groupName, Actor actor)
@@ -671,17 +652,17 @@ namespace SFML_Engine.Engine.Physics
 					sphereActor = passiveActor;
 				}
 
-				double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.getMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.getMid(sphereActor.Position).X));
-				double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.getMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.getMid(sphereActor.Position).Y));
+				double distanceX = Math.Min(Math.Abs(boxActor.Position.X - sphere.GetMid(sphereActor.Position).X), Math.Abs(boxActor.Position.X + box.BoxExtent.X - sphere.GetMid(sphereActor.Position).X));
+				double distanceY = Math.Min(Math.Abs(boxActor.Position.Y - sphere.GetMid(sphereActor.Position).Y), Math.Abs(boxActor.Position.Y + box.BoxExtent.X - sphere.GetMid(sphereActor.Position).Y));
 
 				if (sphere.SphereDiameter * sphere.SphereDiameter > distanceX * distanceX + distanceY * distanceY)
 				{
 					return true;
 				}
-				else if ((boxActor.Position.X < sphere.getMid(sphereActor.Position).X && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y) ||
-						(boxActor.Position.X + box.BoxExtent.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.getMid(sphereActor.Position).Y) ||
-													(boxActor.Position.Y < sphere.getMid(sphereActor.Position).Y && boxActor.Position.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X) ||
-						(boxActor.Position.Y + box.BoxExtent.Y > sphere.getMid(sphereActor.Position).Y && boxActor.Position.X > sphere.getMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.getMid(sphereActor.Position).X)
+				else if ((boxActor.Position.X < sphere.GetMid(sphereActor.Position).X && boxActor.Position.Y > sphere.GetMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.GetMid(sphereActor.Position).Y) ||
+						(boxActor.Position.X + box.BoxExtent.X > sphere.GetMid(sphereActor.Position).X && boxActor.Position.Y > sphere.GetMid(sphereActor.Position).Y && boxActor.Position.Y + box.BoxExtent.Y < sphere.GetMid(sphereActor.Position).Y) ||
+													(boxActor.Position.Y < sphere.GetMid(sphereActor.Position).Y && boxActor.Position.X > sphere.GetMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.GetMid(sphereActor.Position).X) ||
+						(boxActor.Position.Y + box.BoxExtent.Y > sphere.GetMid(sphereActor.Position).Y && boxActor.Position.X > sphere.GetMid(sphereActor.Position).X && boxActor.Position.X + box.BoxExtent.X < sphere.GetMid(sphereActor.Position).X)
 						)
 				{
 					return true;
