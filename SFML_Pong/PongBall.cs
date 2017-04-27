@@ -89,7 +89,7 @@ namespace SFML_Pong
 			var engine = Engine.Instance;
 			if (actor.ActorName == "Left Border")
 			{
-				PongPlayerController player = engine.Players[1] as PongPlayerController;
+				PongPlayerController player = engine.Players[2] as PongPlayerController;
 				if (player != null)
 				{
 					Console.WriteLine("Score for Player 2!!!");
@@ -99,7 +99,7 @@ namespace SFML_Pong
 				
 			}else if (actor.ActorName == "Right Border")
 			{
-				PongPlayerController player = engine.Players[0] as PongPlayerController;
+				PongPlayerController player = engine.Players[1] as PongPlayerController;
 				if (player != null)
 				{
 					Console.WriteLine("Score for Player 1!!!");

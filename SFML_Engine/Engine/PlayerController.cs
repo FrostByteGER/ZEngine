@@ -24,8 +24,15 @@ namespace SFML_Engine.Engine
 		    get { return isActive; }
 			set
 			{
-				isActive = value; 
-				
+				isActive = value;
+				if (value)
+				{
+					RegisterInput(Engine.Instance);
+				}
+				else
+				{
+					UnregisterInput(Engine.Instance);
+				}
 			}
 	    }
 

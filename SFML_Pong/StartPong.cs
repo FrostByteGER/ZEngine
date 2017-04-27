@@ -113,8 +113,8 @@ namespace SFML_Pong
 			var menuController = new PongMenuController(dummyPawn);
 		    menuController.Name = "Player 1";
 
-			engine.LoadLevel(gameLevel);
-		    engine.RegisterLevel(menuLevel);
+			engine.LoadLevel(menuLevel);
+		    engine.RegisterLevel(gameLevel);
 			menuLevel.RegisterActor(dummyPawn);
 
 			gameLevel.RegisterActor(leftPad);

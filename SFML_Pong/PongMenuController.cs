@@ -44,11 +44,13 @@ namespace SFML_Pong
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Player")
 				{
 					//OpenGameLevel(false);
+					IsActive = false;
 					Engine.Instance.LoadLevel(2);
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Bot")
 				{
 					//OpenGameLevel(true);
+					IsActive = false;
 					Engine.Instance.LoadLevel(2);
 				}
 			}
