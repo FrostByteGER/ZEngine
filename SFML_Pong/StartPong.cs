@@ -55,9 +55,29 @@ namespace SFML_Pong
 		    var menuLevel = new PongMenuLevel();
 
 			var gameLevel = new PongGameLevel();
-            var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
-			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
-	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
+
+
+			Image ballImage = new Image(66, 66, Color.White);
+			Image padImage = new Image(30, 200, Color.White);
+
+			Texture leftPadTexture;
+		    Texture rightPadTexture;
+		    Texture ballTexture;
+
+		    if (true)
+		    {
+			    leftPadTexture = new Texture(padImage);
+			    rightPadTexture = new Texture(padImage);
+			    ballTexture = new Texture(ballImage);
+		    }
+		    else
+		    {
+				leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
+				rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
+				ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
+			}
+
+
 
 			var leftPad = new PongPlayerPad();
 	        leftPad.ActorName = "Left Pad";
