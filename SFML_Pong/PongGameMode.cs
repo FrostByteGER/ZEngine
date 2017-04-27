@@ -60,7 +60,7 @@ namespace SFML_Pong
 				scoringPlayer.Score += scoreToAdd;
 				Console.WriteLine("New Score: " + Player1.Score + " | " + Player2.Score);
 			}
-			else if(Player1.Score == WinScore ^ Player2.Score == WinScore)
+			if(Player1.Score == WinScore ^ Player2.Score == WinScore)
 			{
 				if (Player1.Score == WinScore)
 				{

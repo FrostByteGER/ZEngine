@@ -49,8 +49,9 @@ namespace SFML_Engine.Engine
 	    public bool VSyncEnabled { get; set; } = false;
 
         public List<Level> Levels { get; private set; } = new List<Level>();
+	    public Level ActiveLevel { get; internal set; }
 
-        public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
+	    public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
         public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 
@@ -103,6 +104,11 @@ namespace SFML_Engine.Engine
             {
                 break;
             }
+	        if (ActiveLevel == null)
+	        {
+		        Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
+		        return;
+	        }
             EngineTick();
         }
 
@@ -154,8 +160,17 @@ namespace SFML_Engine.Engine
 	            var test = 1;
 				while (accumulator >= Timestep)
                 {
-                    //Console.WriteLine("Engine Tick!");
-                    foreach (var level in Levels)
+					//Console.WriteLine("Engine Tick!");
+	                if (!ActiveLevel.LevelTicking)
+	                {
+		                continue;
+	                }
+					var actors = ActiveLevel.Actors;
+					PhysicsEngine.PhysicsTick(Timestep, ref actors);
+	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
+
+					//TODO: Remove
+					/*foreach (var level in Levels)
                     {
 	                    if (!level.LevelTicking)
 	                    {
@@ -164,8 +179,8 @@ namespace SFML_Engine.Engine
                         var actors = level.Actors;
                         PhysicsEngine.PhysicsTick(Timestep, ref actors);
                         level.LevelTick(DeltaTime.AsSeconds());
-                    }
-                    time += Timestep;
+                    }*/
+					time += Timestep;
                     accumulator -= Timestep;
 					//Console.WriteLine(test);
 	                //++test;
@@ -173,10 +188,13 @@ namespace SFML_Engine.Engine
 
                 engineWindow.Clear();
                 engineWindow.DispatchEvents();
-                foreach (var level in Levels)
+
+	            ActiveLevel.LevelDraw(ref engineWindow);
+				//TODO: Remove
+                /*foreach (var level in Levels)
                 {
                     level.LevelDraw(ref engineWindow);
-                }
+                }*/
                 engineWindow.Display();
 
 				// Execute all pending events in the Queue
@@ -241,8 +259,7 @@ namespace SFML_Engine.Engine
         public void RegisterLevel(Level level)
         {
             level.Engine = this;
-			level.LevelID = LevelIDCounter;
-			++LevelIDCounter;
+			level.LevelID = ++LevelIDCounter;
 			Levels.Add(level);
         }
 
@@ -251,9 +268,30 @@ namespace SFML_Engine.Engine
 		    return Levels.Remove(level);
 	    }
 
-		public int UnregisterLevel(uint levelID)
+		public bool UnregisterLevel(uint levelID)
 		{
-			return Levels.RemoveAll(level => level.LevelID == levelID); // Guaranteed to be unique
+			Console.WriteLine("Trying to remove Level with LevelID: #" + levelID);
+			var level = FindLevel(levelID);
+			return UnregisterLevel(level);
+		}
+
+	    public bool LoadLevel(uint levelID)
+	    {
+		    return LoadLevel(FindLevel(levelID));
+	    }
+
+		public bool LoadLevel(Level level)
+		{
+			if (level == null) return false;
+			if (level.LevelID > 0)
+			{
+				ActiveLevel = level;
+				level.OnLevelLoad();
+				level.LevelTicking = true;
+				return true;
+			}
+			RegisterLevel(level);
+			return LoadLevel(level);
 		}
 
 		public void RegisterPlayer(PlayerController pc)
@@ -267,14 +305,24 @@ namespace SFML_Engine.Engine
             }
         }
 
-		public bool UnegisterPlayer(PlayerController pc)
+		public bool UnregisterPlayer(PlayerController pc)
 		{
+			Console.WriteLine("Trying to remove Player with PlayerID: #" + pc.ID);
+			pc.UnregisterInput(this);
 			return Players.Remove(pc);
 		}
 
-		public int UnregisterPlayer(uint playerID)
+		public bool UnregisterPlayer(uint playerID)
 		{
-			return Players.RemoveAll(player => player.ID == playerID); // Guaranteed to be unique
+
+			Console.WriteLine("Trying to remove Player with PlayerID: #" + playerID);
+			var player = FindPlayer(playerID);
+			return UnregisterPlayer(player);
+		}
+
+	    public PlayerController FindPlayer(uint playerID)
+	    {
+			return Players.Find(x => x.ID == playerID);
 		}
 
 		public void RegisterEvent(EngineEvent e)

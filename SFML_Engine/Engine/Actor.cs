@@ -11,7 +11,7 @@ namespace SFML_Engine.Engine
 	{
 
 		public uint ActorID { get; internal set; } = 0;
-		public int LevelID { get; internal set; } = -1;
+		public uint LevelID { get; internal set; } = 0;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; }

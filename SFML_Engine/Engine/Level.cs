@@ -30,7 +30,7 @@ namespace SFML_Engine.Engine
         }
 
 
-        internal void LevelTick(float deltaTime)
+        protected internal virtual void LevelTick(float deltaTime)
         {
             //Console.WriteLine("Level Tick!");
             foreach (var actor in Actors)
@@ -41,7 +41,7 @@ namespace SFML_Engine.Engine
 	        GameMode.Tick(deltaTime);
         }
 
-        internal void LevelDraw(ref RenderWindow renderWindow)
+        protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
         {
             foreach (var actor in Actors)
             {
@@ -72,11 +72,16 @@ namespace SFML_Engine.Engine
             }
 		}
 
+	    public virtual void OnLevelLoad()
+	    {
+		    Console.WriteLine("Level #" + LevelID + " Loaded");
+	    }
+
         public void RegisterActor(Actor actor)
         {
 			actor.ActorID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
-	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
+	        actor.LevelID = LevelID;
 	        actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
 			Actors.Add(actor);
@@ -98,7 +103,7 @@ namespace SFML_Engine.Engine
 			return UnregisterActor(actor);
 		}
 
-		public void OnGameStart()
+		public virtual void OnGameStart()
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
@@ -108,13 +113,13 @@ namespace SFML_Engine.Engine
 		    }
 	    }
 
-	    public void OnGamePause()
+	    public virtual void OnGamePause()
 	    {
 		    throw new NotImplementedException();
 			//TODO: Call OnGamePause event on all actors
 	    }
 
-	    public void OnGameEnd()
+	    public virtual void OnGameEnd()
 	    {
 			GameMode.OnGameEnd();
 		    LevelTicking = false;

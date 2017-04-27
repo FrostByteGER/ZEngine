@@ -29,6 +29,15 @@ namespace SFML_Pong
 			Input.RegisterJoystickInput(OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}
 
+		public override void UnregisterInput(Engine engine)
+		{
+			Input = engine.InputManager;
+
+			Input.UnregisterKeyInput(OnKeyPressed, OnKeyReleased);
+
+			Input.UnregisterJoystickInput(OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
+		}
+
 		public override void OnGameStart()
 		{
 			base.OnGameStart();

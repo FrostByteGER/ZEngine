@@ -114,13 +114,28 @@ namespace SFML_Engine.Engine.IO
 			MouseScrolled += onMouseScrolled;
 		}
 
+		public void UnregisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
+		{
+			MouseButtonPressed -= onMouseButtonPressed;
+			MouseButtonReleased -= onMouseButtonReleased;
+			MouseMoved -= onMouseMoved;
+			MouseScrolled -= onMouseScrolled;
+		}
+
 		public void RegisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyReleased)
 		{
 			KeyPressed += onKeyPressed;
 			KeyReleased += onKeyReleased;
 		}
 
-	    public void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
+		public void UnregisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyReleased)
+		{
+			KeyPressed -= onKeyPressed;
+			KeyReleased -= onKeyReleased;
+		}
+
+		public void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
 			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
 			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
 	    {
@@ -131,11 +146,29 @@ namespace SFML_Engine.Engine.IO
 			JoystickMoved += onJoystickMoved;
 		}
 
+		public void UnregisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
+			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
+			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
+		{
+			JoystickConnected -= onJoystickConnected;
+			JoystickDisconnected -= onJoystickDisconnected;
+			JoystickButtonPressed -= onJoystickButtonPressed;
+			JoystickButtonReleased -= onJoystickButtonReleased;
+			JoystickMoved -= onJoystickMoved;
+		}
+
 		public void RegisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
 		{
 			TouchBegan += onTouchBegan;
 			TouchEnded += onTouchEnded;
 			TouchMoved += onTouchMoved;
+		}
+
+		public void UnregisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
+		{
+			TouchBegan -= onTouchBegan;
+			TouchEnded -= onTouchEnded;
+			TouchMoved -= onTouchMoved;
 		}
 
 		public void RegisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
@@ -151,6 +184,20 @@ namespace SFML_Engine.Engine.IO
 			RegisterJoystickInput(onJoystickConnected, onJoystickDisconnected, onJoysticButtonPressed, onJoysticButtonReleased, onJoysticButtonMoved);
 			RegisterTouchInput(onTouchBegan, onTouchEnded, onTouchMoved);
 	    }
+
+	    public void UnregisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled
+			, EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyReleased
+			, EventHandler<JoystickConnectEventArgs> onJoystickConnected, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected
+			, EventHandler<JoystickButtonEventArgs> onJoysticButtonPressed, EventHandler<JoystickButtonEventArgs> onJoysticButtonReleased
+			, EventHandler<JoystickMoveEventArgs> onJoysticButtonMoved, EventHandler<TouchEventArgs> onTouchBegan
+			, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
+		{
+			UnregisterMouseInput(onMouseButtonPressed, onMouseButtonReleased, onMouseMoved, onMouseScrolled);
+			UnregisterKeyInput(onKeyPressed, onKeyReleased);
+			UnregisterJoystickInput(onJoystickConnected, onJoystickDisconnected, onJoysticButtonPressed, onJoysticButtonReleased, onJoysticButtonMoved);
+			UnregisterTouchInput(onTouchBegan, onTouchEnded, onTouchMoved);
+		}
 
 		internal void RegisterEngineInput(ref RenderWindow engineWindow)
 		{
