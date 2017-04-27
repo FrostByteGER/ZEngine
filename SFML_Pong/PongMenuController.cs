@@ -57,6 +57,10 @@ namespace SFML_Pong
 					Engine.Instance.Players[2].IsActive = true;
 					Engine.Instance.LoadLevel(2);
 				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Exit Game")
+				{
+					Engine.Instance.CloseEngineWindow();
+				}
 			}
 			if (Input.WPressed || Input.UpPressed)
 			{
