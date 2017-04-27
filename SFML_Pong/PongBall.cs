@@ -10,7 +10,7 @@ namespace SFML_Pong
 	public class PongBall : SpriteActor
 	{
 
-
+		public PongGameMode GameModeReference { get; private set; }
 		public Actor LastPlayerCollision { get; set; }
 		public PongBall()
 		{
@@ -33,6 +33,12 @@ namespace SFML_Pong
 			base.Tick(deltaTime);
 			//Rotation += 25.0f * deltaTime;
 
+		}
+
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+			GameModeReference = (PongGameMode) LevelReference.GameMode;
 		}
 
 		public override void AfterCollision(Actor actor)
@@ -58,17 +64,21 @@ namespace SFML_Pong
 				PongPlayerController player = engine.Players[1] as PongPlayerController;
 				if (player != null)
 				{
-					++player.Score;
 					Console.WriteLine("Score for Player 2!!!");
+					GameModeReference.OnPlayerScore(player, 1);
+					GameModeReference.SpawnBall();
 				}
+				
 			}else if (actor.ActorName == "Right Border")
 			{
 				PongPlayerController player = engine.Players[0] as PongPlayerController;
 				if (player != null)
 				{
 					Console.WriteLine("Score for Player 1!!!");
-					++player.Score;
+					GameModeReference.OnPlayerScore(player, 1);
+					GameModeReference.SpawnBall();
 				}
+				
 			}
 			else
 			{
@@ -76,11 +86,7 @@ namespace SFML_Pong
 				{
 					actor.IsOverlapping(this);
 				}
-				return;
 			}
-
-			Position = new Vector2f(engine.EngineWindowWidth/2.0f, engine.EngineWindowHeight/2.0f);
-			Velocity = new Vector2f(EngineMath.EngineRandom.Next(-(int)MaxVelocity, (int) MaxVelocity), EngineMath.EngineRandom.Next(-(int)MaxVelocity,(int)MaxVelocity));
 		}
 	}
 }

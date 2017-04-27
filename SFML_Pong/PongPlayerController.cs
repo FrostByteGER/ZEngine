@@ -7,7 +7,9 @@ namespace SFML_Pong
 	public class PongPlayerController : PlayerController
 	{
 
-		public uint Score { get; set; } = 0;
+		public int Score { get; set; } = 0;
+		public Level LevelReference { get; set; }
+		public PongGameMode GameModeReference { get; set; }
 		public PongPlayerController()
 		{
 
@@ -27,6 +29,28 @@ namespace SFML_Pong
 			Input.RegisterJoystickInput(OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}
 
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+			LevelReference = PlayerPawn.LevelReference;
+			var mode = LevelReference.GameMode as PongGameMode;
+			if (mode != null)
+			{
+				GameModeReference = mode;
+			}
+			
+		}
+
+		public override void OnGamePause()
+		{
+			base.OnGamePause();
+		}
+
+		public override void OnGameEnd()
+		{
+			base.OnGameEnd();
+		}
+
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -36,6 +60,18 @@ namespace SFML_Pong
 		{
 
 			base.OnKeyPressed(sender, keyEventArgs);
+
+			if (Input.EnterPressed)
+			{
+				if (GameModeReference.GameRunning)
+				{
+					GameModeReference.SpawnBall();
+				}else if (GameModeReference.GameEnded)
+				{
+					GameModeReference.RestartGame();
+				}
+			}
+
 			if (ID == 0)
 			{
 				if (Input.WPressed)
