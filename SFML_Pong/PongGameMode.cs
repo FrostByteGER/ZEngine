@@ -23,7 +23,7 @@ namespace SFML_Pong
 		public bool GameEnded { get; set; } = false;
 
 		public float PowerUPSpawnTimer = 0.0f;
-		public float PowerUPSpawnFrequency = 1f;
+		public float PowerUPSpawnFrequency = 5f;
 
 		public Music BGM_Main;
 		public List<string> MusicTracks = new List<string> { "Assets/SFML_Pong/BGM_Main_1.wav", "Assets/SFML_Pong/BGM_Main_2.wav", "Assets/SFML_Pong/BGM_Main_3.wav", "Assets/SFML_Pong/BGM_Main_4.wav", "Assets/SFML_Pong/BGM_Main_5.wav" };
@@ -121,7 +121,7 @@ namespace SFML_Pong
 
 					powerUp.CollisionShape = ss;
 
-					powerUp.Position = new SFML.System.Vector2f((float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
+					powerUp.Position = new SFML.System.Vector2f((float)(200+(LevelReference.EngineReference.EngineWindowWidth - 400) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
 
 					Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, powerUp, LevelReference.LevelID)));
 
@@ -132,8 +132,6 @@ namespace SFML_Pong
 				}
 				PowerUPSpawnTimer += deltaTime;
 			}
-
-			
 		}
 	}
 }

@@ -125,7 +125,7 @@ namespace SFML_Pong
 			physics.AddOverlapPartners("Balls", "PowerUP");
 
 			var leftPadController = new PongPlayerController(leftPad);
-			var rightPadController = new PongPlayerController(rightPad);
+			var rightPadController = new AIPlayerController(rightPad);
 	        leftPadController.Name = "Player 1";
 	        rightPadController.Name = "Player 2";
 
