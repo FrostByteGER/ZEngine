@@ -68,9 +68,10 @@ namespace SFML_Pong
 
 				}else if (!LastPlayerCollision.Equals(actor))
 				{
-					Console.WriteLine("Faster");
 					this.Velocity = new Vector2f(Velocity.X * 1.05f, Velocity.Y * 1.05f);
 				}
+
+				
 
 				LastPlayerCollision = actor;
 
