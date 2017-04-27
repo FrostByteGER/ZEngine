@@ -84,6 +84,8 @@ namespace SFML_Pong
 				Ball.Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
 				Ball.Velocity = new Vector2f();
 				Ball.Acceleration = new Vector2f();
+				Ball.MaxVelocity = 500;
+				Ball.ScaleAbsolute(1.0f, 1.0f);
 				GameRunning = false;
 				GameEnded = true;
 				return;
@@ -94,7 +96,19 @@ namespace SFML_Pong
 		public void SpawnBall()
 		{
 			Ball.Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
-			Ball.Velocity = new Vector2f(EngineMath.EngineRandom.Next(-(int)Ball.MaxVelocity, (int)Ball.MaxVelocity), EngineMath.EngineRandom.Next(-(int)Ball.MaxVelocity, (int)Ball.MaxVelocity));
+
+			Vector2f vec;
+
+			if (EngineMath.EngineRandom.NextDouble() <= 0.5)
+			{
+				vec = new Vector2f(300f, (float)(EngineMath.EngineRandom.NextDouble()-0.5D)*300);
+			}
+			else
+			{
+				vec = new Vector2f(-300f, (float)(EngineMath.EngineRandom.NextDouble() - 0.5D)*300); ;
+			}
+
+			Ball.Velocity = vec;
 		}
 
 		public void RestartGame()

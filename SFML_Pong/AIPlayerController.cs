@@ -22,9 +22,7 @@ namespace SFML_Pong
 		public AIPlayerController(SpriteActor playerPawn) : base(playerPawn)
 		{
 			pad = playerPawn;
-			
 
-			
 		}
  
 		public override void OnGameStart()
@@ -68,6 +66,15 @@ namespace SFML_Pong
 			{
 				point = ((SFML_Engine.Engine.Physics.SphereShape)ball.CollisionShape).GetMid(ball.Position);
 				wait = 0;
+
+				if (point.Y < ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y/2  + 30)
+				{
+					point.Y = ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2 + 30;
+				}else if (point.Y > 570 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2)
+				{
+					point.Y = 570 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2;
+				}
+
 				Console.WriteLine(point);
 			}
 
