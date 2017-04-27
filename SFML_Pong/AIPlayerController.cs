@@ -67,12 +67,12 @@ namespace SFML_Pong
 				point = ((SFML_Engine.Engine.Physics.SphereShape)ball.CollisionShape).GetMid(ball.Position);
 				wait = 0;
 
-				if (point.Y < ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y/2  + 30)
+				if (point.Y < ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y/2  + 50)
 				{
-					point.Y = ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2 + 30;
-				}else if (point.Y > 570 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2)
+					point.Y = ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2 + 50;
+				}else if (point.Y > 550 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2)
 				{
-					point.Y = 570 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2;
+					point.Y = 550 - ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2;
 				}
 
 				Console.WriteLine(point);
