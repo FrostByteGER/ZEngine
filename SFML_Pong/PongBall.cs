@@ -47,7 +47,7 @@ namespace SFML_Pong
 			base.AfterCollision(actor);
 			if (actor.ActorName == "Left Pad" || actor.ActorName == "Right Pad")
 			{
-				LastPlayerCollision = actor;
+				
 				Console.WriteLine("COLLISION WITH: " + actor.ActorName);
 
 				if (this.CollisionShape.GetType() == typeof(SphereShape) && actor.CollisionShape.GetType() == typeof(BoxShape))
@@ -63,9 +63,18 @@ namespace SFML_Pong
 					this.Acceleration = new Vector2f(norm.X * Math.Abs(Acceleration.X + Acceleration.Y), norm.Y * Math.Abs(Acceleration.X + Acceleration.Y));
 
 				}
+				if (LastPlayerCollision == null)
+				{
+
+				}else if (!LastPlayerCollision.Equals(actor))
+				{
+					this.Velocity = new Vector2f(Velocity.X * 1.05f, Velocity.Y * 1.01f);
+					this.MaxVelocity *= 1.01f;
+				}
+
 				
 
-
+				LastPlayerCollision = actor;
 
 			}
 		}
