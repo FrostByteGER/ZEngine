@@ -9,7 +9,7 @@ namespace SFML_Pong
     public sealed class StartPong
     {
 
-	    public static bool MountainDewMode { get; set; } = false;
+	    public static bool MountainDewMode { get; set; } = true;
 	    public static void Main(string[] args)
 	    {
 		    if (args.Length >= 1)
@@ -69,7 +69,7 @@ namespace SFML_Pong
 		    Texture rightPadTexture;
 		    Texture ballTexture;
 
-		    if (true)
+		    if (!MountainDewMode)
 		    {
 			    leftPadTexture = new Texture(padImage);
 			    rightPadTexture = new Texture(padImage);
@@ -77,8 +77,8 @@ namespace SFML_Pong
 		    }
 		    else
 		    {
-				leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
-				rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
+				leftPadTexture = new Texture("Assets/SFML_Pong/MountainDewCan.png");
+				rightPadTexture = new Texture("Assets/SFML_Pong/MountainDewCan.png");
 				ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
 			}
 
@@ -152,7 +152,11 @@ namespace SFML_Pong
 			gameLevel.RegisterActor(bottomBorder);
 			gameLevel.RegisterActor(leftBorder);
 			gameLevel.RegisterActor(rightBorder);
-	        gameLevel.GameMode = new PongGameMode();
+		    var gameMode = new PongGameMode();
+			gameLevel.GameMode = gameMode;
+		    gameLevel.RegisterActor(gameMode.ShowScore);
+		    gameLevel.RegisterActor(gameMode.ShowWinner);
+
 			engine.RegisterPlayer(menuController);
 			leftPadController.IsActive = false;
 			rightPadController.IsActive = false;

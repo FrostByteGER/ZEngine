@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML.Audio;
+using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
+using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Pong
 {
@@ -18,6 +20,9 @@ namespace SFML_Pong
 		public PongBall Ball { get; set; }
 		public bool AIEnabled { get; set; } = false;
 
+		public Text ShowScore { get; set; }
+		public Text ShowWinner { get; set; }
+
 		public PongPlayerController Winner { get; set; }
 
 		public bool GameRunning { get; set; } = false;
@@ -29,6 +34,22 @@ namespace SFML_Pong
 		public Music BGM_Main;
 		public List<string> MusicTracks = new List<string> { "Assets/SFML_Pong/BGM_Main_1.wav", "Assets/SFML_Pong/BGM_Main_2.wav", "Assets/SFML_Pong/BGM_Main_3.wav", "Assets/SFML_Pong/BGM_Main_4.wav", "Assets/SFML_Pong/BGM_Main_5.wav" };
 
+		public PongGameMode()
+		{
+			ShowScore = new Text();
+			ShowScore.Font = PongMenuLevel.MainGameFont;
+			ShowScore.CharacterSize = 50;
+			ShowScore.Color = Color.Red;
+			ShowScore.Style = Text.Styles.Regular;
+
+			ShowWinner = new Text();
+			ShowWinner.Font = PongMenuLevel.MainGameFont;
+			ShowWinner.CharacterSize = 50;
+			ShowWinner.Color = Color.White;
+			ShowWinner.Style = Text.Styles.Regular;
+			ShowWinner.Visible = false;
+		}
+
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
@@ -39,9 +60,15 @@ namespace SFML_Pong
 			Player2.Score = 0;
 			Player1.Position = new Vector2f();
 			Player2.Position = new Vector2f();
+			ShowScore.DisplayedString = Player1.Score + " : " + Player2.Score;
+			ShowScore.Origin = new Vector2f(ShowScore.GetLocalBounds().Width / 2.0f, ShowScore.GetLocalBounds().Height / 2.0f);
+			ShowScore.Position = new Vector2f(Engine.Instance.EngineWindowWidth / 2.0f, 100);
+			ShowWinner.Origin = new Vector2f(ShowWinner.GetLocalBounds().Width / 2.0f, ShowWinner.GetLocalBounds().Height / 2.0f);
+			ShowWinner.Position = new Vector2f(Engine.Instance.EngineWindowWidth / 2.0f, 200);
+			ShowWinner.Visible = false;
 			Winner = null;
 			Ball = (PongBall)LevelReference.FindActorInLevel("Ball");
-			BGM_Main = new Music(MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
+			BGM_Main = new Music(StartPong.MountainDewMode ? "Assets/SFML_Pong/BGM_Main_MLG.wav" : MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]); 
 			BGM_Main.Loop = true;
 			BGM_Main.Volume = Engine.Instance.GlobalVolume;
 			BGM_Main.Play();
@@ -68,19 +95,29 @@ namespace SFML_Pong
 			{
 				scoringPlayer.Score += scoreToAdd;
 				Console.WriteLine("New Score: " + Player1.Score + " | " + Player2.Score);
+				ShowScore.DisplayedString = Player1.Score + " : " + Player2.Score;
 			}
-			if(Player1.Score == WinScore ^ Player2.Score == WinScore)
+			if (Player1.Score == WinScore ^ Player2.Score == WinScore)
 			{
 				if (Player1.Score == WinScore)
 				{
 					Winner = Player1;
+					ShowWinner.DisplayedString = "Player 1 Wins!";
+					ShowWinner.Color = Color.Green;
+					ShowWinner.Origin = new Vector2f(ShowWinner.GetLocalBounds().Width / 2.0f, ShowWinner.GetLocalBounds().Height / 2.0f);
+
 					Console.WriteLine("Player 1 Wins!");
 				}
 				else if (Player2.Score == WinScore)
 				{
 					Winner = Player2;
+					ShowWinner.DisplayedString = "Player 2 Wins!";
+					ShowWinner.Color = Color.Red;
+					ShowWinner.Origin = new Vector2f(ShowWinner.GetLocalBounds().Width / 2.0f, ShowWinner.GetLocalBounds().Height / 2.0f);
+
 					Console.WriteLine("Player 2 Wins!");
 				}
+				ShowWinner.Visible = true;
 				Ball.Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
 				Ball.Velocity = new Vector2f();
 				Ball.Acceleration = new Vector2f();
@@ -100,6 +137,7 @@ namespace SFML_Pong
 		public void RestartGame()
 		{
 			Console.WriteLine("RESTARTING GAME!");
+			ShowWinner.Visible = false;
 			Player1.Score = 0;
 			Player2.Score = 0;
 			GameEnded = false;

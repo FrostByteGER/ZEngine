@@ -10,7 +10,7 @@ namespace SFML_Pong
 	public class PongMenuLevel : Level
 	{
 
-		public static Font MainGameFont { get; set; }  = new Font("Assets/SFML_Pong/arial.ttf");
+		public static Font MainGameFont { get; set; }
 		public Text MainLogo { get; set; } = new Text();
 		public Text PlayCoop { get; set; } = new Text();
 		public Text PlayVSBot { get; set; } = new Text();
@@ -36,6 +36,7 @@ namespace SFML_Pong
 
 		internal void InitLevel()
 		{
+			MainGameFont = new Font(StartPong.MountainDewMode ? "Assets/SFML_Pong/arial.ttf" : "Assets/SFML_Pong/comic.ttf");
 			MainLogo.Font = MainGameFont;
 			MainLogo.DisplayedString = "Pong";
 			MainLogo.CharacterSize = 100;
