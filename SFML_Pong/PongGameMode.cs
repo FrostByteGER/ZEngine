@@ -33,6 +33,9 @@ namespace SFML_Pong
 			base.OnGameStart();
 			Player1 = LevelReference.EngineReference.Players[1] as PongPlayerController;
 			Player2 = LevelReference.EngineReference.Players[2] as PongPlayerController;
+			Player1.Score = 0;
+			Player2.Score = 0;
+			Winner = null;
 			Ball = (PongBall)LevelReference.FindActorInLevel("Ball");
 			BGM_Main = new Music(MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
 			BGM_Main.Loop = true;
@@ -44,7 +47,8 @@ namespace SFML_Pong
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
-			BGM_Main.Stop();
+			BGM_Main?.Stop();
+			
 			GameRunning = false;
 			Console.WriteLine("GameMode ending");
 		}
@@ -72,9 +76,14 @@ namespace SFML_Pong
 					Winner = Player2;
 					Console.WriteLine("Player 2 Wins!");
 				}
+				Ball.Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
+				Ball.Velocity = new Vector2f();
+				Ball.Acceleration = new Vector2f();
 				GameRunning = false;
 				GameEnded = true;
+				return;
 			}
+			SpawnBall();
 		}
 
 		public void SpawnBall()

@@ -256,7 +256,13 @@ namespace SFML_Engine.Engine
 
         }
 
-	    public void ShutdownLevel(uint levelID)
+		public void CloseEngineWindow()
+		{
+			engineWindow.Close();
+			RequestTermination = true;
+		}
+
+		public void ShutdownLevel(uint levelID)
 	    {
 		    FindLevel(levelID).OnGameEnd();
 	    }
@@ -292,6 +298,7 @@ namespace SFML_Engine.Engine
 			if (level == null) return false;
 			if (level.LevelID > 0)
 			{
+				ActiveLevel?.OnGameEnd();
 				ActiveLevel = level;
 				level.OnLevelLoad();
 				level.LevelTicking = true;
@@ -305,6 +312,7 @@ namespace SFML_Engine.Engine
         {
             Players.Add(pc);
             pc.ID = (uint) Players.Count - 1;
+	        if (!pc.IsActive) return;
 			pc.RegisterInput(this);
 			if (pc.ID == 0) //TODO: Remove
             {

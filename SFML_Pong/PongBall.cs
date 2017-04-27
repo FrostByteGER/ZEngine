@@ -94,7 +94,6 @@ namespace SFML_Pong
 				{
 					Console.WriteLine("Score for Player 2!!!");
 					GameModeReference.OnPlayerScore(player, 1);
-					GameModeReference.SpawnBall();
 				}
 				
 			}else if (actor.ActorName == "Right Border")
@@ -104,7 +103,6 @@ namespace SFML_Pong
 				{
 					Console.WriteLine("Score for Player 1!!!");
 					GameModeReference.OnPlayerScore(player, 1);
-					GameModeReference.SpawnBall();
 				}
 				
 			}

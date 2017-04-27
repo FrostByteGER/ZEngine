@@ -45,13 +45,21 @@ namespace SFML_Pong
 				{
 					//OpenGameLevel(false);
 					IsActive = false;
+					Engine.Instance.Players[1].IsActive = true;
+					Engine.Instance.Players[2].IsActive = true;
 					Engine.Instance.LoadLevel(2);
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Bot")
 				{
 					//OpenGameLevel(true);
 					IsActive = false;
+					Engine.Instance.Players[1].IsActive = true;
+					Engine.Instance.Players[2].IsActive = true;
 					Engine.Instance.LoadLevel(2);
+				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Exit Game")
+				{
+					Engine.Instance.CloseEngineWindow();
 				}
 			}
 			if (Input.WPressed || Input.UpPressed)

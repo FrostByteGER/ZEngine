@@ -116,6 +116,7 @@ namespace SFML_Pong
 			engine.LoadLevel(menuLevel);
 		    engine.RegisterLevel(gameLevel);
 			menuLevel.RegisterActor(dummyPawn);
+		    menuLevel.InitLevel();
 
 			gameLevel.RegisterActor(leftPad);
 			gameLevel.RegisterActor(rightPad);
@@ -126,14 +127,18 @@ namespace SFML_Pong
 			gameLevel.RegisterActor(rightBorder);
 	        gameLevel.GameMode = new PongGameMode();
 			engine.RegisterPlayer(menuController);
-		    engine.RegisterPlayer(leftPadController);
+			leftPadController.IsActive = false;
+			rightPadController.IsActive = false;
+			engine.RegisterPlayer(leftPadController);
 			engine.RegisterPlayer(rightPadController);
-            engine.StartEngine();
+
+			engine.StartEngine();
 
 			// Super important! Delete all textures
 	        ballTexture.Dispose();
 		    leftPadTexture.Dispose();
 		    rightPadTexture.Dispose();
+		    PongMenuLevel.MainGameFont.Dispose();
             Console.ReadLine();
         }
     }
