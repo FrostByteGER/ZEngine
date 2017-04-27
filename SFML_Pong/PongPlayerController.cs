@@ -81,7 +81,7 @@ namespace SFML_Pong
 				}
 			}
 
-			if (ID == 0)
+			if (ID == 1)
 			{
 				if (Input.WPressed)
 				{
@@ -95,7 +95,7 @@ namespace SFML_Pong
 					//PlayerPawn.Velocity = new Vector2f(0.0f, 400.0f);
 				}
 
-			}else if (ID == 1)
+			}else if (ID == 2)
 			{
 				if (Input.UpPressed)
 				{

@@ -31,8 +31,8 @@ namespace SFML_Pong
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
-			Player1 = LevelReference.Engine.Players[0] as PongPlayerController;
-			Player2 = LevelReference.Engine.Players[1] as PongPlayerController;
+			Player1 = LevelReference.EngineReference.Players[1] as PongPlayerController;
+			Player2 = LevelReference.EngineReference.Players[2] as PongPlayerController;
 			Ball = (PongBall)LevelReference.FindActorInLevel("Ball");
 			BGM_Main = new Music(MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
 			BGM_Main.Loop = true;
@@ -79,7 +79,7 @@ namespace SFML_Pong
 
 		public void SpawnBall()
 		{
-			Ball.Position = new Vector2f(LevelReference.Engine.EngineWindowWidth / 2.0f, LevelReference.Engine.EngineWindowHeight / 2.0f);
+			Ball.Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
 			Ball.Velocity = new Vector2f(EngineMath.EngineRandom.Next(-(int)Ball.MaxVelocity, (int)Ball.MaxVelocity), EngineMath.EngineRandom.Next(-(int)Ball.MaxVelocity, (int)Ball.MaxVelocity));
 		}
 
@@ -109,12 +109,12 @@ namespace SFML_Pong
 
 					powerUp.CollisionShape = ss;
 
-					powerUp.Position = new SFML.System.Vector2f((float)(60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.Engine.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
+					powerUp.Position = new SFML.System.Vector2f((float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
 
 					Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, powerUp, LevelReference.LevelID)));
 
 					// TODO add to PhysicsEngine
-					LevelReference.Engine.PhysicsEngine.AddActorToGroup("PowerUP", powerUp);
+					LevelReference.EngineReference.PhysicsEngine.AddActorToGroup("PowerUP", powerUp);
 
 					PowerUPSpawnTimer = 0f;
 				}

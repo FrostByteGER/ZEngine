@@ -123,11 +123,12 @@ namespace SFML_Engine.Engine
             Time currentTime = Time.Zero;
             FPSStartTime = Time.Zero;
             FPSPassedTime = Time.Zero;
-	        foreach (var level in Levels)
+	        /*foreach (var level in Levels)
 	        {
 		        level.OnGameStart();
 		        level.LevelTicking = true;
-	        }
+	        }*/
+	        ActiveLevel.OnGameStart();
 	        foreach (var pc in Players)
 	        {
 		        pc.OnGameStart();
@@ -168,6 +169,10 @@ namespace SFML_Engine.Engine
 					var actors = ActiveLevel.Actors;
 					PhysicsEngine.PhysicsTick(Timestep, ref actors);
 	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
+	                foreach (var pc in Players)
+	                {
+		                pc.Tick(DeltaTime.AsSeconds());
+	                }
 
 					//TODO: Remove
 					/*foreach (var level in Levels)
@@ -258,7 +263,7 @@ namespace SFML_Engine.Engine
 
         public void RegisterLevel(Level level)
         {
-            level.Engine = this;
+            level.EngineReference = this;
 			level.LevelID = ++LevelIDCounter;
 			Levels.Add(level);
         }

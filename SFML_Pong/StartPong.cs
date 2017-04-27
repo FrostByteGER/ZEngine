@@ -52,13 +52,14 @@ namespace SFML_Pong
 			leftBorder.CollisionShape.ShowCollisionShape = true;
 			rightBorder.CollisionShape.ShowCollisionShape = true;
 
-		    var menuLevel = new Level();
+		    var menuLevel = new PongMenuLevel();
 
 			var gameLevel = new PongGameLevel();
             var leftPadTexture = new Texture("Assets/SFML_Pong/Goku.png");
 			var rightPadTexture = new Texture("Assets/SFML_Pong/Goku_MLG.png");
 	        var ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
-			var leftPad = new SpriteActor();
+
+			var leftPad = new PongPlayerPad();
 	        leftPad.ActorName = "Left Pad";
 	        leftPad.MaxVelocity = 700.0f;
 	        leftPad.Position = new Vector2f(30, 30);
@@ -67,7 +68,7 @@ namespace SFML_Pong
 			leftPad.CollisionShape.ShowCollisionShape = true;
 			leftPad.Friction = 0.01f;
 
-		    var rightPad = new SpriteActor();
+		    var rightPad = new PongPlayerPad();
 		    rightPad.Position = new Vector2f(650, 30);
 	        rightPad.ActorName = "Right Pad";
 			rightPad.MaxVelocity = 700.0f;
@@ -108,8 +109,13 @@ namespace SFML_Pong
 	        leftPadController.Name = "Player 1";
 	        rightPadController.Name = "Player 2";
 
-	        engine.LoadLevel(gameLevel);
+		    var dummyPawn = new SpriteActor();
+			var menuController = new PongMenuController(dummyPawn);
+		    menuController.Name = "Player 1";
+
+			engine.LoadLevel(gameLevel);
 		    engine.RegisterLevel(menuLevel);
+			menuLevel.RegisterActor(dummyPawn);
 
 			gameLevel.RegisterActor(leftPad);
 			gameLevel.RegisterActor(rightPad);
@@ -119,7 +125,8 @@ namespace SFML_Pong
 			gameLevel.RegisterActor(leftBorder);
 			gameLevel.RegisterActor(rightBorder);
 	        gameLevel.GameMode = new PongGameMode();
-            engine.RegisterPlayer(leftPadController);
+			engine.RegisterPlayer(menuController);
+		    engine.RegisterPlayer(leftPadController);
 			engine.RegisterPlayer(rightPadController);
             engine.StartEngine();
 

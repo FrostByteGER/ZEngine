@@ -11,23 +11,11 @@ namespace SFML_Engine.Engine.Physics
 		public bool ShowCollisionShape { get; set; } = false;
 	    public Color CollisionShapeColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
 
-	    public bool Movable
-	    {
-		    get { throw new System.NotImplementedException(); }
-		    set { throw new System.NotImplementedException(); }
-	    }
+	    public bool Movable { get; set; }
 
-	    public Vector2f Velocity
-	    {
-		    get { throw new System.NotImplementedException(); }
-		    set { throw new System.NotImplementedException(); }
-	    }
+		public Vector2f Velocity { get; set; }
 
-	    public Vector2f Acceleration
-	    {
-		    get { throw new System.NotImplementedException(); }
-		    set { throw new System.NotImplementedException(); }
-	    }
+	    public Vector2f Acceleration { get; set; }
 
 		public virtual void Move(float x, float y)
 		{

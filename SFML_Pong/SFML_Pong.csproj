@@ -108,6 +108,7 @@
     <Compile Include="PongMenuController.cs" />
     <Compile Include="PongMenuLevel.cs" />
     <Compile Include="PongPlayerController.cs" />
+    <Compile Include="PongPlayerPad.cs" />
     <Compile Include="PowerUp.cs" />
     <Compile Include="StartPong.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

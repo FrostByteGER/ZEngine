@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SFML.Graphics;
 using SFML.System;
+using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using CircleShape = SFML_Engine.Engine.SFML.Graphics.CircleShape;
 using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
+using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Engine.Engine
 {
@@ -19,7 +21,7 @@ namespace SFML_Engine.Engine
 	    public CircleShape CollisionCircle { get; set; } = new CircleShape(10.0f);
 	    public RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
 
-        public Engine Engine { get; set; }
+        public Engine EngineReference { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
 
@@ -46,41 +48,53 @@ namespace SFML_Engine.Engine
             foreach (var actor in Actors)
             {
                 var drawableActor = actor as SpriteActor;
-                if (drawableActor != null && drawableActor.Visible)
-                {
-					if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(BoxShape))
-					{
-						CollisionRectangle.Size = ((BoxShape)drawableActor.CollisionShape).BoxExtent;
 
-						CollisionRectangle.Position = actor.Position;
-						CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+	            if (drawableActor != null && drawableActor.Visible)
+	            {
+		            if (drawableActor.CollisionShape.ShowCollisionShape &&
+		                drawableActor.CollisionShape.GetType() == typeof(BoxShape))
+		            {
+			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).BoxExtent;
 
-						renderWindow.Draw(CollisionRectangle);
+			            CollisionRectangle.Position = actor.Position;
+			            CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+
+			            renderWindow.Draw(CollisionRectangle);
+		            }
+		            else if (drawableActor.CollisionShape.ShowCollisionShape &&
+		                     drawableActor.CollisionShape.GetType() == typeof(SphereShape))
+		            {
+			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).SphereDiameter / 2.0f;
+
+			            CollisionCircle.Position = actor.Position;
+			            CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+
+			            renderWindow.Draw(CollisionCircle);
+		            }
+
+		            renderWindow.Draw(drawableActor);
+	            }
+	            else if(drawableActor == null)
+	            {
+					var drawableText = actor as Text;
+		            if (drawableText != null && drawableText.Visible)
+		            {
+						renderWindow.Draw(drawableText);
 					}
-					else if (drawableActor.CollisionShape.ShowCollisionShape && drawableActor.CollisionShape.GetType() == typeof(SphereShape))
-					{
-						CollisionCircle.Radius = ((SphereShape)drawableActor.CollisionShape).SphereDiameter / 2.0f;
-
-						CollisionCircle.Position = actor.Position;
-						CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
-
-						renderWindow.Draw(CollisionCircle);
-					}
-
-					renderWindow.Draw(drawableActor);
-                }
+				}
             }
 		}
 
 	    public virtual void OnLevelLoad()
 	    {
 		    Console.WriteLine("Level #" + LevelID + " Loaded");
+		    OnGameStart();
 	    }
 
         public void RegisterActor(Actor actor)
         {
-			actor.ActorID = Engine.ActorIDCounter;
-	        ++Engine.ActorIDCounter;
+			actor.ActorID = EngineReference.ActorIDCounter;
+	        ++EngineReference.ActorIDCounter;
 	        actor.LevelID = LevelID;
 	        actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
@@ -92,7 +106,7 @@ namespace SFML_Engine.Engine
 			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
 			actor.OnActorDestroy();
 			var removal = Actors.Remove(actor);
-			removal = Engine.PhysicsEngine.RemoveActorFromGroups(actor);
+			removal = EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
 			return removal;
 		}
 
@@ -153,5 +167,25 @@ namespace SFML_Engine.Engine
 	    {
 		    return Actors.AsReadOnly();
 	    }
+
+	    public void SpawnActor(Actor instigator, Actor actor)
+	    {
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(instigator, actor, LevelID)));
+		}
+
+		public void SpawnActor(Actor actor)
+		{
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, actor, LevelID)));
+		}
+
+		public void DestroyActor(Actor instigator, Actor actor)
+	    {
+			Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actor)));
+		}
+
+		public void DestroyActor(Actor actor)
+		{
+			Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor)));
+		}
 	}
 }

@@ -13,6 +13,7 @@ namespace SFML_Pong
 		public override void OnLevelLoad()
 		{
 			Console.WriteLine("Pong Game Level #" + LevelID + " Loaded");
+			OnGameStart();
 		}
 
 		public override void OnGameStart()

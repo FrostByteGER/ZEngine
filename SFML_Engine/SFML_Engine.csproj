@@ -145,6 +145,7 @@
     <Compile Include="Engine\SFML\RectangleShape.cs" />
     <Compile Include="Engine\SFML\Shape.cs" />
     <Compile Include="Engine\SFML\Text.cs" />
+    <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\SFML\Sprite.cs" />
     <Compile Include="Engine\SpriteActor.cs" />

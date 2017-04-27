@@ -20,7 +20,7 @@ namespace SFML_Engine.Engine.SFML
 		/// See also the note on coordinates and undistorted rendering in SFML.Graphics.Transformable.
 		/// </remarks>
 		////////////////////////////////////////////////////////////
-		public class Text : Transformable, Drawable
+		public class Text : Actor, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

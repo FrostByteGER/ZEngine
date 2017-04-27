@@ -6,6 +6,8 @@ namespace SFML_Pong
 {
 	public class PowerUp : SpriteActor
 	{
+
+		public float MaxSize { get; set; } = 1.5f;
 		public override void IsOverlapping(Actor actor)
 		{
 			if (!MarkedForRemoval && actor.GetType() == typeof(PongBall))
@@ -13,11 +15,11 @@ namespace SFML_Pong
 				var ball = (PongBall)actor;
 
 
-				if (ball.Scale.X < 2.0f || ball.Scale.Y < 2.0f)
+				if (ball.Scale.X < MaxSize || ball.Scale.Y < MaxSize)
 				{
 					ball.ScaleActor(.1f, .1f);
 				}
-				else if(ball.Scale.X >= 2.0f || ball.Scale.Y >= 2.0f)
+				else if(ball.Scale.X >= MaxSize || ball.Scale.Y >= MaxSize)
 				{
 					ball.ScaleActor(-.1f, -.1f);
 				}

@@ -14,7 +14,7 @@ namespace SFML_Engine.Engine
 		public uint LevelID { get; internal set; } = 0;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
-		public CollisionShape CollisionShape { get; set; }
+		public CollisionShape CollisionShape { get; set; } = new CollisionShape();
 		public FloatRect ActorBounds { get; set; } = new FloatRect();
 		public bool Movable { get; set; } = true;
 		public Vector2f Velocity { get; set; }
@@ -124,11 +124,11 @@ namespace SFML_Engine.Engine
 
 		public virtual void AfterCollision(Actor actor)
 		{
-			Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 		public virtual void BeforeCollision(Actor actor)
 		{
-			Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
+			Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 		public virtual void IsOverlapping(Actor actor)
 		{
