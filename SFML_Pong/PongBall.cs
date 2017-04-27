@@ -39,6 +39,8 @@ namespace SFML_Pong
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
+			ScaleAbsolute(1.0f, 1.0f);
+			MaxVelocity = 500.0f;
 			GameModeReference = (PongGameMode) LevelReference.GameMode;
 		}
 
