@@ -173,6 +173,7 @@ namespace SFML_Engine.Engine
 	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
 	                foreach (var pc in Players)
 	                {
+		                if (!pc.IsActive) continue;
 		                pc.Tick(DeltaTime.AsSeconds());
 	                }
 

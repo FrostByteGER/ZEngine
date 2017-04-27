@@ -34,12 +34,15 @@ namespace SFML_Pong
 			point = ((SFML_Engine.Engine.Physics.SphereShape)ball.CollisionShape).GetMid(ball.Position);
 		}
 
-			
+
 
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
 			//base.OnKeyPressed(sender, keyEventArgs);
-
+			if (Input.EscPressed)
+			{
+				IsActive = false;
+			}
 		}
 
 

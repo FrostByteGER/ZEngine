@@ -16,6 +16,7 @@ namespace SFML_Pong
 		public PongPlayerController Player2 { get; set; }
 		public uint WinScore { get; set; } = 3;
 		public PongBall Ball { get; set; }
+		public bool AIEnabled { get; set; } = false;
 
 		public PongPlayerController Winner { get; set; }
 
@@ -32,7 +33,8 @@ namespace SFML_Pong
 		{
 			base.OnGameStart();
 			Player1 = LevelReference.EngineReference.Players[1] as PongPlayerController;
-			Player2 = LevelReference.EngineReference.Players[2] as PongPlayerController;
+			var aiIndex = AIEnabled ? 3 : 2;
+			Player2 = LevelReference.EngineReference.Players[aiIndex] as PongPlayerController;
 			Player1.Score = 0;
 			Player2.Score = 0;
 			Player1.Position = new Vector2f();
@@ -41,7 +43,7 @@ namespace SFML_Pong
 			Ball = (PongBall)LevelReference.FindActorInLevel("Ball");
 			BGM_Main = new Music(MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
 			BGM_Main.Loop = true;
-			BGM_Main.Volume = 5;
+			BGM_Main.Volume = Engine.Instance.GlobalVolume;
 			BGM_Main.Play();
 			SpawnBall();
 			GameRunning = true;

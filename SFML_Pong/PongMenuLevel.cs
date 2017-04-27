@@ -54,7 +54,7 @@ namespace SFML_Pong
 
 
 			PlayVSBot.Font = MainGameFont;
-			PlayVSBot.DisplayedString = "Play vs. Bot";
+			PlayVSBot.DisplayedString = "Player vs. Bot";
 			PlayVSBot.CharacterSize = 50;
 			PlayVSBot.Color = ColorUnselected;
 			PlayVSBot.Style = Text.Styles.Regular;
@@ -62,7 +62,7 @@ namespace SFML_Pong
 			PlayVSBot.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 320);
 
 			AllowSound.Font = MainGameFont;
-			AllowSound.DisplayedString = "Play Sounds";
+			AllowSound.DisplayedString = "Mute Sounds";
 			AllowSound.CharacterSize = 50;
 			AllowSound.Color = ColorUnselected;
 			AllowSound.Style = Text.Styles.Regular;

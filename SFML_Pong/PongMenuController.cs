@@ -54,8 +54,17 @@ namespace SFML_Pong
 					//OpenGameLevel(true);
 					IsActive = false;
 					Engine.Instance.Players[1].IsActive = true;
-					Engine.Instance.Players[2].IsActive = true;
+					Engine.Instance.Players[3].IsActive = true;
 					Engine.Instance.LoadLevel(2);
+				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Mute Sounds")
+				{
+					Engine.Instance.GlobalVolume = 0;
+					LevelRef.Menu[SelectedIndex].DisplayedString = "Play Sounds";
+				}else if (LevelRef.Menu[SelectedIndex].DisplayedString == "Play Sounds")
+				{
+					Engine.Instance.GlobalVolume = 10;
+					LevelRef.Menu[SelectedIndex].DisplayedString = "Mute Sounds";
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Exit Game")
 				{
@@ -270,12 +279,14 @@ namespace SFML_Pong
 		public override void Tick(float deltaTime)
 		{
 			//Console.WriteLine("INDEX: " + SelectedIndex);
+			Console.WriteLine(Engine.Instance.GlobalVolume);
 		}
 
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
 			LevelRef = PlayerPawn.LevelReference as PongMenuLevel;
+			SelectedIndex = 0;
 		}
 
 		public override void OnGamePause()

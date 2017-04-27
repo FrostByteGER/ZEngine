@@ -8,9 +8,14 @@ namespace SFML_Pong
 {
     public sealed class StartPong
     {
+
+	    public static bool MountainDewMode { get; set; } = false;
 	    public static void Main(string[] args)
 	    {
-
+		    if (args.Length >= 1)
+		    {
+			    MountainDewMode = bool.Parse(args[0]);
+		    }
 			Engine engine = Engine.Instance;
 		    engine.GameInfo = new PongGameInfo();
 			engine.EngineWindowWidth = 800;
@@ -79,17 +84,17 @@ namespace SFML_Pong
 
 
 
-			var leftPad = new PongPlayerPad();
+			var leftPad = new PongPlayerPad(leftPadTexture);
 	        leftPad.ActorName = "Left Pad";
 	        leftPad.MaxVelocity = 700.0f;
-	        leftPad.Position = new Vector2f(30, 30);
+	        leftPad.Position = new Vector2f(30, engine.EngineWindowHeight/ 2.0f - leftPadTexture.Size.Y / 2.0f);
 	        leftPad.CollisionShape = new BoxShape(leftPadTexture.Size.X, leftPadTexture.Size.Y);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
 			leftPad.CollisionShape.ShowCollisionShape = true;
 			leftPad.Friction = 0.01f;
 
-		    var rightPad = new PongPlayerPad();
-		    rightPad.Position = new Vector2f(650, 30);
+		    var rightPad = new PongPlayerPad(rightPadTexture);
+		    rightPad.Position = new Vector2f(800 - (30 + rightPadTexture.Size.X), engine.EngineWindowHeight / 2.0f - rightPadTexture.Size.Y / 2.0f);
 	        rightPad.ActorName = "Right Pad";
 			rightPad.MaxVelocity = 700.0f;
 	        rightPad.CollisionShape = new BoxShape(rightPadTexture.Size.X, rightPadTexture.Size.Y);
@@ -125,11 +130,13 @@ namespace SFML_Pong
 			physics.AddOverlapPartners("Balls", "PowerUP");
 
 			var leftPadController = new PongPlayerController(leftPad);
-			var rightPadController = new AIPlayerController(rightPad);
-	        leftPadController.Name = "Player 1";
+			var rightPadController = new PongPlayerController(rightPad);
+		    var aiPadController = new AIPlayerController(rightPad);
+			leftPadController.Name = "Player 1";
 	        rightPadController.Name = "Player 2";
+		    aiPadController.Name = "AI 1";
 
-		    var dummyPawn = new SpriteActor();
+			var dummyPawn = new SpriteActor();
 			var menuController = new PongMenuController(dummyPawn);
 		    menuController.Name = "Player 1";
 
@@ -149,8 +156,10 @@ namespace SFML_Pong
 			engine.RegisterPlayer(menuController);
 			leftPadController.IsActive = false;
 			rightPadController.IsActive = false;
+		    aiPadController.IsActive = false;
 			engine.RegisterPlayer(leftPadController);
 			engine.RegisterPlayer(rightPadController);
+		    engine.RegisterPlayer(aiPadController);
 
 			engine.StartEngine();
 
