@@ -10,7 +10,7 @@ namespace SFML_Pong
 	public class PongMenuLevel : Level
 	{
 
-		public Font MainGameFont { get; set; }
+		public static Font MainGameFont { get; set; }  = new Font("Assets/SFML_Pong/arial.ttf");
 		public Text MainLogo { get; set; } = new Text();
 		public Text PlayCoop { get; set; } = new Text();
 		public Text PlayVSBot { get; set; } = new Text();
@@ -29,7 +29,13 @@ namespace SFML_Pong
 
 		public override void OnLevelLoad()
 		{
-			MainGameFont = new Font("Assets/SFML_Pong/arial.ttf");
+			
+			
+			Console.WriteLine("Pong Menu Level #" + LevelID + " Loaded");
+		}
+
+		internal void InitLevel()
+		{
 			MainLogo.Font = MainGameFont;
 			MainLogo.DisplayedString = "Pong";
 			MainLogo.CharacterSize = 100;
@@ -79,14 +85,13 @@ namespace SFML_Pong
 			ExitGame.Origin = new Vector2f(ExitGame.GetLocalBounds().Width / 2.0f, ExitGame.GetLocalBounds().Height / 2.0f);
 			ExitGame.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 530);
 
-			Menu = new List<Text> { PlayCoop, PlayVSBot , AllowSound, LoadResourcePack, ExitGame };
+			Menu = new List<Text> { PlayCoop, PlayVSBot, AllowSound, LoadResourcePack, ExitGame };
 			RegisterActor(MainLogo);
 			RegisterActor(PlayCoop);
 			RegisterActor(PlayVSBot);
 			RegisterActor(AllowSound);
 			RegisterActor(LoadResourcePack);
 			RegisterActor(ExitGame);
-			Console.WriteLine("Pong Menu Level #" + LevelID + " Loaded");
 		}
 
 		public override void OnGameStart()

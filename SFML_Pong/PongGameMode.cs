@@ -44,7 +44,8 @@ namespace SFML_Pong
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
-			BGM_Main.Stop();
+			BGM_Main?.Stop();
+			
 			GameRunning = false;
 			Console.WriteLine("GameMode ending");
 		}

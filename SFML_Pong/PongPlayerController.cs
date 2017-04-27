@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using System;
+using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 
@@ -67,7 +68,6 @@ namespace SFML_Pong
 
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
-
 			base.OnKeyPressed(sender, keyEventArgs);
 
 			if (Input.EnterPressed)
@@ -81,8 +81,17 @@ namespace SFML_Pong
 				}
 			}
 
+
+
 			if (ID == 1)
 			{
+				if (Input.EscPressed)
+				{
+					IsActive = false;
+					Engine.Instance.Players[0].IsActive = true;
+					Engine.Instance.LoadLevel(1);
+					return;
+				}
 				if (Input.WPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
