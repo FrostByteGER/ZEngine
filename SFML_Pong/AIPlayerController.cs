@@ -8,7 +8,7 @@ namespace SFML_Pong
 	public class AIPlayerController : PongPlayerController
 	{
 
-		float difficulty { set; get; } = 0.1f;
+		float difficulty { set; get; } = 0.5f;
 
 		float wait = 0;
 
