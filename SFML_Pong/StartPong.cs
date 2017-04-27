@@ -37,13 +37,13 @@ namespace SFML_Pong
 			leftBorder.ActorName = "Left Border";
 			rightBorder.ActorName = "Right Border";
 
-			topBorder.Position = new Vector2f(0,-20);
+			topBorder.Position = new Vector2f(0,-400);
 			bottomBorder.Position = new Vector2f(0, 600);
 			leftBorder.Position = new Vector2f(-20, 0);
 			rightBorder.Position = new Vector2f(800, 0);
 
-			topBorder.CollisionShape = new BoxShape(800,20);
-			bottomBorder.CollisionShape = new BoxShape(800, 20);
+			topBorder.CollisionShape = new BoxShape(800,400);
+			bottomBorder.CollisionShape = new BoxShape(800, 400);
 			leftBorder.CollisionShape = new BoxShape(20, 600);
 			rightBorder.CollisionShape = new BoxShape(20, 600);
 

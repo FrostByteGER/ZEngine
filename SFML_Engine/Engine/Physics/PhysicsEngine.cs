@@ -127,17 +127,11 @@ namespace SFML_Engine.Engine.Physics
 												
 												Vector2f norm = sphere.GetMid(sphereActor.Position) - box.GetMid(boxActor.Position);
 
-												Console.WriteLine("Sphere " + sphere.GetMid(sphereActor.Position) + " Box " + box.GetMid(boxActor.Position));
+												norm = new Vector2f(norm.X / (Math.Abs(norm.X) + Math.Abs(norm.Y)), norm.Y / (Math.Abs(norm.X) + Math.Abs(norm.Y)));
 
-												norm = new Vector2f(norm.X / Math.Abs(norm.X + norm.Y), norm.Y / Math.Abs(norm.X + norm.Y));
+												sphereActor.Velocity = new Vector2f((Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y)) * norm.X, (Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y)) * norm.Y);
+												sphereActor.Acceleration = new Vector2f((Math.Abs(sphereActor.Acceleration.X) + Math.Abs(sphereActor.Acceleration.Y)) * norm.X, (Math.Abs(sphereActor.Acceleration.X) + Math.Abs(sphereActor.Acceleration.Y)) * norm.Y);
 
-												Console.WriteLine("Box " + boxActor.Velocity + " Sphere " + sphereActor.Velocity + " Norm " + norm);
-
-												sphereActor.Velocity = new Vector2f(Math.Abs(sphereActor.Velocity.X + sphereActor.Velocity.Y) * norm.X, Math.Abs(sphereActor.Velocity.X + sphereActor.Velocity.Y) * norm.Y);
-												sphereActor.Acceleration = new Vector2f(Math.Abs(sphereActor.Acceleration.X + sphereActor.Acceleration.Y) * norm.X, Math.Abs(sphereActor.Acceleration.X + sphereActor.Acceleration.Y) * norm.Y);
-
-												Console.WriteLine("Box " + boxActor.Velocity + " Sphere " + sphereActor.Velocity + " Norm " + norm + " after");
-												Console.WriteLine();
 
 												activeActor.AfterCollision(passiveActor);
 												
