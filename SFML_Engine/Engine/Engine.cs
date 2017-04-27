@@ -68,6 +68,8 @@ namespace SFML_Engine.Engine
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
 	    public ContextSettings.Attribute OpenGLVersion = ContextSettings.Attribute.Default;
 
+	    public uint GlobalVolume { get; set; } = 5;
+
 
 	    private Engine()
 	    {

@@ -114,7 +114,7 @@ namespace SFML_Pong
 		protected override void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
 		{
 			base.OnKeyReleased(sender, keyEventArgs);
-			if (ID == 0)
+			if (ID == 1)
 			{
 				//Console.WriteLine(PlayerPawn.Velocity);
 
@@ -130,7 +130,7 @@ namespace SFML_Pong
 					//PlayerPawn.Velocity = new Vector2f(0f, 0f);
 				}
 			}
-			else if (ID == 1)
+			else if (ID == 2)
 			{
 				if (!Input.UpPressed)
 				{
