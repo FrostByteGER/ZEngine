@@ -48,7 +48,6 @@ namespace SFML_Pong
 			{
 				GameModeReference = mode;
 			}
-			
 		}
 
 		public override void OnGamePause()
