@@ -35,12 +35,15 @@ namespace SFML_Pong
 			Player2 = LevelReference.EngineReference.Players[2] as PongPlayerController;
 			Player1.Score = 0;
 			Player2.Score = 0;
+			Player1.Position = new Vector2f();
+			Player2.Position = new Vector2f();
 			Winner = null;
 			Ball = (PongBall)LevelReference.FindActorInLevel("Ball");
 			BGM_Main = new Music(MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
 			BGM_Main.Loop = true;
 			BGM_Main.Volume = 5;
 			BGM_Main.Play();
+			SpawnBall();
 			GameRunning = true;
 		}
 

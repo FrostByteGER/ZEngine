@@ -86,7 +86,7 @@ namespace SFML_Engine.Engine
         {
 	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLVersion);
             EngineClock = new Clock();
-            engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Default, settings);
+            engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
             engineWindow.Closed += OnEngineWindowClose;
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			engineWindow.SetFramerateLimit(FPSLimit);

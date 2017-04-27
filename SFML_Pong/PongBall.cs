@@ -42,6 +42,14 @@ namespace SFML_Pong
 			GameModeReference = (PongGameMode) LevelReference.GameMode;
 		}
 
+		public override void OnGameEnd()
+		{
+			base.OnGameEnd();
+			Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, LevelReference.EngineReference.EngineWindowHeight / 2.0f);
+			Velocity = new Vector2f();
+			Acceleration = new Vector2f();
+		}
+
 		public override void AfterCollision(Actor actor)
 		{
 			base.AfterCollision(actor);
