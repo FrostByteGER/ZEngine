@@ -23,7 +23,7 @@ namespace SFML_Pong
 		public bool GameEnded { get; set; } = false;
 
 		public float PowerUPSpawnTimer = 0.0f;
-		public float PowerUPSpawnFrequency = 1f;
+		public float PowerUPSpawnFrequency = 5f;
 
 		public Music BGM_Main;
 		public List<string> MusicTracks = new List<string> { "Assets/SFML_Pong/BGM_Main_1.wav", "Assets/SFML_Pong/BGM_Main_2.wav", "Assets/SFML_Pong/BGM_Main_3.wav", "Assets/SFML_Pong/BGM_Main_4.wav", "Assets/SFML_Pong/BGM_Main_5.wav" };
