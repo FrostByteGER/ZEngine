@@ -6,7 +6,8 @@ namespace SFML_Engine.Engine
 {
     public class PlayerController : Transformable, ITickable, IGameInterface
     {
-        public string Name { get; set; } = "PlayerController";
+	    
+	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; } = new View();
 
@@ -16,7 +17,18 @@ namespace SFML_Engine.Engine
 
 		public InputManager Input { get; set; }
 
-        public PlayerController()
+	    private bool isActive = true;
+		public bool IsActive
+	    {
+		    get { return isActive; }
+			set
+			{
+				isActive = value; 
+				
+			}
+	    }
+
+	    public PlayerController()
         {
         }
 
@@ -28,8 +40,15 @@ namespace SFML_Engine.Engine
         public virtual void RegisterInput(Engine engine)
         {
 	        Input = engine.InputManager;
-
 			Input.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled, 
+				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
+				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+		}
+
+		public virtual void UnregisterInput(Engine engine)
+		{
+			Input = engine.InputManager;
+			Input.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
 		}

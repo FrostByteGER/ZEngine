@@ -7,7 +7,7 @@ namespace SFML_Engine.Engine
 	public class ActorInformation
 	{
 		public uint ActorID { get; set; }
-		public int ActorLevelID { get; set; }
+		public uint ActorLevelID { get; set; }
 		public Vector2f ActorPosition { get; set; }
 		public float ActorRotation { get; set; }
 		public Vector2f ActorScale { get; set; }
@@ -21,7 +21,7 @@ namespace SFML_Engine.Engine
 		public float ActorFriction { get; set; }
 		public bool ActorHasGravity { get; set; }
 
-		public ActorInformation(uint actorId, int actorLevelId, Vector2f actorPosition, float actorRotation, Vector2f actorScale, Vector2f actorOrigin, bool actorMovable, Vector2f actorVelocity, float actorMaxVelocity, Vector2f actorAcceleration, float actorMaxAcceleration, float actorMass, float actorFriction, bool actorHasGravity)
+		public ActorInformation(uint actorId, uint actorLevelId, Vector2f actorPosition, float actorRotation, Vector2f actorScale, Vector2f actorOrigin, bool actorMovable, Vector2f actorVelocity, float actorMaxVelocity, Vector2f actorAcceleration, float actorMaxAcceleration, float actorMass, float actorFriction, bool actorHasGravity)
 		{
 			ActorID = actorId;
 			ActorLevelID = actorLevelId;

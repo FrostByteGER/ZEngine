@@ -103,7 +103,10 @@
     </Compile>
     <Compile Include="PongBall.cs" />
     <Compile Include="PongGameInfo.cs" />
+    <Compile Include="PongGameLevel.cs" />
     <Compile Include="PongGameMode.cs" />
+    <Compile Include="PongMenuController.cs" />
+    <Compile Include="PongMenuLevel.cs" />
     <Compile Include="PongPlayerController.cs" />
     <Compile Include="PowerUp.cs" />
     <Compile Include="StartPong.cs" />
