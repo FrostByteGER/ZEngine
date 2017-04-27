@@ -4,7 +4,7 @@ using SFML_Engine.Engine.IO;
 
 namespace SFML_Engine.Engine
 {
-    public class PlayerController : Transformable, ITickable
+    public class PlayerController : Transformable, ITickable, IGameInterface
     {
         public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
@@ -111,5 +111,20 @@ namespace SFML_Engine.Engine
                 
             }
         }
+
+	    public virtual void OnGameStart()
+	    {
+		    
+	    }
+
+	    public virtual void OnGamePause()
+	    {
+		    
+	    }
+
+	    public virtual void OnGameEnd()
+	    {
+		    
+	    }
     }
 }

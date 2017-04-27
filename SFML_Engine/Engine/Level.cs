@@ -77,6 +77,7 @@ namespace SFML_Engine.Engine
 			actor.ActorID = Engine.ActorIDCounter;
 	        ++Engine.ActorIDCounter;
 	        actor.LevelID = (int)LevelID; // Maybe use int in the first place?
+	        actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
 			Actors.Add(actor);
         }
