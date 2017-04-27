@@ -122,6 +122,10 @@ namespace SFML_Engine.Engine
 		        level.OnGameStart();
 		        level.LevelTicking = true;
 	        }
+	        foreach (var pc in Players)
+	        {
+		        pc.OnGameStart();
+	        }
 	        FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
@@ -186,7 +190,12 @@ namespace SFML_Engine.Engine
 				}
                 FramesRendered++;
             }
-	        foreach (var level in Levels)
+			foreach (var pc in Players)
+			{
+				pc.OnGameEnd();
+			}
+
+			foreach (var level in Levels)
 	        {
 		        level.OnGameEnd();
 	        }
