@@ -109,7 +109,7 @@ namespace SFML_Pong
 
 					powerUp.CollisionShape = ss;
 
-					powerUp.Position = new SFML.System.Vector2f((float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
+					powerUp.Position = new SFML.System.Vector2f((float)(200+(LevelReference.EngineReference.EngineWindowWidth - 400) * EngineMath.EngineRandom.NextDouble()), (float)(60 + (LevelReference.EngineReference.EngineWindowWidth - 120) * EngineMath.EngineRandom.NextDouble()));
 
 					Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, powerUp, LevelReference.LevelID)));
 
@@ -120,8 +120,6 @@ namespace SFML_Pong
 				}
 				PowerUPSpawnTimer += deltaTime;
 			}
-
-			
 		}
 	}
 }
