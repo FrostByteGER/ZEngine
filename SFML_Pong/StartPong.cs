@@ -62,7 +62,7 @@ namespace SFML_Pong
 			var gameLevel = new PongGameLevel();
 
 
-			Image ballImage = new Image(66, 66, Color.White);
+			//Image ballImage = new Image(66, 66, Color.White);
 			Image padImage = new Image(30, 200, Color.White);
 
 			Texture leftPadTexture;
@@ -73,13 +73,13 @@ namespace SFML_Pong
 		    {
 			    leftPadTexture = new Texture(padImage);
 			    rightPadTexture = new Texture(padImage);
-			    ballTexture = new Texture(ballImage);
+			    ballTexture = new Texture(66,66);
 		    }
 		    else
 		    {
 				leftPadTexture = new Texture("Assets/SFML_Pong/MountainDewCan.png");
 				rightPadTexture = new Texture("Assets/SFML_Pong/MountainDewCan.png");
-				ballTexture = new Texture("Assets/SFML_Pong/DragonBall4Star.png");
+				ballTexture = new Texture("Assets/SFML_Pong/IlluminatiBall.png");
 			}
 
 
@@ -90,7 +90,7 @@ namespace SFML_Pong
 	        leftPad.Position = new Vector2f(30, engine.EngineWindowHeight/ 2.0f - leftPadTexture.Size.Y / 2.0f);
 	        leftPad.CollisionShape = new BoxShape(leftPadTexture.Size.X, leftPadTexture.Size.Y);
 	        leftPad.CollisionShape.Origin = leftPad.Origin;
-			leftPad.CollisionShape.ShowCollisionShape = true;
+			leftPad.CollisionShape.ShowCollisionShape = !MountainDewMode;
 			leftPad.Friction = 0.01f;
 
 		    var rightPad = new PongPlayerPad(rightPadTexture);
@@ -99,18 +99,17 @@ namespace SFML_Pong
 			rightPad.MaxVelocity = 700.0f;
 	        rightPad.CollisionShape = new BoxShape(rightPadTexture.Size.X, rightPadTexture.Size.Y);
 	        rightPad.CollisionShape.Origin = rightPad.Origin;
-			rightPad.CollisionShape.ShowCollisionShape = true;
+			rightPad.CollisionShape.ShowCollisionShape = !MountainDewMode;
 			rightPad.Friction = 0.01f;
 
 			var ball = new PongBall(ballTexture);
 			ball.ActorName = "Ball";
 	        ball.CollisionShape = new SphereShape(ballTexture.Size.X);
-			ball.Color = new Color(ball.Color.R, ball.Color.G, ball.Color.B, 60);
 	        ball.CollisionShape.Origin = ball.Origin;
 			ball.Position = new Vector2f(400,250);
 	        ball.MaxVelocity = 500.0f;
 			ball.Velocity = new Vector2f(250,0);
-			ball.CollisionShape.ShowCollisionShape = true;
+			ball.CollisionShape.ShowCollisionShape = !MountainDewMode;
 
 	        physics.AddActorToGroup("Pads",leftPad);
 	        physics.AddActorToGroup("Pads", rightPad);

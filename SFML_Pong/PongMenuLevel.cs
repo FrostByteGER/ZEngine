@@ -15,7 +15,6 @@ namespace SFML_Pong
 		public Text PlayCoop { get; set; } = new Text();
 		public Text PlayVSBot { get; set; } = new Text();
 		public Text AllowSound { get; set; } = new Text();
-		public Text LoadResourcePack { get; set; } = new Text();
 		public Text ExitGame { get; set; } = new Text();
 
 		public List<Text> Menu { get; set; }
@@ -36,7 +35,7 @@ namespace SFML_Pong
 
 		internal void InitLevel()
 		{
-			MainGameFont = new Font(StartPong.MountainDewMode ? "Assets/SFML_Pong/arial.ttf" : "Assets/SFML_Pong/comic.ttf");
+			MainGameFont = new Font(StartPong.MountainDewMode ? "Assets/SFML_Pong/comic.ttf" : "Assets/SFML_Pong/arial.ttf");
 			MainLogo.Font = MainGameFont;
 			MainLogo.DisplayedString = "Pong";
 			MainLogo.CharacterSize = 100;
@@ -70,28 +69,19 @@ namespace SFML_Pong
 			AllowSound.Origin = new Vector2f(AllowSound.GetLocalBounds().Width / 2.0f, AllowSound.GetLocalBounds().Height / 2.0f);
 			AllowSound.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 390);
 
-			LoadResourcePack.Font = MainGameFont;
-			LoadResourcePack.DisplayedString = "Standard Resource Pack";
-			LoadResourcePack.CharacterSize = 50;
-			LoadResourcePack.Color = ColorUnselected;
-			LoadResourcePack.Style = Text.Styles.Regular;
-			LoadResourcePack.Origin = new Vector2f(LoadResourcePack.GetLocalBounds().Width / 2.0f, LoadResourcePack.GetLocalBounds().Height / 2.0f);
-			LoadResourcePack.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 460);
-
 			ExitGame.Font = MainGameFont;
 			ExitGame.DisplayedString = "Exit Game";
 			ExitGame.CharacterSize = 50;
 			ExitGame.Color = ColorUnselected;
 			ExitGame.Style = Text.Styles.Regular;
 			ExitGame.Origin = new Vector2f(ExitGame.GetLocalBounds().Width / 2.0f, ExitGame.GetLocalBounds().Height / 2.0f);
-			ExitGame.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 530);
+			ExitGame.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 460);
 
-			Menu = new List<Text> { PlayCoop, PlayVSBot, AllowSound, LoadResourcePack, ExitGame };
+			Menu = new List<Text> { PlayCoop, PlayVSBot, AllowSound, ExitGame };
 			RegisterActor(MainLogo);
 			RegisterActor(PlayCoop);
 			RegisterActor(PlayVSBot);
 			RegisterActor(AllowSound);
-			RegisterActor(LoadResourcePack);
 			RegisterActor(ExitGame);
 		}
 
