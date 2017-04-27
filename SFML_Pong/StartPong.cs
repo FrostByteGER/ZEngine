@@ -97,7 +97,7 @@ namespace SFML_Pong
 			physics.AddActorToGroup("SoftBorders", rightBorder);
 
 
-			physics.AddCollidablePartner("Pads", "Balls");
+			physics.AddCollidablePartner("Balls", "Pads");
 	        physics.AddCollidablePartner("Balls", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
 	        physics.AddOverlapPartners("Balls", "SoftBorders");
