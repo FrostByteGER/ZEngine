@@ -65,6 +65,68 @@ namespace SFML_Pong
 			base.Tick(deltaTime);
 		}
 
+		protected override void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
+		{
+			base.OnJoystickButtonPressed(sender, joystickButtonEventArgs);
+			if (ID == 1)
+			{
+				if (joystickButtonEventArgs.Button == 7 || joystickButtonEventArgs.Button == 1)
+				{
+					IsActive = false;
+					Engine.Instance.Players[0].IsActive = true;
+					Engine.Instance.LoadLevel(1);
+					return;
+				}
+				if (joystickButtonEventArgs.Button == 3)
+				{
+					if (GameModeReference.GameRunning)
+					{
+						GameModeReference.SpawnBall();
+					}
+					else if (GameModeReference.GameEnded)
+					{
+						GameModeReference.RestartGame();
+					}
+				}
+			}
+		}
+
+		protected override void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
+		{
+			if (ID == 1)
+			{
+
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.Y && joystickMoveEventArgs.Position > 20.0f)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
+				}
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.Y && joystickMoveEventArgs.Position < -20.0f)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
+				}
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.Y && (joystickMoveEventArgs.Position < 20.0f && joystickMoveEventArgs.Position > -20.0f))
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+				}
+
+			}
+			else if (ID == 2)
+			{
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && joystickMoveEventArgs.Position > 20.0f)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
+				}
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && joystickMoveEventArgs.Position < -20.0f)
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
+				}
+				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && (joystickMoveEventArgs.Position < 20.0f && joystickMoveEventArgs.Position > -20.0f))
+				{
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+				}
+			}
+		}
+
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
 			base.OnKeyPressed(sender, keyEventArgs);

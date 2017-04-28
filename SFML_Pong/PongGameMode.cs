@@ -58,8 +58,12 @@ namespace SFML_Pong
 			Player2 = LevelReference.EngineReference.Players[aiIndex] as PongPlayerController;
 			Player1.Score = 0;
 			Player2.Score = 0;
-			Player1.Position = new Vector2f();
-			Player2.Position = new Vector2f();
+			Player1.PlayerPawn.Acceleration = new Vector2f();
+			Player2.PlayerPawn.Acceleration = new Vector2f();
+			Player1.PlayerPawn.Velocity = new Vector2f();
+			Player2.PlayerPawn.Velocity = new Vector2f();
+			Player1.PlayerPawn.Position = new Vector2f(Player1.PlayerPawn.Position.X, Engine.Instance.EngineWindowHeight / 2.0f - ((BoxShape)Player1.PlayerPawn.CollisionShape).BoxExtent.Y / 2.0f);
+			Player2.PlayerPawn.Position = new Vector2f(Player2.PlayerPawn.Position.X, Engine.Instance.EngineWindowHeight / 2.0f - ((BoxShape)Player2.PlayerPawn.CollisionShape).BoxExtent.Y / 2.0f);
 			ShowScore.DisplayedString = Player1.Score + " : " + Player2.Score;
 			ShowScore.Origin = new Vector2f(ShowScore.GetLocalBounds().Width / 2.0f, ShowScore.GetLocalBounds().Height / 2.0f);
 			ShowScore.Position = new Vector2f(Engine.Instance.EngineWindowWidth / 2.0f, 100);
@@ -80,7 +84,6 @@ namespace SFML_Pong
 		{
 			base.OnGameEnd();
 			BGM_Main?.Stop();
-			
 			GameRunning = false;
 			Console.WriteLine("GameMode ending");
 		}

@@ -50,17 +50,25 @@ namespace SFML_Pong
 			base.Tick(deltaTime);
 
 			//Console.WriteLine(wait+" "+ ball+" " + LevelReference);
+			if (((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y + ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2 >= Engine.Instance.EngineWindowHeight - 10 ||
+			    ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y + ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).BoxExtent.Y / 2 <= 0 + 10)
+			{
+				PlayerPawn.Acceleration = -PlayerPawn.Acceleration;
+				PlayerPawn.Velocity = -PlayerPawn.Velocity;
+			}else
+			{
+				if (point.Y < ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y)
+				{
+					// Down
+					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
+				}
+				else if (point.Y > ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y)
+				{
+					// UP
+					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
+				}
+			}
 
-			if (point.Y < ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y)
-			{
-				// Down
-				PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
-			}
-			else if (point.Y > ((SFML_Engine.Engine.Physics.BoxShape)pad.CollisionShape).GetMid(pad.Position).Y)
-			{
-				// UP
-				PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
-			}
 
 			if (wait > difficulty && ball != null)
 			{

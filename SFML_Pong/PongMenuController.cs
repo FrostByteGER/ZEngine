@@ -113,6 +113,39 @@ namespace SFML_Pong
 		protected override void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
 		{
 			base.OnJoystickButtonPressed(sender, joystickButtonEventArgs);
+			if (joystickButtonEventArgs.Button == 0)
+			{
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Player")
+				{
+					//OpenGameLevel(false);
+					IsActive = false;
+					Engine.Instance.Players[1].IsActive = true;
+					Engine.Instance.Players[2].IsActive = true;
+					Engine.Instance.LoadLevel(2);
+				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Bot")
+				{
+					//OpenGameLevel(true);
+					IsActive = false;
+					Engine.Instance.Players[1].IsActive = true;
+					Engine.Instance.Players[3].IsActive = true;
+					Engine.Instance.LoadLevel(2);
+				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Mute Sounds")
+				{
+					Engine.Instance.GlobalVolume = 0;
+					LevelRef.Menu[SelectedIndex].DisplayedString = "Play Sounds";
+				}
+				else if (LevelRef.Menu[SelectedIndex].DisplayedString == "Play Sounds")
+				{
+					Engine.Instance.GlobalVolume = 10;
+					LevelRef.Menu[SelectedIndex].DisplayedString = "Mute Sounds";
+				}
+				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Exit Game")
+				{
+					Engine.Instance.CloseEngineWindow();
+				}
+			}
 		}
 
 		protected override void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
