@@ -183,6 +183,9 @@
   <ItemGroup>
     <Content Include="Lib\OpenAL32.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Audio\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(SolutionDir)$(ProjectName)\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E

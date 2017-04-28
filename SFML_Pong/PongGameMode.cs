@@ -56,6 +56,17 @@ namespace SFML_Pong
 			Player1 = LevelReference.EngineReference.Players[1] as PongPlayerController;
 			var aiIndex = AIEnabled ? 3 : 2;
 			Player2 = LevelReference.EngineReference.Players[aiIndex] as PongPlayerController;
+			Player1.IsActive = true;
+			if (AIEnabled)
+			{
+				LevelReference.EngineReference.Players[2].IsActive = false;
+				LevelReference.EngineReference.Players[3].IsActive = true;
+			}
+			else
+			{
+				LevelReference.EngineReference.Players[3].IsActive = false;
+				LevelReference.EngineReference.Players[2].IsActive = true;
+			}
 			Player1.Score = 0;
 			Player2.Score = 0;
 			Player1.PlayerPawn.Acceleration = new Vector2f();

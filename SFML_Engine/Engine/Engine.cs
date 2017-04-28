@@ -133,7 +133,8 @@ namespace SFML_Engine.Engine
 	        ActiveLevel.OnGameStart();
 	        foreach (var pc in Players)
 	        {
-		        pc.OnGameStart();
+				if (!pc.IsActive) continue;
+				pc.OnGameStart();
 	        }
 	        FPSClock.Restart();
             EngineLoopClock.Restart();
