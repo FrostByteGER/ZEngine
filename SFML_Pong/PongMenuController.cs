@@ -45,16 +45,14 @@ namespace SFML_Pong
 				{
 					//OpenGameLevel(false);
 					IsActive = false;
-					Engine.Instance.Players[1].IsActive = true;
-					Engine.Instance.Players[2].IsActive = true;
+					((PongGameMode) Engine.Instance.Levels[1].GameMode).AIEnabled = false;
 					Engine.Instance.LoadLevel(2);
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Player vs. Bot")
 				{
 					//OpenGameLevel(true);
 					IsActive = false;
-					Engine.Instance.Players[1].IsActive = true;
-					Engine.Instance.Players[3].IsActive = true;
+					((PongGameMode)Engine.Instance.Levels[1].GameMode).AIEnabled = true;
 					Engine.Instance.LoadLevel(2);
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Mute Sounds")

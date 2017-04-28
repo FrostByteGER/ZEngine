@@ -121,6 +121,11 @@ namespace SFML_Engine.Engine
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
+			foreach (var pc in Engine.Instance.Players)
+			{
+				if (!pc.IsActive) continue;
+				pc.OnGameStart();
+			}
 		    foreach (var actor in Actors)
 		    {
 			    actor.OnGameStart();

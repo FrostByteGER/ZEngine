@@ -54,6 +54,7 @@ namespace SFML_Engine.Engine
 	    public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
         public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
+		public AssetManager AssetManager { get; set; }
 
 	    public Queue<EngineEvent> EngineEvents { get; private set; } = new Queue<EngineEvent>();
 
@@ -133,7 +134,8 @@ namespace SFML_Engine.Engine
 	        ActiveLevel.OnGameStart();
 	        foreach (var pc in Players)
 	        {
-		        pc.OnGameStart();
+				if (!pc.IsActive) continue;
+				pc.OnGameStart();
 	        }
 	        FPSClock.Restart();
             EngineLoopClock.Restart();

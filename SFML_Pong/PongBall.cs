@@ -99,7 +99,8 @@ namespace SFML_Pong
 			var engine = Engine.Instance;
 			if (actor.ActorName == "Left Border")
 			{
-				PongPlayerController player = engine.Players[2] as PongPlayerController;
+				var aiIndex = GameModeReference.AIEnabled ? 3 : 2;
+				PongPlayerController player = engine.Players[aiIndex] as PongPlayerController;
 				if (player != null)
 				{
 					Console.WriteLine("Score for Player 2!!!");

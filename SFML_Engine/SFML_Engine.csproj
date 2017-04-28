@@ -122,7 +122,10 @@
     <Compile Include="Engine\Events\SpawnActorEventParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
-    <Compile Include="Engine\IO\ConfigReader.cs" />
+    <Compile Include="Engine\IO\AssetLoader.cs" />
+    <Compile Include="Engine\IO\AssetManager.cs" />
+    <Compile Include="Engine\IO\ConfigLoader.cs" />
+    <Compile Include="Engine\IO\GenericLoader.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
@@ -183,6 +186,9 @@
   <ItemGroup>
     <Content Include="Lib\BulletSharp.dll" />
     <Content Include="Lib\OpenAL32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Audio\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
