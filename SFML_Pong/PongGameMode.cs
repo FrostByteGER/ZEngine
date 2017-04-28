@@ -166,7 +166,7 @@ namespace SFML_Pong
 			base.Tick(deltaTime);
 			if (GameRunning)
 			{
-				if (PowerUPSpawnTimer >= PowerUPSpawnFrequency)
+				if (false &&PowerUPSpawnTimer >= PowerUPSpawnFrequency)
 				{
 					PowerUp powerUp = new PowerUp();
 					powerUp.ActorName = "PowerUp";

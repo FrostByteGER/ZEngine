@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8BD345E2-AEFE-4739-AA56-7BC3834D4DB4}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>SFML_Pong</RootNamespace>
     <AssemblyName>SFML_Pong</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -136,12 +136,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rmdir "Assets" /s /q
+    <PostBuildEvent>robocopy "$(SolutionDir)SFML_Engine\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
+rmdir "Assets" /s /q
 mkdir "Assets\Engine"
 mkdir "Assets\$(ProjectName)"
 robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /E
 robocopy "$(ProjectDir)Assets" "Assets\$(ProjectName)" /COPY:DAT /DCOPY:T /E
-if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
