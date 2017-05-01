@@ -12,7 +12,7 @@ namespace SFML_Engine.Engine
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; } = new View();
 
-        public bool ReceiveInput { get; set; } = true;
+	    public Level LevelReference { get; set; } = null;
 
         public SpriteActor PlayerPawn { get; set; }
 
@@ -25,13 +25,13 @@ namespace SFML_Engine.Engine
 			set
 			{
 				isActive = value;
-				if (value)
+				if (value && LevelReference != null)
 				{
-					RegisterInput(Engine.Instance);
+					RegisterInput();
 				}
-				else
+				else if(!value && LevelReference != null)
 				{
-					UnregisterInput(Engine.Instance);
+					UnregisterInput();
 				}
 			}
 	    }
@@ -45,17 +45,17 @@ namespace SFML_Engine.Engine
             PlayerPawn = playerPawn;
         }
 
-        public virtual void RegisterInput(Engine engine)
+        public virtual void RegisterInput()
         {
-	        Input = engine.InputManager;
+	        Input = LevelReference.EngineReference.InputManager;
 			Input.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled, 
 				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
 		}
 
-		public virtual void UnregisterInput(Engine engine)
+		public virtual void UnregisterInput()
 		{
-			Input = engine.InputManager;
+			Input = LevelReference.EngineReference.InputManager;
 			Input.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
