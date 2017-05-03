@@ -15,6 +15,8 @@ namespace SFML_Breakout
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
+
+
 			Engine engine = Engine.Instance;
 			engine.GameInfo = new BreakoutGameInfo();
 			engine.EngineWindowWidth = 800;
@@ -60,10 +62,20 @@ namespace SFML_Breakout
 			leftBorder.CollisionShape.ShowCollisionShape = true;
 			rightBorder.CollisionShape.ShowCollisionShape = true;
 
+			var playerPad = new SpriteActor();
+			playerPad.ActorName = "Player";
+			playerPad.CollisionShape = new BoxShape(300.0f, 30.0f);
+			playerPad.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - playerPad.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - playerPad.CollisionShape.CollisionBounds.Y * 2.0f);
+			playerPad.CollisionShape.ShowCollisionShape = true;
+			playerPad.CollisionShape.Position = playerPad.Position;
+			var comp = new ActorComponent();
+			playerPad.AddComponent(comp);
+
 			physics.AddActorToGroup("Borders", topBorder);
 			physics.AddActorToGroup("Borders", bottomBorder);
 			physics.AddActorToGroup("Borders", leftBorder);
 			physics.AddActorToGroup("Borders", rightBorder);
+			physics.AddActorToGroup("Pads", playerPad);
 
 			var testlvl = new Level();
 			engine.RegisterLevel(testlvl);
@@ -71,6 +83,7 @@ namespace SFML_Breakout
 			testlvl.RegisterActor(bottomBorder);
 			testlvl.RegisterActor(leftBorder);
 			testlvl.RegisterActor(rightBorder);
+			testlvl.RegisterActor(playerPad);
 
 			engine.StartEngine();
 			Console.ReadLine();

@@ -25,6 +25,7 @@ namespace SFML_Engine.Engine
 		public float Friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
+		public Actor RootComponent { get; set; } = null;
 		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval { get; internal set; } = false;
@@ -166,6 +167,36 @@ namespace SFML_Engine.Engine
 		public virtual void OnGameEnd()
 		{
 			
+		}
+
+		public bool AddComponent(ActorComponent component)
+		{
+			if (Components.Contains(component)) return false;
+			Components.Add(component);
+			component.ParentActor = this;
+			return true;
+		}
+
+		public void RemoveComponent(ActorComponent component)
+		{
+			if (!Components.Contains(component)) return;
+			Components.Remove(component);
+			component.ParentActor = null;
+		}
+
+		public void RemoveComponent(int index)
+		{
+			Components[index].ParentActor = null;
+			Components.RemoveAt(index);
+		}
+
+		public void RemoveAllComponents()
+		{
+			foreach (var component in Components)
+			{
+				component.ParentActor = null;
+			}
+			Components.Clear();
 		}
 
 		public ActorInformation GenerateActorInformation()

@@ -69,7 +69,7 @@ namespace SFML_Engine.Engine
 		            if (drawableActor.CollisionShape.ShowCollisionShape &&
 		                drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 		            {
-			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).BoxExtent;
+			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).CollisionBounds;
 
 			            CollisionRectangle.Position = actor.Position;
 			            CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
@@ -79,7 +79,7 @@ namespace SFML_Engine.Engine
 		            else if (drawableActor.CollisionShape.ShowCollisionShape &&
 		                     drawableActor.CollisionShape.GetType() == typeof(SphereShape))
 		            {
-			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).SphereDiameter / 2.0f;
+			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).CollisionBounds.X / 2.0f;
 
 			            CollisionCircle.Position = actor.Position;
 			            CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
