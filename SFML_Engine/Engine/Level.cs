@@ -194,12 +194,12 @@ namespace SFML_Engine.Engine
 
 	    public void SpawnActor(Actor instigator, Actor actor)
 	    {
-			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(instigator, actor, LevelID)));
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actor, LevelID)));
 		}
 
 		public void SpawnActor(Actor actor)
 		{
-			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, actor, LevelID)));
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, LevelID)));
 		}
 
 		public void DestroyActor(Actor instigator, Actor actor)

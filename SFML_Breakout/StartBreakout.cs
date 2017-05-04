@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;
@@ -27,10 +28,13 @@ namespace SFML_Breakout
 			physics.AddGroup("Pads");
 			physics.AddGroup("Balls");
 			physics.AddGroup("Borders");
+			physics.AddGroup("Blocks");
 
 			physics.AddCollidablePartner("Balls", "Pads");
 			physics.AddCollidablePartner("Balls", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
+			physics.AddCollidablePartner("Balls", "Blocks");
+			physics.AddCollidablePartner("Blocks", "Balls");
 
 			var topBorder = new SpriteActor();
 			var bottomBorder = new SpriteActor();
@@ -63,7 +67,7 @@ namespace SFML_Breakout
 			rightBorder.CollisionShape.ShowCollisionShape = true;
 
 			var playerPad = new SpriteActor();
-			playerPad.ActorName = "Player";
+			playerPad.ActorName = "Player Pad 1";
 			playerPad.CollisionShape = new BoxShape(300.0f, 30.0f);
 			playerPad.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - playerPad.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - playerPad.CollisionShape.CollisionBounds.Y * 2.0f);
 			playerPad.CollisionShape.ShowCollisionShape = true;
@@ -71,19 +75,55 @@ namespace SFML_Breakout
 			var comp = new ActorComponent();
 			playerPad.AddComponent(comp);
 
+			var mainBall = new BreakoutBall();
+			mainBall.ActorName = "Ball";
+			mainBall.CollisionShape = new SphereShape(30.0f);
+			mainBall.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - mainBall.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - mainBall.CollisionShape.CollisionBounds.X * 4.0f);
+			mainBall.CollisionShape.ShowCollisionShape = true;
+			mainBall.CollisionShape.Position = mainBall.Position;
+			mainBall.Velocity = new Vector2f(0.0f, 250.0f);
+
+			var breakoutPlayerController = new BreakoutPlayerController(playerPad);
+			breakoutPlayerController.Name = "Player 1";
+
 			physics.AddActorToGroup("Borders", topBorder);
 			physics.AddActorToGroup("Borders", bottomBorder);
 			physics.AddActorToGroup("Borders", leftBorder);
 			physics.AddActorToGroup("Borders", rightBorder);
 			physics.AddActorToGroup("Pads", playerPad);
+			physics.AddActorToGroup("Balls", mainBall);
+
+			List<Block> blocks = new List<Block>();
+			for (uint i = 0; i < 6; ++i)
+			{
+				for (uint j = 0; j < 6; ++j)
+				{
+					var block = new Block();
+					block.ActorName = "Block" + (i + j);
+					block.CollisionShape = new BoxShape(100.0f, 40.0f);
+					block.Position = new Vector2f(80.0f + block.CollisionShape.CollisionBounds.X * j, 80.0f + block.CollisionShape.CollisionBounds.Y * i);
+					block.CollisionShape.ShowCollisionShape = true;
+					block.CollisionShape.Position = block.Position;
+					physics.AddActorToGroup("Blocks", block);
+					blocks.Add(block);
+				}
+			}
 
 			var testlvl = new Level();
+			var gameMode = new BreakoutGameMode();
+			testlvl.GameMode = gameMode;
 			engine.RegisterLevel(testlvl);
 			testlvl.RegisterActor(topBorder);
 			testlvl.RegisterActor(bottomBorder);
 			testlvl.RegisterActor(leftBorder);
 			testlvl.RegisterActor(rightBorder);
 			testlvl.RegisterActor(playerPad);
+			testlvl.RegisterActor(mainBall);
+			testlvl.RegisterPlayer(breakoutPlayerController);
+			foreach (var block in blocks)
+			{
+				testlvl.RegisterActor(block);
+			}
 
 			engine.StartEngine();
 			Console.ReadLine();

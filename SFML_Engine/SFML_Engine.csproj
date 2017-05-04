@@ -119,7 +119,7 @@
     <Compile Include="Engine\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
-    <Compile Include="Engine\Events\SpawnActorEventParams.cs" />
+    <Compile Include="Engine\Events\SpawnActorParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
