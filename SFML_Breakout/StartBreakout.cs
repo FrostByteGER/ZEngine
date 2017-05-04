@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Breakout
 {
@@ -104,6 +106,9 @@ namespace SFML_Breakout
 					block.Position = new Vector2f(80.0f + block.CollisionShape.CollisionBounds.X * j, 80.0f + block.CollisionShape.CollisionBounds.Y * i);
 					block.CollisionShape.ShowCollisionShape = true;
 					block.CollisionShape.Position = block.Position;
+					block.Hitpoints = (uint) EngineMath.EngineRandom.Next(1, 4);
+					block.MaxHitpoints = block.Hitpoints;
+					block.Score *= block.MaxHitpoints;
 					physics.AddActorToGroup("Blocks", block);
 					blocks.Add(block);
 				}

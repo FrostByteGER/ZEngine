@@ -11,6 +11,7 @@ namespace SFML_Breakout
 	{
 
 		public uint Hitpoints { get; set; } = 1;
+		public uint MaxHitpoints { get; set; } = 1;
 		public bool Invincible { get; set; } = false;
 		public uint Score { get; set; } = 1;
 
@@ -37,28 +38,26 @@ namespace SFML_Breakout
 
 		public override void AfterCollision(Actor actor)
 		{
-			base.AfterCollision(actor);
-
 			Console.WriteLine("COLLISION WITH: " + actor.ActorName);
 			if (actor is BreakoutBall)
 			{
-				CollisionShape.CollisionShapeColor = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
 				if (Invincible) return;
+
 				--Hitpoints;
 				((BreakoutBall) actor).Score += Score;
+				Console.WriteLine("Player Score: " + ((BreakoutBall) actor).Score);
+				var newAlpha = Math.Max(0.0f, Math.Min(1.0f, (float)Hitpoints / MaxHitpoints));
+				CollisionShape.CollisionShapeColor = new Color(CollisionShape.CollisionShapeColor.R, CollisionShape.CollisionShapeColor.G, CollisionShape.CollisionShapeColor.B, (byte)Math.Floor(newAlpha == 1.0f ? 255 : newAlpha * 256.0f));
 				if (Hitpoints == 0) LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
-				Console.WriteLine("New HP of " + ActorName +  ": " + Hitpoints);
 			}
 		}
 
 		public override void BeforeCollision(Actor actor)
 		{
-			base.BeforeCollision(actor);
 		}
 
 		public override void IsOverlapping(Actor actor)
 		{
-			base.IsOverlapping(actor);
 		}
 
 		public override void OnGameStart()

@@ -52,9 +52,14 @@ namespace SFML_Breakout
 			Acceleration = new Vector2f();
 		}
 
+		public void RespawnBall()
+		{
+			MoveAbsolute(new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f - CollisionShape.CollisionBounds.X / 2.0f, LevelReference.EngineReference.EngineWindowHeight - CollisionShape.CollisionBounds.X * 4.0f));
+			Velocity = new Vector2f(0.0f, -250.0f);
+		}
+
 		public override void AfterCollision(Actor actor)
 		{
-			base.AfterCollision(actor);
 			Console.WriteLine("COLLISION WITH: " + actor.ActorName);
 			if (actor.ActorName == "Player Pad 1")
 			{
@@ -81,12 +86,15 @@ namespace SFML_Breakout
 					this.MaxVelocity *= 1.01f;
 				}
 				LastPlayerCollision = actor;
+			}else if (actor.ActorName == "Bottom Border")
+			{
+				RespawnBall();
 			}
 		}
 
 		public override void BeforeCollision(Actor actor)
 		{
-			base.BeforeCollision(actor);
+			
 		}
 
 		public override void IsOverlapping(Actor actor)
