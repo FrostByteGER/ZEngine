@@ -91,6 +91,10 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BulletSharp, Version=2.83.7.1, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\BulletSharp.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -153,6 +157,7 @@
     <Compile Include="Engine\SFML\Text.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />
+    <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\SFML\Sprite.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
@@ -190,6 +195,8 @@
   <ItemGroup>
     <Content Include="Lib\BulletSharp.dll" />
     <Content Include="Lib\OpenAL32.dll" />
+    <Content Include="Lib\VelcroPhysics.dll" />
+    <Content Include="Lib\VelcroPhysics.pdb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Audio\" />
