@@ -20,8 +20,19 @@ namespace SFML_Engine.Engine
 
 		internal List<Actor> Actors { get; set; } = new List<Actor>();
 
+		/// <summary>
+		/// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
+		/// </summary>
+	    public Vector2f LevelBounds { get; set; } = new Vector2f(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
+
+		/// <summary>
+		/// Dummy Object for efficient Collision Debug Drawing.
+		/// </summary>
 	    public CircleShape CollisionCircle { get; set; } = new CircleShape(10.0f);
-	    public RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
+		/// <summary>
+		/// Dummy Object for efficient Collision Debug Drawing.
+		/// </summary>
+		public RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
 
         public Engine EngineReference { get; set; }
 
@@ -30,6 +41,12 @@ namespace SFML_Engine.Engine
 	    internal bool LevelTicking { get; set; } = false;
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
+
+		/// <summary>
+		/// Count of Layers. ZERO-BASED! ACTUAL LAYER COUNT IS LAYERS+1.
+		/// <para>Layers are sorted from front to back. So 0 is the front and Layers.MaxValue is the back. Usually the most front layer(0) is the UI layer.</para>
+		/// </summary>
+	    public uint Layers { get; set; } = 2;
 
 
 		public Level()
@@ -130,6 +147,13 @@ namespace SFML_Engine.Engine
 			Console.WriteLine("Trying to remove Actor with ActorID: #" + actorID);
 			var actor = FindActorInLevel(actorID);
 			return UnregisterActor(actor);
+		}
+
+		public void RegisterActorComponent(ActorComponent component)
+		{
+			component.ComponentID = ActorIDCounter;
+			++ActorIDCounter;
+			Console.WriteLine("Trying to register ActorComponent: " + component.ComponentName + "-" + component.ComponentID);
 		}
 
 		public virtual void OnGameStart()

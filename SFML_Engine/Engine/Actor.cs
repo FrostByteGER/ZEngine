@@ -12,6 +12,7 @@ namespace SFML_Engine.Engine
 
 		public uint ActorID { get; internal set; } = 0;
 		public uint LevelID { get; internal set; } = 0;
+		public uint LayerID { get; set; } = 1;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
 		public CollisionShape CollisionShape { get; set; } = new CollisionShape();
@@ -25,7 +26,7 @@ namespace SFML_Engine.Engine
 		public float Friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
-		public Actor RootComponent { get; set; } = null;
+		public ActorComponent RootComponent { get; set; } = null;
 		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval { get; internal set; } = false;
@@ -167,6 +168,29 @@ namespace SFML_Engine.Engine
 		public virtual void OnGameEnd()
 		{
 			
+		}
+
+		public bool SetRootComponent(ActorComponent root)
+		{
+			if (Components.Contains(root))
+			{
+				var comp = Components.Find(x => x.ComponentID == root.ComponentID);
+				if (comp == null) return false;
+				RootComponent = comp;
+				return true;
+			}
+			Components.Add(root);
+			root.ParentActor = this;
+			return true;
+		}
+
+		public bool SetRootComponent(int rootIndex)
+		{
+			if (rootIndex < 0 || rootIndex >= Components.Count) return false;
+
+			RootComponent = Components[rootIndex];
+			RootComponent.ParentActor = this;
+			return true;
 		}
 
 		public bool AddComponent(ActorComponent component)

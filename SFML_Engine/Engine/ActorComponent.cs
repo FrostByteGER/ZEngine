@@ -9,6 +9,9 @@ namespace SFML_Engine.Engine
 {
 	public class ActorComponent : Transformable, ITickable, ITransformable
 	{
+
+		public uint ComponentID { get; internal set; } = 0;
+		public string ComponentName { get; set; } = "Component";
 		public Actor ParentActor { get; set; } = null;
 
 		//TODO: Implement
@@ -49,6 +52,11 @@ namespace SFML_Engine.Engine
 		public Transformable ComponentTransform { get; set; } = new Transformable();
 
 		public bool Movable { get; set; }
+
+		public virtual void OnActorComponentDestroy()
+		{
+			Console.WriteLine("DESTROYING ACTORCOMPONENT: " + ComponentName + "-" + ComponentID);
+		}
 
 		public virtual void Move(float x, float y)
 		{
