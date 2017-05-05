@@ -7,18 +7,23 @@ using SFML_Engine.Engine.Physics;
 
 namespace SFML_Engine.Engine
 {
-	public class ActorComponent : Transformable, ITickable, ITransformable
+	public class ActorComponent : ITickable, ITransformable, Drawable
 	{
 
 		public uint ComponentID { get; internal set; } = 0;
 		public string ComponentName { get; set; } = "Component";
 		public Actor ParentActor { get; set; } = null;
+		public bool IsRootComponent { get; internal set; } = false;
+
 
 		//TODO: Implement
 		public ActorComponent ParentComponent { get; set; } = null;
 
 		//TODO: Implement
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
+
+		public Transformable Transform { get; set; }
+
 		public virtual void Tick(float deltaTime)
 		{
 			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);
@@ -27,26 +32,54 @@ namespace SFML_Engine.Engine
 		public void SwapParentActor(Actor newParent)
 		{
 			if (ParentActor == null || newParent == null) return;
-			ParentActor.RemoveComponent(this);
+			if (IsRootComponent)
+			{
+				ParentActor.RemoveRootComponent();
+			}
+			else
+			{
+				ParentActor.RemoveComponent(this);
+			}
 			newParent.AddComponent(this);
 		}
 
-		public override Vector2f Position
+		public Vector2f Position
 		{
-			get { return ParentActor.Position + base.Position; }
-			set { base.Position = value; }
+			get
+			{
+				if (IsRootComponent)
+				{
+					return Transform.Position;
+				}
+				return ParentActor.Position + Transform.Position;
+			}
+			set { Transform.Position = value; }
 		}
 
-		public override float Rotation
+		public float Rotation
 		{
-			get { return ParentActor.Rotation + base.Rotation; }
-			set { base.Rotation = value; }
+			get
+			{
+				if (IsRootComponent)
+				{
+					return Transform.Rotation;
+				}
+				return ParentActor.Rotation + Transform.Rotation;
+			}
+			set { Transform.Rotation = value; }
 		}
 
-		public override Vector2f Scale
+		public Vector2f Scale
 		{
-			get { return new Vector2f(ParentActor.Scale.X * base.Scale.X, ParentActor.Scale.Y * base.Scale.Y); }
-			set { base.Scale = value; }
+			get
+			{
+				if (IsRootComponent)
+				{
+					return Transform.Scale;
+				}
+				return new Vector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
+			}
+			set { Transform.Scale = value; }
 		}
 
 		public Transformable ComponentTransform { get; set; } = new Transformable();
@@ -116,6 +149,11 @@ namespace SFML_Engine.Engine
 		public void ScaleAbsolute(Vector2f scale)
 		{
 			Scale = scale;
+		}
+
+		public virtual void Draw(RenderTarget target, RenderStates states)
+		{
+			
 		}
 	}
 }

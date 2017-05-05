@@ -15,7 +15,7 @@ namespace SFML_Engine.Engine.SFML
 		/// Base class for textured shapes with outline
 		/// </summary>
 		////////////////////////////////////////////////////////////
-		public abstract class Shape : Actor, Drawable
+		public abstract class Shape : Transformable, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

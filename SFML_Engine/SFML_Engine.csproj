@@ -134,6 +134,7 @@
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
+    <Compile Include="Engine\Physics\CollisionComponent.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\GameMode.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Engine\SFML\RectangleShape.cs" />
     <Compile Include="Engine\SFML\Shape.cs" />
     <Compile Include="Engine\SFML\Text.cs" />
+    <Compile Include="Engine\SpriteComponent.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />

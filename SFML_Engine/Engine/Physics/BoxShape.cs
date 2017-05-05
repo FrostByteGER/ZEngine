@@ -29,6 +29,7 @@ namespace SFML_Engine.Engine.Physics
 			return new Vector2f(position.X + CollisionBounds.X/2.0f, position.Y + CollisionBounds.Y / 2.0f);
 		}
 
+		/*
 	    public override void ScaleActor(float x, float y)
 	    {
 		    base.ScaleActor(x, y);
@@ -53,5 +54,6 @@ namespace SFML_Engine.Engine.Physics
 		    base.ScaleAbsolute(scale);
 			CollisionBounds = new Vector2f(CollisionBounds.X * scale.X, CollisionBounds.Y * scale.Y);
 		}
+		*/
 	}
 }

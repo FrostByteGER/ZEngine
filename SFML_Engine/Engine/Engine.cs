@@ -198,7 +198,7 @@ namespace SFML_Engine.Engine
 				level.CollisionRectangle.Dispose();
 				foreach (var actor in level.Actors)
 				{
-					actor.CollisionShape.Dispose();
+					//TODO: Dispose components!
 					actor.Dispose();
 				}
 				level.Actors.Clear();

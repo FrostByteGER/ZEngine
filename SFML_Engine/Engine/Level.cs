@@ -79,41 +79,34 @@ namespace SFML_Engine.Engine
         {
             foreach (var actor in Actors)
             {
-                var drawableActor = actor as SpriteActor;
-
-	            if (drawableActor != null && drawableActor.Visible)
+	            if (actor != null && actor.Visible)
 	            {
-		            if (drawableActor.CollisionShape.ShowCollisionShape &&
-		                drawableActor.CollisionShape.GetType() == typeof(BoxShape))
-		            {
-			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).CollisionBounds;
+					foreach (var comp in actor.Components)
+					{
+						if (comp is CollisionComponent)
+						{
+							var colshape = (comp as CollisionComponent).CollisionShape;
+							if (colshape.ShowCollisionShape && colshape.GetType() == typeof(BoxShape))
+							{
+								CollisionRectangle.Size = ((BoxShape)colshape).CollisionBounds;
+								CollisionRectangle.Position = actor.Position;
+								CollisionRectangle.FillColor = colshape.CollisionShapeColor;
 
-			            CollisionRectangle.Position = actor.Position;
-			            CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
+								renderWindow.Draw(CollisionRectangle);
+							}
+							else if (colshape.ShowCollisionShape && colshape.GetType() == typeof(SphereShape))
+							{
+								CollisionCircle.Radius = ((SphereShape)colshape).CollisionBounds.X / 2.0f;
 
-			            renderWindow.Draw(CollisionRectangle);
-		            }
-		            else if (drawableActor.CollisionShape.ShowCollisionShape &&
-		                     drawableActor.CollisionShape.GetType() == typeof(SphereShape))
-		            {
-			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).CollisionBounds.X / 2.0f;
+								CollisionCircle.Position = actor.Position;
+								CollisionCircle.FillColor = colshape.CollisionShapeColor;
 
-			            CollisionCircle.Position = actor.Position;
-			            CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
-
-			            renderWindow.Draw(CollisionCircle);
-		            }
-
-		            renderWindow.Draw(drawableActor);
-	            }
-	            else if(drawableActor == null)
-	            {
-					var drawableText = actor as Text;
-		            if (drawableText != null && drawableText.Visible)
-		            {
-						renderWindow.Draw(drawableText);
+								renderWindow.Draw(CollisionCircle);
+							}
+						}
 					}
-				}
+		            renderWindow.Draw(actor);
+	            }
             }
 		}
 

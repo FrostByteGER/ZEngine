@@ -12,10 +12,6 @@ namespace SFML_Engine.Engine.UI
 		{
 		}
 
-		public UIActor(Transformable transformable) : base(transformable)
-		{
-		}
-
 		protected UIActor(IntPtr cPointer) : base(cPointer)
 		{
 		}
