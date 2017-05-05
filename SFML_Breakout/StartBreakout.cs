@@ -58,22 +58,21 @@ namespace SFML_Breakout
 			leftBorder.Position = new Vector2f(-20, 0);
 			rightBorder.Position = new Vector2f(engine.EngineWindowWidth, 0);
 
-			topBorder.CollisionShape = new BoxShape(engine.EngineWindowWidth, 400);
-			bottomBorder.CollisionShape = new BoxShape(engine.EngineWindowWidth, 400);
-			leftBorder.CollisionShape = new BoxShape(20, engine.EngineWindowHeight);
-			rightBorder.CollisionShape = new BoxShape(20, engine.EngineWindowHeight);
+			topBorder.RootComponent = new CollisionComponent(new BoxShape(engine.EngineWindowWidth, 400));
+			bottomBorder.RootComponent = new CollisionComponent(new BoxShape(engine.EngineWindowWidth, 400));
+			leftBorder.RootComponent = new CollisionComponent(new BoxShape(20, engine.EngineWindowHeight));
+			rightBorder.RootComponent = new CollisionComponent(new BoxShape(20, engine.EngineWindowHeight));
 
-			topBorder.CollisionShape.ShowCollisionShape = true;
-			bottomBorder.CollisionShape.ShowCollisionShape = true;
-			leftBorder.CollisionShape.ShowCollisionShape = true;
-			rightBorder.CollisionShape.ShowCollisionShape = true;
+			topBorder.RootComponent.ShowCollisionShape = true;
+			bottomBorder.RootComponent.ShowCollisionShape = true;
+			leftBorder.RootComponent.ShowCollisionShape = true;
+			rightBorder.RootComponent.ShowCollisionShape = true;
 
 			var playerPad = new SpriteActor();
 			playerPad.ActorName = "Player Pad 1";
-			playerPad.CollisionShape = new BoxShape(300.0f, 30.0f);
+			playerPad.RootComponent = new BoxShape(300.0f, 30.0f);
 			playerPad.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - playerPad.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - playerPad.CollisionShape.CollisionBounds.Y * 2.0f);
-			playerPad.CollisionShape.ShowCollisionShape = true;
-			playerPad.CollisionShape.Position = playerPad.Position;
+			playerPad.RootComponent.ShowCollisionShape = true;
 			var comp = new ActorComponent();
 			playerPad.AddComponent(comp);
 
