@@ -110,11 +110,17 @@ namespace SFML_Breakout
 				if (Input.APressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(-500.0f, 0.0f);
+					//PlayerPawn.Move(-10.0f, 0.0f);
+					PlayerPawn.Rotate(-10.0f);
+					//PlayerPawn.ScaleActor(-0.1f,-0.1f);
 				}
 
 				if (Input.DPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(500.0f, 0.0f);
+					//PlayerPawn.Move(10.0f, 0.0f);
+					PlayerPawn.Rotate(10.0f);
+					//PlayerPawn.ScaleActor(0.1f, 0.1f);
 				}
 			}
 		}

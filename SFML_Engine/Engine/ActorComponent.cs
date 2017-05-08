@@ -22,7 +22,9 @@ namespace SFML_Engine.Engine
 		//TODO: Implement
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 
-		public Transformable Transform { get; set; }
+		public Transformable Transform { get; set; } = new Transformable();
+
+		public bool Visible { get; set; } = true;
 
 		public virtual void Tick(float deltaTime)
 		{
@@ -45,41 +47,50 @@ namespace SFML_Engine.Engine
 
 		public Vector2f Position
 		{
-			get
-			{
-				if (IsRootComponent)
-				{
-					return Transform.Position;
-				}
-				return ParentActor.Position + Transform.Position;
-			}
-			set { Transform.Position = value; }
+			get => IsRootComponent ? Transform.Position : ParentActor.Position + Transform.Position;
+			set => Transform.Position = value;
+		}
+
+		public Vector2f LocalPosition
+		{
+			get => Transform.Position;
+			set => Transform.Position = value;
 		}
 
 		public float Rotation
 		{
-			get
-			{
-				if (IsRootComponent)
-				{
-					return Transform.Rotation;
-				}
-				return ParentActor.Rotation + Transform.Rotation;
-			}
-			set { Transform.Rotation = value; }
+			get => IsRootComponent ? Transform.Rotation : ParentActor.Rotation + Transform.Rotation;
+			set => Transform.Rotation = value;
+		}
+
+		public float LocalRotation
+		{
+			get => Transform.Rotation;
+			set => Transform.Rotation = value;
 		}
 
 		public Vector2f Scale
 		{
-			get
-			{
-				if (IsRootComponent)
-				{
-					return Transform.Scale;
-				}
-				return new Vector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
-			}
-			set { Transform.Scale = value; }
+			get => IsRootComponent ? Transform.Scale : new Vector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
+			set => Transform.Scale = value;
+		}
+
+		public Vector2f LocalScale
+		{
+			get => Transform.Scale;
+			set => Transform.Scale = value;
+		}
+
+		public Vector2f Origin
+		{
+			get => IsRootComponent ? Transform.Origin : ParentActor.Origin;
+			set => Transform.Origin = value;
+		}
+
+		public Vector2f LocalOrigin
+		{
+			get => Transform.Origin;
+			set => Transform.Origin = value;
 		}
 
 		public Transformable ComponentTransform { get; set; } = new Transformable();
@@ -93,7 +104,7 @@ namespace SFML_Engine.Engine
 
 		public virtual void Move(float x, float y)
 		{
-			Position += new Vector2f(x, y);
+			LocalPosition += new Vector2f(x, y);
 		}
 
 		public void MoveAbsolute(float x, float y)
@@ -103,7 +114,7 @@ namespace SFML_Engine.Engine
 
 		public virtual void Move(Vector2f position)
 		{
-			Position += position;
+			LocalPosition += position;
 		}
 
 		public void MoveAbsolute(Vector2f position)
@@ -113,7 +124,7 @@ namespace SFML_Engine.Engine
 
 		public void Rotate(float angle)
 		{
-			Rotation += angle;
+			LocalRotation += angle;
 		}
 
 		public void Rotate(Quaternion angle)

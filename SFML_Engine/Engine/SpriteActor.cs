@@ -1,5 +1,8 @@
-﻿using SFML.Graphics;
+﻿using System;
+using BulletSharp;
+using SFML.Graphics;
 using SFML.System;
+using SFML_Engine.Engine.Physics;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Engine.Engine
@@ -19,34 +22,27 @@ namespace SFML_Engine.Engine
 
 	    public SpriteActor(SpriteComponent spriteComp)
 	    {
-		    SetRootComponent(spriteComp);
+		    SetRootComponent(new CollisionComponent(BulletPhysicsEngine.ConstructRigidBody(null, 1.0f, Matrix.Identity, new BoxShape(spriteComp.Sprite.TextureRect.Width, spriteComp.Sprite.TextureRect.Height, 1.0f))));
+		    AddComponent(spriteComp);
 	    }
 
 	    public SpriteActor(Sprite sprite)
 	    {
-		    SetRootComponent(new SpriteComponent(sprite));
+			SetRootComponent(new CollisionComponent(BulletPhysicsEngine.ConstructRigidBody(null, 1.0f, Matrix.Identity, new BoxShape(sprite.TextureRect.Width, sprite.TextureRect.Height, 1.0f))));
+		    AddComponent(new SpriteComponent(sprite));
 	    }
 
 	    public SpriteActor(Texture t)
 	    {
-			SetRootComponent(new SpriteComponent(new Sprite(t)));
+			SetRootComponent(new CollisionComponent(BulletPhysicsEngine.ConstructRigidBody(null, 1.0f, Matrix.Identity, new BoxShape(t.Size.X, t.Size.Y, 1.0f))));
+		    AddComponent(new SpriteComponent(new Sprite(t)));
 		}
 
         public override void Tick(float deltaTime)
         {
 			base.Tick(deltaTime);
-			//Console.WriteLine("Actor Tick!");
-            //Position = new Vector2f(Position.X + 10.0f * deltaTime, Position.Y);
+	        if (Components.Count < 2) return;
+			Console.WriteLine(RootComponent.Origin + " | " + Components[1].Origin);
         }
-
-	    public override void Move(float x, float y)
-	    {
-		    Position = new Vector2f(x,y);
-	    }
-
-	    public override void Move(Vector2f position)
-	    {
-		    Position = position;
-	    }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BulletSharp;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 using CircleShape = SFML_Engine.Engine.SFML.Graphics.CircleShape;
 using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
 using Text = SFML_Engine.Engine.SFML.Graphics.Text;
@@ -85,21 +87,31 @@ namespace SFML_Engine.Engine
 					{
 						if (comp is CollisionComponent)
 						{
-							var colshape = (comp as CollisionComponent).CollisionShape;
-							if (colshape.ShowCollisionShape && colshape.GetType() == typeof(BoxShape))
+							if (comp.ComponentName == "Test")
 							{
-								CollisionRectangle.Size = ((BoxShape)colshape).CollisionBounds;
-								CollisionRectangle.Position = actor.Position;
-								CollisionRectangle.FillColor = colshape.CollisionShapeColor;
+								Console.WriteLine("THIS");
+							}
+							var colComp = comp as CollisionComponent;
+							var colshape = colComp.CollisionBody;
+							if (colComp.Visible && colshape.GetType() == typeof(BoxShape))
+							{
+								CollisionRectangle.Size = EngineMath.Vec3ToVec2f(((BoxShape)colshape.CollisionShape).HalfExtentsWithoutMargin * 2.0f);
+								CollisionRectangle.Position = colComp.Position;
+								CollisionRectangle.Rotation = colComp.Rotation;
+								CollisionRectangle.Scale = colComp.Scale;
+								CollisionRectangle.Origin = colComp.Origin;
+								CollisionRectangle.FillColor = colComp.ComponentColor;
 
 								renderWindow.Draw(CollisionRectangle);
 							}
-							else if (colshape.ShowCollisionShape && colshape.GetType() == typeof(SphereShape))
+							else if (colComp.Visible && colshape.GetType() == typeof(SphereShape))
 							{
-								CollisionCircle.Radius = ((SphereShape)colshape).CollisionBounds.X / 2.0f;
-
-								CollisionCircle.Position = actor.Position;
-								CollisionCircle.FillColor = colshape.CollisionShapeColor;
+								CollisionCircle.Radius = ((SphereShape)colshape.CollisionShape).Radius;
+								CollisionCircle.Position = colComp.Position;
+								CollisionCircle.Rotation = colComp.Rotation;
+								CollisionCircle.Scale = colComp.Scale;
+								CollisionCircle.Origin = colComp.Origin;
+								CollisionCircle.FillColor = colComp.ComponentColor;
 
 								renderWindow.Draw(CollisionCircle);
 							}
@@ -131,7 +143,7 @@ namespace SFML_Engine.Engine
 			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
 			actor.OnActorDestroy();
 			var removal = Actors.Remove(actor);
-			removal = EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
+			//removal = EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
 			return removal;
 		}
 

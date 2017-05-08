@@ -1,4 +1,5 @@
 ﻿using System;
+using BulletSharp;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
@@ -17,15 +18,15 @@ namespace SFML_Breakout
 		{
 		}
 
-		public BreakoutBall(Texture texture) : base(texture)
+		public BreakoutBall(SpriteComponent spriteComp) : base(spriteComp)
 		{
 		}
 
-		public BreakoutBall(Texture texture, IntRect rectangle) : base(texture, rectangle)
+		public BreakoutBall(Sprite sprite) : base(sprite)
 		{
 		}
 
-		public BreakoutBall(Sprite copy) : base(copy)
+		public BreakoutBall(Texture t) : base(t)
 		{
 		}
 
@@ -54,7 +55,11 @@ namespace SFML_Breakout
 
 		public void RespawnBall()
 		{
-			MoveAbsolute(new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f - CollisionShape.CollisionBounds.X / 2.0f, LevelReference.EngineReference.EngineWindowHeight - CollisionShape.CollisionBounds.X * 4.0f));
+			var collisionComp = RootComponent as CollisionComponent;
+			if (collisionComp != null)
+				MoveAbsolute(new Vector2f(
+					LevelReference.EngineReference.EngineWindowWidth / 2.0f - collisionComp.CollisionBounds.X / 2.0f,
+					LevelReference.EngineReference.EngineWindowHeight - collisionComp.CollisionBounds.X * 4.0f));
 			Velocity = new Vector2f(0.0f, -250.0f);
 		}
 
@@ -63,19 +68,10 @@ namespace SFML_Breakout
 			Console.WriteLine("COLLISION WITH: " + actor.ActorName);
 			if (actor.ActorName == "Player Pad 1")
 			{
-				if (this.CollisionShape.GetType() == typeof(SphereShape) && actor.CollisionShape.GetType() == typeof(BoxShape))
-				{
-					SphereShape cs = (SphereShape)this.CollisionShape;
-					BoxShape bc = (BoxShape)actor.CollisionShape;
-
-					Vector2f norm = cs.GetMid(this.Position) - bc.GetMid(actor.Position);
-
-					norm = new Vector2f(norm.X / (Math.Abs(norm.X) + Math.Abs(norm.Y)), norm.Y / (Math.Abs(norm.X) + Math.Abs(norm.Y)));
-
-					this.Velocity = new Vector2f(norm.X * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)), norm.Y * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)));
-					this.Acceleration = new Vector2f(norm.X * Math.Abs(Acceleration.X + Acceleration.Y), norm.Y * Math.Abs(Acceleration.X + Acceleration.Y));
-
-				}
+				Vector2f norm = Position + Origin - actor.Position + actor.Origin;
+				norm = new Vector2f(norm.X / (Math.Abs(norm.X) + Math.Abs(norm.Y)), norm.Y / (Math.Abs(norm.X) + Math.Abs(norm.Y)));
+				this.Velocity = new Vector2f(norm.X * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)), norm.Y * (Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)));
+				this.Acceleration = new Vector2f(norm.X * Math.Abs(Acceleration.X + Acceleration.Y), norm.Y * Math.Abs(Acceleration.X + Acceleration.Y));
 				if (LastPlayerCollision == null)
 				{
 

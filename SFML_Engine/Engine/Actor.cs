@@ -34,29 +34,26 @@ namespace SFML_Engine.Engine
 
 		public Vector2f Position
 		{
-			get
-			{
-				return RootComponent.Position;
-			}
-			set { RootComponent.Position = value; }
+			get => RootComponent.Position;
+			set => RootComponent.Position = value;
 		}
 
 		public float Rotation
 		{
-			get
-			{
-				return RootComponent.Rotation;
-			}
-			set { RootComponent.Rotation = value; }
+			get => RootComponent.Rotation;
+			set => RootComponent.Rotation = value;
 		}
 
 		public Vector2f Scale
 		{
-			get
-			{
-				return RootComponent.Scale;
-			}
-			set { RootComponent.Scale = value; }
+			get => RootComponent.Scale;
+			set => RootComponent.Scale = value;
+		}
+
+		public Vector2f Origin
+		{
+			get => RootComponent.Origin;
+			set => RootComponent.Origin = value;
 		}
 
 		public Actor() : base(IntPtr.Zero)

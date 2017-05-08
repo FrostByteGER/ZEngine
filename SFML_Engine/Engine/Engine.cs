@@ -149,13 +149,13 @@ namespace SFML_Engine.Engine
 					var actors = ActiveLevel.Actors;
 
 					EngineCoreClock.StartPhysics();
-					PhysicsEngine.PhysicsTick(Timestep, ref actors);
+					//PhysicsEngine.PhysicsTick(Timestep, ref actors);
 					EngineCoreClock.StopPhysics();
 
 					EngineCoreClock.StartUpdate();
 					ActiveLevel.LevelTick(FrameDelta);
 	                EngineCoreClock.StopUpdate();
-	                Console.WriteLine(t);
+	                //Console.WriteLine(t);
                     Accumulator -= Timestep;
 	                ++t;
                 }

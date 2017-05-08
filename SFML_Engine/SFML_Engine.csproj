@@ -133,14 +133,14 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
-    <Compile Include="Engine\Physics\BoxShape.cs" />
+    <Compile Include="Engine\Physics\OverlapComponent.cs" />
+    <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\Physics\CollisionComponent.cs" />
-    <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\GameMode.cs" />
     <Compile Include="Engine\IActorable.cs" />
-    <Compile Include="Engine\Physics\ICollidable.cs" />
     <Compile Include="Engine\IGameInterface.cs" />
+    <Compile Include="Engine\Physics\ICollidable.cs" />
     <Compile Include="Engine\Physics\ITransformable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
@@ -148,7 +148,6 @@
     <Compile Include="Engine\Level.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\PlayerController.cs" />
-    <Compile Include="Engine\Physics\SphereShape.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
     <Compile Include="Engine\SFML\CircleShape.cs" />
