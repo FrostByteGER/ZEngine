@@ -7,7 +7,7 @@ using SFML_Engine.Engine.Physics;
 
 namespace SFML_Engine.Engine
 {
-	public class ActorComponent : ITickable, ITransformable, Drawable
+	public class ActorComponent : ITickable, ITransformable, Drawable, IDestroyable
 	{
 
 		public uint ComponentID { get; internal set; } = 0;
@@ -165,6 +165,26 @@ namespace SFML_Engine.Engine
 		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
 			
+		}
+
+		private void Dispose(bool disposing)
+		{
+			Destroy(disposing);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		public virtual void Destroy(bool disposing)
+		{
+			Transform.Dispose();
+			foreach (var comp in Components)
+			{
+				comp.Dispose();
+			}
 		}
 	}
 }

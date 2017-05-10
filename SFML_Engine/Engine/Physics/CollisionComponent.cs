@@ -21,7 +21,7 @@ namespace SFML_Engine.Engine.Physics
 				if (boxShape != null) return EngineMath.Vec3ToVec2f(boxShape.HalfExtentsWithoutMargin);
 
 				var sphereShape = CollisionBody.CollisionShape as SphereShape;
-				if (sphereShape != null) return new Vector2f(sphereShape.Radius, 0.0f);
+				if (sphereShape != null) return new Vector2f(sphereShape.Radius, sphereShape.Radius);
 
 				//TODO: Do check
 				return new Vector2f();
@@ -31,6 +31,20 @@ namespace SFML_Engine.Engine.Physics
 		public CollisionComponent(RigidBody collisionBody)
 		{
 			CollisionBody = collisionBody ?? throw new ArgumentNullException(nameof(collisionBody));
+			CollisionBody.UserObject = this;
+			Origin = CollisionBounds;
+		}
+
+		public override void Tick(float deltaTime)
+		{
+			base.Tick(deltaTime);
+			Console.WriteLine(CollisionBody.WorldTransform.Origin);
+		}
+
+		public override void Destroy(bool disposing)
+		{
+			base.Destroy(disposing);
+			CollisionBody.Dispose();
 		}
 	}
 }

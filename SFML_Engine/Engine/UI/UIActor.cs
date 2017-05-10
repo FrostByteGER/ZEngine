@@ -12,8 +12,10 @@ namespace SFML_Engine.Engine.UI
 		{
 		}
 
-		protected UIActor(IntPtr cPointer) : base(cPointer)
+		public override void Destroy(bool disposing)
 		{
+			base.Destroy(disposing);
+			//TODO: Add
 		}
 	}
 }

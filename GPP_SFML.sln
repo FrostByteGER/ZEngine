@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\SFML_Engine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Breakout", "SFML_Breakout\SFML_Breakout.csproj", "{765B4479-41B9-45FA-A9F3-3A96A0CACD75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletTest", "BulletTest\BulletTest.csproj", "{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{5603FFEA-9B95-4218-A4E5-9F0970F96478}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}.Debug|x64.Build.0 = Debug|x64
 		{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}.Release|x64.ActiveCfg = Release|x64
 		{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}.Release|x64.Build.0 = Release|x64
+		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Debug|x64.ActiveCfg = Debug|x64
+		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Debug|x64.Build.0 = Debug|x64
+		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Release|x64.ActiveCfg = Release|x64
+		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

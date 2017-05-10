@@ -79,47 +79,53 @@ namespace SFML_Engine.Engine
 
         protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
         {
-            foreach (var actor in Actors)
-            {
-	            if (actor != null && actor.Visible)
-	            {
-					foreach (var comp in actor.Components)
+	        foreach (var pc in Players)
+	        {
+		        renderWindow.SetView(pc.PlayerCamera);
+
+				foreach (var actor in Actors)
+				{
+					if (actor != null && actor.Visible)
 					{
-						if (comp is CollisionComponent)
+						foreach (var comp in actor.Components)
 						{
-							if (comp.ComponentName == "Test")
+							if (comp is CollisionComponent)
 							{
-								Console.WriteLine("THIS");
-							}
-							var colComp = comp as CollisionComponent;
-							var colshape = colComp.CollisionBody;
-							if (colComp.Visible && colshape.GetType() == typeof(BoxShape))
-							{
-								CollisionRectangle.Size = EngineMath.Vec3ToVec2f(((BoxShape)colshape.CollisionShape).HalfExtentsWithoutMargin * 2.0f);
-								CollisionRectangle.Position = colComp.Position;
-								CollisionRectangle.Rotation = colComp.Rotation;
-								CollisionRectangle.Scale = colComp.Scale;
-								CollisionRectangle.Origin = colComp.Origin;
-								CollisionRectangle.FillColor = colComp.ComponentColor;
+								if (comp.ComponentName == "Test")
+								{
+									Console.WriteLine("THIS");
+								}
+								var colComp = comp as CollisionComponent;
+								var colBody = colComp.CollisionBody;
+								var colShape = colBody.CollisionShape;
+								if (colComp.Visible && colBody.GetType() == typeof(RigidBody) && colShape.GetType() == typeof(BoxShape))
+								{
+									CollisionRectangle.Size = EngineMath.Vec3ToVec2f(((BoxShape)colShape).HalfExtentsWithoutMargin * 2.0f);
+									CollisionRectangle.Position = colComp.Position;
+									CollisionRectangle.Rotation = colComp.Rotation;
+									CollisionRectangle.Scale = colComp.Scale;
+									CollisionRectangle.Origin = colComp.Origin;
+									CollisionRectangle.FillColor = colComp.ComponentColor;
 
-								renderWindow.Draw(CollisionRectangle);
-							}
-							else if (colComp.Visible && colshape.GetType() == typeof(SphereShape))
-							{
-								CollisionCircle.Radius = ((SphereShape)colshape.CollisionShape).Radius;
-								CollisionCircle.Position = colComp.Position;
-								CollisionCircle.Rotation = colComp.Rotation;
-								CollisionCircle.Scale = colComp.Scale;
-								CollisionCircle.Origin = colComp.Origin;
-								CollisionCircle.FillColor = colComp.ComponentColor;
+									renderWindow.Draw(CollisionRectangle);
+								}
+								else if (colComp.Visible && colBody.GetType() == typeof(RigidBody) && colShape.GetType() == typeof(SphereShape))
+								{
+									CollisionCircle.Radius = ((SphereShape)colShape).Radius;
+									CollisionCircle.Position = colComp.Position;
+									CollisionCircle.Rotation = colComp.Rotation;
+									CollisionCircle.Scale = colComp.Scale;
+									CollisionCircle.Origin = colComp.Origin;
+									CollisionCircle.FillColor = colComp.ComponentColor;
 
-								renderWindow.Draw(CollisionCircle);
+									renderWindow.Draw(CollisionCircle);
+								}
 							}
 						}
+						renderWindow.Draw(actor);
 					}
-		            renderWindow.Draw(actor);
-	            }
-            }
+				}
+	        }
 		}
 
 	    public virtual void OnLevelLoad()

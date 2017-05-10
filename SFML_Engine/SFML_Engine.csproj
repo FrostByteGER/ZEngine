@@ -129,6 +129,7 @@
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\IDestroyable.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />

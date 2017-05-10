@@ -1,5 +1,6 @@
 ﻿using System;
 using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
 
@@ -10,9 +11,9 @@ namespace SFML_Engine.Engine
 	    
 	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
-        public View PlayerCamera { get; set; } = new View();
+        public View PlayerCamera { get; set; } = new View(new Vector2f(0, 0), new Vector2f(500, -500));
 
-	    public Level LevelReference { get; set; } = null;
+		public Level LevelReference { get; set; } = null;
 
         public SpriteActor PlayerPawn { get; set; }
 
@@ -21,7 +22,7 @@ namespace SFML_Engine.Engine
 	    private bool isActive = true;
 		public bool IsActive
 	    {
-		    get { return isActive; }
+		    get => isActive;
 			set
 			{
 				isActive = value;

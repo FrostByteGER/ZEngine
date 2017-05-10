@@ -44,6 +44,7 @@ namespace SFML_Engine.Engine
 
 		// Engine Managers
 		public PhysicsEngine PhysicsEngine { get; private set; }
+		public BulletPhysicsEngine BulletPhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 		public AssetManager AssetManager { get; set; }
 
@@ -90,6 +91,8 @@ namespace SFML_Engine.Engine
 
 			EngineCoreClock = new EngineClock();
             PhysicsEngine = new PhysicsEngine();
+	        BulletPhysicsEngine = new BulletPhysicsEngine();
+	        BulletPhysicsEngine.InitPhysicsEngine();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref engineWindow);
 
@@ -132,12 +135,7 @@ namespace SFML_Engine.Engine
 					EngineCoreClock.Reset();
 				}
 
-				if (EngineCoreClock != null)
-				{
-					//clock.StartPhysics();
-					//velcroWorld.Step(FrameDelta);
-					//clock.StopPhysics();
-				}
+				/*
 	            var t = 1;
 	            Accumulator += FrameDelta;
 				while (Accumulator >= Timestep)
@@ -150,6 +148,7 @@ namespace SFML_Engine.Engine
 
 					EngineCoreClock.StartPhysics();
 					//PhysicsEngine.PhysicsTick(Timestep, ref actors);
+	                BulletPhysicsEngine.PhysicsTick(FrameDelta);
 					EngineCoreClock.StopPhysics();
 
 					EngineCoreClock.StartUpdate();
@@ -159,10 +158,22 @@ namespace SFML_Engine.Engine
                     Accumulator -= Timestep;
 	                ++t;
                 }
+				*/
 
-                engineWindow.Clear();
+				// Tick Physics
+				EngineCoreClock.StartPhysics();
+				BulletPhysicsEngine.PhysicsTick(FrameDelta);
+				EngineCoreClock.StopPhysics();
+
+				// Tick Level and Actors
+				EngineCoreClock.StartUpdate();
+				ActiveLevel.LevelTick(FrameDelta);
+				EngineCoreClock.StopUpdate();
+
+				engineWindow.Clear();
                 engineWindow.DispatchEvents();
 
+				// Render Level and Actors
 	            EngineCoreClock.StartRender();
 	            ActiveLevel.LevelDraw(ref engineWindow);
 				EngineCoreClock.StopRender();
@@ -192,6 +203,7 @@ namespace SFML_Engine.Engine
         {
             Console.WriteLine("Shutting down Engine!");
 	        PhysicsEngine.Shutdown();
+	        BulletPhysicsEngine.ShutdownPhysicsEngine();
 			foreach (var level in Levels)
 			{
 				level.CollisionCircle.Dispose();

@@ -8,7 +8,7 @@ using SFML;
 
 namespace SFML_Engine.Engine
 {
-	public class Actor : ObjectBase, IActorable, IGameInterface, Drawable
+	public class Actor : IActorable, IGameInterface, Drawable, IDestroyable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
@@ -56,10 +56,7 @@ namespace SFML_Engine.Engine
 			set => RootComponent.Origin = value;
 		}
 
-		public Actor() : base(IntPtr.Zero)
-		{
-		}
-		public Actor(IntPtr cPointer) : base(cPointer)
+		public Actor()
 		{
 		}
 
@@ -260,17 +257,32 @@ namespace SFML_Engine.Engine
 			return ActorName + "-" + ActorID;
 		}
 
-		protected override void Destroy(bool disposing)
-		{
-			//TODO: Do nothing or implement if needed
-		}
-
 		public void Draw(RenderTarget target, RenderStates states)
 		{
 			RootComponent.Draw(target, states);
 			foreach (var drawable in Components)
 			{
 				drawable.Draw(target, states);
+			}
+		}
+
+		private void Dispose(bool disposing)
+		{
+			Destroy(disposing);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		public virtual void Destroy(bool disposing)
+		{
+			foreach (var comp in Components)
+			{
+				RootComponent.Dispose();
+				comp.Dispose();
 			}
 		}
 	}

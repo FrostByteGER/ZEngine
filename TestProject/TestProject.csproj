@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{765B4479-41B9-45FA-A9F3-3A96A0CACD75}</ProjectGuid>
+    <ProjectGuid>{5603FFEA-9B95-4218-A4E5-9F0970F96478}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SFML_Breakout</RootNamespace>
-    <AssemblyName>SFML_Breakout</AssemblyName>
+    <RootNamespace>TestProject</RootNamespace>
+    <AssemblyName>TestProject</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,7 +50,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SFML_Breakout.StartBreakout</StartupObject>
+    <StartupObject>TestProject.TestProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BulletSharp, Version=2.83.7.1, Culture=neutral, processorArchitecture=AMD64">
@@ -83,26 +83,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.cs" />
-    <Compile Include="BreakoutBall.cs" />
-    <Compile Include="BreakoutGameInfo.cs" />
-    <Compile Include="BreakoutGameMode.cs" />
-    <Compile Include="BreakoutPlayerController.cs" />
-    <Compile Include="GameInfo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>GameInfo.settings</DependentUpon>
-    </Compile>
-    <Compile Include="StartBreakout.cs" />
+    <Compile Include="TestProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
+    <ItemGroup>
     <None Include="App.config" />
-    <None Include="Assets\Packages.cfg" />
-    <None Include="GameInfo.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>GameInfo.Designer.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

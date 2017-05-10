@@ -54,6 +54,30 @@ namespace SFML_Engine.Engine.Physics
 			};
 		}
 
+		public void PhysicsTick(float deltaTime)
+		{
+			PhysicsWorld.StepSimulation(deltaTime);
+
+			// Update ActorComponent transforms to match CollisionObject transforms.
+			foreach (var collisionObject in PhysicsWorld.CollisionObjectArray)
+			{
+				var actorComponent = collisionObject.UserObject as ActorComponent;
+				if (actorComponent == null) continue;
+				var body = collisionObject as RigidBody;
+				var component = actorComponent;
+				component.Position = EngineMath.Vec3ToVec2f(collisionObject.WorldTransform.Origin);
+				if (body != null)
+				{
+					component.Rotation = EngineMath.QuatToEulerDegrees(body.Orientation);
+				}
+			}
+		}
+
+		public void PhysicsTick(float deltaTime, int maxSubsteps, float timestep)
+		{
+			PhysicsWorld.StepSimulation(deltaTime, maxSubsteps, timestep);
+		}
+
 		public void ShutdownPhysicsEngine()
 		{
 			if (PhysicsWorld != null)
