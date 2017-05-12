@@ -6,14 +6,48 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
 {
-	public class OverlapComponent : ActorComponent
+	public class OverlapComponent : PhysicsComponent
 	{
 
 		public GhostObject OverlapBody { get; set; }
 
-		public Color ComponentColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
+		public sealed override CollisionObject CollisionObject
+		{
+			get => base.CollisionObject;
+			set
+			{
+				var rigid = (GhostObject)value;
+				if (rigid != null) OverlapBody = rigid;
+				base.CollisionObject = value;
+				OverlapBody.UserObject = this;
+				value.UserObject = this;
+				Origin = CollisionBounds;
+			}
+		}
 
-		public Vector2f CollisionBounds
+		public override Color ComponentColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
+
+		public override short CollisionResponseChannels
+		{
+			get => base.CollisionResponseChannels;
+			set
+			{
+				base.CollisionResponseChannels = value;
+				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyGhostObject(OverlapBody, CollisionType, value);
+			}
+		}
+
+		public override short CollisionType
+		{
+			get => base.CollisionType;
+			set
+			{
+				base.CollisionType = value;
+				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyGhostObject(OverlapBody, value, CollisionResponseChannels);
+			}
+		}
+
+		public override Vector2f CollisionBounds
 		{
 			get
 			{
@@ -28,10 +62,14 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		public OverlapComponent()
+		{
+			
+		}
+
 		public OverlapComponent(GhostObject overlapBody)
 		{
-			OverlapBody = overlapBody ?? throw new ArgumentNullException(nameof(overlapBody));
-			Origin = CollisionBounds;
+			CollisionObject = overlapBody ?? throw new ArgumentNullException(nameof(overlapBody));
 		}
 
 		public override void Destroy(bool disposing)

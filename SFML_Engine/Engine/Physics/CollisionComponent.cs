@@ -6,14 +6,48 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
 {
-	public class CollisionComponent : ActorComponent
+	public class CollisionComponent : PhysicsComponent
 	{
 		
-		public RigidBody CollisionBody { get; set; }
+		public RigidBody CollisionBody { get; private set; }
 
-		public Color ComponentColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
+		public sealed override CollisionObject CollisionObject
+		{
+			get => base.CollisionObject;
+			set
+			{
+				var rigid = (RigidBody)value;
+				if (rigid != null) CollisionBody = rigid;
+				base.CollisionObject = value;
+				CollisionBody.UserObject = this;
+				value.UserObject = this;
+				Origin = CollisionBounds;
+			}
+		}
 
-		public Vector2f CollisionBounds
+		public override Color ComponentColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
+
+		public override short CollisionResponseChannels
+		{
+			get => base.CollisionResponseChannels;
+			set
+			{
+				base.CollisionResponseChannels = value;
+				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyRigidBody(CollisionBody, CollisionType, value);
+			}
+		}
+
+		public override short CollisionType
+		{
+			get => base.CollisionType;
+			set
+			{
+				base.CollisionType = value;
+				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyRigidBody(CollisionBody, value, CollisionResponseChannels);
+			}
+		}
+
+		public override Vector2f CollisionBounds
 		{
 			get
 			{
@@ -28,17 +62,19 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		public CollisionComponent()
+		{
+			
+		}
+
 		public CollisionComponent(RigidBody collisionBody)
 		{
-			CollisionBody = collisionBody ?? throw new ArgumentNullException(nameof(collisionBody));
-			CollisionBody.UserObject = this;
-			Origin = CollisionBounds;
+			CollisionObject = collisionBody ?? throw new ArgumentNullException(nameof(collisionBody));
 		}
 
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			Console.WriteLine(CollisionBody.WorldTransform.Origin);
 		}
 
 		public override void Destroy(bool disposing)

@@ -30,7 +30,13 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		/// <summary>
+		/// Restrict movement to given axis. Default is X and Y.
+		/// </summary>
 		public static Vector3 AllowedMovementAxis { get; set; } = new Vector3(1, 1, 0);
+		/// <summary>
+		/// Restrict rotation to given axis. Default is Z.
+		/// </summary>
 		public static Vector3 AllowedRotationAxis { get; set; } = new Vector3(0, 0, 1);
 
 		public BulletPhysicsEngine(Vector2f gravity)
@@ -40,7 +46,7 @@ namespace SFML_Engine.Engine.Physics
 
 		public BulletPhysicsEngine()
 		{
-			Gravity = new Vector2f(0.0f, -9.81f);
+			Gravity = new Vector2f(0.0f, 9.81f);
 		}
 
 		public void InitPhysicsEngine()
@@ -125,18 +131,200 @@ namespace SFML_Engine.Engine.Physics
 			InitPhysicsEngine();
 		}
 
-		public void AddRigidBody(RigidBody body)
+		public void ModifyPhysicsComponent(PhysicsComponent comp)
 		{
-			PhysicsWorld.AddRigidBody(body);
+			var rigid = (RigidBody) comp.CollisionObject;
+			if (rigid != null)
+			{
+				ModifyRigidBody(rigid, comp.CollisionType, comp.CollisionResponseChannels);
+				return;
+			}
+			ModifyCollisionObject(comp.CollisionObject, comp.CollisionType, comp.CollisionResponseChannels);
 		}
 
-		public void RemoveRigidBody(RigidBody body)
+		public void ModifyCollisionObject(CollisionObject obj, short collisionType, short collisionMask)
+		{
+			UnregisterCollisionObject(obj);
+			RegisterCollisionObject(obj, collisionType, collisionMask);
+		}
+
+		public void ModifyRigidBody(RigidBody body, short collisionType, short collisionMask)
+		{
+			UnregisterRigidBody(body);
+			RegisterRigidBody(body, collisionType, collisionMask);
+		}
+
+		public void RegisterRigidBody(RigidBody body, short collisionType, short collisionMask)
+		{
+			PhysicsWorld.AddRigidBody(body, collisionType, collisionMask);
+		}
+
+		public void UnregisterRigidBody(RigidBody body)
 		{
 			PhysicsWorld.RemoveRigidBody(body);
 		}
 
+		public void RegisterCollisionObject(CollisionObject obj, short collisionType, short collisionMask)
+		{
+			PhysicsWorld.AddCollisionObject(obj, collisionType, collisionMask);
+		}
+
+		public void UnregisterCollisionObject(CollisionObject obj)
+		{
+			PhysicsWorld.RemoveCollisionObject(obj);
+		}
+
+		public void ModifyGhostObject(GhostObject ghost, short collisionType, short collisionMask)
+		{
+			UnregisterCollisionObject(ghost);
+			RegisterCollisionObject(ghost, collisionType, collisionMask);
+		}
+
+		public void RegisterGhostObject(GhostObject ghost, short collisionType, short collisionMask)
+		{
+			PhysicsWorld.AddCollisionObject(ghost, collisionType, collisionMask);
+		}
+
+		public void UnregisterGhostObject(GhostObject ghost)
+		{
+			PhysicsWorld.RemoveCollisionObject(ghost);
+		}
+
+		public void RegisterPhysicsComponent(PhysicsComponent comp)
+		{
+			var rigid = (RigidBody) comp.CollisionObject;
+			if (rigid != null)
+			{
+				RegisterRigidBody(rigid, comp.CollisionType, comp.CollisionResponseChannels);
+				return;
+			}
+			RegisterCollisionObject(comp.CollisionObject, comp.CollisionType, comp.CollisionResponseChannels);
+		}
+
+		public void UnregisterPhysicsComponent(PhysicsComponent comp)
+		{
+			var rigid = (RigidBody) comp.CollisionObject;
+			if (rigid != null)
+			{
+				UnregisterRigidBody(rigid);
+				return;
+			}
+			UnregisterCollisionObject(comp.CollisionObject);
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionResponseChannels = (short) collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = (short) collisionType;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape)
+		{
+			var comp =  new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionType = (short)collisionType;
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape)
+		{
+			var comp = new OverlapComponent();
+			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
 		public static RigidBody ConstructRigidBody(object parent, float mass, Matrix startTransform,
-			BulletSharp.CollisionShape shape)
+			CollisionShape shape)
 		{
 			//rigidbody is dynamic if and only if mass is non zero, otherwise static
 			bool isDynamic = Math.Abs(mass) > 0.00001f;
@@ -167,8 +355,7 @@ namespace SFML_Engine.Engine.Physics
 		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, Vector2f scale,
 			CollisionShape shape)
 		{
-			Matrix t = Matrix.Translation(position.X, position.Y, 0.0f) * Matrix.RotationZ(angle) *
-			           Matrix.Scaling(scale.X, scale.Y, 1.0f);
+			Matrix t = EngineMath.TransformFromPosRotScaleBt(position, angle, scale);
 			return ConstructRigidBody(parent, mass, t, shape);
 		}
 
@@ -191,7 +378,7 @@ namespace SFML_Engine.Engine.Physics
 			CollisionShape shape)
 		{
 			Matrix t = Matrix.Translation(position.X, position.Y, 0.0f) * Matrix.RotationZ(angle) *
-					   Matrix.Scaling(scale.X, scale.Y, 1.0f);
+			           Matrix.Scaling(scale.X, scale.Y, 1.0f);
 			return ConstructOverlapBody(parent, t, shape);
 		}
 
