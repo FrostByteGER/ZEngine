@@ -3,7 +3,6 @@ using BulletSharp;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Physics;
-using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Engine.Engine
 {

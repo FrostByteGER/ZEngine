@@ -4,7 +4,6 @@ using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
-using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Breakout
 {

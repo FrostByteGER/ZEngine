@@ -153,17 +153,11 @@
     <Compile Include="Engine\PlayerController.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
-    <Compile Include="Engine\SFML\CircleShape.cs" />
-    <Compile Include="Engine\SFML\ConvexShape.cs" />
-    <Compile Include="Engine\SFML\RectangleShape.cs" />
-    <Compile Include="Engine\SFML\Shape.cs" />
-    <Compile Include="Engine\SFML\Text.cs" />
     <Compile Include="Engine\SpriteComponent.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
-    <Compile Include="Engine\SFML\Sprite.cs" />
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Start.cs" />

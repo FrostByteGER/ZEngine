@@ -6,7 +6,7 @@ namespace SFML_Engine.Engine.UI
 	public class UIActor : Actor
 	{
 
-		public uint LayerID { get; set; } = 0;
+		public uint UILayerID { get; set; } = 0;
 
 		public UIActor()
 		{

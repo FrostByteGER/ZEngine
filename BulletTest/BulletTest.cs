@@ -11,7 +11,6 @@ using VelcroPhysics.Factories;
 using VelcroPhysics.Utils;
 using CollisionShape = BulletSharp.CollisionShape;
 using Matrix = BulletSharp.Matrix;
-using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
 using Vector3 = BulletSharp.Vector3;
 
 namespace BulletTest

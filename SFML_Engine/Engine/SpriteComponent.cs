@@ -1,6 +1,5 @@
 using System;
 using SFML.Graphics;
-using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
 namespace SFML_Engine.Engine
 {

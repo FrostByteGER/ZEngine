@@ -7,9 +7,6 @@ using SFML.System;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
-using CircleShape = SFML_Engine.Engine.SFML.Graphics.CircleShape;
-using RectangleShape = SFML_Engine.Engine.SFML.Graphics.RectangleShape;
-using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Engine.Engine
 {
