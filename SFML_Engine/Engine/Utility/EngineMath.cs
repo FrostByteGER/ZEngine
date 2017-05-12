@@ -10,11 +10,65 @@ namespace SFML_Engine.Engine.Utility
 
 		public static Random EngineRandom { get; set; } = new Random();
 
+		/// <summary>
+		/// TODO: Check if Inclusive bounds.
+		/// Clamps the given value between min and max.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="val"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
 		public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
 		{
 			if (val.CompareTo(min) < 0) return min;
 			if (val.CompareTo(max) > 0) return max;
 			return val;
+		}
+
+		/// <summary>
+		/// Converts a short to a binary string.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string ShortToBinary(short value)
+		{
+			return Convert.ToString(value, 2).PadLeft(16, '0');
+		}
+
+		/// <summary>
+		/// Converts the given rotation angle from degrees to radians.
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <returns></returns>
+		public static float DegreesToRadians(float angle)
+		{
+			return (float)Math.PI * angle / 180.0f;
+		}
+
+		/// <summary>
+		/// Converts the given rotation vector from degrees to radians as a BulletSharp float vector3.
+		/// </summary>
+		/// <param name="degAngles"></param>
+		/// <returns></returns>
+		public static Vector3 DegreesToRadians(Vector3 degAngles)
+		{
+			float x = (float)Math.PI * degAngles.X / 180.0f;
+			float y = (float)Math.PI * degAngles.Y / 180.0f;
+			float z = (float)Math.PI * degAngles.Z / 180.0f;
+			return new Vector3(x, y, z);
+		}
+
+		/// <summary>
+		/// Converts the given rotation vector from degrees to radians as a SFML float vector2.
+		/// </summary>
+		/// <param name="degAngles"></param>
+		/// <returns></returns>
+		public static Vector2f DegreesToRadians(Vector2f degAngles)
+		{
+			float x = (float)Math.PI * degAngles.X / 180.0f;
+			float y = (float)Math.PI * degAngles.Y / 180.0f;
+			return new Vector2f(x, y);
 		}
 
 		/// <summary>
@@ -177,12 +231,26 @@ namespace SFML_Engine.Engine.Utility
 			return ez;
 		}
 
+		/// <summary>
+		/// Generates a transform matrix from a SFML Vector2f position, scale and a angle in degrees.
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="angle"></param>
+		/// <param name="scale"></param>
+		/// <returns></returns>
 		public static Matrix TransformFromPosRotScaleBt(Vector2f position, float angle, Vector2f scale)
 		{
-			return Matrix.Translation(position.X, position.Y, 0.0f) * Matrix.RotationZ(angle) *
+			return Matrix.Translation(position.X, position.Y, 0.0f) * Matrix.RotationZ(DegreesToRadians(angle)) *
 			       Matrix.Scaling(scale.X, scale.Y, 1.0f);
 		}
 
+		/// <summary>
+		/// Generates a SFML transform matrix from a SFML Vector2f position, scale and a angle in degrees.
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="angle"></param>
+		/// <param name="scale"></param>
+		/// <returns></returns>
 		public static Transform TransformFromPosRotScale(Vector2f position, float angle, Vector2f scale)
 		{
 			var t = new Transform();
@@ -192,6 +260,13 @@ namespace SFML_Engine.Engine.Utility
 			return t;
 		}
 
+		/// <summary>
+		/// Generates a SFML transformable from a SFML Vector2f position, scale and a angle in degrees.
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="angle"></param>
+		/// <param name="scale"></param>
+		/// <returns></returns>
 		public static Transformable TransformableFromPosRotScale(Vector2f position, float angle, Vector2f scale)
 		{
 			var t = new Transformable
