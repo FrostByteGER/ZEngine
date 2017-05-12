@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
-using BulletSharp;
 
 namespace SFML_Engine.Engine.Physics
 {
 	[Flags]
-	public enum CollisionTypes
+	public enum CollisionTypes : short
 	{
-		AllFilter = -1,
+		All = -1,
 		None = 0,
-		DefaultFilter = 1,
-		StaticFilter = 2,
-		KinematicFilter = 4
+		Default = 1,
+		Static = 2,
+		Kinematic = 4,
+		Dynamic = Default
 	}
 }

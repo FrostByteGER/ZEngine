@@ -11,7 +11,7 @@ namespace SFML_Engine.Engine
 	    
 	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
-        public View PlayerCamera { get; set; } = new View(new Vector2f(0, 0), new Vector2f(500, -500));
+        public View PlayerCamera { get; set; } = new View(new Vector2f(0, 0), new Vector2f(400, 400));
 
 		public Level LevelReference { get; set; } = null;
 
