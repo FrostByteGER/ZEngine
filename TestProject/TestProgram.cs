@@ -26,6 +26,7 @@ namespace TestProject
 			var testActor = new Actor();
 			BoxShape collisionShape = new BoxShape(50.0f);
 			var component = physics.ConstructCollisionComponent(1.0f, new Vector2f(0.0f, 0.0f), 43.0f, collisionShape, CollisionTypes.Default);
+			component.CollisionCallbacksEnabled = true;
 			testActor.SetRootComponent(component);
 
 			var bottomBorder = new Actor();
@@ -56,6 +57,8 @@ namespace TestProject
 			level.RegisterActor(leftBorder);
 			level.RegisterActor(rightBorder);
 			level.RegisterPlayer(player);
+
+			Console.WriteLine(rightComponent.CollisionBody.CollisionFlags);
 			engine.StartEngine();
 			Console.ReadLine();
 		}

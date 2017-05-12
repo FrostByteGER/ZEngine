@@ -285,5 +285,10 @@ namespace SFML_Engine.Engine
 				comp.Dispose();
 			}
 		}
+
+		public override string ToString()
+		{
+			return GenerateFullName();
+		}
 	}
 }

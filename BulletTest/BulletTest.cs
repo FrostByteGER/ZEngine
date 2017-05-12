@@ -102,6 +102,9 @@ namespace BulletTest
 			body.Restitution = 1.0f;
 			body.LinearFactor = new Vector3(1, 1, 0);
 			body.AngularFactor = new Vector3(0, 0, 1);
+
+			ManifoldPoint.ContactAdded += ManifoldPoint_ContactAdded;
+
 			while (true)
 			{
 				FrameDelta = Clock.GetFrameDelta();
@@ -139,6 +142,11 @@ namespace BulletTest
 				Console.WriteLine("Ground Position: " + groundBody.WorldTransform.Origin + " Box Position: " + body.WorldTransform.Origin + " | " + QuatToEulerDegrees(body.Orientation));
 				//Thread.Sleep(50);
 			}
+		}
+
+		private static void ManifoldPoint_ContactAdded(ManifoldPoint cp, CollisionObjectWrapper colObj0Wrap, int partId0, int index0, CollisionObjectWrapper colObj1Wrap, int partId1, int index1)
+		{
+			Console.WriteLine("TEST");
 		}
 
 		public static float RadiansToDegrees(float radAngle)
@@ -217,6 +225,7 @@ namespace BulletTest
 
 			RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, shape, localInertia);
 			RigidBody body = new RigidBody(rbInfo);
+			body.CollisionFlags |= CollisionFlags.CustomMaterialCallback;
 			rbInfo.Dispose();
 			return body;
 		}

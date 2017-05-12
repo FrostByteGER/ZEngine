@@ -138,6 +138,10 @@ namespace SFML_Engine.Engine
 	        actor.LevelID = LevelID;
 	        actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
+	        foreach (var component in actor.Components)
+	        {
+		        RegisterActorComponent(component);
+	        }
 			Actors.Add(actor);
         }
 
