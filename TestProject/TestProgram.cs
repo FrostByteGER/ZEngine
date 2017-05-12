@@ -33,7 +33,7 @@ namespace TestProject
 			engine.RegisterLevel(level);
 			level.RegisterActor(testActor);
 			level.RegisterPlayer(player);
-			physics.AddRigidBody(component.CollisionBody);
+			physics.AddRigidBody(component.CollisionBody); //TODO: Let Engine handle this!
 			engine.StartEngine();
 			Console.ReadLine();
 		}
