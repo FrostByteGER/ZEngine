@@ -4,17 +4,18 @@ using SFML_Engine.Engine.Physics;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using SFML;
 
 namespace SFML_Engine.Engine
 {
-	public class Actor : Transformable, IActorable, IGameInterface
+	public class Actor : ObjectBase, IActorable, IGameInterface, Drawable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
 		public uint LevelID { get; internal set; } = 0;
+		public uint LayerID { get; set; } = 1;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
-		public CollisionShape CollisionShape { get; set; } = new CollisionShape();
 		public FloatRect ActorBounds { get; set; } = new FloatRect();
 		public bool Movable { get; set; } = true;
 		public Vector2f Velocity { get; set; }
@@ -25,53 +26,70 @@ namespace SFML_Engine.Engine
 		public float Friction = 0.0f;
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
+		public virtual ActorComponent RootComponent { get; private set; } = null;
 		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval { get; internal set; } = false;
 		public bool Visible { get; set; } = true;
 
-		public Actor()
+		public Vector2f Position
 		{
+			get
+			{
+				return RootComponent.Position;
+			}
+			set { RootComponent.Position = value; }
 		}
 
-		public Actor(Transformable transformable) : base(transformable)
+		public float Rotation
 		{
+			get
+			{
+				return RootComponent.Rotation;
+			}
+			set { RootComponent.Rotation = value; }
 		}
 
-		protected Actor(IntPtr cPointer) : base(cPointer)
+		public Vector2f Scale
 		{
+			get
+			{
+				return RootComponent.Scale;
+			}
+			set { RootComponent.Scale = value; }
 		}
 
+		public Actor() : base(IntPtr.Zero)
+		{
+		}
+		public Actor(IntPtr cPointer) : base(cPointer)
+		{
+		}
 
 
 		public virtual void Move(float x, float y)
 		{
-			Position += new Vector2f(x, y);
-			CollisionShape.Move(new Vector2f(x, y));
+			RootComponent.Move(new Vector2f(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			Position = new Vector2f(x, y);
-			CollisionShape.MoveAbsolute(new Vector2f(x, y));
+			RootComponent.MoveAbsolute(new Vector2f(x, y));
 		}
 
 		public virtual void Move(Vector2f position)
 		{
-			Position += position;
-			CollisionShape.Move(position);
+			RootComponent.Move(position);
 		}
 
 		public void MoveAbsolute(Vector2f position)
 		{
-			Position = position;
-			CollisionShape.MoveAbsolute(position);
+			RootComponent.MoveAbsolute(position);
 		}
 
 		public void Rotate(float angle)
 		{
-			Rotation += angle;
-			CollisionShape.Rotate(angle);
+			RootComponent.Rotate(angle);
 		}
 
 		public void Rotate(Quaternion angle)
@@ -81,8 +99,7 @@ namespace SFML_Engine.Engine
 
 		public void RotateAbsolute(float angle)
 		{
-			Rotation = angle;
-			CollisionShape.RotateAbsolute(angle);
+			RootComponent.RotateAbsolute(angle);
 		}
 
 		public void RotateAbsolute(Quaternion angle)
@@ -92,26 +109,22 @@ namespace SFML_Engine.Engine
 
 		public void ScaleActor(float x, float y)
 		{
-			base.Scale += new Vector2f(x, y);
-			CollisionShape.ScaleActor(new Vector2f(x, y));
+			RootComponent.ScaleActor(new Vector2f(x, y));
 		}
 
 		public void ScaleActor(Vector2f scale)
 		{
-			base.Scale += scale;
-			CollisionShape.ScaleActor(scale);
+			RootComponent.ScaleActor(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			base.Scale = new Vector2f(x, y);
-			CollisionShape.ScaleAbsolute(new Vector2f(x, y));
+			RootComponent.ScaleAbsolute(new Vector2f(x, y));
 		}
 
 		public void ScaleAbsolute(Vector2f scale)
 		{
-			base.Scale = scale;
-			CollisionShape.ScaleAbsolute(scale);
+			RootComponent.ScaleAbsolute(scale);
 		}
 
 		public virtual void Tick(float deltaTime)
@@ -168,9 +181,75 @@ namespace SFML_Engine.Engine
 			
 		}
 
+		public bool SetRootComponent(ActorComponent root)
+		{
+			if (root == null && RootComponent == null) return false;
+			if (root == null && RootComponent != null) return RemoveRootComponent();
+			RemoveRootComponent();
+
+			if (Components.Contains(root))
+			{
+				var comp = Components.Find(x => x.ComponentID == root.ComponentID);
+				if (comp == null) return false;
+				RootComponent = comp;
+				comp.IsRootComponent = true;
+				return true;
+			}
+			Components.Add(root);
+			root.ParentActor = this;
+			RootComponent = root;
+			root.IsRootComponent = true;
+			return true;
+		}
+
+		public bool SetRootComponent(int rootIndex)
+		{
+			if (rootIndex < 0 || rootIndex >= Components.Count) return false;
+			return SetRootComponent(Components[rootIndex]);
+		}
+
+		public bool RemoveRootComponent()
+		{
+			if (RootComponent == null) return false;
+			RemoveComponent(RootComponent);
+			RootComponent.IsRootComponent = false;
+			RootComponent = null;
+			return true;
+		}
+
+		public bool AddComponent(ActorComponent component)
+		{
+			if (Components.Contains(component)) return false;
+			Components.Add(component);
+			component.ParentActor = this;
+			return true;
+		}
+
+		public void RemoveComponent(ActorComponent component)
+		{
+			if (!Components.Contains(component)) return;
+			Components.Remove(component);
+			component.ParentActor = null;
+		}
+
+		public void RemoveComponent(int index)
+		{
+			Components[index].ParentActor = null;
+			Components.RemoveAt(index);
+		}
+
+		public void RemoveAllComponents()
+		{
+			foreach (var component in Components)
+			{
+				component.ParentActor = null;
+			}
+			Components.Clear();
+		}
+
 		public ActorInformation GenerateActorInformation()
 		{
-			return new ActorInformation(ActorID, LevelID, Position, Rotation, Scale, Origin, Movable, Velocity, MaxVelocity,
+			return new ActorInformation(ActorID, LevelID, RootComponent.Position, RootComponent.Rotation, RootComponent.Scale, new Vector2f(), Movable, Velocity, MaxVelocity,
 				Acceleration, MaxAcceleration, Mass, Friction, HasGravity);
 		}
 
@@ -182,6 +261,20 @@ namespace SFML_Engine.Engine
 		public string GenerateFullName()
 		{
 			return ActorName + "-" + ActorID;
+		}
+
+		protected override void Destroy(bool disposing)
+		{
+			//TODO: Do nothing or implement if needed
+		}
+
+		public void Draw(RenderTarget target, RenderStates states)
+		{
+			RootComponent.Draw(target, states);
+			foreach (var drawable in Components)
+			{
+				drawable.Draw(target, states);
+			}
 		}
 	}
 }

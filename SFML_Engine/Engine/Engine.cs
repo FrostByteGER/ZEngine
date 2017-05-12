@@ -7,6 +7,7 @@ using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine
 {
@@ -15,67 +16,65 @@ namespace SFML_Engine.Engine
     {
 
 		private static Engine instance;
-
 		public static Engine Instance => instance ?? (instance = new Engine());
 
-	    public GameInfo GameInfo { get; set; } = new GameInfo();
-
-	    public uint EngineWindowHeight { get; set; }
-        public uint EngineWindowWidth { get; set; }
 		private RenderWindow engineWindow;
-
         public RenderWindow EngineWindow
         {
             get => engineWindow;
 	        private set => engineWindow = value;
         }
 
-        public Clock EngineClock { get; private set; }
-        public Clock EngineLoopClock { get; private set; }
-        public Clock FPSClock { get; private set; }
 
+		// Frame and Physics
+		public EngineClock EngineCoreClock;
+	    public float FrameDelta { get; set; } = 0.0f;
+		public float Timestep { get; set; } = 1.0f / 100.0f;
 		private double Accumulator { get; set; } = 0.0;
-		private double EngineTime { get; set; }= 0.0;
-		private Time CurrentTime { get; set; }
-		public Time DeltaTime { get; private set; }
-	    public float Timestep { get; set; } = 1.0f / 100.0f;
+	    public float FramesPerSecond { get; private set; } = 0.0f;
+		private float FrameAccumulator { get; set; } = 0.0f;
 
-		private Time FPSStartTime { get; set; }
-        public Time FPSPassedTime { get; set; }
-        private uint FramesRendered { get; set; }
-        public double FPS { get; private set; }
 
-	    public uint FPSLimit { get; private set; } = 120;
-
-        public float FPSUpdateValue { get; } = 1f;
-
-        public bool RequestTermination { get; set; }
-	    public bool VSyncEnabled { get; set; } = false;
-
-        public List<Level> Levels { get; private set; } = new List<Level>();
+		// Core Engine
+		public GameInfo GameInfo { get; set; } = new GameInfo();
+		public List<Level> Levels { get; private set; } = new List<Level>();
 	    public Level ActiveLevel { get; internal set; }
+		public uint LevelIDCounter { get; private set; } = 0;
 
-        public PhysicsEngine PhysicsEngine { get; private set; }
+
+		// Engine Managers
+		public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 		public AssetManager AssetManager { get; set; }
 
-	    public Queue<EngineEvent> EngineEvents { get; private set; } = new Queue<EngineEvent>();
 
-		public uint LevelIDCounter { get; private set; } = 0;
-	    public uint EventIDCounter { get; private set; } = 0;
+		// Events
+		public Queue<EngineEvent> EngineEvents { get; private set; } = new Queue<EngineEvent>();
+		public uint EventIDCounter { get; private set; } = 0;
 
-	    public uint DepthBufferSize { get; internal set; } = 24;
-	    public uint StencilBufferSize { get; internal set; } = 8;
-	    public uint AntiAliasingLevel { get; internal set; } = 4;
 
+		// Engine OpenGL Settings
+		public uint DepthBufferSize { get; internal set; }    = 24;
+	    public uint StencilBufferSize { get; internal set; }  = 8;
+	    public uint AntiAliasingLevel { get; internal set; }  = 4;
 	    public uint MajorOpenGLVersion { get; internal set; } = 4;
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
 	    public ContextSettings.Attribute OpenGLVersion = ContextSettings.Attribute.Default;
 
-	    public uint GlobalVolume { get; set; } = 5;
+
+		// Engine Settings
+	    public uint EngineWindowHeight { get; set; } = 800;
+	    public uint EngineWindowWidth { get; set; }  = 600;
+		public bool VSyncEnabled { get; set; }       = false;
+		public uint FPSLimit { get; set; }           = 120;
 
 
-	    private Engine()
+		// Other Settings
+		public uint GlobalVolume { get; set; } = 5;
+		public bool RequestTermination { get; set; } = false;
+
+
+		private Engine()
 	    {
 		    
 	    }
@@ -83,13 +82,13 @@ namespace SFML_Engine.Engine
         public void InitEngine()
         {
 	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLVersion);
-            EngineClock = new Clock();
             engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
             engineWindow.Closed += OnEngineWindowClose;
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			engineWindow.SetFramerateLimit(FPSLimit);
 			engineWindow.SetKeyRepeatEnabled(true);
 
+			EngineCoreClock = new EngineClock();
             PhysicsEngine = new PhysicsEngine();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref engineWindow);
@@ -105,11 +104,6 @@ namespace SFML_Engine.Engine
 		private void InitEngineLoop()
         {
             engineWindow.SetActive();
-			FPSClock = new Clock();
-			EngineLoopClock = new Clock();
-			FPSStartTime = Time.Zero;
-			FPSPassedTime = Time.Zero;
-			CurrentTime = Time.Zero;
 			if (ActiveLevel == null)
 	        {
 		        if (Levels.Count == 0)
@@ -125,55 +119,58 @@ namespace SFML_Engine.Engine
 
         private void EngineTick()
         {
-
-	        FPSClock.Restart();
-            EngineLoopClock.Restart();
             while (!RequestTermination)
             {
+				FrameDelta = EngineCoreClock.GetFrameDelta();
+				FrameAccumulator += FrameDelta;
+				if (FrameAccumulator >= 1.0f)
+				{
+					FramesPerSecond = EngineCoreClock.FrameCount / FrameAccumulator;
+					engineWindow.SetTitle(GameInfo.GameFullName + " FPS: " + FramesPerSecond + " | Frame: " + FrameDelta + " | Render: " + EngineCoreClock.RenderAverage + " | Update: " + EngineCoreClock.UpdateAverage + " | Physics: " + EngineCoreClock.PhysicsAverage);
 
-                Time newTime = EngineLoopClock.ElapsedTime;
-                DeltaTime = newTime - CurrentTime;
-                CurrentTime = newTime;
+					FrameAccumulator = 0.0f;
+					EngineCoreClock.Reset();
+				}
 
-
-
-                Accumulator += DeltaTime.AsSeconds();
-
-                FPSPassedTime = FPSClock.ElapsedTime;
-
-				//Console.WriteLine("Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(1.0f / DeltaTime.AsSeconds()));
-				FPS = 1.0f / DeltaTime.AsSeconds();
-
-				if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
-                {
-                    FPSStartTime = FPSPassedTime;
-					engineWindow.SetTitle(GameInfo.GameFullName + " | Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + CurrentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(FPS));
-
-					FramesRendered = 0;
-                }
-
+				if (EngineCoreClock != null)
+				{
+					//clock.StartPhysics();
+					//velcroWorld.Step(FrameDelta);
+					//clock.StopPhysics();
+				}
+	            var t = 1;
+	            Accumulator += FrameDelta;
 				while (Accumulator >= Timestep)
                 {
-					//Console.WriteLine("Engine Tick!");
 	                if (!ActiveLevel.LevelTicking)
 	                {
 		                continue;
 	                }
 					var actors = ActiveLevel.Actors;
+
+					EngineCoreClock.StartPhysics();
 					PhysicsEngine.PhysicsTick(Timestep, ref actors);
-	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
-					EngineTime += Timestep;
+					EngineCoreClock.StopPhysics();
+
+					EngineCoreClock.StartUpdate();
+					ActiveLevel.LevelTick(FrameDelta);
+	                EngineCoreClock.StopUpdate();
+	                Console.WriteLine(t);
                     Accumulator -= Timestep;
+	                ++t;
                 }
 
                 engineWindow.Clear();
                 engineWindow.DispatchEvents();
 
+	            EngineCoreClock.StartRender();
 	            ActiveLevel.LevelDraw(ref engineWindow);
-                engineWindow.Display();
+				EngineCoreClock.StopRender();
+
+				engineWindow.Display();
 
 				// Execute all pending events in the Queue
-	            while (EngineEvents.Count > 0)
+				while (EngineEvents.Count > 0)
 	            {
 		            var engineEvent = EngineEvents.Dequeue();
 		            if (!engineEvent.Revoked)
@@ -181,7 +178,6 @@ namespace SFML_Engine.Engine
 						engineEvent.ExecuteEvent();
 					}
 				}
-                FramesRendered++;
             }
 
 
@@ -202,7 +198,7 @@ namespace SFML_Engine.Engine
 				level.CollisionRectangle.Dispose();
 				foreach (var actor in level.Actors)
 				{
-					actor.CollisionShape.Dispose();
+					//TODO: Dispose components!
 					actor.Dispose();
 				}
 				level.Actors.Clear();

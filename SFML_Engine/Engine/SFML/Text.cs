@@ -4,6 +4,7 @@ using System.Security;
 using System.Text;
 using SFML.Graphics;
 using SFML.System;
+using SFML_Engine.Engine.UI;
 
 namespace SFML_Engine.Engine.SFML
 {
@@ -20,7 +21,7 @@ namespace SFML_Engine.Engine.SFML
 		/// See also the note on coordinates and undistorted rendering in SFML.Graphics.Transformable.
 		/// </remarks>
 		////////////////////////////////////////////////////////////
-		public class Text : Actor, Drawable
+		public class Text : Transformable, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

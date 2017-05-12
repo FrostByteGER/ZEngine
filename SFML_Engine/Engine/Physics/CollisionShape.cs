@@ -6,11 +6,17 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
 {
+<<<<<<< HEAD
 	public class CollisionShape : Transformable, ITransformable
 	{
+=======
+    public class CollisionShape
+    {
+>>>>>>> 4719a280819cca9b8f1a4701d974b3815ccdb8f2
 		public bool ShowCollisionShape { get; set; } = false;
 		public Color CollisionShapeColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
 
+<<<<<<< HEAD
 		public bool Movable { get; set; }
 
 		public Vector2f Velocity { get; set; }
@@ -82,4 +88,13 @@ namespace SFML_Engine.Engine.Physics
 			return actorPosition;
 		}
 	}
+=======
+		public virtual Vector2f CollisionBounds { get; set; }
+	    public bool Movable { get; set; }
+
+		public Vector2f Velocity { get; set; }
+
+	    public Vector2f Acceleration { get; set; }
+    }
+>>>>>>> 4719a280819cca9b8f1a4701d974b3815ccdb8f2
 }
