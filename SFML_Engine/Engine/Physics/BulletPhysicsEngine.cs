@@ -23,6 +23,13 @@ namespace SFML_Engine.Engine.Physics
 			{
 				if (PhysicsWorld != null)
 				{
+					if (value != new Vector2f(0.0f, 0.0f) || value != Gravity)
+					{
+						foreach (var collisionObject in PhysicsWorld.CollisionObjectArray)
+						{
+							collisionObject.Activate();
+						}
+					}
 					PhysicsWorld.Gravity = EngineMath.Vec2fToVec3(value);
 					return;
 				}
@@ -218,6 +225,9 @@ namespace SFML_Engine.Engine.Physics
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionResponseChannels = (short) collisionResponseChannels;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -227,6 +237,9 @@ namespace SFML_Engine.Engine.Physics
 			var comp = new CollisionComponent();
 			comp.CollisionType = (short) collisionType;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -235,6 +248,9 @@ namespace SFML_Engine.Engine.Physics
 		{
 			var comp =  new CollisionComponent();
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -245,8 +261,9 @@ namespace SFML_Engine.Engine.Physics
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionResponseChannels = (short)collisionResponseChannels;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
-			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
 			return comp;
 		}
 
@@ -255,8 +272,9 @@ namespace SFML_Engine.Engine.Physics
 			var comp = new CollisionComponent();
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
-			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
 			return comp;
 		}
 
@@ -264,8 +282,9 @@ namespace SFML_Engine.Engine.Physics
 		{
 			var comp = new CollisionComponent();
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
-			//PhysicsWorld.AddRigidBody(comp.CollisionBody);
 			return comp;
 		}
 
@@ -275,6 +294,9 @@ namespace SFML_Engine.Engine.Physics
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionResponseChannels = (short)collisionResponseChannels;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -284,6 +306,9 @@ namespace SFML_Engine.Engine.Physics
 			var comp = new OverlapComponent();
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -292,6 +317,9 @@ namespace SFML_Engine.Engine.Physics
 		{
 			var comp = new OverlapComponent();
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -302,6 +330,8 @@ namespace SFML_Engine.Engine.Physics
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionResponseChannels = (short)collisionResponseChannels;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -311,6 +341,8 @@ namespace SFML_Engine.Engine.Physics
 			var comp = new OverlapComponent();
 			comp.CollisionType = (short)collisionType;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -319,6 +351,8 @@ namespace SFML_Engine.Engine.Physics
 		{
 			var comp = new OverlapComponent();
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterGhostObject(comp.OverlapBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -326,22 +360,21 @@ namespace SFML_Engine.Engine.Physics
 		public static RigidBody ConstructRigidBody(object parent, float mass, Matrix startTransform,
 			CollisionShape shape)
 		{
-			//rigidbody is dynamic if and only if mass is non zero, otherwise static
+			// rigidbody is dynamic if and only if mass is non zero, otherwise static
 			bool isDynamic = Math.Abs(mass) > 0.00001f;
 			var localInertia = Vector3.Zero;
 			if (isDynamic) shape.CalculateLocalInertia(mass, out localInertia);
 
-			//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+			// using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 			var myMotionState = new DefaultMotionState(startTransform);
 
 			var rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, shape, localInertia);
 			var body = new RigidBody(rbInfo)
 			{
-				UserObject = parent
-
+				UserObject = parent,
+				LinearFactor = AllowedMovementAxis,
+				AngularFactor = AllowedRotationAxis
 			};
-			body.LinearFactor = AllowedMovementAxis;
-			body.AngularFactor = AllowedRotationAxis;
 			rbInfo.Dispose();
 			return body;
 		}

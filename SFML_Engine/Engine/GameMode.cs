@@ -11,6 +11,8 @@ namespace SFML_Engine.Engine
 	        //Console.WriteLine("GameMode Tick");
         }
 
+	    public bool CanTick { get; set; } = true;
+
 	    public virtual void OnGameStart()
 	    {
 			Console.WriteLine("Game Started!");
@@ -18,7 +20,12 @@ namespace SFML_Engine.Engine
 
 	    public virtual void OnGamePause()
 	    {
-		    throw new NotImplementedException();
+		    CanTick = false;
+	    }
+
+	    public virtual void OnGameResume()
+	    {
+		    CanTick = true;
 	    }
 
 	    public virtual void OnGameEnd()

@@ -25,13 +25,15 @@ namespace SFML_Engine.Engine
 		public Transformable Transform { get; set; } = new Transformable();
 
 		public bool Visible { get; set; } = true;
+		public bool CanTick { get; set; } = true;
 
 		public virtual void Tick(float deltaTime)
 		{
 			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);
 		}
+		
 
-		public void SwapParentActor(Actor newParent)
+	public void SwapParentActor(Actor newParent)
 		{
 			if (ParentActor == null || newParent == null) return;
 			if (IsRootComponent)
@@ -45,49 +47,49 @@ namespace SFML_Engine.Engine
 			newParent.AddComponent(this);
 		}
 
-		public Vector2f Position
+		public virtual Vector2f Position
 		{
 			get => IsRootComponent ? Transform.Position : ParentActor.Position + Transform.Position;
 			set => Transform.Position = value;
 		}
 
-		public Vector2f LocalPosition
+		public virtual Vector2f LocalPosition
 		{
 			get => Transform.Position;
 			set => Transform.Position = value;
 		}
 
-		public float Rotation
+		public virtual float Rotation
 		{
 			get => IsRootComponent ? Transform.Rotation : ParentActor.Rotation + Transform.Rotation;
 			set => Transform.Rotation = value;
 		}
 
-		public float LocalRotation
+		public virtual float LocalRotation
 		{
 			get => Transform.Rotation;
 			set => Transform.Rotation = value;
 		}
 
-		public Vector2f Scale
+		public virtual Vector2f Scale
 		{
 			get => IsRootComponent ? Transform.Scale : new Vector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
 			set => Transform.Scale = value;
 		}
 
-		public Vector2f LocalScale
+		public virtual Vector2f LocalScale
 		{
 			get => Transform.Scale;
 			set => Transform.Scale = value;
 		}
 
-		public Vector2f Origin
+		public virtual Vector2f Origin
 		{
 			get => IsRootComponent ? Transform.Origin : ParentActor.Origin;
 			set => Transform.Origin = value;
 		}
 
-		public Vector2f LocalOrigin
+		public virtual Vector2f LocalOrigin
 		{
 			get => Transform.Origin;
 			set => Transform.Origin = value;

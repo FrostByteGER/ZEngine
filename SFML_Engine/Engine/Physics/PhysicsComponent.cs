@@ -36,9 +36,10 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1, CollisionObjectWrapper collider2, int partId2, int index2)
+		public virtual void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1, CollisionObjectWrapper collider2, int partId2, int index2)
 		{
-			Console.WriteLine("COLLISION: " + (collider1.CollisionObject.UserObject as ActorComponent) + " WITH " + (collider2.CollisionObject.UserObject as ActorComponent));
+			ParentActor.OnCollide(cp, collider1, partId1, index1, collider2, partId2, index2);
+			//Console.WriteLine("COLLISION: " + (collider1.CollisionObject.UserObject as ActorComponent) + " WITH " + (collider2.CollisionObject.UserObject as ActorComponent));
 		}
 	}
 }

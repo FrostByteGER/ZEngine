@@ -62,6 +62,18 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		public override Vector2f Position
+		{
+			get => base.Position;
+			set
+			{
+				base.Position = value;
+				var transform = OverlapBody.WorldTransform;
+				transform.Origin = EngineMath.Vec2fToVec3(value);
+				OverlapBody.WorldTransform = transform;
+			}
+		}
+
 		public OverlapComponent()
 		{
 			

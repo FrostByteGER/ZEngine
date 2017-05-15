@@ -63,15 +63,16 @@ namespace SFML_Engine.Engine
 			//Console.WriteLine("Level Tick!");
 			foreach (var pc in Players)
 			{
-				if (!pc.IsActive) continue;
+				if (!pc.CanTick) continue;
 				pc.Tick(deltaTime);
 			}
 			foreach (var actor in Actors)
             {
-                actor.Tick(deltaTime);
+	            if (!actor.CanTick) continue;
+				actor.Tick(deltaTime);
             }
-
-	        GameMode.Tick(deltaTime);
+	        if (!GameMode.CanTick) return;
+			GameMode.Tick(deltaTime);
         }
 
         protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
@@ -185,9 +186,31 @@ namespace SFML_Engine.Engine
 
 	    public virtual void OnGamePause()
 	    {
-		    throw new NotImplementedException();
-			//TODO: Call OnGamePause event on all actors
-	    }
+			GameMode.OnGamePause();
+			foreach (var pc in Players)
+			{
+				if (!pc.IsActive) continue;
+				pc.OnGamePause();
+			}
+			foreach (var actor in Actors)
+			{
+				actor.OnGamePause();
+			}
+		}
+
+	    public virtual void OnGameResume()
+	    {
+			GameMode.OnGameResume();
+			foreach (var pc in Players)
+			{
+				if (!pc.IsActive) continue;
+				pc.OnGameResume();
+			}
+			foreach (var actor in Actors)
+			{
+				actor.OnGameResume();
+			}
+		}
 
 	    public virtual void OnGameEnd()
 	    {
@@ -236,6 +259,15 @@ namespace SFML_Engine.Engine
 		public void SpawnActor(Actor actor)
 		{
 			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, LevelID)));
+		}
+
+		public void PauseActor(Actor instigator, Actor actor)
+		{
+
+		}
+		public void PauseActor(Actor actor)
+		{
+
 		}
 
 		public void DestroyActor(Actor instigator, Actor actor)

@@ -18,8 +18,9 @@ namespace SFML_Engine.Engine
         public SpriteActor PlayerPawn { get; set; }
 
 		public InputManager Input { get; set; }
+	    public bool CanTick { get; set; } = true;
 
-	    private bool isActive = true;
+		private bool isActive = true;
 		public bool IsActive
 	    {
 		    get => isActive;
@@ -147,7 +148,12 @@ namespace SFML_Engine.Engine
 
 	    public virtual void OnGamePause()
 	    {
-		    
+		    CanTick = false;
+	    }
+
+	    public virtual void OnGameResume()
+	    {
+		    CanTick = true;
 	    }
 
 	    public virtual void OnGameEnd()

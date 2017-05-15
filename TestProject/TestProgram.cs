@@ -23,10 +23,17 @@ namespace TestProject
 			
 			var level = new Level();
 
+			var testActor2 = new Actor();
+			BoxShape collisionShape2 = new BoxShape(50.0f);
+			var component2 = physics.ConstructCollisionComponent(0.0f, new Vector2f(10.0f, 0.0f), 0.0f, collisionShape2, CollisionTypes.Static);
+			component2.CollisionCallbacksEnabled = false;
+			testActor2.SetRootComponent(component2);
+
 			var testActor = new Actor();
 			BoxShape collisionShape = new BoxShape(50.0f);
 			var component = physics.ConstructCollisionComponent(1.0f, new Vector2f(0.0f, 0.0f), 43.0f, collisionShape, CollisionTypes.Default);
-			component.CollisionCallbacksEnabled = true;
+			component.CollisionBody.AngularVelocity = new Vector3(0,0, EngineMath.DegreesToRadians(30));
+			component.CollisionCallbacksEnabled = false;
 			testActor.SetRootComponent(component);
 
 			var bottomBorder = new Actor();
@@ -51,6 +58,7 @@ namespace TestProject
 
 			var player = new TestPlayerController();
 			engine.RegisterLevel(level);
+			level.RegisterActor(testActor2);
 			level.RegisterActor(testActor);
 			level.RegisterActor(bottomBorder);
 			level.RegisterActor(topBorder);

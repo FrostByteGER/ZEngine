@@ -62,6 +62,39 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		public override Vector2f Position
+		{
+			get => base.Position;
+			set
+			{
+				base.Position = value;
+				var transform = CollisionBody.WorldTransform;
+				transform.Origin = EngineMath.Vec2fToVec3(value);
+				CollisionBody.WorldTransform = transform;
+			}
+		}
+
+		public override Vector2f LocalPosition
+		{
+			get { return base.LocalPosition; }
+			set { base.LocalPosition = value; }
+		}
+
+		public override float Rotation
+		{
+			get { return base.Rotation; }
+			set
+			{
+				base.Rotation = value;
+			}
+		}
+
+		public override float LocalRotation
+		{
+			get { return base.LocalRotation; }
+			set { base.LocalRotation = value; }
+		}
+
 		public CollisionComponent()
 		{
 			

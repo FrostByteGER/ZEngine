@@ -3,12 +3,13 @@ using SFML.System;
 using SFML_Engine.Engine.Physics;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
+using BulletSharp;
 using SFML;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace SFML_Engine.Engine
 {
-	public class Actor : IActorable, IGameInterface, Drawable, IDestroyable
+	public class Actor : IActorable, IGameInterface, Drawable, IDestroyable, ICollidable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
@@ -31,6 +32,21 @@ namespace SFML_Engine.Engine
 
 		public bool MarkedForRemoval { get; internal set; } = false;
 		public bool Visible { get; set; } = true;
+		public bool CanTick { get; set; } = true;
+		private bool collisionCallbacksEnabled = true;
+		public bool CollisionCallbacksEnabled
+		{
+			get => collisionCallbacksEnabled;
+			set
+			{
+				collisionCallbacksEnabled = value;
+				foreach (var comp in Components)
+				{
+					var colComp = (PhysicsComponent) comp;
+					if (colComp != null) colComp.CollisionCallbacksEnabled = value;
+				}
+			}
+		}
 
 		public Vector2f Position
 		{
@@ -162,12 +178,24 @@ namespace SFML_Engine.Engine
 
 		public virtual void OnGameStart()
 		{
-			
 		}
 
 		public virtual void OnGamePause()
 		{
-			
+			foreach (var component in Components)
+			{
+				component.CanTick = false;
+			}
+			CanTick = false;
+		}
+
+		public virtual void OnGameResume()
+		{
+			foreach (var component in Components)
+			{
+				component.CanTick = true;
+			}
+			CanTick = true;
 		}
 
 		public virtual void OnGameEnd()
@@ -289,6 +317,12 @@ namespace SFML_Engine.Engine
 		public override string ToString()
 		{
 			return GenerateFullName();
+		}
+
+		public void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1,
+			CollisionObjectWrapper collider2, int partId2, int index2)
+		{
+			
 		}
 	}
 }

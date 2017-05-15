@@ -125,6 +125,10 @@
     <Compile Include="Engine\ActorComponent.cs" />
     <Compile Include="Engine\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
+    <Compile Include="Engine\Events\UnpauseActorEvent.cs" />
+    <Compile Include="Engine\Events\PauseActorEvent.cs" />
+    <Compile Include="Engine\Events\UnpauseActorParams.cs" />
+    <Compile Include="Engine\Events\PauseActorParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="Engine\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
+    <Compile Include="Engine\Utility\TVector2f.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EngineInfo.Designer.cs">
       <AutoGen>True</AutoGen>

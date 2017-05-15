@@ -5,6 +5,7 @@
 
 		void OnGameStart();
 		void OnGamePause();
+		void OnGameResume();
 		void OnGameEnd();
 		
 	}
