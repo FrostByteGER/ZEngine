@@ -109,6 +109,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameInfo.settings</DependentUpon>
     </Compile>
+    <Compile Include="PowerUp.cs" />
+    <Compile Include="PowerUpDup.cs" />
+    <Compile Include="PowerUpInc.cs" />
     <Compile Include="StartBreakout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

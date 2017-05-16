@@ -19,7 +19,6 @@ namespace SFML_Breakout
 				MountainDewMode = bool.Parse(args[0]);
 			}
 
-
 			Engine engine = Engine.Instance;
 			engine.GameInfo = new BreakoutGameInfo();
 			engine.EngineWindowWidth = 800;
@@ -31,9 +30,12 @@ namespace SFML_Breakout
 			physics.AddGroup("Balls");
 			physics.AddGroup("Borders");
 			physics.AddGroup("Blocks");
+			physics.AddGroup("PowerUp");
 
 			physics.AddCollidablePartner("Balls", "Pads");
 			physics.AddCollidablePartner("Balls", "Borders");
+			physics.AddCollidablePartner("PowerUp", "Pads");
+			physics.AddCollidablePartner("PowerUp", "Borders");
 			physics.AddCollidablePartner("Pads", "Borders");
 			physics.AddCollidablePartner("Balls", "Blocks");
 			physics.AddCollidablePartner("Blocks", "Balls");

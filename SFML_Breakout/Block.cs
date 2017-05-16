@@ -4,6 +4,7 @@ using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Utility;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
+using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout
 {
@@ -48,7 +49,32 @@ namespace SFML_Breakout
 				Console.WriteLine("Player Score: " + ((BreakoutBall) actor).Score);
 				var newAlpha = Math.Max(0.0f, Math.Min(1.0f, (float)Hitpoints / MaxHitpoints));
 				CollisionShape.CollisionShapeColor = new Color(CollisionShape.CollisionShapeColor.R, CollisionShape.CollisionShapeColor.G, CollisionShape.CollisionShapeColor.B, (byte)Math.Floor(newAlpha == 1.0f ? 255 : newAlpha * 256.0f));
-				if (Hitpoints == 0) LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+				if (Hitpoints == 0)
+				{
+					//TODO
+
+					PowerUp pow;
+
+					if (EngineMath.EngineRandom.NextDouble() > 0.5)
+					{
+						pow = new PowerUpDup();
+					}
+					else
+					{
+						pow = new PowerUpInc();
+					}
+
+					//PowerUpDup pow = new PowerUpDup();
+
+					pow.Position = ((BoxShape)CollisionShape).GetMid(Position);
+
+					pow.CollisionShape.ShowCollisionShape = true;
+
+					LevelReference.EngineReference.PhysicsEngine.AddActorToGroup("PowerUp", pow);
+
+					LevelReference.EngineReference.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, pow, LevelReference.LevelID)));
+					LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+				}
 			}
 		}
 

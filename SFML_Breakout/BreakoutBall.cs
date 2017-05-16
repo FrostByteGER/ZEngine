@@ -32,8 +32,6 @@ namespace SFML_Breakout
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			//Rotation += 25.0f * deltaTime;
-
 		}
 
 		public override void OnGameStart()
@@ -99,6 +97,9 @@ namespace SFML_Breakout
 
 		public override void IsOverlapping(Actor actor)
 		{
+
+
+
 		}
 	}
 }

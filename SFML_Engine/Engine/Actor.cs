@@ -33,6 +33,7 @@ namespace SFML_Engine.Engine
 
 		public Actor()
 		{
+
 		}
 
 		public Actor(Transformable transformable) : base(transformable)
