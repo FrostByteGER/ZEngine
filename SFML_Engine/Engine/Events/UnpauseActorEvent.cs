@@ -8,7 +8,7 @@
 
 		public override void ExecuteEvent()
 		{
-			Parameters.UnpausableActor.OnGamePause();
+			Parameters.UnpausableActor.OnGameResume();
 		}
 
 

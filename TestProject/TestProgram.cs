@@ -66,7 +66,6 @@ namespace TestProject
 			level.RegisterActor(rightBorder);
 			level.RegisterPlayer(player);
 
-			Console.WriteLine(rightComponent.CollisionBody.CollisionFlags);
 			engine.StartEngine();
 			Console.ReadLine();
 		}

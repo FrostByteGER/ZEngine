@@ -121,8 +121,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Actor.cs" />
-    <Compile Include="Engine\ActorComponent.cs" />
+    <Compile Include="Engine\Game\Actor.cs" />
+    <Compile Include="Engine\Game\ActorComponent.cs" />
     <Compile Include="Engine\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\UnpauseActorEvent.cs" />
@@ -131,9 +131,9 @@
     <Compile Include="Engine\Events\PauseActorParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
-    <Compile Include="Engine\GameLevelState.cs" />
+    <Compile Include="Engine\Game\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
-    <Compile Include="Engine\IDestroyable.cs" />
+    <Compile Include="Engine\Game\IDestroyable.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
@@ -143,26 +143,26 @@
     <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\Physics\CollisionComponent.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
-    <Compile Include="Engine\GameMode.cs" />
-    <Compile Include="Engine\IActorable.cs" />
-    <Compile Include="Engine\IGameInterface.cs" />
+    <Compile Include="Engine\Game\GameMode.cs" />
+    <Compile Include="Engine\Game\IActorable.cs" />
+    <Compile Include="Engine\Game\IGameInterface.cs" />
     <Compile Include="Engine\Physics\ICollidable.cs" />
     <Compile Include="Engine\Physics\ITransformable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
-    <Compile Include="Engine\ITickable.cs" />
-    <Compile Include="Engine\Level.cs" />
+    <Compile Include="Engine\Game\ITickable.cs" />
+    <Compile Include="Engine\Game\Level.cs" />
     <Compile Include="Engine\Physics\PhysicsComponent.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
-    <Compile Include="Engine\PlayerController.cs" />
+    <Compile Include="Engine\Game\PlayerController.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
-    <Compile Include="Engine\SpriteComponent.cs" />
+    <Compile Include="Engine\Game\SpriteComponent.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
-    <Compile Include="Engine\SpriteActor.cs" />
+    <Compile Include="Engine\Game\SpriteActor.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Engine\Utility\TVector2f.cs" />
@@ -198,8 +198,6 @@
   <ItemGroup>
     <Content Include="Lib\BulletSharp.dll" />
     <Content Include="Lib\OpenAL32.dll" />
-    <Content Include="Lib\VelcroPhysics.dll" />
-    <Content Include="Lib\VelcroPhysics.pdb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Audio\" />

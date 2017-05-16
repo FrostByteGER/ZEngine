@@ -151,7 +151,14 @@ namespace SFML_Engine.Engine
 			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
 			actor.OnActorDestroy();
 			var removal = Actors.Remove(actor);
-			//removal = EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
+			foreach (var comp in actor.Components)
+			{
+				var physComp = (PhysicsComponent)comp;
+				if (physComp != null)
+				{
+					EngineReference.BulletPhysicsEngine.UnregisterPhysicsComponent(physComp);
+				}
+			}
 			return removal;
 		}
 

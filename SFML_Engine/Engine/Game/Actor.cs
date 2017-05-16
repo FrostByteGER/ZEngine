@@ -307,11 +307,12 @@ namespace SFML_Engine.Engine
 
 		public virtual void Destroy(bool disposing)
 		{
+			
 			foreach (var comp in Components)
 			{
-				RootComponent.Dispose();
 				comp.Dispose();
 			}
+			RootComponent.Dispose();
 		}
 
 		public override string ToString()
