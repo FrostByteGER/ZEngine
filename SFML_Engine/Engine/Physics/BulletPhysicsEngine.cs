@@ -14,23 +14,23 @@ namespace SFML_Engine.Engine.Physics
 		public BroadphaseInterface Broadphase { get; private set; }
 		public DynamicsWorld PhysicsWorld { get; private set; }
 		public List<CollisionShape> CollisionShapes { get; } = new List<CollisionShape>();
-		private Vector2f gravity;
+		private TVector2f gravity;
 
-		public Vector2f Gravity
+		public TVector2f Gravity
 		{
-			get => PhysicsWorld != null ? EngineMath.Vec3ToVec2f(PhysicsWorld.Gravity) : gravity;
+			get => PhysicsWorld != null ? (TVector2f)PhysicsWorld.Gravity : gravity;
 			set
 			{
 				if (PhysicsWorld != null)
 				{
-					if (value != new Vector2f(0.0f, 0.0f) || value != Gravity)
+					if (value != new TVector2f() || value != Gravity)
 					{
 						foreach (var collisionObject in PhysicsWorld.CollisionObjectArray)
 						{
 							collisionObject.Activate();
 						}
 					}
-					PhysicsWorld.Gravity = EngineMath.Vec2fToVec3(value);
+					PhysicsWorld.Gravity = value;
 					return;
 				}
 				gravity = value;
@@ -46,14 +46,14 @@ namespace SFML_Engine.Engine.Physics
 		/// </summary>
 		public static Vector3 AllowedRotationAxis { get; set; } = new Vector3(0, 0, 0);
 
-		public BulletPhysicsEngine(Vector2f gravity)
+		public BulletPhysicsEngine(TVector2f gravity)
 		{
 			Gravity = gravity;
 		}
 
 		public BulletPhysicsEngine()
 		{
-			Gravity = new Vector2f(0.0f, 9.81f);
+			Gravity = new TVector2f(0.0f, 9.81f);
 		}
 
 		public void InitPhysicsEngine()
@@ -63,7 +63,7 @@ namespace SFML_Engine.Engine.Physics
 			Broadphase = new DbvtBroadphase();
 			PhysicsWorld = new DiscreteDynamicsWorld(CollisionDispatcher, Broadphase, null, CollisionConfig)
 			{
-				Gravity = EngineMath.Vec2fToVec3(Gravity)
+				Gravity = Gravity
 			};
 		}
 
@@ -78,7 +78,7 @@ namespace SFML_Engine.Engine.Physics
 				if (actorComponent == null) continue;
 				var body = collisionObject as RigidBody;
 				var component = actorComponent;
-				component.Position = EngineMath.Vec3ToVec2f(collisionObject.WorldTransform.Origin);
+				component.Position = collisionObject.WorldTransform.Origin;
 				if (body != null)
 				{
 					component.Rotation = EngineMath.QuatToEulerDegrees(body.Orientation);
@@ -219,6 +219,32 @@ namespace SFML_Engine.Engine.Physics
 			UnregisterCollisionObject(comp.CollisionObject);
 		}
 
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType, short collisionResponseChannels, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape, allowedMovementAxis, allowedRotationAxis);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType, short collisionResponseChannels, TVector2f allowedMovementAxis, bool allowRotation)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape, allowedMovementAxis, Convert.ToSingle(allowRotation));
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
 		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType, short collisionResponseChannels)
 		{
 			var comp = new CollisionComponent();
@@ -244,13 +270,59 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape)
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
 		{
 			var comp =  new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape, allowedMovementAxis, allowedRotationAxis);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, TVector2f allowedMovementAxis, bool allowRotation)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape, allowedMovementAxis, Convert.ToSingle(allowRotation));
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			comp.ScaleAbsolute(scale);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape)
+		{
+			var comp = new CollisionComponent();
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
 			comp.ScaleAbsolute(scale);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType, short collisionResponseChannels, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, allowedRotationAxis);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType, short collisionResponseChannels, TVector2f allowedMovementAxis, bool allowRotation)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, Convert.ToSingle(allowRotation));
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
 			return comp;
 		}
@@ -267,11 +339,53 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, allowedRotationAxis);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType, TVector2f allowedMovementAxis, bool allowRotation)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionType = collisionType;
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, Convert.ToSingle(allowRotation));
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
 		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType)
 		{
 			var comp = new CollisionComponent();
 			comp.CollisionType = collisionType;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, allowedRotationAxis);
+			comp.MoveAbsolute(position);
+			comp.RotateAbsolute(angle);
+			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
+			return comp;
+		}
+
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, TVector2f allowedMovementAxis, bool allowRotation)
+		{
+			var comp = new CollisionComponent();
+			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape, allowedMovementAxis, Convert.ToSingle(allowRotation));
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
 			RegisterRigidBody(comp.CollisionBody, comp.CollisionType, comp.CollisionResponseChannels);
@@ -357,8 +471,28 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public static RigidBody ConstructRigidBody(object parent, float mass, Matrix startTransform,
-			CollisionShape shape)
+		public static RigidBody ConstructRigidBody(object parent, float mass, Matrix startTransform, CollisionShape shape, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			// rigidbody is dynamic if and only if mass is non zero, otherwise static
+			bool isDynamic = Math.Abs(mass) > 0.00001f;
+			var localInertia = Vector3.Zero;
+			if (isDynamic) shape.CalculateLocalInertia(mass, out localInertia);
+
+			// using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+			var myMotionState = new DefaultMotionState(startTransform);
+
+			var rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, shape, localInertia);
+			var body = new RigidBody(rbInfo)
+			{
+				UserObject = parent,
+				LinearFactor = allowedMovementAxis,
+				AngularFactor = allowedRotationAxis
+			};
+			rbInfo.Dispose();
+			return body;
+		}
+
+		public static RigidBody ConstructRigidBody(object parent, float mass, Matrix startTransform, CollisionShape shape)
 		{
 			// rigidbody is dynamic if and only if mass is non zero, otherwise static
 			bool isDynamic = Math.Abs(mass) > 0.00001f;
@@ -379,14 +513,34 @@ namespace SFML_Engine.Engine.Physics
 			return body;
 		}
 
-		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle,
-			CollisionShape shape)
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, CollisionShape shape, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			return ConstructRigidBody(parent, mass, position, angle, new Vector2f(1.0f, 1.0f), shape, allowedMovementAxis, allowedRotationAxis);
+		}
+
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, CollisionShape shape, TVector2f allowedMovementAxis, float allowRotation)
+		{
+			return ConstructRigidBody(parent, mass, position, angle, new Vector2f(1.0f, 1.0f), shape, new Vector3(allowedMovementAxis.X, allowedMovementAxis.Y, 0.0f), new Vector3(0.0f, 0.0f, allowRotation));
+		}
+
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, CollisionShape shape)
 		{
 			return ConstructRigidBody(parent, mass, position, angle, new Vector2f(1.0f, 1.0f), shape);
 		}
 
-		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, Vector2f scale,
-			CollisionShape shape)
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, Vector3 allowedMovementAxis, Vector3 allowedRotationAxis)
+		{
+			Matrix t = EngineMath.TransformFromPosRotScaleBt(position, angle, scale);
+			return ConstructRigidBody(parent, mass, t, shape, allowedMovementAxis, allowedRotationAxis);
+		}
+
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, TVector2f allowedMovementAxis, float allowRotation)
+		{
+			Matrix t = EngineMath.TransformFromPosRotScaleBt(position, angle, scale);
+			return ConstructRigidBody(parent, mass, t, shape, new Vector3(allowedMovementAxis.X, allowedMovementAxis.Y, 0.0f), new Vector3(0.0f, 0.0f, allowRotation));
+		}
+
+		public static RigidBody ConstructRigidBody(object parent, float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape)
 		{
 			Matrix t = EngineMath.TransformFromPosRotScaleBt(position, angle, scale);
 			return ConstructRigidBody(parent, mass, t, shape);

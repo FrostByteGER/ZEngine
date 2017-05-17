@@ -4,7 +4,7 @@ using SFML.Window;
 
 namespace SFML_Engine.Engine.IO
 {
-    public class InputManager
+    public class InputManager : ITickable
     {
 
 		public bool MouseLeftPressed { get; set; }
@@ -104,6 +104,13 @@ namespace SFML_Engine.Engine.IO
 	    public EventHandler<TouchEventArgs> TouchBegan = delegate { };
 	    public EventHandler<TouchEventArgs> TouchEnded = delegate { };
 	    public EventHandler<TouchEventArgs> TouchMoved = delegate { };
+
+	    public bool CanTick { get; set; } = true;
+
+		public virtual void Tick(float deltaTime)
+		{
+
+		}
 
 		public void RegisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
 			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
@@ -975,6 +982,5 @@ namespace SFML_Engine.Engine.IO
 			TouchMoved(sender, touchEventArgs);
 			//Console.WriteLine("Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
 		}
-
 	}
 }

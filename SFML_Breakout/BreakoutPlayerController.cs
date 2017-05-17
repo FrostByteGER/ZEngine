@@ -1,4 +1,4 @@
-﻿using SFML.Graphics;
+﻿using System;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
@@ -13,6 +13,9 @@ namespace SFML_Breakout
 		public uint Score { get; set; } = 0;
 
 		public BreakoutGameMode GameModeReference { get; set; }
+
+		public bool LeftBoundReached = false;
+		public bool RightBoundReached = false;
 
 		public BreakoutPlayerController()
 		{
@@ -40,6 +43,8 @@ namespace SFML_Breakout
 			Input.UnregisterJoystickInput(OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}
 
+
+
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
@@ -63,6 +68,20 @@ namespace SFML_Breakout
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			if (!Input.DPressed && Math.Abs(-LevelReference.LevelBounds.X - PlayerPawn.Position.X) < Math.Abs(PlayerPawn.ActorBounds.X + 10.0f) && !LeftBoundReached)
+			{
+				var phys = (CollisionComponent)PlayerPawn.RootComponent;
+				phys.CollisionBody.LinearVelocity = new TVector2f();
+				phys.CollisionBody.SetDamping(1.0f, 0.0f);
+				LeftBoundReached = true;
+			}
+			if (!Input.APressed && Math.Abs(LevelReference.LevelBounds.X - PlayerPawn.Position.X) < Math.Abs(PlayerPawn.ActorBounds.X + 10.0f) && !RightBoundReached)
+			{
+				var phys = (CollisionComponent)PlayerPawn.RootComponent;
+				phys.CollisionBody.LinearVelocity = new TVector2f();
+				phys.CollisionBody.SetDamping(1.0f, 0.0f);
+				RightBoundReached = true;
+			}
 		}
 
 		protected override void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
@@ -111,24 +130,28 @@ namespace SFML_Breakout
 
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
+			
 			base.OnKeyPressed(sender, keyEventArgs);
 			if (ID == 0)
 			{
-				if (Input.APressed)
+				if (Input.APressed && !LeftBoundReached)
 				{
+					Console.WriteLine(">>>>>>" + keyEventArgs.Code + " " + ((CollisionComponent)PlayerPawn.RootComponent).CollisionBody.LinearVelocity);
+					RightBoundReached = false;
 					var phys = (CollisionComponent)PlayerPawn.RootComponent;
-					//phys?.CollisionBody.ApplyCentralImpulse(EngineMath.Vec2fToVec3(new Vector2f(-200.0f, 0.0f)));
-					phys.CollisionBody.LinearVelocity = EngineMath.Vec2fToVec3(new Vector2f(-PlayerPawn.MaxVelocity, 0.0f));
 					phys.CollisionBody.SetDamping(0.0f, 0.0f);
+					phys.CollisionBody.LinearVelocity = new TVector2f(-PlayerPawn.MaxVelocity, 0.0f);
 				}
 
-				if (Input.DPressed)
+				if (Input.DPressed && !RightBoundReached)
 				{
+					Console.WriteLine(keyEventArgs.Code + " " + ((CollisionComponent)PlayerPawn.RootComponent).CollisionBody.LinearVelocity);
+					LeftBoundReached = false;
 					var phys = (CollisionComponent)PlayerPawn.RootComponent;
-					//phys?.CollisionBody.ApplyCentralImpulse(EngineMath.Vec2fToVec3(new Vector2f(200.0f, 0.0f)));
-					phys.CollisionBody.LinearVelocity = EngineMath.Vec2fToVec3(new Vector2f(PlayerPawn.MaxVelocity, 0.0f));
+					phys.CollisionBody.LinearVelocity = new TVector2f(PlayerPawn.MaxVelocity, 0.0f);
 					phys.CollisionBody.SetDamping(0.0f, 0.0f);
 				}
+				
 			}
 		}
 
@@ -140,11 +163,13 @@ namespace SFML_Breakout
 			{
 				if (!Input.WPressed)
 				{
+					//phys.CollisionBody.LinearVelocity = new TVector2f();
 					phys.CollisionBody.SetDamping(0.75f, 0.0f);
 				}
 
 				if (!Input.SPressed)
 				{
+					//phys.CollisionBody.LinearVelocity = new TVector2f();
 					phys.CollisionBody.SetDamping(0.75f, 0.0f);
 				}
 			}

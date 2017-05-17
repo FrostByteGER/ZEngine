@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML.Graphics;
-using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Game;
@@ -167,6 +166,7 @@ namespace SFML_Engine.Engine
 
 				// Tick Level and Actors
 				EngineCoreClock.StartUpdate();
+	            InputManager.Tick(FrameDelta);
 				ActiveLevel.LevelTick(FrameDelta);
 				EngineCoreClock.StopUpdate();
 
