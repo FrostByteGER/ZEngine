@@ -1,11 +1,9 @@
 ﻿using System;
-using BulletSharp;
 using SFML.Graphics;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
-using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout
 {

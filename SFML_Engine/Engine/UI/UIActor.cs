@@ -1,7 +1,4 @@
-﻿using System;
-using SFML.Graphics;
-
-namespace SFML_Engine.Engine.UI
+﻿namespace SFML_Engine.Engine.UI
 {
 	public class UIActor : Actor
 	{

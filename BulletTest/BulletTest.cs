@@ -1,14 +1,10 @@
 ﻿using System;
 using BulletSharp;
-using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Utility;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Factories;
-using VelcroPhysics.Utils;
 using CollisionShape = BulletSharp.CollisionShape;
 using Matrix = BulletSharp.Matrix;
 using Vector3 = BulletSharp.Vector3;
