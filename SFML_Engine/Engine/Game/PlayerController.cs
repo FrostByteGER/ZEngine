@@ -160,5 +160,20 @@ namespace SFML_Engine.Engine
 	    {
 		    
 	    }
-    }
+
+	    public void SetCameraSize(float x, float y)
+	    {
+		    PlayerCamera.Size = new Vector2f(x, y);
+	    }
+
+		public void SetCameraSize(float size)
+		{
+			PlayerCamera.Size = new Vector2f(size, size);
+		}
+
+		public void SetCameraSize(Vector2f size)
+		{
+			PlayerCamera.Size = size;
+		}
+	}
 }

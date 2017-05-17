@@ -1,6 +1,9 @@
-﻿using SFML.System;
+﻿using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Breakout
 {
@@ -10,6 +13,10 @@ namespace SFML_Breakout
 		public uint Score { get; set; } = 0;
 
 		public BreakoutGameMode GameModeReference { get; set; }
+
+		public BreakoutPlayerController()
+		{
+		}
 
 		public BreakoutPlayerController(SpriteActor playerPawn) : base(playerPawn)
 		{
@@ -109,18 +116,18 @@ namespace SFML_Breakout
 			{
 				if (Input.APressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(-500.0f, 0.0f);
-					//PlayerPawn.Move(-10.0f, 0.0f);
-					PlayerPawn.Rotate(-10.0f);
-					//PlayerPawn.ScaleActor(-0.1f,-0.1f);
+					var phys = (CollisionComponent)PlayerPawn.RootComponent;
+					//phys?.CollisionBody.ApplyCentralImpulse(EngineMath.Vec2fToVec3(new Vector2f(-200.0f, 0.0f)));
+					phys.CollisionBody.LinearVelocity = EngineMath.Vec2fToVec3(new Vector2f(-PlayerPawn.MaxVelocity, 0.0f));
+					phys.CollisionBody.SetDamping(0.0f, 0.0f);
 				}
 
 				if (Input.DPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(500.0f, 0.0f);
-					//PlayerPawn.Move(10.0f, 0.0f);
-					PlayerPawn.Rotate(10.0f);
-					//PlayerPawn.ScaleActor(0.1f, 0.1f);
+					var phys = (CollisionComponent)PlayerPawn.RootComponent;
+					//phys?.CollisionBody.ApplyCentralImpulse(EngineMath.Vec2fToVec3(new Vector2f(200.0f, 0.0f)));
+					phys.CollisionBody.LinearVelocity = EngineMath.Vec2fToVec3(new Vector2f(PlayerPawn.MaxVelocity, 0.0f));
+					phys.CollisionBody.SetDamping(0.0f, 0.0f);
 				}
 			}
 		}
@@ -128,16 +135,17 @@ namespace SFML_Breakout
 		protected override void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
 		{
 			base.OnKeyReleased(sender, keyEventArgs);
+			var phys = (CollisionComponent)PlayerPawn.RootComponent;
 			if (ID == 0)
 			{
 				if (!Input.WPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					phys.CollisionBody.SetDamping(0.75f, 0.0f);
 				}
 
 				if (!Input.SPressed)
 				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
+					phys.CollisionBody.SetDamping(0.75f, 0.0f);
 				}
 			}
 			else if (ID == 1)

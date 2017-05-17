@@ -156,7 +156,7 @@ namespace SFML_Engine.Engine
 				var physComp = (PhysicsComponent)comp;
 				if (physComp != null)
 				{
-					EngineReference.BulletPhysicsEngine.UnregisterPhysicsComponent(physComp);
+					EngineReference.PhysicsEngine.UnregisterPhysicsComponent(physComp);
 				}
 			}
 			return removal;

@@ -33,7 +33,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.CollisionResponseChannels = value;
-				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyGhostObject(OverlapBody, CollisionType, value);
+				ParentActor?.LevelReference?.EngineReference?.PhysicsEngine?.ModifyGhostObject(OverlapBody, CollisionType, value);
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.CollisionType = value;
-				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyGhostObject(OverlapBody, value, CollisionResponseChannels);
+				ParentActor?.LevelReference?.EngineReference?.PhysicsEngine?.ModifyGhostObject(OverlapBody, value, CollisionResponseChannels);
 			}
 		}
 

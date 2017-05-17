@@ -33,7 +33,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.CollisionResponseChannels = value;
-				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyRigidBody(CollisionBody, CollisionType, value);
+				ParentActor?.LevelReference?.EngineReference?.PhysicsEngine?.ModifyRigidBody(CollisionBody, CollisionType, value);
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.CollisionType = value;
-				ParentActor?.LevelReference?.EngineReference?.BulletPhysicsEngine?.ModifyRigidBody(CollisionBody, value, CollisionResponseChannels);
+				ParentActor?.LevelReference?.EngineReference?.PhysicsEngine?.ModifyRigidBody(CollisionBody, value, CollisionResponseChannels);
 			}
 		}
 

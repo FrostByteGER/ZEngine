@@ -1,9 +1,11 @@
 ﻿using System;
+using BulletSharp;
 using SFML.Graphics;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
+using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout
 {
@@ -48,8 +50,26 @@ namespace SFML_Breakout
 				Console.WriteLine("Player Score: " + ((BreakoutBall) actor).Score);
 				var newAlpha = Math.Max(0.0f, Math.Min(1.0f, (float)Hitpoints / MaxHitpoints));
 				var component = RootComponent as CollisionComponent;
-				if (component != null) component.ComponentColor = new Color(component.ComponentColor.R, component.ComponentColor.G, component.ComponentColor.B, (byte) Math.Floor(newAlpha == 1.0f ? 255 : newAlpha * 256.0f));
-				if (Hitpoints == 0) LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+				if (Hitpoints == 0)
+				{
+					//TODO
+
+					PowerUp pow;
+
+					if (EngineMath.EngineRandom.NextDouble() > 0.5)
+					{
+						pow = new PowerUpDup();
+					}
+					else
+					{
+						pow = new PowerUpInc();
+					}
+
+					//PowerUpDup pow = new PowerUpDup();
+
+					LevelReference.EngineReference.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, pow, LevelReference.LevelID)));
+					LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
+				}
 			}
 		}
 

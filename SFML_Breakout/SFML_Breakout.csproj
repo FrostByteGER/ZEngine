@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Block.cs" />
     <Compile Include="BreakoutBall.cs" />
+    <Compile Include="BreakoutCollisionTypes.cs" />
     <Compile Include="BreakoutGameInfo.cs" />
     <Compile Include="BreakoutGameMode.cs" />
     <Compile Include="BreakoutPlayerController.cs" />
@@ -93,6 +94,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameInfo.settings</DependentUpon>
     </Compile>
+    <Compile Include="PowerUp.cs" />
+    <Compile Include="PowerUpDup.cs" />
+    <Compile Include="PowerUpInc.cs" />
     <Compile Include="StartBreakout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

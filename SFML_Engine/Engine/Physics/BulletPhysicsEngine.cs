@@ -44,7 +44,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <summary>
 		/// Restrict rotation to given axis. Default is Z.
 		/// </summary>
-		public static Vector3 AllowedRotationAxis { get; set; } = new Vector3(0, 0, 1);
+		public static Vector3 AllowedRotationAxis { get; set; } = new Vector3(0, 0, 0);
 
 		public BulletPhysicsEngine(Vector2f gravity)
 		{
@@ -219,11 +219,11 @@ namespace SFML_Engine.Engine.Physics
 			UnregisterCollisionObject(comp.CollisionObject);
 		}
 
-		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType, short collisionResponseChannels)
 		{
 			var comp = new CollisionComponent();
-			comp.CollisionType = (short)collisionType;
-			comp.CollisionResponseChannels = (short) collisionResponseChannels;
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -232,10 +232,10 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType)
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType)
 		{
 			var comp = new CollisionComponent();
-			comp.CollisionType = (short) collisionType;
+			comp.CollisionType = collisionType;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, scale, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -255,11 +255,11 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType, short collisionResponseChannels)
 		{
 			var comp = new CollisionComponent();
-			comp.CollisionType = (short)collisionType;
-			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -267,10 +267,10 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType)
+		public CollisionComponent ConstructCollisionComponent(float mass, Vector2f position, float angle, CollisionShape shape, short collisionType)
 		{
 			var comp = new CollisionComponent();
-			comp.CollisionType = (short)collisionType;
+			comp.CollisionType = collisionType;
 			comp.CollisionObject = ConstructRigidBody(comp, mass, position, angle, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -288,11 +288,11 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType, short collisionResponseChannels)
 		{
 			var comp = new OverlapComponent();
-			comp.CollisionType = (short)collisionType;
-			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -301,10 +301,10 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, CollisionTypes collisionType)
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, Vector2f scale, CollisionShape shape, short collisionType)
 		{
 			var comp = new OverlapComponent();
-			comp.CollisionType = (short)collisionType;
+			comp.CollisionType = collisionType;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, scale, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -324,11 +324,11 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType, CollisionTypes collisionResponseChannels)
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, short collisionType, short collisionResponseChannels)
 		{
 			var comp = new OverlapComponent();
-			comp.CollisionType = (short)collisionType;
-			comp.CollisionResponseChannels = (short)collisionResponseChannels;
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
@@ -336,10 +336,10 @@ namespace SFML_Engine.Engine.Physics
 			return comp;
 		}
 
-		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, CollisionTypes collisionType)
+		public OverlapComponent ConstructOverlapComponent(Vector2f position, float angle, CollisionShape shape, short collisionType)
 		{
 			var comp = new OverlapComponent();
-			comp.CollisionType = (short)collisionType;
+			comp.CollisionType = collisionType;
 			comp.CollisionObject = ConstructOverlapBody(comp, position, angle, shape);
 			comp.MoveAbsolute(position);
 			comp.RotateAbsolute(angle);
