@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using System.Numerics;
 using SFML.Graphics;
-using SFML.System;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine
 {
 	public class ActorComponent : ITickable, ITransformable, Drawable, IDestroyable
 	{
-
 		public uint ComponentID { get; internal set; } = 0;
 		public string ComponentName { get; set; } = "Component";
 		public Actor ParentActor { get; set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
-
 
 		//TODO: Implement
 		public ActorComponent ParentComponent { get; set; } = null;
@@ -31,9 +29,9 @@ namespace SFML_Engine.Engine
 		{
 			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);
 		}
-		
 
-	public void SwapParentActor(Actor newParent)
+
+		public void SwapParentActor(Actor newParent)
 		{
 			if (ParentActor == null || newParent == null) return;
 			if (IsRootComponent)
@@ -47,13 +45,13 @@ namespace SFML_Engine.Engine
 			newParent.AddComponent(this);
 		}
 
-		public virtual Vector2f Position
+		public virtual TVector2f Position
 		{
-			get => IsRootComponent ? Transform.Position : ParentActor.Position + Transform.Position;
+			get => IsRootComponent ? (TVector2f)Transform.Position : ParentActor.Position + Transform.Position;
 			set => Transform.Position = value;
 		}
 
-		public virtual Vector2f LocalPosition
+		public virtual TVector2f LocalPosition
 		{
 			get => Transform.Position;
 			set => Transform.Position = value;
@@ -71,28 +69,35 @@ namespace SFML_Engine.Engine
 			set => Transform.Rotation = value;
 		}
 
-		public virtual Vector2f Scale
+		public virtual TVector2f Scale
 		{
-			get => IsRootComponent ? Transform.Scale : new Vector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
+			get => IsRootComponent ? (TVector2f)Transform.Scale : new TVector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
 			set => Transform.Scale = value;
 		}
 
-		public virtual Vector2f LocalScale
+		public virtual TVector2f LocalScale
 		{
 			get => Transform.Scale;
 			set => Transform.Scale = value;
 		}
 
-		public virtual Vector2f Origin
+		public virtual TVector2f Origin
 		{
-			get => IsRootComponent ? Transform.Origin : ParentActor.Origin;
+			get => IsRootComponent ? (TVector2f)Transform.Origin : ParentActor.Origin;
 			set => Transform.Origin = value;
 		}
 
-		public virtual Vector2f LocalOrigin
+		public virtual TVector2f LocalOrigin
 		{
 			get => Transform.Origin;
 			set => Transform.Origin = value;
+		}
+
+		private TVector2f componentBounds;
+		public virtual TVector2f ComponentBounds
+		{
+			get => IsRootComponent ? componentBounds : ParentActor.ActorBounds;
+			set => componentBounds = value;
 		}
 
 		public Transformable ComponentTransform { get; set; } = new Transformable();
@@ -106,20 +111,20 @@ namespace SFML_Engine.Engine
 
 		public virtual void Move(float x, float y)
 		{
-			LocalPosition += new Vector2f(x, y);
+			LocalPosition += new TVector2f(x, y);
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			Position = new Vector2f(x, y);
+			Position = new TVector2f(x, y);
 		}
 
-		public virtual void Move(Vector2f position)
+		public virtual void Move(TVector2f position)
 		{
 			LocalPosition += position;
 		}
 
-		public void MoveAbsolute(Vector2f position)
+		public void MoveAbsolute(TVector2f position)
 		{
 			Position = position;
 		}
@@ -146,20 +151,20 @@ namespace SFML_Engine.Engine
 
 		public void ScaleActor(float x, float y)
 		{
-			Scale += new Vector2f(x, y);
+			Scale += new TVector2f(x, y);
 		}
 
-		public void ScaleActor(Vector2f scale)
+		public void ScaleActor(TVector2f scale)
 		{
 			Scale += scale;
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			Scale = new Vector2f(x, y);
+			Scale = new TVector2f(x, y);
 		}
 
-		public void ScaleAbsolute(Vector2f scale)
+		public void ScaleAbsolute(TVector2f scale)
 		{
 			Scale = scale;
 		}

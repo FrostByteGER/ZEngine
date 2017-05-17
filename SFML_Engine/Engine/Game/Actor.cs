@@ -1,10 +1,9 @@
 ﻿using SFML.Graphics;
-using SFML.System;
 using SFML_Engine.Engine.Physics;
 using System;
 using System.Collections.Generic;
 using BulletSharp;
-using SFML;
+using SFML_Engine.Engine.Utility;
 using Quaternion = System.Numerics.Quaternion;
 
 namespace SFML_Engine.Engine
@@ -17,11 +16,16 @@ namespace SFML_Engine.Engine
 		public uint LayerID { get; set; } = 1;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
-		public FloatRect ActorBounds { get; set; } = new FloatRect();
+		public TVector2f ActorBounds
+		{
+			get => RootComponent.ComponentBounds;
+			set => RootComponent.ComponentBounds = value;
+		}
+
 		public bool Movable { get; set; } = true;
-		public Vector2f Velocity { get; set; }
+		public TVector2f Velocity { get; set; }
 		public float MaxVelocity { get; set; } = -1.0f;
-		public Vector2f Acceleration { get; set; }
+		public TVector2f Acceleration { get; set; }
 		public float MaxAcceleration { get; set; } = -1f;
 
 		public float Friction = 0.0f;
@@ -48,7 +52,7 @@ namespace SFML_Engine.Engine
 			}
 		}
 
-		public Vector2f Position
+		public TVector2f Position
 		{
 			get => RootComponent.Position;
 			set => RootComponent.Position = value;
@@ -60,13 +64,13 @@ namespace SFML_Engine.Engine
 			set => RootComponent.Rotation = value;
 		}
 
-		public Vector2f Scale
+		public TVector2f Scale
 		{
 			get => RootComponent.Scale;
 			set => RootComponent.Scale = value;
 		}
 
-		public Vector2f Origin
+		public TVector2f Origin
 		{
 			get => RootComponent.Origin;
 			set => RootComponent.Origin = value;
@@ -79,20 +83,20 @@ namespace SFML_Engine.Engine
 
 		public virtual void Move(float x, float y)
 		{
-			RootComponent.Move(new Vector2f(x, y));
+			RootComponent.Move(new TVector2f(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			RootComponent.MoveAbsolute(new Vector2f(x, y));
+			RootComponent.MoveAbsolute(new TVector2f(x, y));
 		}
 
-		public virtual void Move(Vector2f position)
+		public virtual void Move(TVector2f position)
 		{
 			RootComponent.Move(position);
 		}
 
-		public void MoveAbsolute(Vector2f position)
+		public void MoveAbsolute(TVector2f position)
 		{
 			RootComponent.MoveAbsolute(position);
 		}
@@ -119,20 +123,20 @@ namespace SFML_Engine.Engine
 
 		public void ScaleActor(float x, float y)
 		{
-			RootComponent.ScaleActor(new Vector2f(x, y));
+			RootComponent.ScaleActor(new TVector2f(x, y));
 		}
 
-		public void ScaleActor(Vector2f scale)
+		public void ScaleActor(TVector2f scale)
 		{
 			RootComponent.ScaleActor(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			RootComponent.ScaleAbsolute(new Vector2f(x, y));
+			RootComponent.ScaleAbsolute(new TVector2f(x, y));
 		}
 
-		public void ScaleAbsolute(Vector2f scale)
+		public void ScaleAbsolute(TVector2f scale)
 		{
 			RootComponent.ScaleAbsolute(scale);
 		}
@@ -271,7 +275,7 @@ namespace SFML_Engine.Engine
 
 		public ActorInformation GenerateActorInformation()
 		{
-			return new ActorInformation(ActorID, LevelID, RootComponent.Position, RootComponent.Rotation, RootComponent.Scale, new Vector2f(), Movable, Velocity, MaxVelocity,
+			return new ActorInformation(ActorID, LevelID, RootComponent.Position, RootComponent.Rotation, RootComponent.Scale, new TVector2f(), Movable, Velocity, MaxVelocity,
 				Acceleration, MaxAcceleration, Mass, Friction, HasGravity);
 		}
 

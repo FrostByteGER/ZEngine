@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine
 {
@@ -171,7 +172,7 @@ namespace SFML_Engine.Engine
 			PlayerCamera.Size = new Vector2f(size, size);
 		}
 
-		public void SetCameraSize(Vector2f size)
+		public void SetCameraSize(TVector2f size)
 		{
 			PlayerCamera.Size = size;
 		}

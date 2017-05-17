@@ -13,7 +13,7 @@ namespace SFML_Engine.Engine.Physics
 			(byte) EngineMath.EngineRandom.Next(255), (byte) EngineMath.EngineRandom.Next(255));
 
 		public virtual CollisionObject CollisionObject { get; set; }
-		public abstract Vector2f CollisionBounds { get; }
+		public abstract TVector2f CollisionBounds { get; }
 
 		public virtual short CollisionResponseChannels { get; set; } = Convert.ToInt16(CollisionTypes.All);
 		public virtual short CollisionType { get; set; } = Convert.ToInt16(CollisionTypes.None);
@@ -34,6 +34,12 @@ namespace SFML_Engine.Engine.Physics
 					ManifoldPoint.ContactAdded -= OnCollide;
 				}
 			}
+		}
+
+		public override TVector2f ComponentBounds
+		{
+			get => CollisionBounds;
+			set { } // Since CollisionBounds are computed and handled by Bullet, we will do nothing here.
 		}
 
 		public virtual void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1, CollisionObjectWrapper collider2, int partId2, int index2)

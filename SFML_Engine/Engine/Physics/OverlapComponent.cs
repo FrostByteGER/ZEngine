@@ -47,29 +47,29 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public override Vector2f CollisionBounds
+		public override TVector2f CollisionBounds
 		{
 			get
 			{
 				var boxShape = OverlapBody.CollisionShape as BoxShape;
-				if (boxShape != null) return EngineMath.Vec3ToVec2f(boxShape.HalfExtentsWithoutMargin);
+				if (boxShape != null) return boxShape.HalfExtentsWithoutMargin;
 
 				var sphereShape = OverlapBody.CollisionShape as SphereShape;
-				if (sphereShape != null) return new Vector2f(sphereShape.Radius, sphereShape.Radius);
+				if (sphereShape != null) return new TVector2f(sphereShape.Radius, sphereShape.Radius);
 
 				//TODO: Do check
-				return new Vector2f();
+				return new TVector2f();
 			}
 		}
 
-		public override Vector2f Position
+		public override TVector2f Position
 		{
 			get => base.Position;
 			set
 			{
 				base.Position = value;
 				var transform = OverlapBody.WorldTransform;
-				transform.Origin = EngineMath.Vec2fToVec3(value);
+				transform.Origin = value;
 				OverlapBody.WorldTransform = transform;
 			}
 		}

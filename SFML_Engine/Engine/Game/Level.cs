@@ -22,7 +22,7 @@ namespace SFML_Engine.Engine
 		/// <summary>
 		/// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
 		/// </summary>
-	    public Vector2f LevelBounds { get; set; } = new Vector2f(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
+	    public TVector2f LevelBounds { get; set; } = new TVector2f(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
 
 		/// <summary>
 		/// Dummy Object for efficient Collision Debug Drawing.

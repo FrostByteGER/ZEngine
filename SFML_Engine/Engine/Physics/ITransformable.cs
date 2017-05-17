@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using SFML.Graphics;
-using SFML.System;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
 {
@@ -11,8 +11,8 @@ namespace SFML_Engine.Engine.Physics
 
 	    void Move(float x, float y);
 	    void MoveAbsolute(float x, float y);
-	    void Move(Vector2f position);
-	    void MoveAbsolute(Vector2f position);
+	    void Move(TVector2f position);
+	    void MoveAbsolute(TVector2f position);
 
 		void Rotate(float angle);
 	    void Rotate(Quaternion angle);
@@ -20,9 +20,9 @@ namespace SFML_Engine.Engine.Physics
 	    void RotateAbsolute(Quaternion angle);
 
 		void ScaleActor(float x, float y);
-	    void ScaleActor(Vector2f scale);
+	    void ScaleActor(TVector2f scale);
 		void ScaleAbsolute(float x, float y);
-		void ScaleAbsolute(Vector2f scale);
+		void ScaleAbsolute(TVector2f scale);
 
 	}
 }
