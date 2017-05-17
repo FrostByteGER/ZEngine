@@ -477,7 +477,6 @@ namespace SFML_Engine.Engine.Physics
 			bool isDynamic = Math.Abs(mass) > 0.00001f;
 			var localInertia = Vector3.Zero;
 			if (isDynamic) shape.CalculateLocalInertia(mass, out localInertia);
-
 			// using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 			var myMotionState = new DefaultMotionState(startTransform);
 

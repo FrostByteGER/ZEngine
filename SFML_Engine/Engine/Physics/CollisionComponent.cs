@@ -52,7 +52,7 @@ namespace SFML_Engine.Engine.Physics
 			get
 			{
 				var boxShape = CollisionBody.CollisionShape as BoxShape;
-				if (boxShape != null) return boxShape.HalfExtentsWithoutMargin;
+				if (boxShape != null) return boxShape.HalfExtentsWithMargin;
 
 				var sphereShape = CollisionBody.CollisionShape as SphereShape;
 				if (sphereShape != null) return new TVector2f(sphereShape.Radius, sphereShape.Radius);

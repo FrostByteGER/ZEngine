@@ -1,4 +1,5 @@
 ﻿using System;
+using BulletSharp;
 using SFML.Graphics;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
@@ -35,6 +36,17 @@ namespace SFML_Breakout
 		{
 			base.Tick(deltaTime);
 		}
+
+		public override void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1,
+			CollisionObjectWrapper collider2, int partId2, int index2)
+		{
+			if (((ActorComponent)collider2.CollisionObject.UserObject).ParentActor != this) return;
+			if (!(((ActorComponent)collider1.CollisionObject.UserObject).ParentActor is BreakoutBall)) return;
+			Console.WriteLine((ActorComponent)collider1.CollisionObject.UserObject + " "+ (ActorComponent)collider2.CollisionObject.UserObject);
+
+			LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, ((ActorComponent)collider2.CollisionObject.UserObject).ParentActor)));
+		}
+
 
 		public override void AfterCollision(Actor actor)
 		{

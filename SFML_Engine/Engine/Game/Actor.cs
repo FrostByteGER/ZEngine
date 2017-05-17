@@ -180,6 +180,16 @@ namespace SFML_Engine.Engine
 			return (int) ActorID;
 		}
 
+		public static bool operator ==(Actor left, Actor right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(Actor left, Actor right)
+		{
+			return !Equals(left, right);
+		}
+
 		public virtual void OnGameStart()
 		{
 		}

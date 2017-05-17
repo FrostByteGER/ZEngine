@@ -198,5 +198,33 @@ namespace SFML_Engine.Engine
 		{
 			return ParentActor + "|" + ComponentName + "-" + ComponentID;
 		}
+
+		protected bool Equals(ActorComponent other)
+		{
+			return ComponentID == other.ComponentID;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((ActorComponent) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return (int) ComponentID;
+		}
+
+		public static bool operator ==(ActorComponent left, ActorComponent right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(ActorComponent left, ActorComponent right)
+		{
+			return !Equals(left, right);
+		}
 	}
 }
