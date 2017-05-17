@@ -138,7 +138,7 @@ namespace SFML_Engine.Engine
 	        ++ActorIDCounter;
 	        actor.LevelID = LevelID;
 	        actor.LevelReference = this;
-			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
+			Console.WriteLine("Trying to register Actor: " + actor);
 	        foreach (var component in actor.Components)
 	        {
 		        RegisterActorComponent(component);
@@ -148,7 +148,7 @@ namespace SFML_Engine.Engine
 
 		public bool UnregisterActor(Actor actor)
 		{
-			Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
+			Console.WriteLine("Trying to remove Actor: " + actor);
 			actor.OnActorDestroy();
 			var removal = Actors.Remove(actor);
 			foreach (var comp in actor.Components)
@@ -173,7 +173,7 @@ namespace SFML_Engine.Engine
 		{
 			component.ComponentID = ActorIDCounter;
 			++ActorIDCounter;
-			Console.WriteLine("Trying to register ActorComponent: " + component.ComponentName + "-" + component.ComponentID);
+			Console.WriteLine("Trying to register ActorComponent: " + component);
 		}
 
 		public virtual void OnGameStart()

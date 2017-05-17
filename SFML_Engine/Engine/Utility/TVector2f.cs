@@ -444,5 +444,10 @@ namespace SFML_Engine.Engine.Utility
 		{
 			return a.X <= b.X && a.Y <= b.Y;
 		}
+
+		public override string ToString()
+		{
+			return "[X: " + X + " | Y: " + Y + "]";
+		}
 	}
 }

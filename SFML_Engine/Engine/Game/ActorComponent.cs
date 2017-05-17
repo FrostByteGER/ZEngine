@@ -196,7 +196,7 @@ namespace SFML_Engine.Engine
 
 		public override string ToString()
 		{
-			return ComponentName + "-" + ComponentID;
+			return ParentActor + "|" + ComponentName + "-" + ComponentID;
 		}
 	}
 }
