@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using System;
+using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 
@@ -36,11 +37,13 @@ namespace SFML_Breakout
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
-			var mode = LevelReference.GameMode as BreakoutGameMode;
+			var mode = (BreakoutGameMode)LevelReference.GameMode;
 			if (mode != null)
 			{
 				GameModeReference = mode;
 			}
+			var pawn = (SpriteActor)PlayerPawn;
+			//pawn.PCReference = this;
 		}
 
 		public override void OnGamePause()
@@ -56,6 +59,7 @@ namespace SFML_Breakout
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			Console.WriteLine(Score);
 		}
 
 		protected override void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)

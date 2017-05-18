@@ -9,9 +9,11 @@ namespace SFML_Breakout
 {
 	public class BreakoutBall : SpriteActor
 	{
-		public uint Score { get; set; } = 0;
+
 		public Actor LastPlayerCollision { get; set; }
 		public BreakoutGameMode GameModeReference { get; set; }
+
+		public BreakoutPlayerController PCReference { get; set; }
 
 		public BreakoutBall()
 		{

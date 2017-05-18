@@ -46,11 +46,9 @@ namespace SFML_Breakout
 
 				//TODO Score
 				--Hitpoints;
-				
-				
-				((BreakoutBall)actor).Score += Score;
-				Console.WriteLine("Player Score: " + ((BreakoutBall)actor).Score);
-				
+
+
+				((BreakoutGameMode) LevelReference.GameMode).Player.Score += Score;				
 				
 
 				var newAlpha = Math.Max(0.0f, Math.Min(1.0f, (float)Hitpoints / MaxHitpoints));

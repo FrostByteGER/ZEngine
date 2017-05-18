@@ -9,6 +9,19 @@ namespace SFML_Breakout
 	{
 		private List<PowerUp> PowerUps { get; set; } = new List<PowerUp>();
 
+		public BreakoutPlayerController Player { get; set; }
+
+		public override void Tick(float deltaTime)
+		{
+			base.Tick(deltaTime);
+		}
+
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+			Player = (BreakoutPlayerController) LevelReference.FindPlayer(0);
+		}
+
 		public void AddPowerUp(PowerUp pu)
 		{
 			if (!PowerUps.Contains(pu))
