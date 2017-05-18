@@ -236,6 +236,8 @@ namespace SFML_Engine.Engine.Physics
 											{
 												activeActor.BeforeCollision(passiveActor);
 
+												Console.WriteLine(groupNameActive+" "+groupNamePassive);
+
 												if (sphereActor.Velocity.Y < 0)
 												{
 													sphereActor.Velocity = new Vector2f(sphereActor.Velocity.X, -sphereActor.Velocity.Y + boxActor.Velocity.Y);
@@ -257,21 +259,27 @@ namespace SFML_Engine.Engine.Physics
 									else if ((sphere.CollisionBounds.X / 2) * (sphere.CollisionBounds.X / 2) > distanceX * distanceX + distanceY * distanceY)
 									{
 
-										activeActor.IsOverlapping(passiveActor);
+										if (CollidablePartner.ContainsKey(groupNameActive))
+										{
+											if (CollidablePartner[groupNameActive].Contains(groupNamePassive))
+											{
 
-										double normTempX = distanceX / (Math.Abs(distanceX) + Math.Abs(distanceY));
-										double normTempY = distanceY / (Math.Abs(distanceX) + Math.Abs(distanceY));
+												activeActor.IsOverlapping(passiveActor);
 
-										//dumb Temp
+												double normTempX = distanceX / (Math.Abs(distanceX) + Math.Abs(distanceY));
+												double normTempY = distanceY / (Math.Abs(distanceX) + Math.Abs(distanceY));
 
-										activeActor.BeforeCollision(passiveActor);
+												//dumb Temp
 
-										float sphereSpeed = Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y);// + Math.Abs(boxActor.Velocity.X) + Math.Abs(boxActor.Velocity.Y);
+												activeActor.BeforeCollision(passiveActor);
 
-										sphereActor.Velocity = new Vector2f((float)normTempX * sphereSpeed, (float)normTempY * sphereSpeed);
+												float sphereSpeed = Math.Abs(sphereActor.Velocity.X) + Math.Abs(sphereActor.Velocity.Y);// + Math.Abs(boxActor.Velocity.X) + Math.Abs(boxActor.Velocity.Y);
 
-										activeActor.AfterCollision(passiveActor);
+												sphereActor.Velocity = new Vector2f((float)normTempX * sphereSpeed, (float)normTempY * sphereSpeed);
 
+												activeActor.AfterCollision(passiveActor);
+											}
+										}
 									}
 								}
 
@@ -608,14 +616,28 @@ namespace SFML_Engine.Engine.Physics
 
 		public bool RemoveCollidablePartner(string activ, string passive)
 		{
-			if (!CollidablePartner.ContainsKey(activ))
+			if (CollidablePartner.ContainsKey(activ))
 			{
 				if (!CollidablePartner[activ].Contains(passive))
 				{
 					return true;
 				}
-				RemoveCollidablePartner(activ, passive);
-				return CollidablePartner[activ].Remove(passive);
+
+				Console.Write(activ );
+
+				foreach (String s in CollidablePartner[activ])
+				{
+					Console.Write(s + " ");
+				}
+
+				CollidablePartner[activ].Remove(passive);
+
+				foreach (String s in CollidablePartner[activ])
+				{
+					Console.Write(s+" ");
+				}
+
+				return true;
 			}
 			return true;
 		}

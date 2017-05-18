@@ -16,6 +16,8 @@ namespace SFML_Breakout
 
 		public BreakoutPlayerController PCReference { get; set; }
 
+		public bool fire { get; set; }
+
 		public BreakoutBall()
 		{
 		}
@@ -101,9 +103,6 @@ namespace SFML_Breakout
 
 		public override void IsOverlapping(Actor actor)
 		{
-
-
-
 		}
 	}
 }

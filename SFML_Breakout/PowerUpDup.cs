@@ -15,7 +15,7 @@ namespace SFML_Breakout
 
 		public PowerUpDup()
 		{
-			CollisionShape.CollisionShapeColor = new SFML.Graphics.Color(0, 255, 0);
+			CollisionShape.CollisionShapeColor = new SFML.Graphics.Color(255, 0, 255);
 		}
 
 		public PowerUpDup(PowerUpDup p)

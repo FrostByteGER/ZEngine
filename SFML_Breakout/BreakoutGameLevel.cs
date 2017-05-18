@@ -79,6 +79,8 @@ namespace SFML_Breakout
 			gameMode.AddPowerUp(new PowerUpPadSizeInc());
 			gameMode.AddPowerUp(new PuwerUpPadSizeDec());
 			gameMode.AddPowerUp(new PowerUpBullets());
+			gameMode.AddPowerUp(new PowerUpPunchThrow());
+			gameMode.AddPowerUp(new PowerUpFireBall());
 			gameMode.Balls.Add(mainBall);
 			gameMode.Blocks = Blocks;
 

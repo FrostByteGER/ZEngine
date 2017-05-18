@@ -42,11 +42,16 @@ namespace SFML_Breakout
 			if (actor is BreakoutBall || actor is Bullet)
 			{
 				if(actor is Bullet) LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor)));
-				if (Invincible) return;
 
-				//TODO Score
-				Hitpoints = (--Hitpoints).Clamp<uint>(0, uint.MaxValue);
-
+				if (!((BreakoutBall) actor).fire)
+				{
+					if (Invincible) return;
+					Hitpoints = (--Hitpoints).Clamp<uint>(0, uint.MaxValue);
+				}
+				else
+				{
+					Hitpoints = 0;
+				}
 
 				((BreakoutGameMode)LevelReference.GameMode).Player.Score += Score;
 
