@@ -20,6 +20,8 @@ namespace SFML_Engine.Engine
 
 	    public GameInfo GameInfo { get; set; } = new GameInfo();
 
+	    public PersistentGameMode PersistentGameMode { get; set; } = new PersistentGameMode();
+
 	    public uint EngineWindowHeight { get; set; }
         public uint EngineWindowWidth { get; set; }
 		private RenderWindow engineWindow;
@@ -30,10 +32,18 @@ namespace SFML_Engine.Engine
 	        private set => engineWindow = value;
         }
 
+		public PhysicsEngine PhysicsEngine { get; private set; }
+
+
+		public bool EngineTicking { get; private set; } = false;
         public Clock EngineClock { get; private set; }
         public Clock EngineLoopClock { get; private set; }
         public Clock FPSClock { get; private set; }
-        public Time DeltaTime { get; private set; }
+
+		private double Accumulator { get; set; } = 0.0;
+		private double EngineTime { get; set; }= 0.0;
+		private Time CurrentTime { get; set; }
+		public Time DeltaTime { get; private set; }
 	    public float Timestep { get; set; } = 1.0f / 100.0f;
 
 		private Time FPSStartTime { get; set; }
@@ -51,14 +61,13 @@ namespace SFML_Engine.Engine
         public List<Level> Levels { get; private set; } = new List<Level>();
 	    public Level ActiveLevel { get; internal set; }
 
-	    public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
-        public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
+		public AssetManager AssetManager { get; set; }
 
 	    public Queue<EngineEvent> EngineEvents { get; private set; } = new Queue<EngineEvent>();
 
-	    public uint ActorIDCounter { get; set; } = 0;
-		public uint LevelIDCounter { get; set; } = 0;
+		public uint LevelIDCounter { get; private set; } = 0;
+	    public uint EventIDCounter { get; private set; } = 0;
 
 	    public uint DepthBufferSize { get; internal set; } = 24;
 	    public uint StencilBufferSize { get; internal set; } = 8;
@@ -68,19 +77,13 @@ namespace SFML_Engine.Engine
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
 	    public ContextSettings.Attribute OpenGLVersion = ContextSettings.Attribute.Default;
 
-	    public uint GlobalVolume { get; set; } = 10;
+	    public uint GlobalVolume { get; set; } = 50;
 
 
 	    private Engine()
 	    {
 		    
 	    }
-
-        public void StartEngine()
-        {
-            Console.WriteLine("Starting Engine!");
-            InitEngineLoop();
-        }
 
         public void InitEngine()
         {
@@ -91,63 +94,54 @@ namespace SFML_Engine.Engine
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			engineWindow.SetFramerateLimit(FPSLimit);
 			engineWindow.SetKeyRepeatEnabled(true);
-
-            PhysicsEngine = new PhysicsEngine();
+	        PhysicsEngine = new PhysicsEngine();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref engineWindow);
 
         }
 
-        private void InitEngineLoop()
+		public void StartEngine()
+		{
+			Console.WriteLine("Starting Engine!");
+			InitEngineLoop();
+		}
+
+		private void InitEngineLoop()
         {
             engineWindow.SetActive();
-
-            while (engineWindow.IsOpen)
-            {
-                break;
-            }
-	        if (ActiveLevel == null)
+			FPSClock = new Clock();
+			EngineLoopClock = new Clock();
+			FPSStartTime = Time.Zero;
+			FPSPassedTime = Time.Zero;
+			CurrentTime = Time.Zero;
+			if (ActiveLevel == null)
 	        {
-		        Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
-		        return;
+		        if (Levels.Count == 0)
+		        {
+					Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
+					return;
+				}
+		        LoadLevel(Levels[0]);
+
 	        }
-            EngineTick();
+	        EngineTicking = true;
+			EngineTick();
         }
 
         private void EngineTick()
         {
-            FPSClock = new Clock();
-            EngineLoopClock = new Clock();
-
-            
-            double accumulator = 0.0;
-            double time = 0.0;
-            Time currentTime = Time.Zero;
-            FPSStartTime = Time.Zero;
-            FPSPassedTime = Time.Zero;
-	        /*foreach (var level in Levels)
-	        {
-		        level.OnGameStart();
-		        level.LevelTicking = true;
-	        }*/
-	        ActiveLevel.OnGameStart();
-	        foreach (var pc in Players)
-	        {
-				if (!pc.IsActive) continue;
-				pc.OnGameStart();
-	        }
 	        FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
             {
 
                 Time newTime = EngineLoopClock.ElapsedTime;
-                DeltaTime = newTime - currentTime;
-                currentTime = newTime;
+                DeltaTime = newTime - CurrentTime;
+                CurrentTime = newTime;
 
 
 
-                accumulator += DeltaTime.AsSeconds();
+                Accumulator += DeltaTime.AsSeconds();
 
                 FPSPassedTime = FPSClock.ElapsedTime;
 
@@ -157,12 +151,12 @@ namespace SFML_Engine.Engine
 				if ((FPSPassedTime - FPSStartTime).AsSeconds() > FPSUpdateValue && FramesRendered > 10)
                 {
                     FPSStartTime = FPSPassedTime;
-					engineWindow.SetTitle(GameInfo.GameFullName + " | Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + currentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(FPS));
+					engineWindow.SetTitle(GameInfo.GameFullName + " | Delta: " + DeltaTime.AsSeconds() + " Current Time: " + newTime.AsSeconds() + " Previous Time: " + CurrentTime.AsSeconds() + " Frames Rendered: " + FramesRendered + " FPS: " + Convert.ToUInt32(FPS));
 
 					FramesRendered = 0;
                 }
-	            var test = 1;
-				while (accumulator >= Timestep)
+
+				while (Accumulator >= Timestep)
                 {
 					//Console.WriteLine("Engine Tick!");
 	                if (!ActiveLevel.LevelTicking)
@@ -170,40 +164,16 @@ namespace SFML_Engine.Engine
 		                continue;
 	                }
 					var actors = ActiveLevel.Actors;
-					PhysicsEngine.PhysicsTick(Timestep, ref actors);
+	                PhysicsEngine.PhysicsTick(Timestep, ref actors);
 	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
-	                foreach (var pc in Players)
-	                {
-		                if (!pc.IsActive) continue;
-		                pc.Tick(DeltaTime.AsSeconds());
-	                }
-
-					//TODO: Remove
-					/*foreach (var level in Levels)
-                    {
-	                    if (!level.LevelTicking)
-	                    {
-		                    continue;
-	                    }
-                        var actors = level.Actors;
-                        PhysicsEngine.PhysicsTick(Timestep, ref actors);
-                        level.LevelTick(DeltaTime.AsSeconds());
-                    }*/
-					time += Timestep;
-                    accumulator -= Timestep;
-					//Console.WriteLine(test);
-	                //++test;
+					EngineTime += Timestep;
+                    Accumulator -= Timestep;
                 }
 
                 engineWindow.Clear();
                 engineWindow.DispatchEvents();
 
 	            ActiveLevel.LevelDraw(ref engineWindow);
-				//TODO: Remove
-                /*foreach (var level in Levels)
-                {
-                    level.LevelDraw(ref engineWindow);
-                }*/
                 engineWindow.Display();
 
 				// Execute all pending events in the Queue
@@ -217,15 +187,7 @@ namespace SFML_Engine.Engine
 				}
                 FramesRendered++;
             }
-			foreach (var pc in Players)
-			{
-				pc.OnGameEnd();
-			}
-
-			foreach (var level in Levels)
-	        {
-		        level.OnGameEnd();
-	        }
+		    ActiveLevel.OnGameEnd();
 			ShutdownEngine();
         }
 
@@ -235,6 +197,7 @@ namespace SFML_Engine.Engine
 	        PhysicsEngine.Shutdown();
 			foreach (var level in Levels)
 			{
+
 				level.CollisionCircle.Dispose();
 				level.CollisionRectangle.Dispose();
 				foreach (var actor in level.Actors)
@@ -273,12 +236,21 @@ namespace SFML_Engine.Engine
 
         public void RegisterLevel(Level level)
         {
+	        if (Levels.Contains(level)) return;
             level.EngineReference = this;
 			level.LevelID = ++LevelIDCounter;
 			Levels.Add(level);
         }
 
-	    public bool UnregisterLevel(Level level)
+		public void RegisterLevels(List<Level> levels)
+		{
+			foreach (var level in levels)
+			{
+				RegisterLevel(level);
+			}
+		}
+
+		public bool UnregisterLevel(Level level)
 	    {
 		    return Levels.Remove(level);
 	    }
@@ -298,53 +270,29 @@ namespace SFML_Engine.Engine
 		public bool LoadLevel(Level level)
 		{
 			if (level == null) return false;
-			if (level.LevelID > 0)
+			if (level.LevelID > 0 && level != ActiveLevel)
 			{
 				ActiveLevel?.OnGameEnd();
+				ActiveLevel?.ShutdownLevel();
 				ActiveLevel = level;
+				level.InitLevel();
 				level.OnLevelLoad();
 				level.LevelTicking = true;
 				return true;
+			}
+			if (level == ActiveLevel)
+			{
+				return false;
 			}
 			RegisterLevel(level);
 			return LoadLevel(level);
 		}
 
-		public void RegisterPlayer(PlayerController pc)
-        {
-            Players.Add(pc);
-            pc.ID = (uint) Players.Count - 1;
-	        if (!pc.IsActive) return;
-			pc.RegisterInput(this);
-			if (pc.ID == 0) //TODO: Remove
-            {
-                //pc.RegisterInput(this);
-            }
-        }
-
-		public bool UnregisterPlayer(PlayerController pc)
-		{
-			Console.WriteLine("Trying to remove Player with PlayerID: #" + pc.ID);
-			pc.UnregisterInput(this);
-			return Players.Remove(pc);
-		}
-
-		public bool UnregisterPlayer(uint playerID)
-		{
-
-			Console.WriteLine("Trying to remove Player with PlayerID: #" + playerID);
-			var player = FindPlayer(playerID);
-			return UnregisterPlayer(player);
-		}
-
-	    public PlayerController FindPlayer(uint playerID)
-	    {
-			return Players.Find(x => x.ID == playerID);
-		}
-
 		public void RegisterEvent(EngineEvent e)
-	    {
-		    EngineEvents.Enqueue(e);
+		{
+			if (EngineEvents.Contains(e)) return;
+			e.EventID = ++EventIDCounter;
+			EngineEvents.Enqueue(e);
 	    }
 
 		public Level FindLevel(uint id)

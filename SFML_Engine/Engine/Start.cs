@@ -18,8 +18,8 @@ namespace SFML_Engine.Engine
 			Level.RegisterActor(actor);
 			Level.RegisterActor(actor2);
 			engine.RegisterLevel(Level);
-			engine.RegisterPlayer(pc);
-			engine.RegisterPlayer(pc2);
+	        Level.RegisterPlayer(pc);
+	        Level.RegisterPlayer(pc2);
 			engine.StartEngine();
             Console.ReadLine();
         }
