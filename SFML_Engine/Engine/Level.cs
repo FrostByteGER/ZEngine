@@ -18,7 +18,7 @@ namespace SFML_Engine.Engine
 
 		public uint ActorIDCounter { get; private set; } = 0;
 
-		internal List<Actor> Actors { get; set; } = new List<Actor>();
+		protected internal List<Actor> Actors { get; set; } = new List<Actor>();
 
 	    public CircleShape CollisionCircle { get; set; } = new CircleShape(10.0f);
 	    public RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
@@ -26,19 +26,23 @@ namespace SFML_Engine.Engine
         public Engine EngineReference { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
-
-	    internal bool LevelTicking { get; set; } = false;
+		internal bool LevelTicking { get; set; } = false;
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
 
 
 		public Level()
         {
-        }
+		}
 
-	    protected internal virtual void InitLevel()
+		public virtual void InitLevel()
 	    {
 		    Console.WriteLine("Initiating Level " + LevelID);
+	    }
+
+	    public virtual void ShutdownLevel()
+	    {
+		    
 	    }
 
 
@@ -69,7 +73,7 @@ namespace SFML_Engine.Engine
 		            if (drawableActor.CollisionShape.ShowCollisionShape &&
 		                drawableActor.CollisionShape.GetType() == typeof(BoxShape))
 		            {
-			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).BoxExtent;
+			            CollisionRectangle.Size = ((BoxShape) drawableActor.CollisionShape).CollisionBounds;
 
 			            CollisionRectangle.Position = actor.Position;
 			            CollisionRectangle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
@@ -79,7 +83,7 @@ namespace SFML_Engine.Engine
 		            else if (drawableActor.CollisionShape.ShowCollisionShape &&
 		                     drawableActor.CollisionShape.GetType() == typeof(SphereShape))
 		            {
-			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).SphereDiameter / 2.0f;
+			            CollisionCircle.Radius = ((SphereShape) drawableActor.CollisionShape).CollisionBounds.X / 2.0f;
 
 			            CollisionCircle.Position = actor.Position;
 			            CollisionCircle.FillColor = drawableActor.CollisionShape.CollisionShapeColor;
@@ -103,14 +107,13 @@ namespace SFML_Engine.Engine
 	    public virtual void OnLevelLoad()
 	    {
 		    Console.WriteLine("Level #" + LevelID + " Loaded");
-		    OnGameStart();
+			OnGameStart();
 	    }
 
         public void RegisterActor(Actor actor)
         {
 			actor.ActorID = ActorIDCounter;
 	        ++ActorIDCounter;
-	        actor.LevelID = LevelID;
 	        actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor.ActorName + "-" + actor.ActorID);
 			Actors.Add(actor);
@@ -123,6 +126,17 @@ namespace SFML_Engine.Engine
 			var removal = Actors.Remove(actor);
 			removal = EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
 			return removal;
+		}
+
+		public void UnregisterActors()
+		{
+			foreach (var actor in Actors)
+			{
+				Console.WriteLine("Trying to remove Actor: " + actor.ActorName + "-" + actor.ActorID);
+				actor.OnActorDestroy();
+				EngineReference.PhysicsEngine.RemoveActorFromGroups(actor);
+			}
+			Actors.Clear();
 		}
 
 		public bool UnregisterActor(uint actorID)
@@ -138,7 +152,6 @@ namespace SFML_Engine.Engine
 		    GameMode.OnGameStart();
 			foreach (var pc in Players)
 			{
-				if (!pc.IsActive) continue;
 				pc.OnGameStart();
 			}
 			foreach (var actor in Actors)
@@ -194,12 +207,12 @@ namespace SFML_Engine.Engine
 
 	    public void SpawnActor(Actor instigator, Actor actor)
 	    {
-			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(instigator, actor, LevelID)));
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actor, LevelID)));
 		}
 
 		public void SpawnActor(Actor actor)
 		{
-			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorEventParams>(new SpawnActorEventParams(this, actor, LevelID)));
+			Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, LevelID)));
 		}
 
 		public void DestroyActor(Actor instigator, Actor actor)
@@ -213,7 +226,7 @@ namespace SFML_Engine.Engine
 		}
 
 		/// <summary>
-		/// Registers the given PlayerController in this level and registers its input.
+		/// Registers the given PlayerController in this level.
 		/// </summary>
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc)
@@ -221,7 +234,6 @@ namespace SFML_Engine.Engine
 			Players.Add(pc);
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
-			pc.IsActive = true;
 		}
 
 		/// <summary>
@@ -234,7 +246,6 @@ namespace SFML_Engine.Engine
 			Players.Add(pc);
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
-			pc.IsActive = isActive;
 		}
 
 		public bool UnregisterPlayer(PlayerController pc)
@@ -249,6 +260,16 @@ namespace SFML_Engine.Engine
 			Console.WriteLine("Trying to remove Player with PlayerID: #" + playerID);
 			var player = FindPlayer(playerID);
 			return UnregisterPlayer(player);
+		}
+
+		public void UnregisterPlayers()
+		{
+			foreach (var pc in Players)
+			{
+				Console.WriteLine("Trying to remove Player with PlayerID: #" + pc.ID);
+				pc.IsActive = false;
+			}
+			Players.Clear();
 		}
 
 		public PlayerController FindPlayer(uint playerID)

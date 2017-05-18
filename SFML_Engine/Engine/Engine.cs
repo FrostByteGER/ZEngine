@@ -20,6 +20,8 @@ namespace SFML_Engine.Engine
 
 	    public GameInfo GameInfo { get; set; } = new GameInfo();
 
+	    public PersistentGameMode PersistentGameMode { get; set; } = new PersistentGameMode();
+
 	    public uint EngineWindowHeight { get; set; }
         public uint EngineWindowWidth { get; set; }
 		private RenderWindow engineWindow;
@@ -30,6 +32,10 @@ namespace SFML_Engine.Engine
 	        private set => engineWindow = value;
         }
 
+		public PhysicsEngine PhysicsEngine { get; private set; }
+
+
+		public bool EngineTicking { get; private set; } = false;
         public Clock EngineClock { get; private set; }
         public Clock EngineLoopClock { get; private set; }
         public Clock FPSClock { get; private set; }
@@ -55,7 +61,6 @@ namespace SFML_Engine.Engine
         public List<Level> Levels { get; private set; } = new List<Level>();
 	    public Level ActiveLevel { get; internal set; }
 
-        public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 		public AssetManager AssetManager { get; set; }
 
@@ -72,7 +77,7 @@ namespace SFML_Engine.Engine
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
 	    public ContextSettings.Attribute OpenGLVersion = ContextSettings.Attribute.Default;
 
-	    public uint GlobalVolume { get; set; } = 5;
+	    public uint GlobalVolume { get; set; } = 50;
 
 
 	    private Engine()
@@ -89,8 +94,7 @@ namespace SFML_Engine.Engine
             engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			engineWindow.SetFramerateLimit(FPSLimit);
 			engineWindow.SetKeyRepeatEnabled(true);
-
-            PhysicsEngine = new PhysicsEngine();
+	        PhysicsEngine = new PhysicsEngine();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref engineWindow);
 
@@ -120,12 +124,12 @@ namespace SFML_Engine.Engine
 		        LoadLevel(Levels[0]);
 
 	        }
-            EngineTick();
+	        EngineTicking = true;
+			EngineTick();
         }
 
         private void EngineTick()
         {
-
 	        FPSClock.Restart();
             EngineLoopClock.Restart();
             while (!RequestTermination)
@@ -160,7 +164,7 @@ namespace SFML_Engine.Engine
 		                continue;
 	                }
 					var actors = ActiveLevel.Actors;
-					PhysicsEngine.PhysicsTick(Timestep, ref actors);
+	                PhysicsEngine.PhysicsTick(Timestep, ref actors);
 	                ActiveLevel.LevelTick(DeltaTime.AsSeconds());
 					EngineTime += Timestep;
                     Accumulator -= Timestep;
@@ -183,12 +187,7 @@ namespace SFML_Engine.Engine
 				}
                 FramesRendered++;
             }
-
-
-			foreach (var level in Levels)
-	        {
-		        level.OnGameEnd();
-	        }
+		    ActiveLevel.OnGameEnd();
 			ShutdownEngine();
         }
 
@@ -198,6 +197,7 @@ namespace SFML_Engine.Engine
 	        PhysicsEngine.Shutdown();
 			foreach (var level in Levels)
 			{
+
 				level.CollisionCircle.Dispose();
 				level.CollisionRectangle.Dispose();
 				foreach (var actor in level.Actors)
@@ -242,7 +242,15 @@ namespace SFML_Engine.Engine
 			Levels.Add(level);
         }
 
-	    public bool UnregisterLevel(Level level)
+		public void RegisterLevels(List<Level> levels)
+		{
+			foreach (var level in levels)
+			{
+				RegisterLevel(level);
+			}
+		}
+
+		public bool UnregisterLevel(Level level)
 	    {
 		    return Levels.Remove(level);
 	    }
@@ -265,7 +273,9 @@ namespace SFML_Engine.Engine
 			if (level.LevelID > 0 && level != ActiveLevel)
 			{
 				ActiveLevel?.OnGameEnd();
+				ActiveLevel?.ShutdownLevel();
 				ActiveLevel = level;
+				level.InitLevel();
 				level.OnLevelLoad();
 				level.LevelTicking = true;
 				return true;

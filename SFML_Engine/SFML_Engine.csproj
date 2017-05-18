@@ -91,17 +91,20 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.8\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.8\lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-system-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-system-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.8\lib\sfmlnet-system-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.7\lib\sfmlnet-window-2.dll</HintPath>
+      <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.8\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -119,9 +122,12 @@
     <Compile Include="Engine\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
-    <Compile Include="Engine\Events\SpawnActorEventParams.cs" />
+    <Compile Include="Engine\Events\SpawnActorParams.cs" />
+    <Compile Include="Engine\Events\SwitchLevelEvent.cs" />
+    <Compile Include="Engine\Events\SwitchLevelParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\Game\PersistentGameMode.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
@@ -165,11 +171,11 @@
     <None Include="App.config" />
     <None Include="Assets\Config.cfg" />
     <None Include="Assets\Packages.cfg" />
-    <None Include="packages.config" />
     <None Include="EngineInfo.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>EngineInfo.Designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
@@ -195,11 +201,11 @@
     <PostBuildEvent>robocopy "$(SolutionDir)$(ProjectName)\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets')" />
+  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.7\build\TriNityGER.SFML.Net.targets'))" />
+    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets'))" />
   </Target>
 </Project>

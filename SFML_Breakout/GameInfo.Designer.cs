@@ -43,7 +43,7 @@ namespace SFML_Breakout {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-alpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-release")]
         public string GameVersionSuffix {
             get {
                 return ((string)(this["GameVersionSuffix"]));
@@ -52,7 +52,7 @@ namespace SFML_Breakout {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public uint GameMajorVersion {
             get {
                 return ((uint)(this["GameMajorVersion"]));
@@ -61,7 +61,7 @@ namespace SFML_Breakout {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public uint GameMinorVersion {
             get {
                 return ((uint)(this["GameMinorVersion"]));
