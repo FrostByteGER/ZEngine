@@ -1,5 +1,4 @@
-﻿using SFML.System;
-using System;
+﻿using System;
 
 namespace SFML_Engine.Engine.Utility
 {
@@ -13,11 +12,5 @@ namespace SFML_Engine.Engine.Utility
 			if (val.CompareTo(max) > 0) return max;
 			return val;
 		}
-
-		public static Vector2f GetNorm(Vector2f vec)
-		{
-			return new Vector2f(vec.X / ((Math.Abs(vec.X) + Math.Abs(vec.Y))), vec.Y / ((Math.Abs(vec.X) + Math.Abs(vec.Y))));
-		}
-
 	}
 }

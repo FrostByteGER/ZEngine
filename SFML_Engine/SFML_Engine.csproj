@@ -127,7 +127,6 @@
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
-    <Compile Include="Engine\Physics\Collision.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\GameMode.cs" />
