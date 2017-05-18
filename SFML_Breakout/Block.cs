@@ -109,7 +109,15 @@ namespace SFML_Breakout
 				if (Invincible) return;
 
 				//TODO Score
-				--Hitpoints;
+				if (ball.fire)
+				{
+					Hitpoints = 0;
+				}
+				else
+				{
+					--Hitpoints;
+				}
+				
 
 
 				((BreakoutGameMode)LevelReference.GameMode).Player.Score += Score;

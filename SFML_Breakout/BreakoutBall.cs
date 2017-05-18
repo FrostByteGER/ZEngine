@@ -15,6 +15,8 @@ namespace SFML_Breakout
 
 		public BreakoutPlayerController PCReference { get; set; }
 
+		public bool fire { get; set; }
+
 		public BreakoutBall()
 		{
 		}
