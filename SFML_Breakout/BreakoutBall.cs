@@ -99,9 +99,6 @@ namespace SFML_Breakout
 
 		public override void IsOverlapping(Actor actor)
 		{
-
-
-
 		}
 	}
 }

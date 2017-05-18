@@ -114,6 +114,7 @@
     <Compile Include="PowerUpBullets.cs" />
     <Compile Include="PowerUpDup.cs" />
     <Compile Include="PowerUpPadSizeInc.cs" />
+    <Compile Include="PowerUpPunchThrow.cs" />
     <Compile Include="PuwerUpPadSizeDec.cs" />
     <Compile Include="StartBreakout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

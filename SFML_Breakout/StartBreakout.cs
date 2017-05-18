@@ -123,10 +123,11 @@ namespace SFML_Breakout
 
 			var testlvl = new Level();
 			var gameMode = new BreakoutGameMode();
-			gameMode.AddPowerUp(new PowerUpDup());
-			gameMode.AddPowerUp(new PowerUpPadSizeInc());
-			gameMode.AddPowerUp(new PuwerUpPadSizeDec());
-			gameMode.AddPowerUp(new PowerUpBullets());
+			//gameMode.AddPowerUp(new PowerUpDup());
+			//gameMode.AddPowerUp(new PowerUpPadSizeInc());
+			//gameMode.AddPowerUp(new PuwerUpPadSizeDec());
+			//gameMode.AddPowerUp(new PowerUpBullets());
+			gameMode.AddPowerUp(new PowerUpPunchThrow());
 
 			testlvl.GameMode = gameMode;
 			engine.RegisterLevel(testlvl);
