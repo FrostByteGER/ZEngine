@@ -34,7 +34,7 @@ namespace SFML_Breakout
 
 			BreakoutBall newBall = new BreakoutBall();
 
-			newBall.ActorName = "Ball2";
+			newBall.ActorName = "Ball";
 			newBall.CollisionShape = new SphereShape(30.0f);
 			newBall.Position = mainBall.Position;
 			newBall.CollisionShape.ShowCollisionShape = true;

@@ -32,11 +32,7 @@ namespace SFML_Breakout
 				return null;
 			}
 
-			int choose = (int)(EngineMath.EngineRandom.NextDouble() * PowerUps.Count);
-
-			Console.WriteLine(PowerUps.Count+" "+choose);
-
-			return (PowerUp)PowerUps[choose].Clone();
+			return (PowerUp)PowerUps[(int)(EngineMath.EngineRandom.NextDouble() * PowerUps.Count)].Clone();
 		}
 	}
 }

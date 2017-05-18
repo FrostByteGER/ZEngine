@@ -104,12 +104,14 @@
     <Compile Include="BreakoutGameInfo.cs" />
     <Compile Include="BreakoutGameMode.cs" />
     <Compile Include="BreakoutPlayerController.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="GameInfo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameInfo.settings</DependentUpon>
     </Compile>
     <Compile Include="PowerUp.cs" />
+    <Compile Include="PowerUpBullets.cs" />
     <Compile Include="PowerUpDup.cs" />
     <Compile Include="PowerUpPadSizeInc.cs" />
     <Compile Include="PuwerUpPadSizeDec.cs" />

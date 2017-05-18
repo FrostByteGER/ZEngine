@@ -38,10 +38,7 @@ namespace SFML_Breakout
 			if (box.CollisionBounds.X+10 <= maxSize)
 			{
 				box.CollisionBounds = new Vector2f(box.CollisionBounds.X + 10, box.CollisionBounds.Y);
-			}
-			else
-			{
-				box.CollisionBounds = new Vector2f(maxSize, box.CollisionBounds.Y);
+				pad.Position = new Vector2f(pad.Position.X - 5, pad.Position.Y);
 			}
 
 		}

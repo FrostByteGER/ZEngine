@@ -31,6 +31,7 @@ namespace SFML_Breakout
 			physics.AddGroup("Borders");
 			physics.AddGroup("Blocks");
 			physics.AddGroup("PowerUp");
+			physics.AddGroup("Bullets");
 
 			physics.AddCollidablePartner("Balls", "Pads");
 			physics.AddCollidablePartner("Balls", "Borders");
@@ -39,6 +40,9 @@ namespace SFML_Breakout
 			physics.AddCollidablePartner("Pads", "Borders");
 			physics.AddCollidablePartner("Balls", "Blocks");
 			physics.AddCollidablePartner("Blocks", "Balls");
+
+			physics.AddOverlapPartners("Blocks", "Bullets");
+			physics.AddOverlapPartners("Bullets", "Borders");
 
 			var topBorder = new SpriteActor();
 			var bottomBorder = new SpriteActor();
@@ -122,6 +126,7 @@ namespace SFML_Breakout
 			gameMode.AddPowerUp(new PowerUpDup());
 			gameMode.AddPowerUp(new PowerUpPadSizeInc());
 			gameMode.AddPowerUp(new PuwerUpPadSizeDec());
+			gameMode.AddPowerUp(new PowerUpBullets());
 
 			testlvl.GameMode = gameMode;
 			engine.RegisterLevel(testlvl);

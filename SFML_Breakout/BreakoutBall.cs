@@ -66,7 +66,7 @@ namespace SFML_Breakout
 					SphereShape cs = (SphereShape)this.CollisionShape;
 					BoxShape bc = (BoxShape)actor.CollisionShape;
 
-					Vector2f norm = cs.GetMid(this.Position) - bc.GetMid(actor.Position);
+					Vector2f norm = cs.GetMid(this.Position) - bc.GetMid(actor.Position) - new Vector2f(0, 50);
 
 					norm = new Vector2f(norm.X / (Math.Abs(norm.X) + Math.Abs(norm.Y)), norm.Y / (Math.Abs(norm.X) + Math.Abs(norm.Y)));
 
