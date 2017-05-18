@@ -123,8 +123,11 @@
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
+    <Compile Include="Engine\Events\SwitchLevelEvent.cs" />
+    <Compile Include="Engine\Events\SwitchLevelParams.cs" />
     <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\Game\PersistentGameMode.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />

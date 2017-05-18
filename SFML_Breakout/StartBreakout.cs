@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
@@ -11,138 +12,121 @@ namespace SFML_Breakout
 	public sealed class StartBreakout
 	{
 		public static bool MountainDewMode { get; set; } = true;
-
+		public static Engine EngineRef = Engine.Instance;
+		public static PhysicsEngine Physics;
 		public static void Main(string[] args)
 		{
 			if (args.Length >= 1)
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
+			EngineRef.GameInfo = new BreakoutGameInfo();
+			EngineRef.PeristentGameMode = new BreakoutPersistentGameMode();
+			EngineRef.EngineWindowWidth = 800;
+			EngineRef.EngineWindowHeight = 800;
+			EngineRef.InitEngine();
+			Physics = EngineRef.PhysicsEngine;
 
-			Engine engine = Engine.Instance;
-			engine.GameInfo = new BreakoutGameInfo();
-			engine.EngineWindowWidth = 800;
-			engine.EngineWindowHeight = 600;
-			engine.InitEngine();
-			var physics = engine.PhysicsEngine;
+			Physics.AddGroup("Pads");
+			Physics.AddGroup("Balls");
+			Physics.AddGroup("Borders");
+			Physics.AddGroup("Blocks");
+			Physics.AddGroup("PowerUp");
+			Physics.AddGroup("Bullets");
 
-			physics.AddGroup("Pads");
-			physics.AddGroup("Balls");
-			physics.AddGroup("Borders");
-			physics.AddGroup("Blocks");
-			physics.AddGroup("PowerUp");
-			physics.AddGroup("Bullets");
+			Physics.AddCollidablePartner("Balls","Pads");
+			Physics.AddCollidablePartner("Balls", "Borders");
+			Physics.AddCollidablePartner("Balls", "Blocks");
+			Physics.AddCollidablePartner("Blocks", "Balls");
+			Physics.AddCollidablePartner("PowerUp", "Pads");
+			Physics.AddCollidablePartner("PowerUp", "Borders");
+			Physics.AddCollidablePartner("Pads", "Borders");
 
-			physics.AddCollidablePartner("Balls", "Pads");
-			physics.AddCollidablePartner("Balls", "Borders");
-			physics.AddCollidablePartner("PowerUp", "Pads");
-			physics.AddCollidablePartner("PowerUp", "Borders");
-			physics.AddCollidablePartner("Pads", "Borders");
-			physics.AddCollidablePartner("Balls", "Blocks");
-			physics.AddCollidablePartner("Blocks", "Balls");
+			Physics.AddOverlapPartners("Blocks", "Bullets");
+			Physics.AddOverlapPartners("Bullets", "Borders");
 
-			physics.AddOverlapPartners("Blocks", "Bullets");
-			physics.AddOverlapPartners("Bullets", "Borders");
 
-			var topBorder = new SpriteActor();
-			var bottomBorder = new SpriteActor();
-			var leftBorder = new SpriteActor();
-			var rightBorder = new SpriteActor();
+			var menuLevel = new BreakoutMenuLevel();
+			Engine.Instance.RegisterLevel(menuLevel);
+			var dummyPawn = new SpriteActor();
+			var menuController = new BreakoutMenuPlayerController(dummyPawn);
+			menuLevel.RegisterPlayer(menuController);
+			menuLevel.RegisterActor(dummyPawn);
+			menuLevel.InitiateMenu();
+			EngineRef.LoadLevel(menuLevel);
 
-			topBorder.Movable = false;
-			bottomBorder.Movable = false;
-			leftBorder.Movable = false;
-			rightBorder.Movable = false;
 
-			topBorder.ActorName = "Top Border";
-			bottomBorder.ActorName = "Bottom Border";
-			leftBorder.ActorName = "Left Border";
-			rightBorder.ActorName = "Right Border";
-
-			topBorder.Position = new Vector2f(0, -400);
-			bottomBorder.Position = new Vector2f(0, engine.EngineWindowHeight);
-			leftBorder.Position = new Vector2f(-20, 0);
-			rightBorder.Position = new Vector2f(engine.EngineWindowWidth, 0);
-
-			topBorder.CollisionShape = new BoxShape(engine.EngineWindowWidth, 400);
-			bottomBorder.CollisionShape = new BoxShape(engine.EngineWindowWidth, 400);
-			leftBorder.CollisionShape = new BoxShape(20, engine.EngineWindowHeight);
-			rightBorder.CollisionShape = new BoxShape(20, engine.EngineWindowHeight);
-
-			topBorder.CollisionShape.ShowCollisionShape = true;
-			bottomBorder.CollisionShape.ShowCollisionShape = true;
-			leftBorder.CollisionShape.ShowCollisionShape = true;
-			rightBorder.CollisionShape.ShowCollisionShape = true;
-
-			var playerPad = new SpriteActor();
-			playerPad.ActorName = "Player Pad 1";
-			playerPad.CollisionShape = new BoxShape(300.0f, 30.0f);
-			playerPad.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - playerPad.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - playerPad.CollisionShape.CollisionBounds.Y * 2.0f);
-			playerPad.CollisionShape.ShowCollisionShape = true;
-			playerPad.CollisionShape.Position = playerPad.Position;
-			playerPad.Friction = 0.01f;
-			var comp = new ActorComponent();
-			playerPad.AddComponent(comp);
-
-			var mainBall = new BreakoutBall();
-			mainBall.ActorName = "Ball";
-			mainBall.CollisionShape = new SphereShape(30.0f);
-			mainBall.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - mainBall.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - mainBall.CollisionShape.CollisionBounds.X * 4.0f);
-			mainBall.CollisionShape.ShowCollisionShape = true;
-			mainBall.CollisionShape.Position = mainBall.Position;
-			mainBall.Velocity = new Vector2f(0.0f, 250.0f);
-
-			var breakoutPlayerController = new BreakoutPlayerController(playerPad);
-			breakoutPlayerController.Name = "Player 1";
-
-			physics.AddActorToGroup("Borders", topBorder);
-			physics.AddActorToGroup("Borders", bottomBorder);
-			physics.AddActorToGroup("Borders", leftBorder);
-			physics.AddActorToGroup("Borders", rightBorder);
-			physics.AddActorToGroup("Pads", playerPad);
-			physics.AddActorToGroup("Balls", mainBall);
-
-			List<Block> blocks = new List<Block>();
-			for (uint i = 0; i < 6; ++i)
+			List<List<float[]>> values = new List<List<float[]>>();
+			try
+			{ 
+				using (StreamReader sr = new StreamReader("Assets/SFML_Breakout/Levels.cfg"))
+				{
+					string line;
+					List<float[]> levelValues = new List<float[]>();
+					float[] pair = new float[2];
+					while ((line = sr.ReadLine()) != null)
+					{
+						if (line == "---")
+						{
+							values.Add(levelValues);
+							levelValues = new List<float[]>();
+						}
+						else
+						{
+							line = line.Remove(line.Length - 1);
+							var valuesraw = line.Split(',');
+							pair[0] = Convert.ToSingle(valuesraw[0]);
+							pair[1] = Convert.ToSingle(valuesraw[1]);
+							levelValues.Add(pair);
+							pair = new float[2];
+						}
+					}
+					values.Add(levelValues);
+				}
+			}
+			catch (Exception e)
 			{
-				for (uint j = 0; j < 6; ++j)
+				Console.WriteLine("The file could not be read:");
+				Console.WriteLine(e.Message);
+			}
+
+			List<BreakoutGameLevel> levels = new List<BreakoutGameLevel>();
+
+
+			for (int h = 0; h < values.Count; ++h)
+			{
+				levels.Add(new BreakoutGameLevel());
+			}
+
+			((BreakoutPersistentGameMode) EngineRef.PeristentGameMode).MaxLevels = (uint) levels.Count;
+				
+			for (int i = 0; i < values.Count; ++i)
+			{
+				BreakoutGameLevel l = levels[i];
+				l.GameMode = new BreakoutGameMode();
+				EngineRef.RegisterLevel(l);
+				List<Block> blocks = new List<Block>();
+				float blockSizeX = values[i][0][0];
+				float blockSizeY = values[i][0][1];
+				for (int j = 0; j < values[i].Count; ++j)
 				{
 					var block = new Block();
 					block.ActorName = "Block" + (i + j);
-					block.CollisionShape = new BoxShape(100.0f, 40.0f);
-					block.Position = new Vector2f(80.0f + block.CollisionShape.CollisionBounds.X * j, 80.0f + block.CollisionShape.CollisionBounds.Y * i);
+					block.CollisionShape = new BoxShape(blockSizeX, blockSizeY);
+					block.Position = new Vector2f(values[i][j][0], values[i][j][1]);
 					block.CollisionShape.ShowCollisionShape = true;
 					block.CollisionShape.Position = block.Position;
-					block.Hitpoints = (uint) EngineMath.EngineRandom.Next(1, 4);
+					block.Hitpoints = (uint)EngineMath.EngineRandom.Next(1, 4);
 					block.MaxHitpoints = block.Hitpoints;
 					block.Score *= block.MaxHitpoints;
-					physics.AddActorToGroup("Blocks", block);
 					blocks.Add(block);
+					l.RegisterActor(block);
 				}
+				l.Blocks = blocks;
 			}
 
-			var testlvl = new Level();
-			var gameMode = new BreakoutGameMode();
-			gameMode.AddPowerUp(new PowerUpDup());
-			gameMode.AddPowerUp(new PowerUpPadSizeInc());
-			gameMode.AddPowerUp(new PuwerUpPadSizeDec());
-			gameMode.AddPowerUp(new PowerUpBullets());
-
-			testlvl.GameMode = gameMode;
-			engine.RegisterLevel(testlvl);
-			testlvl.RegisterActor(topBorder);
-			testlvl.RegisterActor(bottomBorder);
-			testlvl.RegisterActor(leftBorder);
-			testlvl.RegisterActor(rightBorder);
-			testlvl.RegisterActor(playerPad);
-			testlvl.RegisterActor(mainBall);
-			testlvl.RegisterPlayer(breakoutPlayerController);
-			foreach (var block in blocks)
-			{
-				testlvl.RegisterActor(block);
-			}
-
-			engine.StartEngine();
+			EngineRef.StartEngine();
+			BreakoutMenuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
 			Console.ReadLine();
 		}
 	}

@@ -102,7 +102,11 @@
     <Compile Include="Block.cs" />
     <Compile Include="BreakoutBall.cs" />
     <Compile Include="BreakoutGameInfo.cs" />
+    <Compile Include="BreakoutGameLevel.cs" />
     <Compile Include="BreakoutGameMode.cs" />
+    <Compile Include="BreakoutMenuLevel.cs" />
+    <Compile Include="BreakoutMenuPlayerController.cs" />
+    <Compile Include="BreakoutPersistentGameMode.cs" />
     <Compile Include="BreakoutPlayerController.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="GameInfo.Designer.cs">

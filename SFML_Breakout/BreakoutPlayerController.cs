@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Events;
 
 namespace SFML_Breakout
 {
@@ -59,7 +60,7 @@ namespace SFML_Breakout
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			Console.WriteLine(Score);
+			//Console.WriteLine(Score);
 		}
 
 		protected override void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
@@ -67,6 +68,11 @@ namespace SFML_Breakout
 			base.OnJoystickButtonPressed(sender, joystickButtonEventArgs);
 			if (ID == 0)
 			{
+				if (joystickButtonEventArgs.Button == 7 || joystickButtonEventArgs.Button == 1)
+				{
+					LevelReference.EngineReference.RegisterEvent(new SwitchLevelEvent<SwitchLevelParams>(new SwitchLevelParams(this, LevelReference.EngineReference.Levels[0])));
+
+				}
 			}
 		}
 
@@ -89,21 +95,6 @@ namespace SFML_Breakout
 				}
 
 			}
-			else if (ID == 1)
-			{
-				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && joystickMoveEventArgs.Position > 20.0f)
-				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 500.0f);
-				}
-				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && joystickMoveEventArgs.Position < -20.0f)
-				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, -500.0f);
-				}
-				if (joystickMoveEventArgs.Axis == Joystick.Axis.R && (joystickMoveEventArgs.Position < 20.0f && joystickMoveEventArgs.Position > -20.0f))
-				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-				}
-			}
 		}
 
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
@@ -111,6 +102,14 @@ namespace SFML_Breakout
 			base.OnKeyPressed(sender, keyEventArgs);
 			if (ID == 0)
 			{
+				if (Input.EscPressed)
+				{
+					LevelReference.EngineReference.RegisterEvent(new SwitchLevelEvent<SwitchLevelParams>(new SwitchLevelParams(this, LevelReference.EngineReference.Levels[0])));
+				}
+				if (Input.F12Pressed)
+				{
+					((BreakoutGameMode)LevelReference.GameMode).LoadNextLevel();
+				}
 				if (Input.APressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(-500.0f, 0.0f);
@@ -134,18 +133,6 @@ namespace SFML_Breakout
 				}
 
 				if (!Input.SPressed)
-				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-				}
-			}
-			else if (ID == 1)
-			{
-				if (!Input.UpPressed)
-				{
-					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
-				}
-
-				if (!Input.DownPressed)
 				{
 					PlayerPawn.Acceleration = new Vector2f(0.0f, 0);
 				}

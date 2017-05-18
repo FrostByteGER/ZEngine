@@ -11,11 +11,7 @@ namespace SFML_Engine.Engine
 	{
 		public Actor ParentActor { get; set; } = null;
 
-		//TODO: Implement
-		public ActorComponent ParentComponent { get; set; } = null;
 
-		//TODO: Implement
-		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		public virtual void Tick(float deltaTime)
 		{
 			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);

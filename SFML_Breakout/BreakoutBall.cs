@@ -2,6 +2,7 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Physics;
 using Sprite = SFML_Engine.Engine.SFML.Graphics.Sprite;
 
@@ -88,7 +89,8 @@ namespace SFML_Breakout
 				LastPlayerCollision = actor;
 			}else if (actor.ActorName == "Bottom Border")
 			{
-				RespawnBall();
+				((BreakoutGameMode) LevelReference.GameMode).Balls.Remove(this);
+				LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
 			}
 		}
 

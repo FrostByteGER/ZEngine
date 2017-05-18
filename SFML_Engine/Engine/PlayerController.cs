@@ -141,7 +141,7 @@ namespace SFML_Engine.Engine
 
 	    public virtual void OnGameStart()
 	    {
-		    
+		    IsActive = true;
 	    }
 
 	    public virtual void OnGamePause()
@@ -151,7 +151,7 @@ namespace SFML_Engine.Engine
 
 	    public virtual void OnGameEnd()
 	    {
-		    
+		    IsActive = false;
 	    }
     }
 }
