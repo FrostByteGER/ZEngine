@@ -1,4 +1,5 @@
 ﻿using System;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
@@ -41,9 +42,14 @@ namespace SFML_Breakout
 		{
 			if (actor is BreakoutBall || actor is Bullet)
 			{
+				var hitSound = new Sound(BreakoutPersistentGameMode.BlockHitBuffer);
+				hitSound.Volume = LevelReference.EngineReference.GlobalVolume;
+				hitSound.Play();
+				
+
 				if(actor is Bullet) LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor)));
 
-				if (!((BreakoutBall) actor).fire)
+				if (actor is BreakoutBall && !((BreakoutBall) actor).fire)
 				{
 					if (Invincible) return;
 					Hitpoints = (--Hitpoints).Clamp<uint>(0, uint.MaxValue);

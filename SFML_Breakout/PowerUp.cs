@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SFML.Audio;
 
 namespace SFML_Breakout
 {
@@ -31,6 +32,9 @@ namespace SFML_Breakout
 			if (actor.ActorName == "Player Pad 1")
 			{
 				Apply();
+				var powerUpSound = new Sound(BreakoutPersistentGameMode.PowerUpBuffer);
+				powerUpSound.Volume = LevelReference.EngineReference.GlobalVolume;
+				powerUpSound.Play();
 				LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
 			}
 

@@ -53,12 +53,18 @@ namespace SFML_Breakout
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Mute Sounds")
 				{
 					Engine.Instance.GlobalVolume = 0;
+					BreakoutPersistentGameMode.BGM_Main.Volume = 0;
 					LevelRef.Menu[SelectedIndex].DisplayedString = "Play Sounds";
+					LevelRef.Menu[SelectedIndex].Origin = new Vector2f(LevelRef.Menu[SelectedIndex].GetLocalBounds().Width / 2.0f, LevelRef.Menu[SelectedIndex].GetLocalBounds().Height / 2.0f);
+					LevelRef.Menu[SelectedIndex].Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, 320);
 				}
 				else if (LevelRef.Menu[SelectedIndex].DisplayedString == "Play Sounds")
 				{
-					Engine.Instance.GlobalVolume = 10;
+					Engine.Instance.GlobalVolume = 50;
+					BreakoutPersistentGameMode.BGM_Main.Volume = 50;
 					LevelRef.Menu[SelectedIndex].DisplayedString = "Mute Sounds";
+					LevelRef.Menu[SelectedIndex].Origin = new Vector2f(LevelRef.Menu[SelectedIndex].GetLocalBounds().Width / 2.0f, LevelRef.Menu[SelectedIndex].GetLocalBounds().Height / 2.0f);
+					LevelRef.Menu[SelectedIndex].Position = new Vector2f(LevelReference.EngineReference.EngineWindowWidth / 2.0f, 320);
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Exit Game")
 				{

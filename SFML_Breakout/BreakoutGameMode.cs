@@ -46,6 +46,7 @@ namespace SFML_Breakout
 			GameWon = false;
 			GameOver = false;
 			Player = (BreakoutPlayerController) LevelReference.FindPlayer(0);
+			BreakoutPersistentGameMode.SwitchMusic();
 		}
 
 		public void LoadNextLevel()
@@ -66,6 +67,7 @@ namespace SFML_Breakout
 		public override void OnGameEnd()
 		{
 			if (GameEnded) return;
+			BreakoutPersistentGameMode.BGM_Main.Stop();
 			base.OnGameEnd();
 			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PersistentGameMode;
 			if (GameWon)

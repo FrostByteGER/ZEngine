@@ -86,8 +86,8 @@ namespace SFML_Breakout
 
 		public override void OnGameStart()
 		{
-
 			base.OnGameStart();
+			BreakoutPersistentGameMode.SwitchMusic();
 		}
 
 		public override void OnGamePause()
