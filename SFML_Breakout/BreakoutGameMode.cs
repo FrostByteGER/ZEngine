@@ -2,9 +2,7 @@ using SFML_Engine.Engine;
 using SFML_Engine.Engine.Utility;
 using System;
 using System.Collections.Generic;
-using SFML.System;
 using SFML_Engine.Engine.Events;
-using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout
 {
@@ -18,7 +16,6 @@ namespace SFML_Breakout
 
 		public BreakoutPlayerController Player { get; set; }
 
-		public uint CurrentLevel { get; set; } = 0;
 		public bool GameEnded { get; set; } = false;
 		public bool GameWon { get; set; } = false;
 		public bool GameOver { get; set; } = false;
@@ -46,6 +43,11 @@ namespace SFML_Breakout
 			GameWon = false;
 			GameOver = false;
 			Player = (BreakoutPlayerController) LevelReference.FindPlayer(0);
+			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PersistentGameMode;
+			if (gameMode.CurrentLevel == gameMode.MaxLevels)
+			{
+				BreakoutPersistentGameMode.BGM_MLG_Current = BreakoutPersistentGameMode.BGM_MLG_Final;
+			}
 			BreakoutPersistentGameMode.SwitchMusic();
 		}
 
@@ -68,8 +70,10 @@ namespace SFML_Breakout
 		{
 			if (GameEnded) return;
 			BreakoutPersistentGameMode.BGM_Main.Stop();
-			base.OnGameEnd();
 			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PersistentGameMode;
+
+			BreakoutPersistentGameMode.BGM_MLG_Current = gameMode.HighScore > gameMode.SecretThreshold ? BreakoutPersistentGameMode.BGM_MLG_Secret : BreakoutPersistentGameMode.BGM_MLG_Main;
+			base.OnGameEnd();
 			if (GameWon)
 			{
 				gameMode.HighScore += Player.Score;

@@ -9,13 +9,13 @@
       <Value Profile="(Default)">v</Value>
     </Setting>
     <Setting Name="GameVersionSuffix" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">-alpha</Value>
+      <Value Profile="(Default)">-release</Value>
     </Setting>
     <Setting Name="GameMajorVersion" Type="System.UInt32" Scope="Application">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="GameMinorVersion" Type="System.UInt32" Scope="Application">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="GameHotfixVersion" Type="System.UInt32" Scope="Application">
       <Value Profile="(Default)">0</Value>

@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Breakout
@@ -19,6 +20,25 @@ namespace SFML_Breakout
 
 			EngineReference.PhysicsEngine.AddCollidablePartner("Blocks", "Balls");
 			EngineReference.PhysicsEngine.AddCollidablePartner("Balls", "Blocks");
+
+			Blocks = new List<Block>();
+			var values = StartBreakout.LoadBlockPositions();
+			float blockSizeX = values[(int)(LevelID - 2)][0][0];
+			float blockSizeY = values[(int)(LevelID - 2)][0][1];
+			for (int j = 0; j < values[(int) (LevelID - 2)].Count; ++j)
+			{
+				var block = new Block();
+				block.ActorName = "Block" + ((int)(LevelID - 2) + j);
+				block.CollisionShape = new BoxShape(blockSizeX, blockSizeY);
+				block.Position = new Vector2f(values[(int)(LevelID - 2)][j][0], values[(int)(LevelID - 2)][j][1]);
+				block.CollisionShape.ShowCollisionShape = true;
+				block.CollisionShape.Position = block.Position;
+				block.Hitpoints = (uint)EngineMath.EngineRandom.Next(1, 4);
+				block.MaxHitpoints = block.Hitpoints;
+				block.Score *= block.MaxHitpoints;
+				Blocks.Add(block);
+			}
+
 
 			var topBorder = new SpriteActor();
 			var bottomBorder = new SpriteActor();
@@ -128,7 +148,7 @@ namespace SFML_Breakout
 
 		public void UpdateHighscoreText(uint highscore)
 		{
-			HighscoreText.DisplayedString = "Highscore: " + ((BreakoutPersistentGameMode)EngineReference.PersistentGameMode).HighScore;
+			HighscoreText.DisplayedString = "Highscore: " + (((BreakoutPersistentGameMode)EngineReference.PersistentGameMode).HighScore + ((BreakoutGameMode)GameMode).Player.Score);
 			HighscoreText.Origin = new Vector2f(HighscoreText.GetLocalBounds().Width / 2.0f, HighscoreText.GetLocalBounds().Height / 2.0f);
 			HighscoreText.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 25);
 		}

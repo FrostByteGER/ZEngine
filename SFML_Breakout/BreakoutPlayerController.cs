@@ -1,5 +1,4 @@
-﻿using System;
-using SFML.System;
+﻿using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
@@ -108,6 +107,7 @@ namespace SFML_Breakout
 				}
 				if (Input.F12Pressed)
 				{
+
 					((BreakoutGameMode)LevelReference.GameMode).LoadNextLevel();
 				}
 				if (Input.APressed)

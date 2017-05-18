@@ -1,10 +1,8 @@
 ﻿using System;
-using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
-using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout
 {

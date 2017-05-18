@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
@@ -28,8 +27,10 @@ namespace SFML_Breakout
 
 		public void InitiateMenu()
 		{
+
+
 			MainLogo.Font = MainGameFont;
-			MainLogo.DisplayedString = "Pong";
+			MainLogo.DisplayedString = "Breakout";
 			MainLogo.CharacterSize = 100;
 			MainLogo.Color = ColorSelected;
 			MainLogo.Style = Text.Styles.Regular;
@@ -73,7 +74,10 @@ namespace SFML_Breakout
 
 		public override void OnLevelLoad()
 		{
-
+			var dummyPawn = new SpriteActor();
+			var menuController = new BreakoutMenuPlayerController(dummyPawn);
+			RegisterPlayer(menuController);
+			RegisterActor(dummyPawn);
 			RegisterActor(MainLogo);
 			RegisterActor(Play);
 			RegisterActor(AllowSound);
@@ -98,6 +102,14 @@ namespace SFML_Breakout
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
+			BreakoutPersistentGameMode.BGM_Main.Stop();
+		}
+
+		public override void ShutdownLevel()
+		{
+			base.ShutdownLevel();
+			UnregisterPlayers();
+			UnregisterActors();
 		}
 	}
 }
