@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;
+using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Breakout
 {
@@ -9,9 +11,15 @@ namespace SFML_Breakout
 	{
 		public List<Block> Blocks { get; set; }
 		public Actor Pad { get; set; } = null;
+
+		public Text HighscoreText { get; set; }
 		public override void InitLevel()
 		{
 			base.InitLevel();
+
+			EngineReference.PhysicsEngine.AddCollidablePartner("Blocks", "Balls");
+			EngineReference.PhysicsEngine.AddCollidablePartner("Balls", "Blocks");
+
 			var topBorder = new SpriteActor();
 			var bottomBorder = new SpriteActor();
 			var leftBorder = new SpriteActor();
@@ -63,6 +71,7 @@ namespace SFML_Breakout
 			mainBall.CollisionShape.ShowCollisionShape = true;
 			mainBall.CollisionShape.Position = mainBall.Position;
 			mainBall.Velocity = new Vector2f(0.0f, 250.0f);
+			mainBall.fire = false;
 
 			var breakoutPlayerController = new BreakoutPlayerController(playerPad);
 			breakoutPlayerController.Name = "Player 1";
@@ -73,6 +82,15 @@ namespace SFML_Breakout
 			EngineReference.PhysicsEngine.AddActorToGroup("Borders", rightBorder);
 			EngineReference.PhysicsEngine.AddActorToGroup("Pads", playerPad);
 			EngineReference.PhysicsEngine.AddActorToGroup("Balls", mainBall);
+
+			HighscoreText = new Text();
+			HighscoreText.Font = BreakoutMenuLevel.MainGameFont;
+			HighscoreText.DisplayedString = "Highscore: 0";
+			HighscoreText.CharacterSize = 50;
+			HighscoreText.Color = Color.White;
+			HighscoreText.Style = Text.Styles.Bold;
+			HighscoreText.Origin = new Vector2f(HighscoreText.GetLocalBounds().Width / 2.0f, HighscoreText.GetLocalBounds().Height / 2.0f);
+			HighscoreText.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 25);
 
 			var gameMode = new BreakoutGameMode();
 			gameMode.AddPowerUp(new PowerUpDup());
@@ -91,11 +109,13 @@ namespace SFML_Breakout
 			RegisterActor(rightBorder);
 			RegisterActor(playerPad);
 			RegisterActor(mainBall);
+			
 			foreach (var actor in Blocks)
 			{
 				RegisterActor(actor);
 				EngineReference.PhysicsEngine.AddActorToGroup("Blocks", actor);
 			}
+			RegisterActor(HighscoreText);
 			RegisterPlayer(breakoutPlayerController);
 		}
 
@@ -104,6 +124,13 @@ namespace SFML_Breakout
 			base.ShutdownLevel();
 			UnregisterPlayers();
 			UnregisterActors();
+		}
+
+		public void UpdateHighscoreText(uint highscore)
+		{
+			HighscoreText.DisplayedString = "Highscore: " + ((BreakoutPersistentGameMode)EngineReference.PersistentGameMode).HighScore;
+			HighscoreText.Origin = new Vector2f(HighscoreText.GetLocalBounds().Width / 2.0f, HighscoreText.GetLocalBounds().Height / 2.0f);
+			HighscoreText.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 25);
 		}
 	}
 }

@@ -20,8 +20,12 @@ namespace SFML_Breakout
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
+
+			BreakoutMenuLevel.MainGameFont = new Font(MountainDewMode ? "Assets/SFML_Breakout/comic.ttf" : "Assets/SFML_Breakout/arial.ttf");
+
+
 			EngineRef.GameInfo = new BreakoutGameInfo();
-			EngineRef.PeristentGameMode = new BreakoutPersistentGameMode();
+			EngineRef.PersistentGameMode = new BreakoutPersistentGameMode();
 			EngineRef.EngineWindowWidth = 800;
 			EngineRef.EngineWindowHeight = 800;
 			EngineRef.InitEngine();
@@ -98,7 +102,7 @@ namespace SFML_Breakout
 				levels.Add(new BreakoutGameLevel());
 			}
 
-			((BreakoutPersistentGameMode) EngineRef.PeristentGameMode).MaxLevels = (uint) levels.Count;
+			((BreakoutPersistentGameMode) EngineRef.PersistentGameMode).MaxLevels = (uint) levels.Count;
 				
 			for (int i = 0; i < values.Count; ++i)
 			{

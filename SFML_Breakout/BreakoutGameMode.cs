@@ -50,7 +50,7 @@ namespace SFML_Breakout
 
 		public void LoadNextLevel()
 		{
-			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PeristentGameMode;
+			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PersistentGameMode;
 			if (gameMode.CurrentLevel < gameMode.MaxLevels)
 			{
 				++gameMode.CurrentLevel;
@@ -67,7 +67,7 @@ namespace SFML_Breakout
 		{
 			if (GameEnded) return;
 			base.OnGameEnd();
-			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PeristentGameMode;
+			var gameMode = (BreakoutPersistentGameMode)LevelReference.EngineReference.PersistentGameMode;
 			if (GameWon)
 			{
 				gameMode.HighScore += Player.Score;

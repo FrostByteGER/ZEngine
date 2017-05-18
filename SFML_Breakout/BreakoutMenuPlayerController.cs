@@ -46,9 +46,9 @@ namespace SFML_Breakout
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Play")
 				{
 					IsActive = false;
-					if (((BreakoutPersistentGameMode) LevelReference.EngineReference.PeristentGameMode).CurrentLevel == 0)
-						++((BreakoutPersistentGameMode) LevelReference.EngineReference.PeristentGameMode).CurrentLevel;
-					LevelReference.EngineReference.RegisterEvent(new SwitchLevelEvent<SwitchLevelParams>(new SwitchLevelParams(this, LevelReference.EngineReference.Levels[(int) ((BreakoutPersistentGameMode) LevelReference.EngineReference.PeristentGameMode).CurrentLevel ])));
+					if (((BreakoutPersistentGameMode) LevelReference.EngineReference.PersistentGameMode).CurrentLevel == 0)
+						++((BreakoutPersistentGameMode) LevelReference.EngineReference.PersistentGameMode).CurrentLevel;
+					LevelReference.EngineReference.RegisterEvent(new SwitchLevelEvent<SwitchLevelParams>(new SwitchLevelParams(this, LevelReference.EngineReference.Levels[(int) ((BreakoutPersistentGameMode) LevelReference.EngineReference.PersistentGameMode).CurrentLevel ])));
 				}
 				if (LevelRef.Menu[SelectedIndex].DisplayedString == "Mute Sounds")
 				{

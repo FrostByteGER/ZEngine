@@ -54,24 +54,26 @@ namespace SFML_Breakout
 				}
 
 				((BreakoutGameMode)LevelReference.GameMode).Player.Score += Score;
+				((BreakoutGameLevel) LevelReference).UpdateHighscoreText(((BreakoutGameMode) LevelReference.GameMode).Player.Score);
 
 
 				var newAlpha = Math.Max(0.0f, Math.Min(1.0f, (float)Hitpoints / MaxHitpoints));
 				CollisionShape.CollisionShapeColor = new Color(CollisionShape.CollisionShapeColor.R, CollisionShape.CollisionShapeColor.G, CollisionShape.CollisionShapeColor.B, (byte)Math.Floor(newAlpha == 1.0f ? 255 : newAlpha * 256.0f));
 				if (Hitpoints <= 0)
 				{
-					Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>" + "FUUUUUUUUUUUUUUUCKING BLOCK");
 					((BreakoutGameMode)LevelReference.GameMode).Blocks.Remove(this);
-					PowerUp pow = ((BreakoutGameMode)LevelReference.GameMode).GetRandomPowerUp();
+					if (EngineMath.EngineRandom.NextDouble() > 0.75)
+					{
+						PowerUp pow = ((BreakoutGameMode)LevelReference.GameMode).GetRandomPowerUp();
 
-					pow.Position = ((BoxShape)CollisionShape).GetMid(Position);
-					pow.CollisionShape.ShowCollisionShape = true;
+						pow.Position = ((BoxShape)CollisionShape).GetMid(Position);
+						pow.CollisionShape.ShowCollisionShape = true;
 
-					LevelReference.EngineReference.PhysicsEngine.AddActorToGroup("PowerUp", pow);
-					LevelReference.EngineReference.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, pow, LevelReference.LevelID)));
+						LevelReference.EngineReference.PhysicsEngine.AddActorToGroup("PowerUp", pow);
+						LevelReference.EngineReference.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, pow, LevelReference.LevelID)));
+					}
+
 					LevelReference.EngineReference.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, this)));
-
-					Console.WriteLine(">>>>>>>>>>>>>>>>>>" + ((BreakoutGameMode)LevelReference.GameMode).Blocks.Count + " remaining");
 				}
 			}
 		}

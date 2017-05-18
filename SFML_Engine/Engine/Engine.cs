@@ -20,7 +20,7 @@ namespace SFML_Engine.Engine
 
 	    public GameInfo GameInfo { get; set; } = new GameInfo();
 
-	    public PersistentGameMode PeristentGameMode { get; set; } = new PersistentGameMode();
+	    public PersistentGameMode PersistentGameMode { get; set; } = new PersistentGameMode();
 
 	    public uint EngineWindowHeight { get; set; }
         public uint EngineWindowWidth { get; set; }
@@ -187,12 +187,7 @@ namespace SFML_Engine.Engine
 				}
                 FramesRendered++;
             }
-
-
-			foreach (var level in Levels)
-	        {
-		        level.OnGameEnd();
-	        }
+		    ActiveLevel.OnGameEnd();
 			ShutdownEngine();
         }
 

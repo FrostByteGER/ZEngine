@@ -26,8 +26,8 @@ namespace SFML_Breakout
 
 		public override void Apply()
 		{	
-
 			// Must be reactivated by Level reset
+			// ^Done
 			LevelReference.EngineReference.PhysicsEngine.RemoveCollidablePartner("Blocks", "Balls");
 			LevelReference.EngineReference.PhysicsEngine.RemoveCollidablePartner("Balls", "Blocks");
 		}

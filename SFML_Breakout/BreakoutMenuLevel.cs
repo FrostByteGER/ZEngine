@@ -28,7 +28,6 @@ namespace SFML_Breakout
 
 		public void InitiateMenu()
 		{
-			MainGameFont = new Font(StartBreakout.MountainDewMode ? "Assets/SFML_Breakout/comic.ttf" : "Assets/SFML_Breakout/arial.ttf");
 			MainLogo.Font = MainGameFont;
 			MainLogo.DisplayedString = "Pong";
 			MainLogo.CharacterSize = 100;
@@ -80,7 +79,7 @@ namespace SFML_Breakout
 			RegisterActor(AllowSound);
 			RegisterActor(ExitGame);
 			RegisterActor(HighScoreText);
-			HighScoreText.DisplayedString = "Highscore: " + ((BreakoutPersistentGameMode) EngineReference.PeristentGameMode).AlltimeHighScore;
+			HighScoreText.DisplayedString = "Highscore: " + ((BreakoutPersistentGameMode) EngineReference.PersistentGameMode).AlltimeHighScore;
 
 			base.OnLevelLoad();
 		}
