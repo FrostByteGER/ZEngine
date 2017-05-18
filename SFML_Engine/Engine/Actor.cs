@@ -200,6 +200,16 @@ namespace SFML_Engine.Engine
 			Components.Clear();
 		}
 
+		public ActorComponent GetComponent(Type actorComponent)
+		{
+			return Components.Find(ac => ac.GetType() == actorComponent);
+		}
+
+		public List<ActorComponent> GetComponents(Type actorComponent)
+		{
+			return Components.FindAll(ac => ac.GetType() == actorComponent);
+		}
+
 		public ActorInformation GenerateActorInformation()
 		{
 			return new ActorInformation(ActorID, LevelID, Position, Rotation, Scale, Origin, Movable, Velocity, MaxVelocity,
