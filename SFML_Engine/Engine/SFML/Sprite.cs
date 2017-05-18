@@ -18,7 +18,7 @@ namespace SFML_Engine.Engine.SFML
         /// See also the note on coordinates and undistorted rendering in SFML.Graphics.Transformable.
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public class Sprite : Transformable, Drawable
+        public class Sprite : Actor, Drawable
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

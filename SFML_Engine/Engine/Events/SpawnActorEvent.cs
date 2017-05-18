@@ -1,6 +1,6 @@
 ﻿namespace SFML_Engine.Engine.Events
 {
-	public class SpawnActorEvent<T> : EngineEvent<T> where T : SpawnActorParams
+	public class SpawnActorEvent<T> : EngineEvent<T> where T : SpawnActorEventParams
 	{
 		public SpawnActorEvent(T parameters) : base(parameters)
 		{

@@ -2,7 +2,7 @@
 
 namespace SFML_Engine.Engine
 {
-    public interface IActorable : ICollidable, IPhysicsProperties, ITickable
+    public interface IActorable : ICollidable, ITransformable, IPhysicsProperties, ITickable
     {
         
     }

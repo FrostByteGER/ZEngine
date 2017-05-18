@@ -1,13 +1,14 @@
 ﻿using System.Numerics;
-using SFML.Graphics;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Physics
 {
     public interface ITransformable
     {
-	    Transformable Transform { get; set; }
+
         bool Movable { get; set; }
+        Vector2f Velocity { get; set; }
+        Vector2f Acceleration { get; set; }
 
 	    void Move(float x, float y);
 	    void MoveAbsolute(float x, float y);
