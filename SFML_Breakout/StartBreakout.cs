@@ -76,6 +76,7 @@ namespace SFML_Breakout
 			playerPad.Position = new Vector2f(engine.EngineWindowWidth / 2.0f - playerPad.CollisionShape.CollisionBounds.X / 2.0f, engine.EngineWindowHeight - playerPad.CollisionShape.CollisionBounds.Y * 2.0f);
 			playerPad.CollisionShape.ShowCollisionShape = true;
 			playerPad.CollisionShape.Position = playerPad.Position;
+			playerPad.Friction = 0.01f;
 			var comp = new ActorComponent();
 			playerPad.AddComponent(comp);
 
@@ -118,6 +119,10 @@ namespace SFML_Breakout
 
 			var testlvl = new Level();
 			var gameMode = new BreakoutGameMode();
+			gameMode.AddPowerUp(new PowerUpDup());
+			gameMode.AddPowerUp(new PowerUpPadSizeInc());
+			gameMode.AddPowerUp(new PuwerUpPadSizeDec());
+
 			testlvl.GameMode = gameMode;
 			engine.RegisterLevel(testlvl);
 			testlvl.RegisterActor(topBorder);

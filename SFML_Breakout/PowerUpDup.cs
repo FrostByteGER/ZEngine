@@ -12,6 +12,19 @@ namespace SFML_Breakout
 {
 	class PowerUpDup : PowerUp
 	{
+
+		public PowerUpDup()
+		{
+			CollisionShape.CollisionShapeColor = new SFML.Graphics.Color(0, 255, 0);
+		}
+
+		public PowerUpDup(PowerUpDup p)
+		{
+			Velocity = p.Velocity;
+			CollisionShape = new SphereShape(p.CollisionShape.CollisionBounds.X);
+			CollisionShape.CollisionShapeColor = p.CollisionShape.CollisionShapeColor;
+		}
+
 		public override void Apply()
 		{
 
@@ -31,5 +44,11 @@ namespace SFML_Breakout
 			LevelReference.EngineReference.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, newBall, LevelReference.LevelID)));
 			
 		}
+
+		public override object Clone()
+		{
+			return new PowerUpDup(this);
+		}
+
 	}
 }

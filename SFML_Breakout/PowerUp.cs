@@ -10,14 +10,18 @@ using System.Threading.Tasks;
 
 namespace SFML_Breakout
 {
-	class PowerUp : SpriteActor
+	public class PowerUp : SpriteActor ,ICloneable
 	{
-
-
 		public PowerUp()
 		{
 			Velocity = new Vector2f(0f, 75f);
 			CollisionShape = new SphereShape(10);
+		}
+
+		public PowerUp(PowerUp p)
+		{
+			Velocity = p.Velocity;
+			CollisionShape = new SphereShape(p.CollisionShape.CollisionBounds.X);
 		}
 
 		public override void IsOverlapping(Actor actor)
@@ -39,6 +43,11 @@ namespace SFML_Breakout
 		public virtual void Apply()
 		{
 
+		}
+
+		public virtual object Clone()
+		{
+			return new PowerUp(this);
 		}
 	}
 }

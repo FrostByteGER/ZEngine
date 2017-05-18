@@ -16,9 +16,6 @@ namespace SFML_Engine.Engine.Physics
 
 		private Dictionary<string, List<string>> OverlapPartner = new Dictionary<string, List<string>>();
 
-
-		//var accounts = new Dictionary<string, double>();
-
 		internal void PhysicsTick(float deltaTime, ref List<Actor> actors)
         {
 			// move Actors

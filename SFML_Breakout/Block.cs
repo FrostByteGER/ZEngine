@@ -53,17 +53,24 @@ namespace SFML_Breakout
 				{
 					//TODO
 
-					PowerUp pow;
+					PowerUp pow = ((BreakoutGameMode)LevelReference.GameMode).GetRandomPowerUp();
 
-					if (EngineMath.EngineRandom.NextDouble() > 0.5)
+					//double choose = EngineMath.EngineRandom.NextDouble();
+
+					/*
+					if (choose < 0.3)
 					{
 						pow = new PowerUpDup();
 					}
+					else if(choose < 0.6)
+					{
+						pow = new PowerUpPadSizeInc();
+					}
 					else
 					{
-						pow = new PowerUpInc();
+						pow = new PowerUpDec();
 					}
-
+					*/
 					//PowerUpDup pow = new PowerUpDup();
 
 					pow.Position = ((BoxShape)CollisionShape).GetMid(Position);

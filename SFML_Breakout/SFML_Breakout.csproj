@@ -111,7 +111,8 @@
     </Compile>
     <Compile Include="PowerUp.cs" />
     <Compile Include="PowerUpDup.cs" />
-    <Compile Include="PowerUpInc.cs" />
+    <Compile Include="PowerUpPadSizeInc.cs" />
+    <Compile Include="PuwerUpPadSizeDec.cs" />
     <Compile Include="StartBreakout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
