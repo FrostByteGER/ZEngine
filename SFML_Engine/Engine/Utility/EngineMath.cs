@@ -3,7 +3,7 @@ using System.Numerics;
 using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;
-using Vector3 = Microsoft.Xna.Framework.Vector3;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SFML_Engine.Engine.Utility
 {
@@ -53,12 +53,11 @@ namespace SFML_Engine.Engine.Utility
 		/// </summary>
 		/// <param name="degAngles"></param>
 		/// <returns></returns>
-		public static Vector3 DegreesToRadians(Vector3 degAngles)
+		public static Vector2 DegreesToRadians(Vector2 degAngles)
 		{
 			float x = (float)Math.PI * degAngles.X / 180.0f;
 			float y = (float)Math.PI * degAngles.Y / 180.0f;
-			float z = (float)Math.PI * degAngles.Z / 180.0f;
-			return new Vector3(x, y, z);
+			return new Vector2(x, y);
 		}
 
 		/// <summary>
@@ -100,12 +99,11 @@ namespace SFML_Engine.Engine.Utility
 		/// </summary>
 		/// <param name="radAngles"></param>
 		/// <returns></returns>
-		public static Vector3 RadiansToDegrees(Vector3 radAngles)
+		public static Vector2 RadiansToDegrees(Vector2 radAngles)
 		{
 			float x = (float) (radAngles.X * (180.0 / Math.PI));
 			float y = (float) (radAngles.Y * (180.0 / Math.PI));
-			float z = (float) (radAngles.Z * (180.0 / Math.PI));
-			return new Vector3(x, y, z);
+			return new Vector2(x, y);
 		}
 
 		/// <summary>
@@ -139,12 +137,11 @@ namespace SFML_Engine.Engine.Utility
 		/// <param name="radY"></param>
 		/// <param name="radZ"></param>
 		/// <returns></returns>
-		public static Vector3 RadiansToDegreesBt(float radX, float radY, float radZ)
+		public static Vector2 RadiansToDegreesBt(float radX, float radY)
 		{
 			float x = (float) (radX * (180.0 / Math.PI));
 			float y = (float) (radY * (180.0 / Math.PI));
-			float z = (float) (radZ * (180.0 / Math.PI));
-			return new Vector3(x, y, z);
+			return new Vector2(x, y);
 		}
 
 		/// <summary>
@@ -178,110 +175,33 @@ namespace SFML_Engine.Engine.Utility
 		/// </summary>
 		/// <param name="source">The vector to convert</param>
 		/// <returns></returns>
-		public static Vector2f Vec3ToVec2f(Vector3 source)
+		public static Vector2f Vec3ToVec2f(Vector2 source)
 		{
 			return new Vector2f(source.X, source.Y);
 		}
 
 		/// <summary>
-		/// Converts a SFML float vector to BulletSharp float Vector3.
+		/// Converts a SFML float vector to BulletSharp float Vector2.
 		/// </summary>
 		/// <param name="source">The vector to convert</param>
 		/// <returns></returns>
-		public static Vector3 Vec2fToVec3(Vector2f source)
+		public static Vector2 Vec2fToVec2(Vector2f source)
 		{
-			return new Vector3(source.X, source.Y, 0.0f);
+			return new Vector2(source.X, source.Y);
 		}
 
+		
 		/// <summary>
-		/// Converts a BulletSharp Quaternion to Euler angles in degrees. Returns all 3 axis as a BulletSharp vector.
-		/// </summary>
-		/// <param name="quat">The quaternion to convert</param>
-		public static Vector3 QuatToEulerDegreesBt(Quaternion quat)
-		{
-			double w = quat.W;
-			double x = quat.X;
-			double y = quat.Y;
-			double z = quat.Z;
-			double sqw = w * w;
-			double sqx = x * x;
-			double sqy = y * y;
-			double sqz = z * z;
-			float ez = (float) Math.Atan2(2.0 * (x * y + z * w), sqx - sqy - sqz + sqw);
-			float ex = (float) Math.Atan2(2.0 * (y * z + x * w), -sqx - sqy + sqz + sqw);
-			float ey = (float) Math.Asin(-2.0 * (x * z - y * w));
-			return RadiansToDegreesBt(ex, ey, ez);
-		}
-
-		/// <summary>
-		/// Converts a BulletSharp Quaternion to Euler angles in radians. Returns all 3 axis as a BulletSharp vector.
-		/// </summary>
-		/// <param name="quat">The quaternion to convert</param>
-		public static Vector3 QuatToEulerRadiansBt(Quaternion quat)
-		{
-			double w = quat.W;
-			double x = quat.X;
-			double y = quat.Y;
-			double z = quat.Z;
-			double sqw = w * w;
-			double sqx = x * x;
-			double sqy = y * y;
-			double sqz = z * z;
-			float ez = (float) Math.Atan2(2.0 * (x * y + z * w), sqx - sqy - sqz + sqw);
-			float ex = (float) Math.Atan2(2.0 * (y * z + x * w), -sqx - sqy + sqz + sqw);
-			float ey = (float) Math.Asin(-2.0 * (x * z - y * w));
-			return new Vector3(ex, ey, ez);
-		}
-
-		/// <summary>
-		/// Converts a BulletSharp Quaternion to Euler angles in degrees. Only returns the Z axis as in SFML theres only one rotation axis.
-		/// </summary>
-		/// <param name="quat">The quaternion to convert</param>
-		public static float QuatToEulerDegrees(Quaternion quat)
-		{
-			double w = quat.W;
-			double x = quat.X;
-			double y = quat.Y;
-			double z = quat.Z;
-			double sqw = w * w;
-			double sqx = x * x;
-			double sqy = y * y;
-			double sqz = z * z;
-			float ez = (float) Math.Atan2(2.0 * (x * y + z * w), sqx - sqy - sqz + sqw);
-			return RadiansToDegrees(ez);
-		}
-
-		/// <summary>
-		/// Converts a BulletSharp Quaternion to Euler angles in radians. Only returns the Z axis as in SFML theres only one rotation axis.
-		/// </summary>
-		/// <param name="quat">The quaternion to convert</param>
-		/// <returns></returns>
-		public static float QuatToEulerRadians(Quaternion quat)
-		{
-			double w = quat.W;
-			double x = quat.X;
-			double y = quat.Y;
-			double z = quat.Z;
-			double sqw = w * w;
-			double sqx = x * x;
-			double sqy = y * y;
-			double sqz = z * z;
-			float ez = (float) Math.Atan2(2.0 * (x * y + z * w), sqx - sqy - sqz + sqw);
-			return ez;
-		}
-
-		/*
-		/// <summary>
+		/// TODO: Implement!
 		/// Generates a transform matrix from a SFML Vector2f position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Matrix TransformFromPosRotScaleBt(Vector2f position, float angle, Vector2f scale)
+		public static Matrix TransformFromPosRotScaleVc(Vector2f position, float angle, Vector2f scale)
 		{
-			return Matrix.Translation(position.X, position.Y, 0.0f) * Matrix.RotationZ(DegreesToRadians(angle)) *
-			       Matrix.Scaling(scale.X, scale.Y, 1.0f);
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -351,6 +271,5 @@ namespace SFML_Engine.Engine.Utility
 			};
 			return t;
 		}
-		*/
 	}
 }

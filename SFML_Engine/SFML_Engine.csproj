@@ -138,7 +138,6 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
-    <Compile Include="Engine\Physics\CollisionTypes.cs" />
     <Compile Include="Engine\Physics\OverlapComponent.cs" />
     <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\Physics\CollisionComponent.cs" />
@@ -158,6 +157,7 @@
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
     <Compile Include="Engine\Game\SpriteComponent.cs" />
+    <Compile Include="Engine\Physics\VelcroPhysicsEngine.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />

@@ -7,9 +7,8 @@ using SFML_Engine.Engine;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 using VelcroPhysics.Factories;
-using VelcroPhysics.Utils;
 
-namespace VelcroTest
+namespace BulletTest
 {
 	public class VelcroTest
 	{
@@ -27,6 +26,11 @@ namespace VelcroTest
 			var groundSprite = new RectangleShape(new Vector2f(200, 20));
 			groundSprite.FillColor = Color.White;
 			groundSprite.Origin = groundSprite.Size / 2.0f;
+
+			var groundSprite3 = new RectangleShape(new Vector2f(5, 5));
+			groundSprite3.FillColor = Color.White;
+			groundSprite3.Origin = groundSprite3.Size / 2.0f;
+			groundSprite3.Position = new Vector2f(0, 100);
 
 			// Full extent, no half extent!
 			var boxSprite = new RectangleShape(new Vector2f(20, 20));
@@ -89,6 +93,7 @@ namespace VelcroTest
 					renderwindow.Draw(triggerBoxSprite);
 					renderwindow.Draw(groundSprite);
 					renderwindow.Draw(boxSprite);
+					renderwindow.Draw(groundSprite3);
 					renderwindow.Display();
 					Clock.StopRender();
 				}

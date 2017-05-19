@@ -5,7 +5,7 @@ using SFML.Window;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Game
 {
     public class PlayerController : Transformable, ITickable, IGameInterface
     {

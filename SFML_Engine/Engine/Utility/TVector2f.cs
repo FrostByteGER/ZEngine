@@ -5,7 +5,7 @@ using SFML.System;
 namespace SFML_Engine.Engine.Utility
 {
 	/// <summary>
-	/// Wrapper class for SFML Vector2f. Allows conversion to Vector2f and Vector3 as well as many operations like +, -, *, /, ==, !=, >, <, >= and <=
+	/// Wrapper class for SFML Vector2f. Allows conversion to Vector2f and Vector2 as well as many operations like +, -, *, /, ==, !=, >, <, >= and <=
 	/// </summary>
 	public class TVector2f
 	{
@@ -51,7 +51,7 @@ namespace SFML_Engine.Engine.Utility
 			Vec2f = vec.Vec2f;
 		}
 
-		public TVector2f(Vector3 vec)
+		public TVector2f(Vector2 vec)
 		{
 			Vec2f = new Vector2f(vec.X, vec.Y);
 		}
@@ -83,14 +83,14 @@ namespace SFML_Engine.Engine.Utility
 			return new TVector2f(vec);
 		}
 
-		public static implicit operator TVector2f(Vector3 vec)
+		public static implicit operator TVector2f(Vector2 vec)
 		{
 			return new TVector2f(vec);
 		}
 
-		public static implicit operator Vector3(TVector2f vec)
+		public static implicit operator Vector2(TVector2f vec)
 		{
-			return new Vector3(vec.Vec2f.X, vec.Vec2f.Y, 0.0f);
+			return new Vector2(vec.Vec2f.X, vec.Vec2f.Y);
 		}
 
 		public static TVector2f operator +(TVector2f a, float b)
@@ -118,12 +118,12 @@ namespace SFML_Engine.Engine.Utility
 			return new TVector2f(a + b.Vec2f);
 		}
 
-		public static TVector2f operator +(TVector2f a, Vector3 b)
+		public static TVector2f operator +(TVector2f a, Vector2 b)
 		{
 			return new TVector2f(a.X + b.X, a.Y + b.Y);
 		}
 
-		public static TVector2f operator +(Vector3 a, TVector2f b)
+		public static TVector2f operator +(Vector2 a, TVector2f b)
 		{
 			return new TVector2f(a.X + b.X, a.Y + b.Y);
 		}
@@ -153,12 +153,12 @@ namespace SFML_Engine.Engine.Utility
 			return new TVector2f(a - b.Vec2f);
 		}
 
-		public static TVector2f operator -(TVector2f a, Vector3 b)
+		public static TVector2f operator -(TVector2f a, Vector2 b)
 		{
 			return new TVector2f(a.X - b.X, a.Y - b.Y);
 		}
 
-		public static TVector2f operator -(Vector3 a, TVector2f b)
+		public static TVector2f operator -(Vector2 a, TVector2f b)
 		{
 			return new TVector2f(a.X - b.X, a.Y - b.Y);
 		}
@@ -188,12 +188,12 @@ namespace SFML_Engine.Engine.Utility
 			return new TVector2f(a.X / b.X, a.Y / b.Y);
 		}
 
-		public static TVector2f operator /(TVector2f a, Vector3 b)
+		public static TVector2f operator /(TVector2f a, Vector2 b)
 		{
 			return new TVector2f(a.X / b.X, a.Y / b.Y);
 		}
 
-		public static TVector2f operator /(Vector3 a, TVector2f b)
+		public static TVector2f operator /(Vector2 a, TVector2f b)
 		{
 			return new TVector2f(a.X / b.X, a.Y / b.Y);
 		}
@@ -223,12 +223,12 @@ namespace SFML_Engine.Engine.Utility
 			return new TVector2f(a.X * b.X, a.Y * b.Y);
 		}
 
-		public static TVector2f operator *(TVector2f a, Vector3 b)
+		public static TVector2f operator *(TVector2f a, Vector2 b)
 		{
 			return new TVector2f(a.X * b.X, a.Y * b.Y);
 		}
 
-		public static TVector2f operator *(Vector3 a, TVector2f b)
+		public static TVector2f operator *(Vector2 a, TVector2f b)
 		{
 			return new TVector2f(a.X * b.X, a.Y * b.Y);
 		}
@@ -259,12 +259,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X == b.X && a.Y == b.Y;
 		}
 
-		public static bool operator ==(Vector3 a, TVector2f b)
+		public static bool operator ==(Vector2 a, TVector2f b)
 		{
 			return a.X == b.X && a.Y == b.Y;
 		}
 
-		public static bool operator ==(TVector2f a, Vector3 b)
+		public static bool operator ==(TVector2f a, Vector2 b)
 		{
 			return a.X == b.X && a.Y == b.Y;
 		}
@@ -295,12 +295,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X != b.X && a.Y != b.Y;
 		}
 
-		public static bool operator !=(Vector3 a, TVector2f b)
+		public static bool operator !=(Vector2 a, TVector2f b)
 		{
 			return a.X != b.X && a.Y != b.Y;
 		}
 
-		public static bool operator !=(TVector2f a, Vector3 b)
+		public static bool operator !=(TVector2f a, Vector2 b)
 		{
 			return a.X != b.X && a.Y != b.Y;
 		}
@@ -330,12 +330,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X > b.X && a.Y > b.Y;
 		}
 
-		public static bool operator >(Vector3 a, TVector2f b)
+		public static bool operator >(Vector2 a, TVector2f b)
 		{
 			return a.X > b.X && a.Y > b.Y;
 		}
 
-		public static bool operator >(TVector2f a, Vector3 b)
+		public static bool operator >(TVector2f a, Vector2 b)
 		{
 			return a.X > b.X && a.Y > b.Y;
 		}
@@ -365,12 +365,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X < b.X && a.Y < b.Y;
 		}
 
-		public static bool operator <(Vector3 a, TVector2f b)
+		public static bool operator <(Vector2 a, TVector2f b)
 		{
 			return a.X < b.X && a.Y < b.Y;
 		}
 
-		public static bool operator <(TVector2f a, Vector3 b)
+		public static bool operator <(TVector2f a, Vector2 b)
 		{
 			return a.X < b.X && a.Y < b.Y;
 		}
@@ -400,12 +400,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X >= b.X && a.Y >= b.Y;
 		}
 
-		public static bool operator >=(Vector3 a, TVector2f b)
+		public static bool operator >=(Vector2 a, TVector2f b)
 		{
 			return a.X >= b.X && a.Y >= b.Y;
 		}
 
-		public static bool operator >=(TVector2f a, Vector3 b)
+		public static bool operator >=(TVector2f a, Vector2 b)
 		{
 			return a.X >= b.X && a.Y >= b.Y;
 		}
@@ -435,12 +435,12 @@ namespace SFML_Engine.Engine.Utility
 			return a.X <= b.X && a.Y <= b.Y;
 		}
 
-		public static bool operator <=(Vector3 a, TVector2f b)
+		public static bool operator <=(Vector2 a, TVector2f b)
 		{
 			return a.X <= b.X && a.Y <= b.Y;
 		}
 
-		public static bool operator <=(TVector2f a, Vector3 b)
+		public static bool operator <=(TVector2f a, Vector2 b)
 		{
 			return a.X <= b.X && a.Y <= b.Y;
 		}

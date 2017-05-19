@@ -2,6 +2,7 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Physics;
 
 namespace SFML_Breakout

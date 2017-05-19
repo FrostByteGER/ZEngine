@@ -1,4 +1,6 @@
-﻿namespace SFML_Engine.Engine.UI
+﻿using SFML_Engine.Engine.Game;
+
+namespace SFML_Engine.Engine.UI
 {
 	public class UIActor : Actor
 	{

@@ -5,7 +5,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Game
 {
 	public class ActorComponent : ITickable, ITransformable, Drawable, IDestroyable
 	{

@@ -1,8 +1,4 @@
-﻿using System;
-using SFML.Graphics;
-using SFML_Engine.Engine.Physics;
-
-namespace SFML_Engine.Engine
+﻿namespace SFML_Engine.Engine.Game
 {
     public class SpriteActor : Actor
     {

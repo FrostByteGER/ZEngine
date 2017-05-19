@@ -1,11 +1,13 @@
-﻿using SFML.Graphics;
-using SFML_Engine.Engine.Physics;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SFML.Graphics;
+using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
+using VelcroPhysics.Collision.ContactSystem;
+using VelcroPhysics.Dynamics;
 using Quaternion = System.Numerics.Quaternion;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Game
 {
 	public class Actor : IActorable, IGameInterface, Drawable, IDestroyable, ICollidable
 	{
@@ -49,6 +51,32 @@ namespace SFML_Engine.Engine
 					//if (colComp != null) colComp.CollisionCallbacksEnabled = value;
 				}
 			}
+		}
+
+		public bool CanOverlap
+		{
+			get { throw new NotImplementedException(); }
+			set { throw new NotImplementedException(); }
+		}
+
+		public void OnCollide(Fixture otherActor, Fixture self, Contact contactInfo)
+		{
+			
+		}
+
+		public void OnCollideEnd(Fixture otherActor, Fixture self, Contact contactInfo)
+		{
+			
+		}
+
+		public void OnOverlapBegin(Fixture otherActor, Fixture self, Contact contactInfo)
+		{
+			
+		}
+
+		public void OnOverlapEnd(Fixture otherActor, Fixture self, Contact contactInfo)
+		{
+			
 		}
 
 		public TVector2f Position
@@ -146,19 +174,6 @@ namespace SFML_Engine.Engine
 			{
 				component.Tick(deltaTime);
 			}
-		}
-
-		public virtual void AfterCollision(Actor actor)
-		{
-			Console.WriteLine(">>>AFTER COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
-		}
-		public virtual void BeforeCollision(Actor actor)
-		{
-			Console.WriteLine(">>>BEFORE COLLISION: " + ActorName + " WITH " + actor.ActorName + " <<<");
-		}
-		public virtual void IsOverlapping(Actor actor)
-		{
-			Console.WriteLine(">>>OVERLAPPING: " + ActorName + " WITH " + actor.ActorName + " <<<");
 		}
 
 		public override bool Equals(object obj)

@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
