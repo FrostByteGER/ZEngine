@@ -1,5 +1,4 @@
 ﻿using System;
-using BulletSharp;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Utility

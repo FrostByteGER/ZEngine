@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Breakout", "SFML_Breakout\SFML_Breakout.csproj", "{765B4479-41B9-45FA-A9F3-3A96A0CACD75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletTest", "BulletTest\BulletTest.csproj", "{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelcroTest", "VelcroTest\VelcroTest.csproj", "{61D0AFFC-4F6B-491F-9B42-E8ED813C93BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{5603FFEA-9B95-4218-A4E5-9F0970F96478}"
 EndProject

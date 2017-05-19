@@ -2,7 +2,6 @@
 using SFML_Engine.Engine.Physics;
 using System;
 using System.Collections.Generic;
-using BulletSharp;
 using SFML_Engine.Engine.Utility;
 using Quaternion = System.Numerics.Quaternion;
 
@@ -334,8 +333,7 @@ namespace SFML_Engine.Engine
 			return GenerateFullName();
 		}
 
-		public virtual void OnCollide(ManifoldPoint cp, CollisionObjectWrapper collider1, int partId1, int index1,
-			CollisionObjectWrapper collider2, int partId2, int index2)
+		public virtual void OnCollide()
 		{
 			
 		}

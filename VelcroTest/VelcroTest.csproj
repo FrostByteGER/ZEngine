@@ -39,9 +39,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BulletSharp">
-      <HintPath>..\SFML_Engine\Lib\BulletSharp.dll</HintPath>
-    </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TriNityGER.SFML.Net.2.3.2.8\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
@@ -67,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BulletTest.cs" />
+    <Compile Include="VelcroTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

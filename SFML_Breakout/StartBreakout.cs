@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BulletSharp;
 using SFML.System;
 using SFML_Engine.Engine;
-using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Breakout

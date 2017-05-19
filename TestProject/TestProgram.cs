@@ -1,5 +1,4 @@
 ﻿using System;
-using BulletSharp;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Physics;

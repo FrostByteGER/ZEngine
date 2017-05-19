@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BulletSharp;
 using SFML.System;
 using SFML_Engine.Engine.Utility;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BulletSharp;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
