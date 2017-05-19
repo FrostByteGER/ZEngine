@@ -7,7 +7,7 @@ namespace SFML_Engine.Engine.Physics
 {
 	public class BulletPhysicsEngine
 	{
-
+		/*
 		public CollisionConfiguration CollisionConfig { get; private set; }
 		public CollisionDispatcher CollisionDispatcher { get; private set; }
 		public BroadphaseInterface Broadphase { get; private set; }
@@ -567,6 +567,6 @@ namespace SFML_Engine.Engine.Physics
 			return ConstructOverlapBody(parent, t, shape);
 		}
 
-
+	*/
 	}
 }

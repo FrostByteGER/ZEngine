@@ -6,7 +6,7 @@ namespace SFML_Engine.Engine.Physics
 {
 	public class OverlapComponent : PhysicsComponent
 	{
-
+		/*
 		public GhostObject OverlapBody { get; set; }
 
 		public sealed override CollisionObject CollisionObject
@@ -86,6 +86,6 @@ namespace SFML_Engine.Engine.Physics
 		{
 			base.Destroy(disposing);
 			OverlapBody.Dispose();
-		}
+		}*/
 	}
 }

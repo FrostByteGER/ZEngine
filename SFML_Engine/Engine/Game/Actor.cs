@@ -46,7 +46,7 @@ namespace SFML_Engine.Engine
 				foreach (var comp in Components)
 				{
 					var colComp = (PhysicsComponent) comp;
-					if (colComp != null) colComp.CollisionCallbacksEnabled = value;
+					//if (colComp != null) colComp.CollisionCallbacksEnabled = value;
 				}
 			}
 		}

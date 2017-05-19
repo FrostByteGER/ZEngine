@@ -86,6 +86,7 @@ namespace SFML_Engine.Engine
 					{
 						foreach (var comp in actor.Components)
 						{
+							/*
 							if (comp is CollisionComponent)
 							{
 								if (comp.ComponentName == "Test")
@@ -117,7 +118,7 @@ namespace SFML_Engine.Engine
 
 									renderWindow.Draw(CollisionCircle);
 								}
-							}
+							}*/
 						}
 						renderWindow.Draw(actor);
 					}
@@ -155,7 +156,7 @@ namespace SFML_Engine.Engine
 				var physComp = (PhysicsComponent)comp;
 				if (physComp != null)
 				{
-					EngineReference.PhysicsEngine.UnregisterPhysicsComponent(physComp);
+					//EngineReference.PhysicsEngine.UnregisterPhysicsComponent(physComp);
 				}
 			}
 			return removal;

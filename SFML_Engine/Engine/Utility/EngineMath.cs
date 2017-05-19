@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Numerics;
+using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace SFML_Engine.Engine.Utility
 {
@@ -267,6 +270,7 @@ namespace SFML_Engine.Engine.Utility
 			return ez;
 		}
 
+		/*
 		/// <summary>
 		/// Generates a transform matrix from a SFML Vector2f position, scale and a angle in degrees.
 		/// </summary>
@@ -347,5 +351,6 @@ namespace SFML_Engine.Engine.Utility
 			};
 			return t;
 		}
+		*/
 	}
 }

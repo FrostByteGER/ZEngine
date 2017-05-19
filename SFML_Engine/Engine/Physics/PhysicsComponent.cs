@@ -4,9 +4,9 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
 {
-	public abstract class PhysicsComponent : ActorComponent, ICollidable
+	public abstract class PhysicsComponent : ActorComponent
 	{
-
+		/*
 		public virtual Color ComponentColor { get; set; } = new Color((byte) EngineMath.EngineRandom.Next(255),
 			(byte) EngineMath.EngineRandom.Next(255), (byte) EngineMath.EngineRandom.Next(255));
 
@@ -44,6 +44,6 @@ namespace SFML_Engine.Engine.Physics
 		{
 			ParentActor.OnCollide(cp, collider1, partId1, index1, collider2, partId2, index2);
 			//Console.WriteLine("COLLISION: " + (collider1.CollisionObject.UserObject as ActorComponent) + " WITH " + (collider2.CollisionObject.UserObject as ActorComponent));
-		}
+		}*/
 	}
 }

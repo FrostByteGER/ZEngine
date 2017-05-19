@@ -16,7 +16,7 @@ namespace SFML_Engine.Engine
 				//Origin = new Vector2f(bounds.Width / 2.0f, bounds.Height / 2.0f);
 	        }
         }
-
+		/*
 	    public SpriteActor(SpriteComponent spriteComp)
 	    {
 		    SetRootComponent(new CollisionComponent(BulletPhysicsEngine.ConstructRigidBody(null, 1.0f, Matrix.Identity, new BoxShape(spriteComp.Sprite.TextureRect.Width, spriteComp.Sprite.TextureRect.Height, 1.0f))));
@@ -40,6 +40,6 @@ namespace SFML_Engine.Engine
 			base.Tick(deltaTime);
 	        if (Components.Count < 2) return;
 			Console.WriteLine(RootComponent.Origin + " | " + Components[1].Origin);
-        }
+        }*/
     }
 }

@@ -43,7 +43,7 @@ namespace SFML_Engine.Engine
 
 		// Engine Managers
 		public PhysicsEngine GUIPhysicsEngine { get; private set; }
-		public BulletPhysicsEngine PhysicsEngine { get; private set; }
+		public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 		public AssetManager AssetManager { get; set; }
 
@@ -90,8 +90,7 @@ namespace SFML_Engine.Engine
 
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();
-	        PhysicsEngine = new BulletPhysicsEngine();
-	        PhysicsEngine.InitPhysicsEngine();
+	        PhysicsEngine = new PhysicsEngine();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref engineWindow);
 
@@ -161,7 +160,7 @@ namespace SFML_Engine.Engine
 
 				// Tick Physics
 				EngineCoreClock.StartPhysics();
-				PhysicsEngine.PhysicsTick(FrameDelta);
+				//PhysicsEngine.PhysicsTick(FrameDelta);
 				EngineCoreClock.StopPhysics();
 
 				// Tick Level and Actors
@@ -203,7 +202,7 @@ namespace SFML_Engine.Engine
         {
             Console.WriteLine("Shutting down Engine!");
 	        GUIPhysicsEngine.Shutdown();
-	        PhysicsEngine.ShutdownPhysicsEngine();
+	       // PhysicsEngine.ShutdownPhysicsEngine();
 			foreach (var level in Levels)
 			{
 				level.CollisionCircle.Dispose();

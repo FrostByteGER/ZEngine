@@ -8,7 +8,7 @@ namespace SFML_Engine.Engine.Physics
 	public class CollisionComponent : PhysicsComponent
 	{
 		
-		public RigidBody CollisionBody { get; private set; }
+		/*public RigidBody CollisionBody { get; private set; }
 
 		public sealed override CollisionObject CollisionObject
 		{
@@ -99,11 +99,6 @@ namespace SFML_Engine.Engine.Physics
 			
 		}
 
-		public CollisionComponent(RigidBody collisionBody)
-		{
-			CollisionObject = collisionBody ?? throw new ArgumentNullException(nameof(collisionBody));
-		}
-
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -113,6 +108,6 @@ namespace SFML_Engine.Engine.Physics
 		{
 			base.Destroy(disposing);
 			CollisionBody.Dispose();
-		}
+		}*/
 	}
 }
