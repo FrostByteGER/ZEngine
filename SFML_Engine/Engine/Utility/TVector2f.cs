@@ -23,6 +23,9 @@ namespace SFML_Engine.Engine.Utility
 			set => Vec2f = new Vector2f(Vec2f.X, value);
 		}
 
+		public static float UnitX { get; } = 1.0f;
+		public static float UnitY { get; } = 1.0f;
+
 		public float Length => (float) Math.Sqrt(Vec2f.X * Vec2f.X + Vec2f.Y * Vec2f.Y);
 
 		public float LengthSquared => Vec2f.X * Vec2f.X + Vec2f.Y * Vec2f.Y;

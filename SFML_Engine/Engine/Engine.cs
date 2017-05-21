@@ -14,14 +14,14 @@ namespace SFML_Engine.Engine
 	public class Engine
     {
 
-		private static Engine instance;
-		public static Engine Instance => instance ?? (instance = new Engine());
+		private static Engine _instance;
+		public static Engine Instance => _instance ?? (_instance = new Engine());
 
-		private RenderWindow engineWindow;
+		private RenderWindow _engineWindow;
         public RenderWindow EngineWindow
         {
-            get => engineWindow;
-	        private set => engineWindow = value;
+            get => _engineWindow;
+	        private set => _engineWindow = value;
         }
 
 
@@ -36,14 +36,12 @@ namespace SFML_Engine.Engine
 
 		// Core Engine
 		public GameInfo GameInfo { get; set; } = new GameInfo();
-		public List<Level> Levels { get; private set; } = new List<Level>();
 	    public Level ActiveLevel { get; internal set; }
 		public uint LevelIDCounter { get; private set; } = 0;
 
 
 		// Engine Managers
 		public PhysicsEngine GUIPhysicsEngine { get; private set; }
-		public PhysicsEngine PhysicsEngine { get; private set; }
 		public InputManager InputManager { get; set; }
 		public AssetManager AssetManager { get; set; }
 
@@ -82,17 +80,16 @@ namespace SFML_Engine.Engine
         public void InitEngine()
         {
 	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLVersion);
-            engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
-            engineWindow.Closed += OnEngineWindowClose;
-            engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
-			engineWindow.SetFramerateLimit(FPSLimit);
-			engineWindow.SetKeyRepeatEnabled(true);
+            _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
+            _engineWindow.Closed += OnEngineWindowClose;
+            _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
+			_engineWindow.SetFramerateLimit(FPSLimit);
+			_engineWindow.SetKeyRepeatEnabled(true);
 
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();
-	        PhysicsEngine = new PhysicsEngine();
 			InputManager = new InputManager();
-			InputManager.RegisterEngineInput(ref engineWindow);
+			InputManager.RegisterEngineInput(ref _engineWindow);
 
         }
 
@@ -104,16 +101,11 @@ namespace SFML_Engine.Engine
 
 		private void InitEngineLoop()
         {
-            engineWindow.SetActive();
+            _engineWindow.SetActive();
 			if (ActiveLevel == null)
 	        {
-		        if (Levels.Count == 0)
-		        {
-					Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
-					return;
-				}
-		        LoadLevel(Levels[0]);
-
+				Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
+				return;
 	        }
             EngineTick();
         }
@@ -127,40 +119,15 @@ namespace SFML_Engine.Engine
 				if (FrameAccumulator >= 1.0f)
 				{
 					FramesPerSecond = EngineCoreClock.FrameCount / FrameAccumulator;
-					engineWindow.SetTitle(GameInfo.GameFullName + " FPS: " + FramesPerSecond + " | Frame: " + FrameDelta + " | Render: " + EngineCoreClock.RenderAverage + " | Update: " + EngineCoreClock.UpdateAverage + " | Physics: " + EngineCoreClock.PhysicsAverage);
+					_engineWindow.SetTitle(GameInfo.GameFullName + " FPS: " + FramesPerSecond + " | Frame: " + FrameDelta + " | Render: " + EngineCoreClock.RenderAverage + " | Update: " + EngineCoreClock.UpdateAverage + " | Physics: " + EngineCoreClock.PhysicsAverage);
 
 					FrameAccumulator = 0.0f;
 					EngineCoreClock.Reset();
 				}
 
-				/*
-	            var t = 1;
-	            Accumulator += FrameDelta;
-				while (Accumulator >= Timestep)
-                {
-	                if (!ActiveLevel.LevelTicking)
-	                {
-		                continue;
-	                }
-					var actors = ActiveLevel.Actors;
-
-					EngineCoreClock.StartPhysics();
-					//PhysicsEngine.PhysicsTick(Timestep, ref actors);
-	                BulletPhysicsEngine.PhysicsTick(FrameDelta);
-					EngineCoreClock.StopPhysics();
-
-					EngineCoreClock.StartUpdate();
-					ActiveLevel.LevelTick(FrameDelta);
-	                EngineCoreClock.StopUpdate();
-	                //Console.WriteLine(t);
-                    Accumulator -= Timestep;
-	                ++t;
-                }
-				*/
-
 				// Tick Physics
 				EngineCoreClock.StartPhysics();
-				//PhysicsEngine.PhysicsTick(FrameDelta);
+				ActiveLevel.PhysicsEngine.PhysicsTick(FrameDelta);
 				EngineCoreClock.StopPhysics();
 
 				// Tick Level and Actors
@@ -169,15 +136,15 @@ namespace SFML_Engine.Engine
 				ActiveLevel.LevelTick(FrameDelta);
 				EngineCoreClock.StopUpdate();
 
-				engineWindow.Clear();
-                engineWindow.DispatchEvents();
+				_engineWindow.Clear();
+                _engineWindow.DispatchEvents();
 
 				// Render Level and Actors
 	            EngineCoreClock.StartRender();
-	            ActiveLevel.LevelDraw(ref engineWindow);
+	            ActiveLevel.LevelDraw(ref _engineWindow);
 				EngineCoreClock.StopRender();
 
-				engineWindow.Display();
+				_engineWindow.Display();
 
 				// Execute all pending events in the Queue
 				while (EngineEvents.Count > 0)
@@ -190,11 +157,7 @@ namespace SFML_Engine.Engine
 				}
             }
 
-
-			foreach (var level in Levels)
-	        {
-		        level.OnGameEnd();
-	        }
+	        ActiveLevel.OnGameEnd();
 			ShutdownEngine();
         }
 
@@ -202,21 +165,18 @@ namespace SFML_Engine.Engine
         {
             Console.WriteLine("Shutting down Engine!");
 	        GUIPhysicsEngine.Shutdown();
-	       // PhysicsEngine.ShutdownPhysicsEngine();
-			foreach (var level in Levels)
+			// PhysicsEngine.ShutdownPhysicsEngine();
+
+			ActiveLevel.CollisionCircle.Dispose();
+	        ActiveLevel.CollisionRectangle.Dispose();
+			foreach (var actor in ActiveLevel.Actors)
 			{
-				level.CollisionCircle.Dispose();
-				level.CollisionRectangle.Dispose();
-				foreach (var actor in level.Actors)
-				{
-					//TODO: Dispose components!
-					actor.Dispose();
-				}
-				level.Actors.Clear();
-				
+				//TODO: Dispose components!
+				actor.Dispose();
 			}
-	        Levels.Clear();
-			engineWindow.Dispose();
+	        ActiveLevel.Actors.Clear();
+
+			_engineWindow.Dispose();
         }
 
         private void OnEngineWindowClose(object sender, EventArgs args)
@@ -230,59 +190,23 @@ namespace SFML_Engine.Engine
 
 		public void CloseEngineWindow()
 		{
-			engineWindow.Close();
+			_engineWindow.Close();
 			RequestTermination = true;
 		}
 
-		public void ShutdownLevel(uint levelID)
+		public void ShutdownLevel()
 	    {
-		    FindLevel(levelID).OnGameEnd();
-	    }
-
-
-
-        public void RegisterLevel(Level level)
-        {
-	        if (Levels.Contains(level)) return;
-            level.EngineReference = this;
-			level.LevelID = ++LevelIDCounter;
-			Levels.Add(level);
-        }
-
-	    public bool UnregisterLevel(Level level)
-	    {
-		    return Levels.Remove(level);
-	    }
-
-		public bool UnregisterLevel(uint levelID)
-		{
-			Console.WriteLine("Trying to remove Level with LevelID: #" + levelID);
-			var level = FindLevel(levelID);
-			return UnregisterLevel(level);
-		}
-
-	    public bool LoadLevel(uint levelID)
-	    {
-		    return LoadLevel(FindLevel(levelID));
+		    ActiveLevel.OnGameEnd();
 	    }
 
 		public bool LoadLevel(Level level)
 		{
-			if (level == null) return false;
-			if (level.LevelID > 0 && level != ActiveLevel)
-			{
-				ActiveLevel?.OnGameEnd();
-				ActiveLevel = level;
-				level.OnLevelLoad();
-				level.LevelTicking = true;
-				return true;
-			}
-			if (level == ActiveLevel)
-			{
-				return false;
-			}
-			RegisterLevel(level);
-			return LoadLevel(level);
+			if (level == null || level == ActiveLevel) return false;
+			ActiveLevel?.OnGameEnd();
+			ActiveLevel = level;
+			level.OnLevelLoad();
+			level.LevelTicking = true;
+			return true;
 		}
 
 		public void RegisterEvent(EngineEvent e)
@@ -291,10 +215,5 @@ namespace SFML_Engine.Engine
 			e.EventID = ++EventIDCounter;
 			EngineEvents.Enqueue(e);
 	    }
-
-		public Level FindLevel(uint id)
-		{
-			return Levels.Find(x => x.LevelID == id);
-		}
 	}
 }

@@ -7,23 +7,48 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Game
 {
-	public class ActorComponent : ITickable, ITransformable, Drawable, IDestroyable
+	public class ActorComponent : ITickable, ITransformable, IDestroyable
 	{
 		public uint ComponentID { get; internal set; } = 0;
 		public string ComponentName { get; set; } = "Component";
 		public Actor ParentActor { get; set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
-		//TODO: Implement
-		public ActorComponent ParentComponent { get; set; } = null;
-
-		//TODO: Implement
-		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
-
-		public Transformable Transform { get; set; } = new Transformable();
-
-		public bool Visible { get; set; } = true;
+		public Transformable ComponentTransform { get; set; } = new Transformable();
 		public bool CanTick { get; set; } = true;
+
+		public virtual TVector2f Position
+		{
+			get => IsRootComponent ? (TVector2f)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
+			set => ComponentTransform.Position = value;
+		}
+
+		public virtual float Rotation
+		{
+			get => IsRootComponent ? ComponentTransform.Rotation : ParentActor.Rotation + ComponentTransform.Rotation;
+			set => ComponentTransform.Rotation = value;
+		}
+
+		public virtual TVector2f Scale
+		{
+			get => IsRootComponent ? (TVector2f)ComponentTransform.Scale : new TVector2f(ParentActor.Scale.X * ComponentTransform.Scale.X, ParentActor.Scale.Y * ComponentTransform.Scale.Y);
+			set => ComponentTransform.Scale = value;
+		}
+
+		public virtual TVector2f Origin
+		{
+			get => IsRootComponent ? (TVector2f)ComponentTransform.Origin : ParentActor.Origin;
+			set => ComponentTransform.Origin = value;
+		}
+
+		protected TVector2f _componentBounds;
+		public virtual TVector2f ComponentBounds
+		{
+			get => IsRootComponent ? _componentBounds : ParentActor.ActorBounds;
+			set => _componentBounds = value;
+		}
+
+		public bool Movable { get; set; }
 
 		public virtual void Tick(float deltaTime)
 		{
@@ -45,65 +70,6 @@ namespace SFML_Engine.Engine.Game
 			newParent.AddComponent(this);
 		}
 
-		public virtual TVector2f Position
-		{
-			get => IsRootComponent ? (TVector2f)Transform.Position : ParentActor.Position + Transform.Position;
-			set => Transform.Position = value;
-		}
-
-		public virtual TVector2f LocalPosition
-		{
-			get => Transform.Position;
-			set => Transform.Position = value;
-		}
-
-		public virtual float Rotation
-		{
-			get => IsRootComponent ? Transform.Rotation : ParentActor.Rotation + Transform.Rotation;
-			set => Transform.Rotation = value;
-		}
-
-		public virtual float LocalRotation
-		{
-			get => Transform.Rotation;
-			set => Transform.Rotation = value;
-		}
-
-		public virtual TVector2f Scale
-		{
-			get => IsRootComponent ? (TVector2f)Transform.Scale : new TVector2f(ParentActor.Scale.X * Transform.Scale.X, ParentActor.Scale.Y * Transform.Scale.Y);
-			set => Transform.Scale = value;
-		}
-
-		public virtual TVector2f LocalScale
-		{
-			get => Transform.Scale;
-			set => Transform.Scale = value;
-		}
-
-		public virtual TVector2f Origin
-		{
-			get => IsRootComponent ? (TVector2f)Transform.Origin : ParentActor.Origin;
-			set => Transform.Origin = value;
-		}
-
-		public virtual TVector2f LocalOrigin
-		{
-			get => Transform.Origin;
-			set => Transform.Origin = value;
-		}
-
-		private TVector2f componentBounds;
-		public virtual TVector2f ComponentBounds
-		{
-			get => IsRootComponent ? componentBounds : ParentActor.ActorBounds;
-			set => componentBounds = value;
-		}
-
-		public Transformable ComponentTransform { get; set; } = new Transformable();
-
-		public bool Movable { get; set; }
-
 		public virtual void OnActorComponentDestroy()
 		{
 			Console.WriteLine("DESTROYING ACTORCOMPONENT: " + ComponentName + "-" + ComponentID);
@@ -111,42 +77,32 @@ namespace SFML_Engine.Engine.Game
 
 		public virtual void Move(float x, float y)
 		{
-			LocalPosition += new TVector2f(x, y);
+			Position += new TVector2f(x, y);
 		}
 
-		public void MoveAbsolute(float x, float y)
+		public void SetPosition(float x, float y)
 		{
 			Position = new TVector2f(x, y);
 		}
 
 		public virtual void Move(TVector2f position)
 		{
-			LocalPosition += position;
+			Position += position;
 		}
 
-		public void MoveAbsolute(TVector2f position)
+		public void SetPosition(TVector2f position)
 		{
 			Position = position;
 		}
 
 		public void Rotate(float angle)
 		{
-			LocalRotation += angle;
+			Rotation += angle;
 		}
 
-		public void Rotate(Quaternion angle)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void RotateAbsolute(float angle)
+		public void SetRotation(float angle)
 		{
 			Rotation = angle;
-		}
-
-		public void RotateAbsolute(Quaternion angle)
-		{
-			throw new NotImplementedException();
 		}
 
 		public void ScaleActor(float x, float y)
@@ -159,19 +115,14 @@ namespace SFML_Engine.Engine.Game
 			Scale += scale;
 		}
 
-		public void ScaleAbsolute(float x, float y)
+		public void SetScale(float x, float y)
 		{
 			Scale = new TVector2f(x, y);
 		}
 
-		public void ScaleAbsolute(TVector2f scale)
+		public void SetScale(TVector2f scale)
 		{
 			Scale = scale;
-		}
-
-		public virtual void Draw(RenderTarget target, RenderStates states)
-		{
-			
 		}
 
 		private void Dispose(bool disposing)
@@ -187,11 +138,7 @@ namespace SFML_Engine.Engine.Game
 
 		public virtual void Destroy(bool disposing)
 		{
-			Transform.Dispose();
-			foreach (var comp in Components)
-			{
-				comp.Dispose();
-			}
+			ComponentTransform.Dispose();
 		}
 
 		public override string ToString()

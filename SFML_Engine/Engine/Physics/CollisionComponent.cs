@@ -9,11 +9,6 @@ namespace SFML_Engine.Engine.Physics
 	{
 		public override Color ComponentColor { get; set; } = new Color((byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255), (byte)EngineMath.EngineRandom.Next(255));
 
-		public override TVector2f CollisionBounds
-		{
-			get { throw new NotImplementedException(); }
-		}
-
 		public CollisionComponent()
 		{
 			

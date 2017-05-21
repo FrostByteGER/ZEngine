@@ -1,25 +1,45 @@
-﻿using System;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Collision.Filtering;
-using VelcroPhysics.Collision.Narrowphase;
 using VelcroPhysics.Dynamics;
+using VelcroPhysics.Primitives;
+using Transform = VelcroPhysics.Primitives.Transform;
 
 namespace SFML_Engine.Engine.Physics
 {
-	public abstract class PhysicsComponent : ActorComponent, ICollidable
+	public abstract class PhysicsComponent : RenderComponent, ICollidable
 	{
 		
 		public virtual Color ComponentColor { get; set; } = new Color((byte) EngineMath.EngineRandom.Next(255),
 			(byte) EngineMath.EngineRandom.Next(255), (byte) EngineMath.EngineRandom.Next(255));
 
 		public virtual Body CollisionBody { get; set; }
-		public abstract TVector2f CollisionBounds { get; }
 
-		public int CollisionResponseChannels { get; set; } = Convert.ToInt32(Category.All);
-		public int CollisionType { get; set; } = Convert.ToInt32(Category.Cat1);
+		public override TVector2f ComponentBounds
+		{
+			get
+			{
+				var aabb = new AABB();
+				foreach (var fixture in CollisionBody.FixtureList)
+				{
+					var aabbLocal = new AABB();
+					var transformable = new Transform();
+					CollisionBody.GetTransform(out transformable);
+					fixture.Shape.ComputeAABB(out aabbLocal, ref transformable, 0);
+					aabb.Combine(ref aabbLocal);
+				}
+				_componentBounds = aabb.Extents;
+				return aabb.Extents;
+			}
+
+			set { } // Since CollisionBounds are computed and handled by Velcro, we will do nothing here.
+		}
+
+		public Category CollisionResponseChannels { get; set; } = Category.All;
+		public Category CollisionType { get; set; } = Category.Cat1;
 
 		private bool _canOverlap = false;
 		public bool CanOverlap
@@ -69,31 +89,42 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public virtual void OnCollide(Fixture otherActor, Fixture self, Contact contactInfo)
+		public override TVector2f Position
+		{
+			get => CollisionBody.Position;
+			set => CollisionBody.Position = value;
+		}
+
+		public override float Rotation
+		{
+			get => CollisionBody.Rotation;
+			set => CollisionBody.Rotation = value;
+		}
+
+		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public virtual void OnCollideEnd(Fixture otherActor, Fixture self, Contact contactInfo)
+		public virtual void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public virtual void OnOverlapBegin(Fixture otherActor, Fixture self, Contact contactInfo)
+		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public virtual void OnOverlapEnd(Fixture otherActor, Fixture self, Contact contactInfo)
+		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-
-		public override TVector2f ComponentBounds
+		public override void Draw(RenderTarget target, RenderStates states)
 		{
-			get => CollisionBounds;
-			set { } // Since CollisionBounds are computed and handled by Bullet, we will do nothing here.
+			base.Draw(target, states);
+			//TODO: Draw Global CollisionShape.
 		}
 	}
 }

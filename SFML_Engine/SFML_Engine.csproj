@@ -134,6 +134,11 @@
     <Compile Include="Engine\Game\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
     <Compile Include="Engine\Game\IDestroyable.cs" />
+    <Compile Include="Engine\Game\LevelInfo.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
+    <Compile Include="Engine\Graphics\RenderComponent.cs" />
+    <Compile Include="Engine\Graphics\Material.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
@@ -156,7 +161,7 @@
     <Compile Include="Engine\Game\PlayerController.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
-    <Compile Include="Engine\Game\SpriteComponent.cs" />
+    <Compile Include="Engine\Graphics\SpriteComponent.cs" />
     <Compile Include="Engine\Physics\VelcroPhysicsEngine.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\UI\UIActor.cs" />

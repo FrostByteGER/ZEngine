@@ -12,7 +12,7 @@ namespace SFML_Engine.Engine.Game
 	    
 	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
-        public View PlayerCamera { get; set; } = new View(new Vector2f(0, 0), new Vector2f(401, 401));
+        public View PlayerCamera { get; set; } = new View(new TVector2f(), new TVector2f(400.0f));
 
 		public Level LevelReference { get; set; } = null;
 
@@ -21,13 +21,13 @@ namespace SFML_Engine.Engine.Game
 		public InputManager Input { get; set; }
 	    public bool CanTick { get; set; } = true;
 
-		private bool isActive = true;
+		private bool _isActive = true;
 		public bool IsActive
 	    {
-		    get => isActive;
+		    get => _isActive;
 			set
 			{
-				isActive = value;
+				_isActive = value;
 				if (value && LevelReference != null)
 				{
 					RegisterInput();

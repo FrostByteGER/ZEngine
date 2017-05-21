@@ -49,10 +49,6 @@ namespace SFML_Engine.Engine.Game
 		public GameLevelState(Time timestamp, List<Actor> actors)
 		{
 			Timestamp = timestamp;
-			foreach(var actor in actors)
-			{
-				ActorStates.Add(actor.GenerateActorInformation());
-			}
 		}
 	}
 }

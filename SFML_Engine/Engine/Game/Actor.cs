@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SFML.Graphics;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
@@ -9,7 +11,7 @@ using Quaternion = System.Numerics.Quaternion;
 
 namespace SFML_Engine.Engine.Game
 {
-	public class Actor : IActorable, IGameInterface, Drawable, IDestroyable, ICollidable
+	public class Actor : IActorable, IGameInterface, IDestroyable, ICollidable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
@@ -24,27 +26,48 @@ namespace SFML_Engine.Engine.Game
 		}
 
 		public bool Movable { get; set; } = true;
-		public TVector2f Velocity { get; set; }
-		public float MaxVelocity { get; set; } = -1.0f;
-		public TVector2f Acceleration { get; set; }
-		public float MaxAcceleration { get; set; } = -1f;
 
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
+		public TVector2f Velocity { get; set; }
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
+		public float MaxVelocity { get; set; } = -1.0f;
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
+		public TVector2f Acceleration { get; set; }
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
+		public float MaxAcceleration { get; set; } = -1f;
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
 		public float Friction = 0.0f;
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
 		public float Mass { get; set; } = 1.0f;
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		public virtual ActorComponent RootComponent { get; private set; } = null;
+		/// <summary>
+		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
+		/// </summary>
 		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval { get; internal set; } = false;
 		public bool Visible { get; set; } = true;
 		public bool CanTick { get; set; } = true;
-		private bool collisionCallbacksEnabled = true;
+		private bool _collisionCallbacksEnabled = true;
 		public bool CollisionCallbacksEnabled
 		{
-			get => collisionCallbacksEnabled;
+			get => _collisionCallbacksEnabled;
 			set
 			{
-				collisionCallbacksEnabled = value;
+				_collisionCallbacksEnabled = value;
 				foreach (var comp in Components)
 				{
 					var colComp = (PhysicsComponent) comp;
@@ -57,26 +80,6 @@ namespace SFML_Engine.Engine.Game
 		{
 			get { throw new NotImplementedException(); }
 			set { throw new NotImplementedException(); }
-		}
-
-		public void OnCollide(Fixture otherActor, Fixture self, Contact contactInfo)
-		{
-			
-		}
-
-		public void OnCollideEnd(Fixture otherActor, Fixture self, Contact contactInfo)
-		{
-			
-		}
-
-		public void OnOverlapBegin(Fixture otherActor, Fixture self, Contact contactInfo)
-		{
-			
-		}
-
-		public void OnOverlapEnd(Fixture otherActor, Fixture self, Contact contactInfo)
-		{
-			
 		}
 
 		public TVector2f Position
@@ -107,7 +110,6 @@ namespace SFML_Engine.Engine.Game
 		{
 		}
 
-
 		public virtual void Move(float x, float y)
 		{
 			RootComponent.Move(new TVector2f(x, y));
@@ -115,7 +117,7 @@ namespace SFML_Engine.Engine.Game
 
 		public void MoveAbsolute(float x, float y)
 		{
-			RootComponent.MoveAbsolute(new TVector2f(x, y));
+			RootComponent.SetPosition(new TVector2f(x, y));
 		}
 
 		public virtual void Move(TVector2f position)
@@ -123,29 +125,15 @@ namespace SFML_Engine.Engine.Game
 			RootComponent.Move(position);
 		}
 
-		public void MoveAbsolute(TVector2f position)
-		{
-			RootComponent.MoveAbsolute(position);
-		}
 
 		public void Rotate(float angle)
 		{
 			RootComponent.Rotate(angle);
 		}
 
-		public void Rotate(Quaternion angle)
-		{
-			throw new NotImplementedException();
-		}
-
 		public void RotateAbsolute(float angle)
 		{
-			RootComponent.RotateAbsolute(angle);
-		}
-
-		public void RotateAbsolute(Quaternion angle)
-		{
-			throw new NotImplementedException();
+			RootComponent.SetRotation(angle);
 		}
 
 		public void ScaleActor(float x, float y)
@@ -160,12 +148,12 @@ namespace SFML_Engine.Engine.Game
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			RootComponent.ScaleAbsolute(new TVector2f(x, y));
+			RootComponent.SetScale(new TVector2f(x, y));
 		}
 
 		public void ScaleAbsolute(TVector2f scale)
 		{
-			RootComponent.ScaleAbsolute(scale);
+			RootComponent.SetScale(scale);
 		}
 
 		public virtual void Tick(float deltaTime)
@@ -176,32 +164,24 @@ namespace SFML_Engine.Engine.Game
 			}
 		}
 
-		public override bool Equals(object obj)
+		public void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
-			return Equals((Actor) obj);
+
 		}
 
-		protected bool Equals(Actor other)
+		public void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
-			return ActorID == other.ActorID;
+
 		}
 
-		public override int GetHashCode()
+		public void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
-			return (int) ActorID;
+
 		}
 
-		public static bool operator ==(Actor left, Actor right)
+		public void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
-			return Equals(left, right);
-		}
 
-		public static bool operator !=(Actor left, Actor right)
-		{
-			return !Equals(left, right);
 		}
 
 		public virtual void OnGameStart()
@@ -267,6 +247,38 @@ namespace SFML_Engine.Engine.Game
 			return true;
 		}
 
+		public T GetRootComponent<T>() where T : ActorComponent
+		{
+			return (T)RootComponent;
+		}
+
+		public ActorComponent GetComponent(uint componentID)
+		{
+			return Components.Find(comp => comp.ComponentID == componentID);
+		}
+
+		/// <summary>
+		/// Generic Version of GetComponent. Returns the component with the corresponding ID and casts it to T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="componentID"></param>
+		/// <returns></returns>
+		public T GetComponent<T>(uint componentID) where T : ActorComponent
+		{
+			return (T)Components.Find(comp => comp.ComponentID == componentID);
+		}
+
+		public T GetComponent<T>(Type t) where T : ActorComponent
+		{
+			return (T)Components.Find(comp => comp.GetType() == t);
+		}
+
+		public List<T> GetComponents<T>(Type t) where T : ActorComponent
+		{
+			return Components.FindAll(comp => comp.GetType() == t).Cast<T>().ToList();
+		}
+
+
 		public bool AddComponent(ActorComponent component)
 		{
 			if (Components.Contains(component)) return false;
@@ -297,12 +309,6 @@ namespace SFML_Engine.Engine.Game
 			Components.Clear();
 		}
 
-		public ActorInformation GenerateActorInformation()
-		{
-			return new ActorInformation(ActorID, LevelID, RootComponent.Position, RootComponent.Rotation, RootComponent.Scale, new TVector2f(), Movable, Velocity, MaxVelocity,
-				Acceleration, MaxAcceleration, Mass, Friction, HasGravity);
-		}
-
 		public virtual void OnActorDestroy()
 		{
 			Console.WriteLine("DESTROYING ACTOR: " + ActorName + "-" + ActorID);
@@ -311,15 +317,6 @@ namespace SFML_Engine.Engine.Game
 		public string GenerateFullName()
 		{
 			return ActorName + "-" + ActorID;
-		}
-
-		public void Draw(RenderTarget target, RenderStates states)
-		{
-			RootComponent.Draw(target, states);
-			foreach (var drawable in Components)
-			{
-				drawable.Draw(target, states);
-			}
 		}
 
 		private void Dispose(bool disposing)
@@ -348,9 +345,32 @@ namespace SFML_Engine.Engine.Game
 			return GenerateFullName();
 		}
 
-		public virtual void OnCollide()
+		public override bool Equals(object obj)
 		{
-			
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((Actor)obj);
+		}
+
+		protected bool Equals(Actor other)
+		{
+			return ActorID == other.ActorID;
+		}
+
+		public override int GetHashCode()
+		{
+			return (int)ActorID;
+		}
+
+		public static bool operator ==(Actor left, Actor right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(Actor left, Actor right)
+		{
+			return !Equals(left, right);
 		}
 	}
 }

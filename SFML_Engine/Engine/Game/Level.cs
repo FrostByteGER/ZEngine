@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
@@ -36,7 +37,9 @@ namespace SFML_Engine.Engine.Game
 
         public GameMode GameMode { get; set; } = new GameMode();
 
-	    internal bool LevelTicking { get; set; } = false;
+	    public VelcroPhysicsEngine PhysicsEngine { get; private set; } = new VelcroPhysicsEngine();
+
+		internal bool LevelTicking { get; set; } = false;
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
 
@@ -84,8 +87,11 @@ namespace SFML_Engine.Engine.Game
 				{
 					if (actor != null && actor.Visible)
 					{
+						var drawable = (RenderComponent)actor.RootComponent;
+						if (drawable != null) renderWindow.Draw(drawable);
 						foreach (var comp in actor.Components)
 						{
+							//TODO: Instead of drawing them in the order the components are arranged in the actor.Components array, get all possible and visible RenderComponents and draw them based on layers.
 							/*
 							if (comp is CollisionComponent)
 							{
@@ -120,7 +126,7 @@ namespace SFML_Engine.Engine.Game
 								}
 							}*/
 						}
-						renderWindow.Draw(actor);
+
 					}
 				}
 	        }
