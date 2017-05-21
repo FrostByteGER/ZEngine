@@ -1,8 +1,8 @@
 ﻿using System;
 using SFML.Graphics;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 

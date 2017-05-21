@@ -1,5 +1,4 @@
 ﻿using SFML.Graphics;
-using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
@@ -16,7 +15,20 @@ namespace SFML_Engine.Engine.Physics
 		public virtual Color ComponentColor { get; set; } = new Color((byte) EngineMath.EngineRandom.Next(255),
 			(byte) EngineMath.EngineRandom.Next(255), (byte) EngineMath.EngineRandom.Next(255));
 
-		public virtual Body CollisionBody { get; set; }
+
+		private Body _collisionBody;
+		public virtual Body CollisionBody
+		{
+			get => _collisionBody;
+			private set //TODO: Use or remove!
+			{
+				var collisionCallbacksEnabled = CollisionCallbacksEnabled;
+				CollisionCallbacksEnabled = false;
+				_collisionBody = value;
+				CollisionBody.IsSensor = _canOverlap;
+				CollisionCallbacksEnabled = collisionCallbacksEnabled;
+			}
+		}
 
 		public override TVector2f ComponentBounds
 		{
@@ -53,6 +65,7 @@ namespace SFML_Engine.Engine.Physics
 		}
 
 		private bool _collisionCallbacksEnabled = false;
+
 		public bool CollisionCallbacksEnabled
 		{
 			get => _collisionCallbacksEnabled;

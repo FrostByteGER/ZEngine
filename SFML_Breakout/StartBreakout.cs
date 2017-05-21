@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML.System;
-using SFML_Engine.Engine;
+using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 

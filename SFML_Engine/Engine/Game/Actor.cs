@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFML.Graphics;
-using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
-using Quaternion = System.Numerics.Quaternion;
 
 namespace SFML_Engine.Engine.Game
 {
@@ -268,14 +265,14 @@ namespace SFML_Engine.Engine.Game
 			return (T)Components.Find(comp => comp.ComponentID == componentID);
 		}
 
-		public T GetComponent<T>(Type t) where T : ActorComponent
+		public T GetComponent<T>() where T : ActorComponent
 		{
-			return (T)Components.Find(comp => comp.GetType() == t);
+			return (T)Components.Find(comp => comp.GetType() == typeof(T));
 		}
 
-		public List<T> GetComponents<T>(Type t) where T : ActorComponent
+		public List<T> GetComponents<T>() where T : ActorComponent
 		{
-			return Components.FindAll(comp => comp.GetType() == t).Cast<T>().ToList();
+			return Components.FindAll(comp => comp.GetType() == typeof(T)).Cast<T>().ToList();
 		}
 
 
@@ -332,12 +329,10 @@ namespace SFML_Engine.Engine.Game
 
 		public virtual void Destroy(bool disposing)
 		{
-			
 			foreach (var comp in Components)
 			{
 				comp.Dispose();
 			}
-			RootComponent.Dispose();
 		}
 
 		public override string ToString()

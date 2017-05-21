@@ -6,7 +6,15 @@ namespace SFML_Engine.Engine.Graphics
 	public class RenderComponent : ActorComponent, Drawable
 	{
 		public Material ComponentMaterial { get; set; } = new Material();
+
+		/// <summary>
+		/// Component Layer. Use to modify the draw order of components.
+		/// <para>Layers are sorted from front to back. So 0 is the front and Layers.MaxValue is the back. </para>
+		/// </summary>
+		public uint ComponentLayerID { get; set; } = 1;
+
 		public bool Visible { get; set; } = true;
+
 		/// <summary>
 		/// Call base implementation first for states setup.(Setting shader etc.)
 		/// </summary>

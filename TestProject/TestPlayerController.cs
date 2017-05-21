@@ -1,7 +1,6 @@
 ﻿using System;
 using SFML.System;
 using SFML.Window;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.Game;
 
 namespace TestProject
@@ -10,25 +9,25 @@ namespace TestProject
 	{
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
-			var gravity = LevelReference.EngineReference.PhysicsEngine.Gravity;
+			var gravity = LevelReference.PhysicsEngine.Gravity;
 			if (Input.APressed)
 			{
-				LevelReference.EngineReference.PhysicsEngine.Gravity += new Vector2f(-9.81f, 0.0f);
+				LevelReference.PhysicsEngine.Gravity += new Vector2f(-9.81f, 0.0f);
 			}else if (Input.DPressed)
 			{
-				LevelReference.EngineReference.PhysicsEngine.Gravity += new Vector2f(9.81f, 0.0f);
+				LevelReference.PhysicsEngine.Gravity += new Vector2f(9.81f, 0.0f);
 			}
 
 			if (Input.WPressed)
 			{
-				LevelReference.EngineReference.PhysicsEngine.Gravity += new Vector2f(0.0f, -9.81f);
+				LevelReference.PhysicsEngine.Gravity += new Vector2f(0.0f, -9.81f);
 			}
 			else if (Input.SPressed)
 			{
-				LevelReference.EngineReference.PhysicsEngine.Gravity += new Vector2f(0.0f, 9.81f);
+				LevelReference.PhysicsEngine.Gravity += new Vector2f(0.0f, 9.81f);
 			}
 
-			Console.WriteLine("Gravity set to: " + LevelReference.EngineReference.PhysicsEngine.Gravity);
+			Console.WriteLine("Gravity set to: " + LevelReference.PhysicsEngine.Gravity);
 		}
 	}
 }

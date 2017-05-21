@@ -8,7 +8,7 @@ using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine
+namespace SFML_Engine.Engine.Core
 {
 
 	public class Engine
@@ -127,7 +127,7 @@ namespace SFML_Engine.Engine
 
 				// Tick Physics
 				EngineCoreClock.StartPhysics();
-				ActiveLevel.PhysicsEngine.PhysicsTick(FrameDelta);
+				ActiveLevel.PhysicsEngine?.PhysicsTick(FrameDelta);
 				EngineCoreClock.StopPhysics();
 
 				// Tick Level and Actors
@@ -156,7 +156,6 @@ namespace SFML_Engine.Engine
 					}
 				}
             }
-
 	        ActiveLevel.OnGameEnd();
 			ShutdownEngine();
         }
@@ -165,16 +164,10 @@ namespace SFML_Engine.Engine
         {
             Console.WriteLine("Shutting down Engine!");
 	        GUIPhysicsEngine.Shutdown();
-			// PhysicsEngine.ShutdownPhysicsEngine();
 
-			ActiveLevel.CollisionCircle.Dispose();
-	        ActiveLevel.CollisionRectangle.Dispose();
-			foreach (var actor in ActiveLevel.Actors)
-			{
-				//TODO: Dispose components!
-				actor.Dispose();
-			}
-	        ActiveLevel.Actors.Clear();
+			Level.CollisionCircle.Dispose();
+	        Level.CollisionRectangle.Dispose();
+	        ActiveLevel.ShutdownLevel();
 
 			_engineWindow.Dispose();
         }
@@ -185,7 +178,6 @@ namespace SFML_Engine.Engine
             var window = (RenderWindow)sender;
             window.Close();
             RequestTermination = true;
-
         }
 
 		public void CloseEngineWindow()
@@ -194,15 +186,11 @@ namespace SFML_Engine.Engine
 			RequestTermination = true;
 		}
 
-		public void ShutdownLevel()
-	    {
-		    ActiveLevel.OnGameEnd();
-	    }
-
 		public bool LoadLevel(Level level)
 		{
 			if (level == null || level == ActiveLevel) return false;
 			ActiveLevel?.OnGameEnd();
+			ActiveLevel?.ShutdownLevel();
 			ActiveLevel = level;
 			level.OnLevelLoad();
 			level.LevelTicking = true;

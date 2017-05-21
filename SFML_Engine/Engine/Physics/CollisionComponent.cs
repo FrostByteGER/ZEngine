@@ -1,6 +1,4 @@
-﻿using System;
-using SFML.Graphics;
-using SFML.System;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics
@@ -11,7 +9,7 @@ namespace SFML_Engine.Engine.Physics
 
 		public CollisionComponent()
 		{
-			
+			CanOverlap = false;
 		}
 
 		public override void Tick(float deltaTime)

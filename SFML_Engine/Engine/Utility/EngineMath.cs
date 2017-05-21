@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;

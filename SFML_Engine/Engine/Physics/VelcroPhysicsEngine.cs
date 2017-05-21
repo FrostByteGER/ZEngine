@@ -1,6 +1,4 @@
-﻿using System;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Utility;
+﻿using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_Engine.Engine.Physics
@@ -43,6 +41,22 @@ namespace SFML_Engine.Engine.Physics
 				if (actor == null) continue;
 
 			}
+		}
+
+		public void UnregisterPhysicsComponent(PhysicsComponent comp)
+		{
+			PhysicsWorld.RemoveBody(comp.CollisionBody);
+		}
+
+		public CollisionComponent ConstructCollisionComponent()
+		{
+			var component = new CollisionComponent();
+			return component;
+		}
+
+		internal void ShutdownPhysicsEngine()
+		{
+			
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace SFML_Engine.Engine
     {
         public static void Main(string[] args)
         {
-	        Engine engine = Engine.Instance;
+	        Core.Engine engine = Core.Engine.Instance;
 	        engine.EngineWindowWidth = 800;
 	        engine.EngineWindowHeight = 600;
 			engine.InitEngine();

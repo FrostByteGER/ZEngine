@@ -1,4 +1,4 @@
-﻿namespace SFML_Engine.Engine
+﻿namespace SFML_Engine.Engine.Core
 {
 	public sealed class EngineInfo
 	{

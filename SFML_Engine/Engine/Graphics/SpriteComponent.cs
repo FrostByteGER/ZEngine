@@ -1,10 +1,8 @@
 using System;
 using SFML.Graphics;
-using SFML.System;
-using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine.Game
+namespace SFML_Engine.Engine.Graphics
 {
 	public class SpriteComponent : RenderComponent
 	{

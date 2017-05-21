@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SFML_Engine.Engine;
+using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 using VelcroPhysics.Factories;

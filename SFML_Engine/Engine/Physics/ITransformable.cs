@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Physics

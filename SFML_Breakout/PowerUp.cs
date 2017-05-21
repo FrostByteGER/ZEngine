@@ -1,5 +1,4 @@
 ﻿using SFML.System;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Game;
 

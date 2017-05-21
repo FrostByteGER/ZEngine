@@ -123,7 +123,7 @@
   <ItemGroup>
     <Compile Include="Engine\Game\Actor.cs" />
     <Compile Include="Engine\Game\ActorComponent.cs" />
-    <Compile Include="Engine\EngineInfo.cs" />
+    <Compile Include="Engine\Core\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
     <Compile Include="Engine\Events\UnpauseActorEvent.cs" />
     <Compile Include="Engine\Events\PauseActorEvent.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Game\SpriteActor.cs" />
-    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\Core\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Engine\Utility\TVector2f.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
