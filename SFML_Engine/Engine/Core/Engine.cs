@@ -192,6 +192,8 @@ namespace SFML_Engine.Engine.Core
 			ActiveLevel?.OnGameEnd();
 			ActiveLevel?.ShutdownLevel();
 			ActiveLevel = level;
+			level.EngineReference = this;
+			level.LevelLoaded = true;
 			level.OnLevelLoad();
 			level.LevelTicking = true;
 			return true;

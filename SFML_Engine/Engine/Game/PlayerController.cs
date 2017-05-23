@@ -28,11 +28,11 @@ namespace SFML_Engine.Engine.Game
 			set
 			{
 				_isActive = value;
-				if (value && LevelReference != null)
+				if (value && LevelReference != null && LevelReference.LevelLoaded)
 				{
 					RegisterInput();
 				}
-				else if(!value && LevelReference != null)
+				else if(!value && LevelReference != null && LevelReference.LevelLoaded)
 				{
 					UnregisterInput();
 				}

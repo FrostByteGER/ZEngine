@@ -3,6 +3,7 @@ using SFML.System;
 using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
+using VelcroPhysics.Dynamics;
 
 namespace TestProject
 {
@@ -26,11 +27,9 @@ namespace TestProject
 			
 
 			var testActor2 = new Actor();
-			var collisionShape2 = new BoxShape(50.0f);
-			var component2 = physics.ConstructCollisionComponent(0.0f, new Vector2f(10.0f, 0.0f), 0.0f, collisionShape2, (short)CollisionTypes.Static);
-			component2.CollisionCallbacksEnabled = false;
-			testActor2.SetRootComponent(component2);
+			var component2 = physics.ConstructRectangleCollisionComponent(testActor2, true, new TVector2f(10.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 1.0f, new TVector2f(50.0f), BodyType.Static);
 
+			/*
 			var testActor = new Actor();
 			var collisionShape = new BoxShape(50.0f);
 			var component = physics.ConstructCollisionComponent(1.0f, new Vector2f(0.0f, 0.0f), 43.0f, collisionShape, (short)CollisionTypes.Default);
@@ -56,15 +55,15 @@ namespace TestProject
 			var rightBorder = new Actor();
 			var rightColShape = new BoxShape(10.0f, 200.0f, 50.0f);
 			var rightComponent = physics.ConstructCollisionComponent(0.0f, new Vector2f(210.0f, 0.0f), 0.0f, rightColShape, (short)CollisionTypes.Default);
-			rightBorder.SetRootComponent(rightComponent);
+			rightBorder.SetRootComponent(rightComponent);*/
 
 			var player = new TestPlayerController();
 			level.RegisterActor(testActor2);
-			level.RegisterActor(testActor);
-			level.RegisterActor(bottomBorder);
-			level.RegisterActor(topBorder);
-			level.RegisterActor(leftBorder);
-			level.RegisterActor(rightBorder);
+			//level.RegisterActor(testActor);
+			//level.RegisterActor(bottomBorder);
+			//level.RegisterActor(topBorder);
+			//level.RegisterActor(leftBorder);
+			//level.RegisterActor(rightBorder);
 			level.RegisterPlayer(player);
 			engine.LoadLevel(level);
 

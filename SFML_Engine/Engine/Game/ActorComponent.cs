@@ -8,7 +8,7 @@ namespace SFML_Engine.Engine.Game
 	{
 		public uint ComponentID { get; internal set; } = 0;
 		public string ComponentName { get; set; } = "Component";
-		public Actor ParentActor { get; set; } = null;
+		public Actor ParentActor { get; internal set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
 		public TTransformable ComponentTransform { get; set; } = new TTransformable();

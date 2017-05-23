@@ -1,5 +1,8 @@
-﻿using SFML_Engine.Engine.Utility;
+﻿using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Utility;
+using VelcroPhysics.Collision.Filtering;
 using VelcroPhysics.Dynamics;
+using VelcroPhysics.Factories;
 
 namespace SFML_Engine.Engine.Physics
 {
@@ -8,10 +11,22 @@ namespace SFML_Engine.Engine.Physics
 		
 
 		public World PhysicsWorld { get; }
+
+		private TVector2f _gravity = new TVector2f(0.0f, 9.81f);
 		public TVector2f Gravity
 		{
-			get => PhysicsWorld.Gravity;
-			set => PhysicsWorld.Gravity = value;
+			get => PhysicsWorld != null ? (TVector2f)PhysicsWorld.Gravity : _gravity;
+			set
+			{
+				if (PhysicsWorld != null)
+				{
+					PhysicsWorld.Gravity = value;
+				}
+				else
+				{
+					_gravity = value;
+				}
+			}
 		}
 
 		public VelcroPhysicsEngine()
@@ -48,10 +63,69 @@ namespace SFML_Engine.Engine.Physics
 			PhysicsWorld.RemoveBody(comp.CollisionBody);
 		}
 
-		public CollisionComponent ConstructCollisionComponent()
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="parent">Parent Actor.</param>
+		/// <param name="asRootComponent">Wether this CollisionComponent shall be the RootComponent of the given parent actor.</param>
+		/// <param name="position">Position relative to Parent Actor.</param>
+		/// <param name="angle">Rotation relative to Parent Actor.</param>
+		/// <param name="scale">Scale relative to Parent Actor.</param>
+		/// <param name="mass">Mass in kg. of the Collision Component Collision Body.</param>
+		/// <param name="rectHalfExtents">Size of the Collision Components Collision Body.</param>
+		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
+		/// <returns></returns>
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType)
 		{
-			var component = new CollisionComponent();
-			return component;
+			var comp = new CollisionComponent();
+			if (asRootComponent)
+			{
+				parent.SetRootComponent(comp);
+			}
+			else
+			{
+				parent.AddComponent(comp);
+			}
+			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, rectHalfExtents.X * 2.0f, rectHalfExtents.Y * 2.0f, mass, comp.WorldPosition, EngineMath.DegreesToRadians(angle), bodyType, comp);
+			comp.SetLocalPosition(position);
+			comp.SetLocalRotation(angle);
+			comp.SetLocalScale(scale);
+			return comp;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="parent">Parent Actor.</param>
+		/// <param name="asRootComponent">Wether this CollisionComponent shall be the RootComponent of the given parent actor.</param>
+		/// <param name="position">Position relative to Parent Actor.</param>
+		/// <param name="angle">Rotation relative to Parent Actor.</param>
+		/// <param name="scale">Scale relative to Parent Actor.</param>
+		/// <param name="mass">Mass in kg. of the Collision Component Collision Body.</param>
+		/// <param name="rectHalfExtents">Size of the Collision Components Collision Body.</param>
+		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
+		/// <param name="collisionType">Collision Type of the Collision Component.</param>
+		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
+		/// <returns></returns>
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels)
+		{
+			var comp = new CollisionComponent();
+			if (asRootComponent)
+			{
+				parent.SetRootComponent(comp);
+			}
+			else
+			{
+				parent.AddComponent(comp);
+			}
+			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, rectHalfExtents.X * 2.0f, rectHalfExtents.Y * 2.0f, mass, new TVector2f(), EngineMath.DegreesToRadians(angle), bodyType, comp);
+			comp.SetLocalPosition(position);
+			comp.SetLocalRotation(angle);
+			comp.SetLocalScale(scale);
+			comp.CollisionType = collisionType;
+			comp.CollisionResponseChannels = collisionResponseChannels;
+			return comp;
 		}
 
 		internal void ShutdownPhysicsEngine()

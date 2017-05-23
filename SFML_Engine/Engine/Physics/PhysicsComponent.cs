@@ -20,7 +20,7 @@ namespace SFML_Engine.Engine.Physics
 		public virtual Body CollisionBody
 		{
 			get => _collisionBody;
-			private set //TODO: Use or remove!
+			set //TODO: Use or remove!
 			{
 				var collisionCallbacksEnabled = CollisionCallbacksEnabled;
 				CollisionCallbacksEnabled = false;
@@ -60,7 +60,8 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				_canOverlap = value;
-				CollisionBody.IsSensor = value;
+				if(CollisionBody != null) CollisionBody.IsSensor = value;
+
 			}
 		}
 

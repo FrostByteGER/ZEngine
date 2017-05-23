@@ -40,6 +40,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public VelcroPhysicsEngine PhysicsEngine { get; private set; } = new VelcroPhysicsEngine();
 
+	    public bool LevelLoaded { get; set; } = false;
 		internal bool LevelTicking { get; set; } = false;
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
@@ -136,6 +137,10 @@ namespace SFML_Engine.Engine.Game
 	    public virtual void OnLevelLoad()
 	    {
 		    Console.WriteLine("Level #" + LevelID + " Loaded");
+		    foreach (var pc in Players)
+		    {
+			    pc.IsActive = pc.IsActive; // If Player Controllers were set to active, register their input now.
+		    }
 		    OnGameStart();
 	    }
 
@@ -198,6 +203,7 @@ namespace SFML_Engine.Engine.Game
 
 	    internal virtual void ShutdownLevel()
 	    {
+		    LevelLoaded = false;
 		    PhysicsEngine.ShutdownPhysicsEngine();
 			Dispose();
 	    }

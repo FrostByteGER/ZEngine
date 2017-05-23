@@ -1,6 +1,6 @@
 ﻿using SFML_Engine.Engine.Utility;
 
-namespace SFML_Engine.Engine.Physics
+namespace SFML_Engine.Engine.Game
 {
     public interface ITransformable
     {
