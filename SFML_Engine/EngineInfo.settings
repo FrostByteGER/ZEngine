@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="EngineName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">King Engine</Value>
+      <Value Profile="(Default)">Trigger Engine</Value>
     </Setting>
     <Setting Name="EngineVersionPrefix" Type="System.String" Scope="Application">
       <Value Profile="(Default)">v</Value>

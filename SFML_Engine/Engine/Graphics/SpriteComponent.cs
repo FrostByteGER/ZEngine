@@ -18,32 +18,32 @@ namespace SFML_Engine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f Position
+		public override TVector2f LocalPosition
 		{
-			get => base.Position;
+			get => base.LocalPosition;
 			set
 			{
-				base.Position = value;
+				base.LocalPosition = value;
 				Sprite.Position = value;
 			}
 		}
 
-		public override float Rotation
+		public override float LocalRotation
 		{
-			get => base.Rotation;
+			get => base.LocalRotation;
 			set
 			{
-				base.Rotation = value;
+				base.LocalRotation = value;
 				Sprite.Rotation = value;
 			}
 		}
 
-		public override TVector2f Scale
+		public override TVector2f LocalScale
 		{
-			get => base.Scale;
+			get => base.LocalScale;
 			set
 			{
-				base.Scale = value;
+				base.LocalScale = value;
 				Sprite.Scale = value;
 			}
 		}

@@ -25,7 +25,7 @@ namespace SFML_Engine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("King Engine")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Trigger Engine")]
         public string EngineName {
             get {
                 return ((string)(this["EngineName"]));

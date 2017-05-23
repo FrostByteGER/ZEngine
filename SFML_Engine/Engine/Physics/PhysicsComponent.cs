@@ -102,13 +102,13 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public override TVector2f Position
+		public override TVector2f LocalPosition
 		{
 			get => CollisionBody.Position;
 			set => CollisionBody.Position = value;
 		}
 
-		public override float Rotation
+		public override float LocalRotation
 		{
 			get => CollisionBody.Rotation;
 			set => CollisionBody.Rotation = value;

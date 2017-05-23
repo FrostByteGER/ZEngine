@@ -68,33 +68,68 @@ namespace SFML_Engine.Engine.Game
 				foreach (var comp in Components)
 				{
 					var colComp = (PhysicsComponent) comp;
-					//if (colComp != null) colComp.CollisionCallbacksEnabled = value;
+					if (colComp != null) colComp.CollisionCallbacksEnabled = value;
 				}
 			}
 		}
 
 		public bool CanOverlap
 		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
+			get
+			{
+				var canoverlap = false;
+				foreach (var comp in Components)
+				{
+					var physComp = (PhysicsComponent)comp;
+					if (comp == null) continue;
+					canoverlap = physComp.CanOverlap;
+					if (canoverlap) break;
+				}
+				return canoverlap;
+			}
+			set
+			{
+				foreach (var comp in Components)
+				{
+					var physComp = (PhysicsComponent)comp;
+					if (comp != null) physComp.CanOverlap = value;
+				}
+			}
+		}
+
+		public bool CanOverlapAll
+		{
+			get
+			{
+				var canoverlap = false;
+				foreach (var comp in Components)
+				{
+					var physComp = (PhysicsComponent)comp;
+					if (comp == null) continue;
+					canoverlap = physComp.CanOverlap;
+					if (!canoverlap) break;
+				}
+				return canoverlap;
+			}
+			set => CanOverlap = value;
 		}
 
 		public TVector2f Position
 		{
-			get => RootComponent.Position;
-			set => RootComponent.Position = value;
+			get => RootComponent.LocalPosition;
+			set => RootComponent.LocalPosition = value;
 		}
 
 		public float Rotation
 		{
-			get => RootComponent.Rotation;
-			set => RootComponent.Rotation = value;
+			get => RootComponent.LocalRotation;
+			set => RootComponent.LocalRotation = value;
 		}
 
 		public TVector2f Scale
 		{
-			get => RootComponent.Scale;
-			set => RootComponent.Scale = value;
+			get => RootComponent.LocalScale;
+			set => RootComponent.LocalScale = value;
 		}
 
 		public TVector2f Origin
@@ -103,54 +138,60 @@ namespace SFML_Engine.Engine.Game
 			set => RootComponent.Origin = value;
 		}
 
+		public TTransformable ActorTransform
+		{
+			get => RootComponent.ComponentTransform;
+			set => RootComponent.ComponentTransform = value;
+		}
+
 		public Actor()
 		{
 		}
 
 		public virtual void Move(float x, float y)
 		{
-			RootComponent.Move(new TVector2f(x, y));
+			RootComponent.MoveLocal(new TVector2f(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			RootComponent.SetPosition(new TVector2f(x, y));
+			RootComponent.SetLocalPosition(new TVector2f(x, y));
 		}
 
 		public virtual void Move(TVector2f position)
 		{
-			RootComponent.Move(position);
+			RootComponent.MoveLocal(position);
 		}
 
 
 		public void Rotate(float angle)
 		{
-			RootComponent.Rotate(angle);
+			RootComponent.RotateLocal(angle);
 		}
 
 		public void RotateAbsolute(float angle)
 		{
-			RootComponent.SetRotation(angle);
+			RootComponent.SetLocalRotation(angle);
 		}
 
 		public void ScaleActor(float x, float y)
 		{
-			RootComponent.ScaleActor(new TVector2f(x, y));
+			RootComponent.ScaleLocal(new TVector2f(x, y));
 		}
 
 		public void ScaleActor(TVector2f scale)
 		{
-			RootComponent.ScaleActor(scale);
+			RootComponent.ScaleLocal(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			RootComponent.SetScale(new TVector2f(x, y));
+			RootComponent.SetLocalScale(new TVector2f(x, y));
 		}
 
 		public void ScaleAbsolute(TVector2f scale)
 		{
-			RootComponent.SetScale(scale);
+			RootComponent.SetLocalScale(scale);
 		}
 
 		public virtual void Tick(float deltaTime)

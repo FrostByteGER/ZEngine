@@ -1,5 +1,4 @@
 ﻿using System;
-using SFML.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
@@ -12,30 +11,33 @@ namespace SFML_Engine.Engine.Game
 		public Actor ParentActor { get; set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
-		public Transformable ComponentTransform { get; set; } = new Transformable();
+		public TTransformable ComponentTransform { get; set; } = new TTransformable();
+
+		public TTransformable WorldTransform => IsRootComponent ? ComponentTransform : ParentActor.ActorTransform + ComponentTransform;
+
 		public bool CanTick { get; set; } = true;
 
-		public virtual TVector2f Position
+		public virtual TVector2f LocalPosition
 		{
-			get => IsRootComponent ? (TVector2f)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
+			get => ComponentTransform.Position;
 			set => ComponentTransform.Position = value;
 		}
 
-		public virtual float Rotation
+		public virtual float LocalRotation
 		{
-			get => IsRootComponent ? ComponentTransform.Rotation : ParentActor.Rotation + ComponentTransform.Rotation;
+			get => ComponentTransform.Rotation;
 			set => ComponentTransform.Rotation = value;
 		}
 
-		public virtual TVector2f Scale
+		public virtual TVector2f LocalScale
 		{
-			get => IsRootComponent ? (TVector2f)ComponentTransform.Scale : new TVector2f(ParentActor.Scale.X * ComponentTransform.Scale.X, ParentActor.Scale.Y * ComponentTransform.Scale.Y);
+			get => ComponentTransform.Scale;
 			set => ComponentTransform.Scale = value;
 		}
 
 		public virtual TVector2f Origin
 		{
-			get => IsRootComponent ? (TVector2f)ComponentTransform.Origin : ParentActor.Origin;
+			get => ComponentTransform.Origin;
 			set => ComponentTransform.Origin = value;
 		}
 
@@ -44,6 +46,24 @@ namespace SFML_Engine.Engine.Game
 		{
 			get => IsRootComponent ? _componentBounds : ParentActor.ActorBounds;
 			set => _componentBounds = value;
+		}
+
+		public TVector2f WorldPosition
+		{
+			get => IsRootComponent ? (TVector2f)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
+			set => LocalPosition = ComponentTransform.InverseTransform * value;
+		}
+
+		public float WorldRotation
+		{
+			get => IsRootComponent ? ComponentTransform.Rotation : ParentActor.Rotation + ComponentTransform.Rotation;
+			set { } // TODO: Not Possible!
+		}
+
+		public TVector2f WorldScale
+		{
+			get => IsRootComponent ? (TVector2f)ComponentTransform.Scale : new TVector2f(ParentActor.Scale.X * ComponentTransform.Scale.X, ParentActor.Scale.Y * ComponentTransform.Scale.Y);
+			set { } // TODO: Not Possible!
 		}
 
 		public bool Movable { get; set; }
@@ -73,54 +93,104 @@ namespace SFML_Engine.Engine.Game
 			Console.WriteLine("DESTROYING ACTORCOMPONENT: " + ComponentName + "-" + ComponentID);
 		}
 
-		public virtual void Move(float x, float y)
+		public virtual void MoveLocal(float x, float y)
 		{
-			Position += new TVector2f(x, y);
+			LocalPosition += new TVector2f(x, y);
 		}
 
-		public void SetPosition(float x, float y)
+		public void MoveWorld(TVector2f position)
 		{
-			Position = new TVector2f(x, y);
+			throw new NotImplementedException();
 		}
 
-		public virtual void Move(TVector2f position)
+		public void SetLocalPosition(float x, float y)
 		{
-			Position += position;
+			LocalPosition = new TVector2f(x, y);
 		}
 
-		public void SetPosition(TVector2f position)
+		public virtual void MoveLocal(TVector2f position)
 		{
-			Position = position;
+			LocalPosition += position;
 		}
 
-		public void Rotate(float angle)
+		public void MoveWorld(float x, float y)
 		{
-			Rotation += angle;
+			WorldPosition += new TVector2f(x, y);
 		}
 
-		public void SetRotation(float angle)
+		public void SetLocalPosition(TVector2f position)
 		{
-			Rotation = angle;
+			LocalPosition = position;
 		}
 
-		public void ScaleActor(float x, float y)
+		public void SetWorldPosition(float x, float y)
 		{
-			Scale += new TVector2f(x, y);
+			WorldPosition = new TVector2f(x, y);
 		}
 
-		public void ScaleActor(TVector2f scale)
+		public void SetWorldPosition(TVector2f position)
 		{
-			Scale += scale;
+			WorldPosition = position;
 		}
 
-		public void SetScale(float x, float y)
+		public void RotateLocal(float angle)
 		{
-			Scale = new TVector2f(x, y);
+			LocalRotation += angle;
 		}
 
-		public void SetScale(TVector2f scale)
+		public void RotateWorld(float angle)
 		{
-			Scale = scale;
+			throw new NotImplementedException();
+		}
+
+		public void SetLocalRotation(float angle)
+		{
+			LocalRotation = angle;
+		}
+
+		public void SetWorldRotation(float angle)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ScaleLocal(float x, float y)
+		{
+			LocalScale += new TVector2f(x, y);
+		}
+
+		public void ScaleLocal(TVector2f scale)
+		{
+			LocalScale += scale;
+		}
+
+		public void ScaleWorld(float x, float y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ScaleWorld(TVector2f scale)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetLocalScale(float x, float y)
+		{
+			LocalScale = new TVector2f(x, y);
+		}
+
+		public void SetLocalScale(TVector2f scale)
+		{
+			LocalScale = scale;
+		}
+
+		public void SetWorldScale(float x, float y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetWorldScale(TVector2f scale)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void Dispose(bool disposing)
