@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SFML_Engine</RootNamespace>
     <AssemblyName>SFML_Engine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -76,8 +76,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>SFML_Engine.Engine.Start</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -132,6 +131,14 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
+    <Compile Include="Engine\JUI\GUI.cs" />
+    <Compile Include="Engine\JUI\JButton.cs" />
+    <Compile Include="Engine\JUI\JCheckbox.cs" />
+    <Compile Include="Engine\JUI\JContainer.cs" />
+    <Compile Include="Engine\JUI\JElement.cs" />
+    <Compile Include="Engine\JUI\JLabel.cs" />
+    <Compile Include="Engine\JUI\JLayout.cs" />
+    <Compile Include="Engine\JUI\MouseOverLap.cs" />
     <Compile Include="Engine\Physics\BoxShape.cs" />
     <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
