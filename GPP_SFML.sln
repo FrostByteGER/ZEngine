@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Breakout", "SFML_Breakout\SFML_Breakout.csproj", "{765B4479-41B9-45FA-A9F3-3A96A0CACD75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_SpaceSEM", "SFML_SpaceSEM\SFML_SpaceSEM.csproj", "{9B289967-904A-46E4-8201-A4456621F6DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{765B4479-41B9-45FA-A9F3-3A96A0CACD75}.Debug|x64.Build.0 = Debug|x64
 		{765B4479-41B9-45FA-A9F3-3A96A0CACD75}.Release|x64.ActiveCfg = Release|x64
 		{765B4479-41B9-45FA-A9F3-3A96A0CACD75}.Release|x64.Build.0 = Release|x64
+		{9B289967-904A-46E4-8201-A4456621F6DC}.Debug|x64.ActiveCfg = Debug|x64
+		{9B289967-904A-46E4-8201-A4456621F6DC}.Debug|x64.Build.0 = Debug|x64
+		{9B289967-904A-46E4-8201-A4456621F6DC}.Release|x64.ActiveCfg = Release|x64
+		{9B289967-904A-46E4-8201-A4456621F6DC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
