@@ -13,8 +13,6 @@ namespace SFML_Engine.Engine.JUI
 		public Color HoverColor { get; set; } = new Color(128, 128, 255);
 		public Color SelectColor { get; set; } = new Color(255, 255, 255);
 
-		public bool IsHovered { set; get; } = false;
-
 		public JButton(GUI gui) : base(gui)
 		{
 		}

@@ -34,18 +34,27 @@ namespace SFML_Engine.Engine
 
 			InputManager im = new InputManager();
 
-			GUI gui = new GUI(new Font("D:/CShap/SFML_Engine/Assets/arial.ttf"), renderwindow, im);
+			GUI gui = new GUI(new Font("D:/CShap/SFML_Engine/Assets/comic.ttf"), renderwindow, im);
 
 			gui.InputManager = im;
 
 			JContainer container = new JContainer(gui);
 
-			container.Box.Position = new Vector2f(100, 100);
-			container.Box.Size = new Vector2f(200, 500);
+			container.setPosition(new Vector2f(100, 100));
+			container.setSize(new Vector2f(600, 600));
+
 			container.Box.FillColor = new Color(255, 255, 255);
 
-			container.Layout = new JLayout(container);
-			
+			JBorderLayout tempLayout = new JBorderLayout(container);
+
+			tempLayout.TopSize = 0.2f;
+			tempLayout.BottemSize = 0.2f;
+			tempLayout.LeftSize = 0.2f;
+			tempLayout.RightSize = 0.2f;
+
+			container.Layout = tempLayout;
+
+			JChackboxGroup cgroup = new JChackboxGroup();
 
 			JElement element1 = new JElement(gui);
 			element1.setBackgroundColor(new Color(255, 0 ,0));
@@ -53,46 +62,54 @@ namespace SFML_Engine.Engine
 			element2.Text.DisplayedString = "Lable";
 			element2.Text.CharacterSize = 50;
 			element2.Text.Color = new Color(255,255,255);
-			//element2.Text.Font = new Font("D:/CShap/SFML_Engine/Assets/arial.ttf");
 			element2.setBackgroundColor(new Color(0, 255, 0));
 			JCheckbox element3 = new JCheckbox(gui);
-			element3.setBackgroundColor (new Color(255, 255, 0));
+			element3.setBackgroundColor (new Color(100, 100, 100));
 			element3.Text.DisplayedString = "Checkbox";
-			element3.Text.CharacterSize = 50;
+			element3.Text.CharacterSize = 25;
 			element3.Text.Color = new Color(200, 200, 200);
+			element3.SelectColor = new Color(200,200,200);
+			element3.HoverColor = new Color(150, 150, 150);
+			element3.CheckBoxColor = new Color(50,50,50);
+			cgroup.AddBox(element3);
 			JButton element4 = new JButton(gui);
 			element4.Text.DisplayedString = "Button";
 			element4.Text.CharacterSize = 50;
 			element4.Text.Color = new Color(255, 255, 255);
 			element4.setBackgroundColor (new Color(0, 0, 255));
 
-			/*
+			
 
 			JContainer container2 = new JContainer(gui);
 
-			container2.Box.Position = new Vector2f(100, 100);
-			container2.Box.Size = new Vector2f(200, 500);
+			//container2.Box.Position = new Vector2f(100, 100);
+			//container2.Box.Size = new Vector2f(200, 500);
 			container2.Box.FillColor = new Color(255, 255, 255);
 
-			container2.Layout = new JLayout(container2);
 
+			GridLayout gridLayout = new GridLayout(container2);
+
+			gridLayout.Rows = 2;
+
+			container2.Layout = gridLayout;
 
 			JCheckbox element6 = new JCheckbox(gui);
 			element6.setBackgroundColor (new Color(255, 0, 255));
+			cgroup.AddBox(element6);
 			JElement element7 = new JElement(gui);
 			element7.setBackgroundColor( new Color(0, 255, 255));
-			
-			*/
-
-			container.addElement(element1);
-			container.addElement(element2);
-			container.addElement(element3);
-			container.addElement(element4);
-			//container.addElement(container2);
 
 
-			//container2.addElement(element6);
-			//container2.addElement(element7);
+
+			container.addElement(element1, JBorderLayout.CENTER);
+			container.addElement(element2, JBorderLayout.TOP);
+			container.addElement(element3, JBorderLayout.BOTTOM);
+			container.addElement(element4, JBorderLayout.LEFT);
+			container.addElement(container2, JBorderLayout.BOTTOM);
+
+
+			container2.addElement(element6);
+			container2.addElement(element7);
 
 			gui.RootContainer = container;
 

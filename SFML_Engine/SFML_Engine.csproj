@@ -131,8 +131,11 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
+    <Compile Include="Engine\JUI\JBorderLayout.cs" />
+    <Compile Include="Engine\JUI\GridLayout.cs" />
     <Compile Include="Engine\JUI\GUI.cs" />
     <Compile Include="Engine\JUI\JButton.cs" />
+    <Compile Include="Engine\JUI\JChackboxGroup.cs" />
     <Compile Include="Engine\JUI\JCheckbox.cs" />
     <Compile Include="Engine\JUI\JContainer.cs" />
     <Compile Include="Engine\JUI\JElement.cs" />

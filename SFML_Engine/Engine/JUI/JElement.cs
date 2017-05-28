@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace SFML_Engine.Engine.JUI
 		public RectangleShape Box { get; set; } = new RectangleShape();
 
 		public bool Visable { get; set; } = true;
+
+		public bool IsHovered { get; set; } = false;
+
+		public bool IsPressed { get; set; } = false;
 
 		public JElement(GUI gui)
 		{
@@ -62,10 +67,12 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Pressed(){
 			Console.WriteLine("Pressed" + Position);
+			IsPressed = true;
 		}
 
 		public virtual void Released() {
 			Console.WriteLine("Released" + Position);
+			IsPressed = false;
 		}
 
 		public virtual void Entered(){
@@ -74,8 +81,18 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Leave(){
 			Console.WriteLine("Leave" + Position);
+			IsPressed = false;
 		}
 
+		public virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
+		{
+			
+		}
+
+		public virtual void Drag(object sender, MouseMoveEventArgs mouseMoveEventArgs)
+		{
+			
+		}
 
 	}
 }

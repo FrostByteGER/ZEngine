@@ -14,9 +14,9 @@ namespace SFML_Engine.Engine.JUI
 		public Color CheckBoxColor { get; set; } = new Color(32,64,128);
 		public Color HoverColor { get; set; } = new Color(128, 128, 255);
 		public Color SelectColor { get; set; } = new Color(255, 255, 255);
-		public bool IsSelected { get; set; } = false;
 
-		public bool IsHovered { set; get; } = false;
+		public JChackboxGroup Group { get; set; }
+		public bool IsSelected { get; set; } = false;
 
 		public JCheckbox(GUI gui) : base(gui)
 		{
@@ -61,6 +61,10 @@ namespace SFML_Engine.Engine.JUI
 			else
 			{
 				IsSelected = true;
+				if (Group != null)
+				{
+					Group.Update(this);
+				}
 				Checkbox.FillColor = SelectColor;
 				
 			}
@@ -68,17 +72,32 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void ReSize(Vector2f position, Vector2f size)
 		{
+			if (size.Y < size.X)
+			{
+				base.ReSize(new Vector2f(position.X + size.Y * 0.25f, position.Y), new Vector2f(size.X - size.Y * 0.25f, size.Y));
+			}
+			else
+			{
+				base.ReSize(new Vector2f(position.X + size.X * 0.25f, position.Y), new Vector2f(size.X - size.X * 0.25f, size.Y));
+			}
 
-			base.ReSize(position, size);
+			
 
-			Checkbox.Position = position;
-			Checkbox.Size = new Vector2f(size.Y * 0.25f, size.Y * 0.25f);
+			Box.Position = position;
+			Box.Size = size;
 
-			//this.Position = position + new Vector2f(size.Y, 0);
-			//this.Size = new Vector2f(size.X-size.Y, size.Y);
-
-			//base.ReSize(position + new Vector2f(size.Y * 0.25f, 0), new Vector2f(size.X - size.Y, size.Y));
-
+			Position = position;
+			Size = size;
+			if (size.Y < size.X)
+			{
+				Checkbox.Size = new Vector2f(size.Y * 0.25f, size.Y * 0.25f);
+			}
+			else
+			{
+				Checkbox.Size = new Vector2f(size.X * 0.25f, size.X * 0.25f);
+			}
+			
+			Checkbox.Position = new Vector2f(position.X, position.Y + size.Y/2f - Checkbox.Size.Y/2f);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
@@ -88,6 +107,7 @@ namespace SFML_Engine.Engine.JUI
 				Box.Draw(target, states);
 				Checkbox.Draw(target, states);
 				Text.Draw(target, states);
+
 			}
 		}
 	}

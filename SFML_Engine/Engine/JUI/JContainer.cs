@@ -27,6 +27,17 @@ namespace SFML_Engine.Engine.JUI
 			}
 		}
 
+		public bool addElement(JElement element, int layoutinfo)
+		{
+			if (Layout != null)
+			{
+				Elements.Insert(layoutinfo, element);
+				Layout.ReSize();
+				return true;
+			}
+			return false;
+		}
+
 		public bool removeElement(JElement element)
 		{
 			if (Elements.Contains(element))
@@ -46,7 +57,10 @@ namespace SFML_Engine.Engine.JUI
 			base.Draw(target, states);
 			foreach (JElement element in Elements)
 			{
-				element.Draw(target, states);
+				if (element != null)
+				{
+					element.Draw(target, states);
+				}
 			}
 		}
 	}
