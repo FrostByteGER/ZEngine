@@ -87,17 +87,20 @@ namespace SFML_Engine.Engine
 			container2.Box.FillColor = new Color(255, 255, 255);
 
 
-			GridLayout gridLayout = new GridLayout(container2);
+			JGridLayout gridLayout = new JGridLayout(container2);
 
-			gridLayout.Rows = 2;
+			gridLayout.Rows = 3;
 
 			container2.Layout = gridLayout;
 
 			JCheckbox element6 = new JCheckbox(gui);
 			element6.setBackgroundColor (new Color(255, 0, 255));
 			cgroup.AddBox(element6);
-			JElement element7 = new JElement(gui);
+			JSlider element7 = new JSlider(gui);
 			element7.setBackgroundColor( new Color(0, 255, 255));
+			JSlider element8 = new JSlider(gui);
+			element8.DisplayTyp = JSlider.VERTICAL;
+			element8.setBackgroundColor(new Color(0, 255, 255));
 
 
 
@@ -110,6 +113,7 @@ namespace SFML_Engine.Engine
 
 			container2.addElement(element6);
 			container2.addElement(element7);
+			container2.addElement(element8);
 
 			gui.RootContainer = container;
 

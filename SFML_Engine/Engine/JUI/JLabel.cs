@@ -7,12 +7,13 @@ namespace SFML_Engine.Engine.JUI
 {
 	class JLabel : JElement
 	{
+		public Text Text { get; set; } = new Text();
+
 		public JLabel(GUI gui) : base(gui)
 		{
 			Text.Font = gui.GUIFont;
+			Text.Color = gui.DefaultTextColor;
 		}
-
-		public Text Text { get; set; } = new Text();
 
 		public override void setPosition(Vector2f Position)
 		{

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class GridLayout : JLayout
+	class JGridLayout : JLayout
 	{
 
 		public int Rows { get; set; } = 1;
 		public int Columns { get; set; } = 1;
 
-		public GridLayout(JContainer container) : base(container)
+		public JGridLayout(JContainer container) : base(container)
 		{
 		}
 

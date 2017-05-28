@@ -25,6 +25,14 @@ namespace SFML_Engine.Engine.JUI
 
 		private JElement LastSelectedElement;
 
+		//Default Color (i don want to handle NullpointerExceptions)
+		public Color DefaultElementColor { get; set; } = new Color(225, 225, 225);
+		public Color DefaultBackgroundColor { get; set; }  = new Color(0, 0, 0);
+		public Color DefaultTextColor { get; set; }  = new Color(255, 255, 255);
+		public Color DefaultEffectColor1 { get; set; } = new Color(162,162,162);
+		public Color DefaultEffectColor2 { get; set; } = new Color(128,128,128);
+		public Color DefaultEffectColor3 { get; set; } = new Color(64,64,64);
+
 		public GUI(Font font, RenderWindow renderwindow, InputManager inputManager)
 		{
 			GUIFont = font;

@@ -11,15 +11,18 @@ namespace SFML_Engine.Engine.JUI
 	class JCheckbox : JLabel
 	{
 		public RectangleShape Checkbox { get; set; } = new RectangleShape();
-		public Color CheckBoxColor { get; set; } = new Color(32,64,128);
-		public Color HoverColor { get; set; } = new Color(128, 128, 255);
-		public Color SelectColor { get; set; } = new Color(255, 255, 255);
+		public Color CheckBoxColor { get; set; }
+		public Color HoverColor { get; set; }
+		public Color SelectColor { get; set; }
 
 		public JChackboxGroup Group { get; set; }
 		public bool IsSelected { get; set; } = false;
 
 		public JCheckbox(GUI gui) : base(gui)
 		{
+			CheckBoxColor = gui.DefaultEffectColor3;
+			HoverColor = gui.DefaultEffectColor1;
+			SelectColor = gui.DefaultEffectColor2;
 			Checkbox.FillColor = CheckBoxColor;
 		}
 

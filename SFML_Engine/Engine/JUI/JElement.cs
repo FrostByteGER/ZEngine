@@ -31,6 +31,8 @@ namespace SFML_Engine.Engine.JUI
 		public JElement(GUI gui)
 		{
 			this.gui = gui;
+
+			setBackgroundColor(gui.DefaultBackgroundColor);
 		}
 
 		public virtual void setPosition(Vector2f position)

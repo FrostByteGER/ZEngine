@@ -10,11 +10,13 @@ namespace SFML_Engine.Engine.JUI
 	class JButton : JLabel
 	{
 
-		public Color HoverColor { get; set; } = new Color(128, 128, 255);
-		public Color SelectColor { get; set; } = new Color(255, 255, 255);
+		public Color HoverColor { get; set; }
+		public Color SelectColor { get; set; }
 
 		public JButton(GUI gui) : base(gui)
 		{
+			HoverColor = gui.DefaultEffectColor1;
+			SelectColor = gui.DefaultEffectColor2;
 		}
 
 		public override void Entered()
