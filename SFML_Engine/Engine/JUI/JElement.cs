@@ -20,6 +20,8 @@ namespace SFML_Engine.Engine.JUI
 		public bool Visable { get; set; } = true;
 		public bool IsHovered { get; set; } = false;
 		public bool IsPressed { get; set; } = false;
+		public delegate void doSomething();
+		public event doSomething Something;
 
 		public JElement(GUI gui)
 		{
@@ -60,9 +62,18 @@ namespace SFML_Engine.Engine.JUI
 			setSize(size);
 		}
 
-		public virtual void Pressed(){
+		public virtual void Pressed() {
 			Console.WriteLine("Pressed" + Position);
 			IsPressed = true;
+
+			Console.WriteLine(Something != null);
+
+			if (Something != null)
+			{
+				Something();
+				
+			}
+
 		}
 
 		public virtual void Released() {
@@ -70,24 +81,26 @@ namespace SFML_Engine.Engine.JUI
 			IsPressed = false;
 		}
 
-		public virtual void Entered(){
+		public virtual void Entered() {
 			Console.WriteLine("Entered" + Position);
 		}
 
-		public virtual void Leave(){
+		public virtual void Leave() {
 			Console.WriteLine("Leave" + Position);
 			IsPressed = false;
 		}
 
 		public virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
-			
+
 		}
 
 		public virtual void Drag(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
-			
+
 		}
+
+	
 
 	}
 }

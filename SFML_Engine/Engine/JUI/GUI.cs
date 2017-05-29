@@ -205,5 +205,10 @@ namespace SFML_Engine.Engine.JUI
 		{
 			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
 		}
+
+		public void test()
+		{
+			Console.WriteLine("testIt");
+		}
 	}
 }

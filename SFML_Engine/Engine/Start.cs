@@ -4,6 +4,7 @@ using SFML.Window;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.JUI;
 using System;
+using System.IO;
 
 namespace SFML_Engine.Engine
 {
@@ -17,6 +18,12 @@ namespace SFML_Engine.Engine
 			var window = (RenderWindow)sender;
 			window.Close();
 			open = true;
+		}
+
+		public void doSomething()
+		{
+			Console.WriteLine("testIt");
+			
 		}
 
 		public static void Main(string[] args)
@@ -34,7 +41,7 @@ namespace SFML_Engine.Engine
 
 			InputManager im = new InputManager();
 
-			GUI gui = new GUI(new Font("D:/CShap/SFML_Engine/Assets/comic.ttf"), renderwindow, im);
+			GUI gui = new GUI(new Font("./comic.ttf"), renderwindow, im);
 
 			JContainer container = new JContainer(gui);
 
@@ -90,6 +97,7 @@ namespace SFML_Engine.Engine
 			element8.DisplayTyp = JSlider.VERTICAL;
 			element8.setBackgroundColor(new Color(0, 255, 255));
 			JElement element9 = new JElement(gui);
+			element9.Something += st.doSomething;
 
 
 			container.addElement(element1, JBorderLayout.CENTER);
