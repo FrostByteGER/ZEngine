@@ -28,7 +28,7 @@ namespace SFML_Engine.Engine.JUI
 				if (!object.ReferenceEquals(box, trigger))
 				{
 					box.IsSelected = false;
-					box.Checkbox.FillColor = box.CheckBoxColor;
+					box.Box.FillColor = box.CheckBoxColor;
 				}
 			}
 		}

@@ -36,8 +36,6 @@ namespace SFML_Engine.Engine
 
 			GUI gui = new GUI(new Font("D:/CShap/SFML_Engine/Assets/comic.ttf"), renderwindow, im);
 
-			gui.InputManager = im;
-
 			JContainer container = new JContainer(gui);
 
 			container.setPosition(new Vector2f(100, 100));
@@ -67,41 +65,31 @@ namespace SFML_Engine.Engine
 			element3.setBackgroundColor (new Color(100, 100, 100));
 			element3.Text.DisplayedString = "Checkbox";
 			element3.Text.CharacterSize = 25;
-			element3.Text.Color = new Color(200, 200, 200);
-			element3.SelectColor = new Color(200,200,200);
-			element3.HoverColor = new Color(150, 150, 150);
-			element3.CheckBoxColor = new Color(50,50,50);
 			cgroup.AddBox(element3);
 			JButton element4 = new JButton(gui);
 			element4.Text.DisplayedString = "Button";
 			element4.Text.CharacterSize = 50;
-			element4.Text.Color = new Color(255, 255, 255);
+			element4.Text.Color = new Color(255, 255, 255, 50);
 			element4.setBackgroundColor (new Color(0, 0, 255));
 
-			
 
 			JContainer container2 = new JContainer(gui);
-
-			//container2.Box.Position = new Vector2f(100, 100);
-			//container2.Box.Size = new Vector2f(200, 500);
-			container2.Box.FillColor = new Color(255, 255, 255);
 
 
 			JGridLayout gridLayout = new JGridLayout(container2);
 
-			gridLayout.Rows = 3;
+			gridLayout.Rows = 4;
 
 			container2.Layout = gridLayout;
 
 			JCheckbox element6 = new JCheckbox(gui);
-			element6.setBackgroundColor (new Color(255, 0, 255));
 			cgroup.AddBox(element6);
 			JSlider element7 = new JSlider(gui);
 			element7.setBackgroundColor( new Color(0, 255, 255));
 			JSlider element8 = new JSlider(gui);
 			element8.DisplayTyp = JSlider.VERTICAL;
 			element8.setBackgroundColor(new Color(0, 255, 255));
-
+			JElement element9 = new JElement(gui);
 
 
 			container.addElement(element1, JBorderLayout.CENTER);
@@ -114,6 +102,7 @@ namespace SFML_Engine.Engine
 			container2.addElement(element6);
 			container2.addElement(element7);
 			container2.addElement(element8);
+			container2.addElement(element9);
 
 			gui.RootContainer = container;
 

@@ -13,19 +13,12 @@ namespace SFML_Engine.Engine.JUI
 	{
 
 		public GUI gui { get; private set; }
-
 		public Vector2f Position { get; set; } = new Vector2f(0, 0);
-
 		public Vector2f Size { get; set; } = new Vector2f(0, 0);
-
 		public Color BackGroundColor { get; set; }
-
 		public RectangleShape Box { get; set; } = new RectangleShape();
-
 		public bool Visable { get; set; } = true;
-
 		public bool IsHovered { get; set; } = false;
-
 		public bool IsPressed { get; set; } = false;
 
 		public JElement(GUI gui)

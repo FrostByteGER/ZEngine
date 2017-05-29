@@ -10,7 +10,6 @@ namespace SFML_Engine.Engine.JUI
 {
 	class JCheckbox : JLabel
 	{
-		public RectangleShape Checkbox { get; set; } = new RectangleShape();
 		public Color CheckBoxColor { get; set; }
 		public Color HoverColor { get; set; }
 		public Color SelectColor { get; set; }
@@ -23,7 +22,7 @@ namespace SFML_Engine.Engine.JUI
 			CheckBoxColor = gui.DefaultEffectColor3;
 			HoverColor = gui.DefaultEffectColor1;
 			SelectColor = gui.DefaultEffectColor2;
-			Checkbox.FillColor = CheckBoxColor;
+			Box.FillColor = CheckBoxColor;
 		}
 
 		public override void Entered()
@@ -32,7 +31,7 @@ namespace SFML_Engine.Engine.JUI
 			IsHovered = true;
 			if (!IsSelected)
 			{
-				Checkbox.FillColor = HoverColor;
+				Box.FillColor = HoverColor;
 			}
 		}
 
@@ -42,7 +41,7 @@ namespace SFML_Engine.Engine.JUI
 			IsHovered = false;
 			if (!IsSelected)
 			{
-				Checkbox.FillColor = CheckBoxColor;
+				Box.FillColor = CheckBoxColor;
 			}	
 		}
 
@@ -54,11 +53,11 @@ namespace SFML_Engine.Engine.JUI
 				IsSelected = false;
 				if (IsHovered)
 				{
-					Checkbox.FillColor = HoverColor;
+					Box.FillColor = HoverColor;
 				}
 				else
 				{
-					Checkbox.FillColor = CheckBoxColor;
+					Box.FillColor = CheckBoxColor;
 				}
 			}
 			else
@@ -68,39 +67,14 @@ namespace SFML_Engine.Engine.JUI
 				{
 					Group.Update(this);
 				}
-				Checkbox.FillColor = SelectColor;
+				Box.FillColor = SelectColor;
 				
 			}
 		}
 
 		public override void ReSize(Vector2f position, Vector2f size)
 		{
-			if (size.Y < size.X)
-			{
-				base.ReSize(new Vector2f(position.X + size.Y * 0.25f, position.Y), new Vector2f(size.X - size.Y * 0.25f, size.Y));
-			}
-			else
-			{
-				base.ReSize(new Vector2f(position.X + size.X * 0.25f, position.Y), new Vector2f(size.X - size.X * 0.25f, size.Y));
-			}
-
-			
-
-			Box.Position = position;
-			Box.Size = size;
-
-			Position = position;
-			Size = size;
-			if (size.Y < size.X)
-			{
-				Checkbox.Size = new Vector2f(size.Y * 0.25f, size.Y * 0.25f);
-			}
-			else
-			{
-				Checkbox.Size = new Vector2f(size.X * 0.25f, size.X * 0.25f);
-			}
-			
-			Checkbox.Position = new Vector2f(position.X, position.Y + size.Y/2f - Checkbox.Size.Y/2f);
+			base.ReSize(position, size);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
@@ -108,7 +82,6 @@ namespace SFML_Engine.Engine.JUI
 			if (Visable)
 			{
 				Box.Draw(target, states);
-				Checkbox.Draw(target, states);
 				Text.Draw(target, states);
 
 			}

@@ -44,7 +44,6 @@ namespace SFML_Engine.Engine.JUI
 
 				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 			}
-
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
@@ -72,8 +71,6 @@ namespace SFML_Engine.Engine.JUI
 				Cross.Size = new Vector2f(CrossSize, Size.Y);
 				Cross.Position = new Vector2f(position.X + size.X / 2f - Cross.Size.X, position.Y);
 			}
-			
-
 		}
 	}
 }
