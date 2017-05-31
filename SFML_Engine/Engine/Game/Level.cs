@@ -90,7 +90,10 @@ namespace SFML_Engine.Engine.Game
 
 				foreach (var actor in drawableActors)
 				{
-					var drawableComps = actor.GetComponents<RenderComponent>().FindAll(c => c.Visible).OrderByDescending(c => c.ComponentLayerID).ToList();
+					var c1 = actor.GetComponents<RenderComponent>();
+					var c11 = c1.FindAll(c => c.Visible);
+					var c2 = c11.OrderByDescending(c => c.ComponentLayerID);
+					var drawableComps = c2.ToList();
 					if (drawableComps.Count <= 0) continue;
 					foreach (var comp in drawableComps)
 					{
@@ -289,7 +292,7 @@ namespace SFML_Engine.Engine.Game
 
 		public List<T> FindActorsInLevel<T>() where T : Actor
 		{
-			return Actors.FindAll(x => x.GetType() == typeof(T)).Cast<T>().ToList();
+			return Actors.FindAll(x => x is T).Cast<T>().ToList();
 		}
 
 		public ReadOnlyCollection<Actor> GetActors()

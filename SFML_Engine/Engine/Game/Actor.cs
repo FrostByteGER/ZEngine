@@ -200,6 +200,7 @@ namespace SFML_Engine.Engine.Game
 			{
 				component.Tick(deltaTime);
 			}
+			//Console.WriteLine(Position);
 		}
 
 		public void OnCollide(Fixture self, Fixture other, Contact contactInfo)
@@ -308,12 +309,12 @@ namespace SFML_Engine.Engine.Game
 
 		public T GetComponent<T>() where T : ActorComponent
 		{
-			return (T)Components.Find(comp => comp.GetType() == typeof(T));
+			return (T)Components.Find(comp => comp is T);
 		}
 
 		public List<T> GetComponents<T>() where T : ActorComponent
 		{
-			return Components.FindAll(comp => comp.GetType() == typeof(T)).Cast<T>().ToList();
+			return Components.FindAll(comp => comp is T).Cast<T>().ToList();
 		}
 
 
