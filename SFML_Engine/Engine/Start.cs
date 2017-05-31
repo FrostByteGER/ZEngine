@@ -20,12 +20,6 @@ namespace SFML_Engine.Engine
 			open = true;
 		}
 
-		public void doSomething()
-		{
-			Console.WriteLine("testIt");
-			
-		}
-
 		public static void Main(string[] args)
         {
 
@@ -43,78 +37,123 @@ namespace SFML_Engine.Engine
 
 			GUI gui = new GUI(new Font("./comic.ttf"), renderwindow, im);
 
-			JContainer container = new JContainer(gui);
+			// Root Container
+			JContainer rootContainer = new JContainer(gui);
 
-			container.setPosition(new Vector2f(100, 100));
-			container.setSize(new Vector2f(600, 600));
+			rootContainer.setPosition(new Vector2f(100, 100));
+			rootContainer.setSize(new Vector2f(600, 600));
 
-			container.Box.FillColor = new Color(255, 255, 255);
+			JBorderLayout borderLayout = new JBorderLayout(rootContainer);
 
-			JBorderLayout tempLayout = new JBorderLayout(container);
+			borderLayout.TopSize = 0.2f;
+			borderLayout.BottemSize = 0.2f;
+			borderLayout.LeftSize = 0.2f;
+			borderLayout.RightSize = 0.2f;
 
-			tempLayout.TopSize = 0.2f;
-			tempLayout.BottemSize = 0.2f;
-			tempLayout.LeftSize = 0.2f;
-			tempLayout.RightSize = 0.2f;
+			rootContainer.Layout = borderLayout;
 
-			container.Layout = tempLayout;
+			// Title
+			JLabel title = new JLabel(gui);
+			title.Text.DisplayedString = "Game Title";
 
-			JChackboxGroup cgroup = new JChackboxGroup();
+			// Main Menue
+			JContainer mainLeftContainer = new JContainer(gui);
+			mainLeftContainer.Layout = new JLayout(mainLeftContainer);
 
-			JElement element1 = new JElement(gui);
-			element1.setBackgroundColor(new Color(255, 0 ,0));
-			JLabel element2 = new JLabel(gui);
-			element2.Text.DisplayedString = "Lable";
-			element2.Text.CharacterSize = 50;
-			element2.Text.Color = new Color(255,255,255);
-			element2.setBackgroundColor(new Color(0, 255, 0));
-			JCheckbox element3 = new JCheckbox(gui);
-			element3.setBackgroundColor (new Color(100, 100, 100));
-			element3.Text.DisplayedString = "Checkbox";
-			element3.Text.CharacterSize = 25;
-			cgroup.AddBox(element3);
-			JButton element4 = new JButton(gui);
-			element4.Text.DisplayedString = "Button";
-			element4.Text.CharacterSize = 50;
-			element4.Text.Color = new Color(255, 255, 255, 50);
-			element4.setBackgroundColor (new Color(0, 0, 255));
+			JCheckbox playCheckBox = new JCheckbox(gui);
+			playCheckBox.Text.DisplayedString = "Play";
 
+			JCheckbox optionCheckBox = new JCheckbox(gui);
+			optionCheckBox.Text.DisplayedString = "Options";
 
-			JContainer container2 = new JContainer(gui);
+			JCheckbox helpCheckBox = new JCheckbox(gui);
+			helpCheckBox.Text.DisplayedString = "Help";
 
+			JCheckbox creditsCheckBox = new JCheckbox(gui);
+			creditsCheckBox.Text.DisplayedString = "Credits";
 
-			JGridLayout gridLayout = new JGridLayout(container2);
+			JCheckbox editorsCheckBox = new JCheckbox(gui);
+			editorsCheckBox.Text.DisplayedString = "Editor";
+			editorsCheckBox.IsEnabled = false;
 
-			gridLayout.Rows = 4;
+			JCheckbox exitCheckBox = new JCheckbox(gui);
+			exitCheckBox.Text.DisplayedString = "Exit";
 
-			container2.Layout = gridLayout;
+			JChackboxGroup mainCheckBoxGroup = new JChackboxGroup();
+			mainCheckBoxGroup.AddBox(playCheckBox);
+			mainCheckBoxGroup.AddBox(optionCheckBox);
+			mainCheckBoxGroup.AddBox(helpCheckBox);
+			mainCheckBoxGroup.AddBox(creditsCheckBox);
+			mainCheckBoxGroup.AddBox(editorsCheckBox);
+			mainCheckBoxGroup.AddBox(exitCheckBox);
 
-			JCheckbox element6 = new JCheckbox(gui);
-			cgroup.AddBox(element6);
-			JSlider element7 = new JSlider(gui);
-			element7.setBackgroundColor( new Color(0, 255, 255));
-			JSlider element8 = new JSlider(gui);
-			element8.DisplayTyp = JSlider.VERTICAL;
-			element8.setBackgroundColor(new Color(0, 255, 255));
-			JElement element9 = new JElement(gui);
-			element9.Something += st.doSomething;
-
-
-			container.addElement(element1, JBorderLayout.CENTER);
-			container.addElement(element2, JBorderLayout.TOP);
-			container.addElement(element3, JBorderLayout.BOTTOM);
-			container.addElement(element4, JBorderLayout.LEFT);
-			container.addElement(container2, JBorderLayout.BOTTOM);
+			// Container vvv
+			// Play Menue
+			JContainer playContainer = new JContainer(gui);
+			playContainer.Layout = new JLayout(playContainer);
+			JLabel playTemp = new JLabel(gui);
+			playTemp.Text.DisplayedString = "PlayTemp";
+			playContainer.addElement(playTemp);
 
 
-			container2.addElement(element6);
-			container2.addElement(element7);
-			container2.addElement(element8);
-			container2.addElement(element9);
+			// Option Menue
 
-			gui.RootContainer = container;
+			JContainer optionContainer = new JContainer(gui);
+			optionContainer.Layout = new JLayout(playContainer);
+			JLabel optionTemp = new JLabel(gui);
+			optionTemp.Text.DisplayedString = "OptionTemp";
+			optionContainer.addElement(optionTemp);
+
+			// Help Menue
+
+			JContainer helpContainer = new JContainer(gui);
+			helpContainer.Layout = new JLayout(playContainer);
+			JLabel helpTemp = new JLabel(gui);
+			helpTemp.Text.DisplayedString = "OptionTemp";
+			helpContainer.addElement(helpTemp);
+
+			// Credit Menue
+
+			JContainer creditContainer = new JContainer(gui);
+			creditContainer.Layout = new JLayout(playContainer);
+			JLabel creditTemp = new JLabel(gui);
+			creditTemp.Text.DisplayedString = "OptionTemp";
+			creditContainer.addElement(creditTemp);
+
+			// Editor Menue
+
+			JContainer editorContainer = new JContainer(gui);
+			editorContainer.Layout = new JLayout(playContainer);
+			JLabel editorTemp = new JLabel(gui);
+			editorTemp.Text.DisplayedString = "OptionTemp";
+			editorContainer.addElement(editorTemp);
+
+			// Exit Menue
+
+			JContainer exitContainer = new JContainer(gui);
+			exitContainer.Layout = new JLayout(playContainer);
+			JLabel exitTemp = new JLabel(gui);
+			exitTemp.Text.DisplayedString = "OptionTemp";
+			exitContainer.addElement(exitTemp);
+
+			//Container ^^^
+
+			rootContainer.addElement(title, JBorderLayout.TOP);
+			rootContainer.addElement(mainLeftContainer, JBorderLayout.LEFT);
+
+			mainLeftContainer.addElement(playCheckBox);
+			mainLeftContainer.addElement(optionCheckBox);
+			mainLeftContainer.addElement(helpCheckBox);
+			mainLeftContainer.addElement(creditsCheckBox);
+			mainLeftContainer.addElement(editorsCheckBox);
+			mainLeftContainer.addElement(exitCheckBox);
+
+
+			gui.RootContainer = rootContainer;
 
 			renderwindow.Closed += st.OnEngineWindowClose;
+
+
 
 			while (st.open)
 			{

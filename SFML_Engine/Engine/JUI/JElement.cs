@@ -17,16 +17,17 @@ namespace SFML_Engine.Engine.JUI
 		public Vector2f Size { get; set; } = new Vector2f(0, 0);
 		public Color BackGroundColor { get; set; }
 		public RectangleShape Box { get; set; } = new RectangleShape();
-		public bool Visable { get; set; } = true;
+		public bool IsVisable { get; set; } = true;
+		public bool IsEnabled { get; set; } = true;
 		public bool IsHovered { get; set; } = false;
 		public bool IsPressed { get; set; } = false;
-		public delegate void doSomething();
+		public delegate void doSomething(JElement instigator);
 		public event doSomething Something;
 
 		public JElement(GUI gui)
 		{
 			this.gui = gui;
-
+			Something += gui.Interact;
 			setBackgroundColor(gui.DefaultBackgroundColor);
 		}
 
@@ -50,7 +51,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
-			if (Visable)
+			if (IsVisable)
 			{
 				Box.Draw(target, states);
 			}
@@ -66,12 +67,9 @@ namespace SFML_Engine.Engine.JUI
 			Console.WriteLine("Pressed" + Position);
 			IsPressed = true;
 
-			Console.WriteLine(Something != null);
-
-			if (Something != null)
+			if (Something != null && IsEnabled)
 			{
-				Something();
-				
+				Something(this);
 			}
 
 		}
@@ -99,8 +97,5 @@ namespace SFML_Engine.Engine.JUI
 		{
 
 		}
-
-	
-
 	}
 }

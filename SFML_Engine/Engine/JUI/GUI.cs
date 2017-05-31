@@ -25,7 +25,7 @@ namespace SFML_Engine.Engine.JUI
 
 		private JElement LastSelectedElement;
 
-		//Default Color (i don want to handle NullpointerExceptions)
+		//Default Color (i don want to handle NullpointerExceptions), lol i don't need a Default Color to avoid NullpointerExceptions ,but i want to see something.
 		public Color DefaultElementColor { get; set; } = new Color(225, 225, 225);
 		public Color DefaultBackgroundColor { get; set; }  = new Color(0, 0, 0);
 		public Color DefaultTextColor { get; set; }  = new Color(255, 255, 255);
@@ -206,9 +206,18 @@ namespace SFML_Engine.Engine.JUI
 			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
 		}
 
-		public void test()
+		// Is Called if Something interacts with the GUI
+		public virtual void Interact(JElement instigator)
 		{
-			Console.WriteLine("testIt");
+			if (instigator is JCheckbox)
+			{
+				Console.WriteLine("testIt >|" + ((JCheckbox)instigator).Text.DisplayedString + "|<");
+			}
+			else
+			{
+				Console.WriteLine("testIt >|" + instigator + "|<");
+			}
+			
 		}
 	}
 }

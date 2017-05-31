@@ -33,6 +33,5 @@ namespace SFML_Engine.Engine.JUI
 				}
 			}
 		}
-
 	}
 }

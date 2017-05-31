@@ -35,8 +35,11 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void Pressed()
 		{
-			base.Pressed();
-			Box.FillColor = SelectColor;
+			if (IsEnabled)
+			{
+				base.Pressed();
+				Box.FillColor = SelectColor;
+			}		
 		}
 
 		public override void Released()

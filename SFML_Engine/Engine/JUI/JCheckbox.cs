@@ -25,6 +25,31 @@ namespace SFML_Engine.Engine.JUI
 			Box.FillColor = CheckBoxColor;
 		}
 
+		public void Select()
+		{
+			IsSelected = true;
+			OnSelect();
+			if (Group != null)
+			{
+				Group.Update(this);
+			}
+			Box.FillColor = SelectColor;
+		}
+
+		public void Deselect()
+		{
+			IsSelected = false;
+			OnDeselect();
+			if (IsHovered)
+			{
+				Box.FillColor = HoverColor;
+			}
+			else
+			{
+				Box.FillColor = CheckBoxColor;
+			}
+		}
+
 		public override void Entered()
 		{
 			base.Entered();
@@ -47,29 +72,29 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void Pressed()
 		{
-			base.Pressed();
-			if (IsSelected)
+			if (IsEnabled)
 			{
-				IsSelected = false;
-				if (IsHovered)
+				base.Pressed();
+				if (IsSelected)
 				{
-					Box.FillColor = HoverColor;
+					Deselect();
 				}
 				else
 				{
-					Box.FillColor = CheckBoxColor;
+					Select();
 				}
 			}
-			else
-			{
-				IsSelected = true;
-				if (Group != null)
-				{
-					Group.Update(this);
-				}
-				Box.FillColor = SelectColor;
-				
-			}
+
+		}
+
+		public virtual void OnSelect()
+		{
+
+		}
+
+		public virtual void OnDeselect()
+		{
+
 		}
 
 		public override void ReSize(Vector2f position, Vector2f size)
@@ -79,12 +104,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void Draw(RenderTarget target, RenderStates states)
 		{
-			if (Visable)
-			{
-				Box.Draw(target, states);
-				Text.Draw(target, states);
-
-			}
+			base.Draw(target, states);
 		}
 	}
 }

@@ -48,8 +48,11 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void Draw(RenderTarget target, RenderStates states)
 		{
-			base.Draw(target, states);
-			Text.Draw(target, states);
+			if (IsVisable)
+			{
+				base.Draw(target, states);
+				Text.Draw(target, states);
+			}
 		}
 	}
 }
