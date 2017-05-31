@@ -5,11 +5,11 @@ using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JLabel : JElement
+	public class JLabel : JElement
 	{
 		public Text Text { get; set; } = new Text();
 
-		public JLabel(GUI gui) : base(gui)
+		public JLabel(JGUI gui) : base(gui)
 		{
 			Text.Font = gui.GUIFont;
 			Text.Color = gui.DefaultTextColor;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JChackboxGroup
+	public class JChackboxGroup
 	{
 		public IList<JCheckbox> CheckBoxes { get; set; } = new List<JCheckbox>();
 

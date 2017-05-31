@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JGridLayout : JLayout
+	public class JGridLayout : JLayout
 	{
 
 		public int Rows { get; set; } = 1;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class MouseOverLap
+	public class MouseOverLap
 	{
 
 		public bool Overlaping(JElement element, Vector2i mousePosition)

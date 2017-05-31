@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JElement : Drawable
+	public class JElement : Drawable
 	{
 
-		public GUI gui { get; private set; }
+		public JGUI gui { get; private set; }
 		public Vector2f Position { get; set; } = new Vector2f(0, 0);
 		public Vector2f Size { get; set; } = new Vector2f(0, 0);
 		public Color BackGroundColor { get; set; }
 		public RectangleShape Box { get; set; } = new RectangleShape();
+		public int UI_ID = -1;
 		public bool IsVisable { get; set; } = true;
 		public bool IsEnabled { get; set; } = true;
 		public bool IsHovered { get; set; } = false;
@@ -24,7 +25,7 @@ namespace SFML_Engine.Engine.JUI
 		public delegate void doSomething(JElement instigator);
 		public event doSomething Something;
 
-		public JElement(GUI gui)
+		public JElement(JGUI gui)
 		{
 			this.gui = gui;
 			Something += gui.Interact;

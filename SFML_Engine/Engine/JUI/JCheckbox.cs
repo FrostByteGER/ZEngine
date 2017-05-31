@@ -8,7 +8,7 @@ using SFML.System;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JCheckbox : JLabel
+	public class JCheckbox : JLabel
 	{
 		public Color CheckBoxColor { get; set; }
 		public Color HoverColor { get; set; }
@@ -17,7 +17,7 @@ namespace SFML_Engine.Engine.JUI
 		public JChackboxGroup Group { get; set; }
 		public bool IsSelected { get; set; } = false;
 
-		public JCheckbox(GUI gui) : base(gui)
+		public JCheckbox(JGUI gui) : base(gui)
 		{
 			CheckBoxColor = gui.DefaultEffectColor3;
 			HoverColor = gui.DefaultEffectColor1;

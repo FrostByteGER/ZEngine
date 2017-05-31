@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JButton : JLabel
+	public class JButton : JLabel
 	{
 
 		public Color HoverColor { get; set; }
 		public Color SelectColor { get; set; }
 
-		public JButton(GUI gui) : base(gui)
+		public JButton(JGUI gui) : base(gui)
 		{
 			HoverColor = gui.DefaultEffectColor1;
 			SelectColor = gui.DefaultEffectColor2;

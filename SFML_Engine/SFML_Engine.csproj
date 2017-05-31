@@ -133,7 +133,7 @@
     <Compile Include="Engine\IO\GenericLoader.cs" />
     <Compile Include="Engine\JUI\JBorderLayout.cs" />
     <Compile Include="Engine\JUI\JGridLayout.cs" />
-    <Compile Include="Engine\JUI\GUI.cs" />
+    <Compile Include="Engine\JUI\JGUI.cs" />
     <Compile Include="Engine\JUI\JButton.cs" />
     <Compile Include="Engine\JUI\JChackboxGroup.cs" />
     <Compile Include="Engine\JUI\JCheckbox.cs" />

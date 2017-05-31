@@ -9,7 +9,7 @@ using SFML.System;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JSlider : JElement
+	public class JSlider : JElement
 	{
 		public int DisplayTyp = 0;
 		public static int HORIZONTAL { get; } = 0;
@@ -22,7 +22,7 @@ namespace SFML_Engine.Engine.JUI
 		public float CrossSize = 5f;
 		public float SliderValue = 0.5f;
 
-		public JSlider(GUI gui) : base(gui)
+		public JSlider(JGUI gui) : base(gui)
 		{
 			SilderColor = gui.DefaultEffectColor1;
 			Slider.FillColor = gui.DefaultElementColor;

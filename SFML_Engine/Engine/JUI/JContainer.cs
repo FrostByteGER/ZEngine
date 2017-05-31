@@ -8,13 +8,13 @@ using SFML.System;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JContainer : JElement
+	public class JContainer : JElement
 	{
 
 		public JLayout Layout { set; get; }
 		public List<JElement> Elements { set; get; } = new List<JElement>();
 
-		public JContainer(GUI gui) : base(gui)
+		public JContainer(JGUI gui) : base(gui)
 		{
 		}
 

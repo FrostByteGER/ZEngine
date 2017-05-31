@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-
-	class JLayout
+	public class JLayout
 	{
 		public JContainer Container { get; set; }
 

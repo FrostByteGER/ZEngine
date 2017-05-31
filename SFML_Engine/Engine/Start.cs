@@ -35,7 +35,7 @@ namespace SFML_Engine.Engine
 
 			InputManager im = new InputManager();
 
-			GUI gui = new GUI(new Font("./comic.ttf"), renderwindow, im);
+			JGUI gui = new JGUI(new Font("./comic.ttf"), renderwindow, im);
 
 			// Root Container
 			JContainer rootContainer = new JContainer(gui);

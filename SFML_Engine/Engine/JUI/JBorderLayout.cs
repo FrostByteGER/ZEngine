@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JBorderLayout : JLayout
+	public class JBorderLayout : JLayout
 	{
 
 		public static int CENTER = 0;

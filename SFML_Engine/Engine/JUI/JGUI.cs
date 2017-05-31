@@ -4,13 +4,11 @@ using SFML.Window;
 using SFML_Engine.Engine.IO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class GUI : ITickable, Drawable
+	public class JGUI : ITickable, Drawable
 	{
 		public Font GUIFont { get; set; }
 		public JContainer RootContainer { get; set; }
@@ -33,7 +31,7 @@ namespace SFML_Engine.Engine.JUI
 		public Color DefaultEffectColor2 { get; set; } = new Color(128,128,128);
 		public Color DefaultEffectColor3 { get; set; } = new Color(64,64,64);
 
-		public GUI(Font font, RenderWindow renderwindow, InputManager inputManager)
+		public JGUI(Font font, RenderWindow renderwindow, InputManager inputManager)
 		{
 			GUIFont = font;
 			this.renderwindow = renderwindow;
