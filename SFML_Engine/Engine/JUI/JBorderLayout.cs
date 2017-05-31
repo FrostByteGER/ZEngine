@@ -23,9 +23,12 @@ namespace SFML_Engine.Engine.JUI
 
 		public JBorderLayout(JContainer container) : base(container)
 		{
-			for (int i = 0; i <= 6 - container.Elements.Count; i++)
+			//
+			Console.WriteLine(container.Elements.Count);
+			for (int i = 0; 5 >= container.Elements.Count; i++)
 			{
-				Container.Elements.Add(null);
+				Container.Elements.Insert(i,null);
+				Console.WriteLine(container.Elements.Count);
 			}
 		}
 

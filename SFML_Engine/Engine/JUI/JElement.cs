@@ -68,11 +68,6 @@ namespace SFML_Engine.Engine.JUI
 			Console.WriteLine("Pressed" + Position);
 			IsPressed = true;
 
-			if (Something != null && IsEnabled)
-			{
-				Something(this);
-			}
-
 		}
 
 		public virtual void Released() {
@@ -87,6 +82,14 @@ namespace SFML_Engine.Engine.JUI
 		public virtual void Leave() {
 			Console.WriteLine("Leave" + Position);
 			IsPressed = false;
+		}
+
+		public void Execute()
+		{
+			if (Something != null)
+			{
+				Something(this);
+			}
 		}
 
 		public virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)

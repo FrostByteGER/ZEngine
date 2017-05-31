@@ -36,7 +36,7 @@ namespace SFML_SpaceSEM
 
 			Input.UnregisterJoystickInput(null, null, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}
-
+		/*
 		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
 			if (Input.EnterPressed)
@@ -173,7 +173,7 @@ namespace SFML_SpaceSEM
 				LevelRef.Menu[SelectedIndex].Color = SpaceSEMMenuLevel.ColorSelected;
 			}
 		}
-
+		*/
 		public override void OnGameStart()
 		{
 			base.OnGameStart();

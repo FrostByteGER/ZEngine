@@ -73,8 +73,7 @@ namespace SFML_Engine.Engine.JUI
 		public override void Pressed()
 		{
 			if (IsEnabled)
-			{
-				base.Pressed();
+			{	
 				if (IsSelected)
 				{
 					Deselect();
@@ -84,17 +83,18 @@ namespace SFML_Engine.Engine.JUI
 					Select();
 				}
 			}
+			base.Pressed();
 
 		}
 
 		public virtual void OnSelect()
 		{
-
+			Execute();
 		}
 
 		public virtual void OnDeselect()
 		{
-
+			Execute();
 		}
 
 		public override void ReSize(Vector2f position, Vector2f size)

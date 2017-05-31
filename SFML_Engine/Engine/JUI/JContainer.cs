@@ -31,7 +31,7 @@ namespace SFML_Engine.Engine.JUI
 		{
 			if (Layout != null)
 			{
-				Elements.Insert(layoutinfo, element);
+				Elements[layoutinfo] = element;
 				Layout.ReSize();
 				return true;
 			}
@@ -50,6 +50,16 @@ namespace SFML_Engine.Engine.JUI
 				return true;
 			}
 			return false;
+		}
+
+		public override void ReSize(Vector2f position, Vector2f size)
+		{
+			base.ReSize(position, size);
+			if (Layout != null)
+			{
+				Layout.ReSize();
+			}
+
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
