@@ -216,8 +216,7 @@ namespace SFML_Engine.Engine.JUI
 			else
 			{
 				Console.WriteLine("testIt >|" + instigator + "|<");
-			}
-			
+			}	
 		}
 	}
 }
