@@ -25,6 +25,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public CircleShape SelecterCircel { get; set; } = new CircleShape();
 		public Vector2i SelecterPoint { get; set; } = new Vector2i(0,0);
+		public Vector2i SelectorMovment { get; set; } = new Vector2i(0,0);
 		public bool UseSelector { get; set; } = false;
 
 		//Default Color (i don want to handle NullpointerExceptions), lol i don't need a Default Color to avoid NullpointerExceptions ,but i want to see something.
@@ -54,20 +55,13 @@ namespace SFML_Engine.Engine.JUI
 		{
 			if (InputManager != null)
 			{
+				if (UseSelector)
+				{
+					SelecterPoint += SelectorMovment;
+				}
+
 				JElement element = getSelectedElement(RootContainer);
-
-				if (InputManager.MouseLeftPressed && HoverElement != null && LastSelectedElement != HoverElement)
-				{
-					HoverElement.Pressed();
-					LastSelectedElement = HoverElement;
-				}
-
-				if (LastSelectedElement != null && !InputManager.MouseLeftPressed)
-				{
-					LastSelectedElement.Released();
-					LastSelectedElement = null;
-				}
-
+				
 				if (element != HoverElement)
 				{
 					if (element != null)
@@ -84,10 +78,18 @@ namespace SFML_Engine.Engine.JUI
 			}
 		}
 
+		private void PressElement(JElement element)
+		{
+			element.Pressed();
+		}
+
+		private void ReleasElement(JElement element)
+		{
+			element.Released();
+		}
+
 		private JElement getSelectedElement(JContainer container)
 		{
-
-			Vector2i v = Mouse.GetPosition(renderwindow);
 
 			JElement tempElement;
 
@@ -97,20 +99,20 @@ namespace SFML_Engine.Engine.JUI
 				{
 					tempElement = getSelectedElement((JContainer)e);
 					if (tempElement == null){}
-					else if (MOL.Overlaping(tempElement, v))
+					else if (MOL.Overlaping(tempElement, SelecterPoint))
 					{
 						return tempElement;
 					}
 
 				} else if(e is JElement)
 				{
-					if (MOL.Overlaping(e, v))
+					if (MOL.Overlaping(e, SelecterPoint))
 					{
 						return e;
 					}
 				}
 			}
-			if (MOL.Overlaping(container, v))
+			if (MOL.Overlaping(container, SelecterPoint))
 			{
 				return container;
 			}
@@ -119,6 +121,9 @@ namespace SFML_Engine.Engine.JUI
 
 		public void Draw(RenderTarget target, RenderStates states)
 		{
+
+			SelecterCircel.Position = (Vector2f)SelecterPoint;
+
 			if (RootContainer != null)
 			{
 				if (RootContainer.Layout != null)
@@ -136,19 +141,26 @@ namespace SFML_Engine.Engine.JUI
 
 		protected virtual void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Button Pressed: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
+			if (InputManager.MouseLeftPressed && HoverElement != null && LastSelectedElement != HoverElement)
+			{
+				HoverElement.Pressed();
+				LastSelectedElement = HoverElement;
+			}
 		}
 
 		protected virtual void OnMouseButtonReleased(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Button Released: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
+			if (LastSelectedElement != null && !InputManager.MouseLeftPressed)
+			{
+				LastSelectedElement.Released();
+				LastSelectedElement = null;
+			}
 		}
 
 		protected virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
 			UseSelector = false;
-			SelecterPoint = new Vector2i(mouseMoveEventArgs.X, mouseMoveEventArgs.Y);
-			SelecterCircel.Position = new Vector2f(SelecterPoint.X - (SelecterCircel.Radius/2), SelecterPoint.Y - (SelecterCircel.Radius / 2));
+			SelecterPoint = new Vector2i(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f));
 
 			if (HoverElement != null)
 			{
@@ -190,12 +202,29 @@ namespace SFML_Engine.Engine.JUI
 
 		protected virtual void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + PlayerPawn.ActorID + " Input Event: Joystick Button Pressed: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
+
+			// A
+			if (joystickButtonEventArgs.Button == 1)
+			{
+				if (HoverElement != null && LastSelectedElement != HoverElement)
+				{
+					HoverElement.Pressed();
+					LastSelectedElement = HoverElement;
+				}
+			}
 		}
 
 		protected virtual void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
 		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Released: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
+			// A
+			if (joystickButtonEventArgs.Button == 1)
+			{
+				if (LastSelectedElement != null)
+				{
+					LastSelectedElement.Released();
+					LastSelectedElement = null;
+				}
+			}
 		}
 
 		protected virtual void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
@@ -204,17 +233,23 @@ namespace SFML_Engine.Engine.JUI
 
 			if (joystickMoveEventArgs.Axis == Joystick.Axis.X || joystickMoveEventArgs.Axis == Joystick.Axis.U)
 			{
-				SelecterPoint += new Vector2i((int)joystickMoveEventArgs.Position, 0);
-
-			}else if(joystickMoveEventArgs.Axis == Joystick.Axis.Y || joystickMoveEventArgs.Axis == Joystick.Axis.R)
-			{
-				SelecterPoint += new Vector2i(0, (int)joystickMoveEventArgs.Position);
-
+				SelectorMovment = new Vector2i((int)(joystickMoveEventArgs.Position/10f), SelectorMovment.Y);
 			}
-
-			Console.WriteLine(joystickMoveEventArgs.Axis+" "+Joystick.Axis.Y);
-
-			//Console.WriteLine("PlayerController: " + Name + "-" + PlayerPawn.ActorID + " Input Event: Joystick Moved: JoystickID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
+			else if(joystickMoveEventArgs.Axis == Joystick.Axis.Y || joystickMoveEventArgs.Axis == Joystick.Axis.R)
+			{
+				SelectorMovment = new Vector2i(SelectorMovment.X, (int)(joystickMoveEventArgs.Position/10f));
+			}
+			if (HoverElement != null)
+			{
+				if (HoverElement.IsPressed)
+				{
+					HoverElement.Drag(sender, SelecterPoint);
+				}
+				else
+				{
+					HoverElement.OnMouseMoved(sender, SelecterPoint);
+				}
+			}
 		}
 
 		protected virtual void OnTouchBegan(object sender, TouchEventArgs touchEventArgs)
@@ -237,11 +272,11 @@ namespace SFML_Engine.Engine.JUI
 		{
 			if (instigator is JCheckbox)
 			{
-				Console.WriteLine("testIt >|" + ((JCheckbox)instigator).Text.DisplayedString + "|<");
+				// Console.WriteLine("testIt >|" + ((JCheckbox)instigator).Text.DisplayedString + "|<");
 			}
 			else
 			{
-				Console.WriteLine("testIt >|" + instigator + "|<");
+				// Console.WriteLine("testIt >|" + instigator + "|<");
 			}	
 		}
 	}

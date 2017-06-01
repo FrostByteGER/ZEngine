@@ -12,15 +12,6 @@ namespace SFML_SpaceSEM
 	{
 
 		public static Font MainGameFont { get; set; }
-		/* old
-		public Text MainLogo { get; set; } = new Text();
-		public Text Play { get; set; } = new Text();
-		public Text AllowSound { get; set; } = new Text();
-		public Text ExitGame { get; set; } = new Text();
-		public Text HighScoreText { get; set; } = new Text();
-
-		public List<Text> Menu { get; set; }
-		*/
 		private SpaceGUI GUI;
 
 		public JContainer rootContainer;
@@ -45,67 +36,23 @@ namespace SFML_SpaceSEM
 		public void InitiateMenu()
 		{
 
-			// old vvv
-			/*
-			MainLogo.Font = MainGameFont;
-			MainLogo.DisplayedString = "Space SEM";
-			MainLogo.CharacterSize = 100;
-			MainLogo.Color = ColorSelected;
-			MainLogo.Style = Text.Styles.Regular;
-			MainLogo.Origin = new Vector2f(MainLogo.GetLocalBounds().Width / 2.0f, MainLogo.GetLocalBounds().Height / 2.0f);
-			MainLogo.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 100);
-
-			Play.Font = MainGameFont;
-			Play.DisplayedString = "Play";
-			Play.CharacterSize = 50;
-			Play.Color = ColorSelected;
-			Play.Style = Text.Styles.Regular;
-			Play.Origin = new Vector2f(Play.GetLocalBounds().Width / 2.0f, Play.GetLocalBounds().Height / 2.0f);
-			Play.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 250);
-
-			AllowSound.Font = MainGameFont;
-			AllowSound.DisplayedString = "Mute Sounds";
-			AllowSound.CharacterSize = 50;
-			AllowSound.Color = ColorUnselected;
-			AllowSound.Style = Text.Styles.Regular;
-			AllowSound.Origin = new Vector2f(AllowSound.GetLocalBounds().Width / 2.0f, AllowSound.GetLocalBounds().Height / 2.0f);
-			AllowSound.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 320);
-
-			ExitGame.Font = MainGameFont;
-			ExitGame.DisplayedString = "Exit Game";
-			ExitGame.CharacterSize = 50;
-			ExitGame.Color = ColorUnselected;
-			ExitGame.Style = Text.Styles.Regular;
-			ExitGame.Origin = new Vector2f(ExitGame.GetLocalBounds().Width / 2.0f, ExitGame.GetLocalBounds().Height / 2.0f);
-			ExitGame.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 390);
-
-			HighScoreText.Font = MainGameFont;
-			HighScoreText.DisplayedString = "Highscore: 0";
-			HighScoreText.CharacterSize = 50;
-			HighScoreText.Color = ColorSelected;
-			HighScoreText.Style = Text.Styles.Bold;
-			HighScoreText.Origin = new Vector2f(HighScoreText.GetLocalBounds().Width / 2.0f, HighScoreText.GetLocalBounds().Height / 2.0f);
-			HighScoreText.Position = new Vector2f(EngineReference.EngineWindowWidth / 2.0f, 500);
-
-			Menu = new List<Text> { Play, AllowSound, ExitGame };
-			*/
-			// old ^^^
-
 			// Font TODO 
 			GUI = new SpaceGUI(MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
 
-			rootContainer.setPosition(new Vector2f(100, 100));
-			rootContainer.setSize(new Vector2f(600, 600));
+			rootContainer.setBackgroundColor( Color.Blue);
+
+			rootContainer.setPosition(new Vector2f(50, 50));
+			rootContainer.setSize(new Vector2f(700, 700));
 
 			JBorderLayout borderLayout = new JBorderLayout(rootContainer);
 
-			borderLayout.TopSize = 0.2f;
-			borderLayout.BottemSize = 0.2f;
+			borderLayout.TopSize = 0.1f;
+			//borderLayout.BottemSize = 0.2f;
 			borderLayout.LeftSize = 0.2f;
-			borderLayout.RightSize = 0.2f;
+			//borderLayout.RightSize = 0.2f;
 
 			rootContainer.Layout = borderLayout;
 
@@ -211,18 +158,6 @@ namespace SFML_SpaceSEM
 
 		public override void OnLevelLoad()
 		{
-			/* old
-			var dummyPawn = new SpriteActor();
-			var menuController = new SpaceSEMMenuPlayerController(dummyPawn);
-			RegisterPlayer(menuController);
-			RegisterActor(dummyPawn);
-			RegisterActor(MainLogo);
-			RegisterActor(Play);
-			RegisterActor(AllowSound);
-			RegisterActor(ExitGame);
-			RegisterActor(HighScoreText);
-			//HighScoreText.DisplayedString = "Highscore: " + ((BreakoutPersistentGameMode)EngineReference.PersistentGameMode).AlltimeHighScore;
-			*/
 			base.OnLevelLoad();
 		}
 

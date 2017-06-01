@@ -73,7 +73,7 @@ namespace SFML_Engine.Engine.JUI
 		public override void Pressed()
 		{
 			if (IsEnabled)
-			{	
+			{
 				if (IsSelected)
 				{
 					Deselect();
