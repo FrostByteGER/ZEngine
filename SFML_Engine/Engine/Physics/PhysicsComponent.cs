@@ -127,25 +127,29 @@ namespace SFML_Engine.Engine.Physics
 		public override void Draw(RenderTarget target, RenderStates states)
 		{
 			base.Draw(target, states);
-
-			if (CollisionBody.FixtureList[0].Shape is PolygonShape)
+			foreach (var fixture in CollisionBody.FixtureList)
 			{
-				var shape = (PolygonShape) CollisionBody.FixtureList[0].Shape;
-				Level.CollisionRectangle.Position = WorldPosition;
-				Level.CollisionRectangle.Rotation = LocalRotation;
-				Level.CollisionRectangle.Scale = LocalScale;
-				Level.CollisionRectangle.Origin = Origin;
-				Level.CollisionRectangle.Size = ComponentBounds * 2.0f;
-				target.Draw(Level.CollisionRectangle, states);
-			}else if (CollisionBody.FixtureList[0].Shape is CircleShape)
-			{
-				Level.CollisionCircle.Position = WorldPosition;
-				Level.CollisionCircle.Rotation = WorldRotation;
-				Level.CollisionCircle.Scale = LocalScale;
-				Level.CollisionCircle.Origin = Origin;
-				Level.CollisionCircle.Radius = CollisionBody.FixtureList[0].Shape.Radius;
-				target.Draw(Level.CollisionCircle, states);
+				if (fixture.Shape is PolygonShape)
+				{
+					var shape = (PolygonShape)fixture.Shape;
+					Level.CollisionRectangle.Position = WorldPosition;
+					Level.CollisionRectangle.Rotation = LocalRotation;
+					Level.CollisionRectangle.Scale = LocalScale;
+					Level.CollisionRectangle.Origin = Origin;
+					Level.CollisionRectangle.Size = ComponentBounds * 2.0f;
+					target.Draw(Level.CollisionRectangle, states);
+				}
+				else if (fixture.Shape is CircleShape)
+				{
+					Level.CollisionCircle.Position = WorldPosition;
+					Level.CollisionCircle.Rotation = WorldRotation;
+					Level.CollisionCircle.Scale = LocalScale;
+					Level.CollisionCircle.Origin = Origin;
+					Level.CollisionCircle.Radius = fixture.Shape.Radius;
+					target.Draw(Level.CollisionCircle, states);
+				}
 			}
+			
 		}
 	}
 }
