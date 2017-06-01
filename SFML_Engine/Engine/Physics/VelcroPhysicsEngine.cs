@@ -52,6 +52,8 @@ namespace SFML_Engine.Engine.Physics
 			{
 				var component = (PhysicsComponent) body.UserData;
 				if (component == null) continue;
+				component.SetLocalPosition(body.Position);
+				component.SetLocalRotation(body.Rotation);
 				var actor = component.ParentActor;
 				if (actor == null) continue;
 
@@ -88,6 +90,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, rectHalfExtents.X * 2.0f, rectHalfExtents.Y * 2.0f, mass, comp.WorldPosition, EngineMath.DegreesToRadians(angle), bodyType, comp);
+			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
 			comp.SetLocalScale(scale);

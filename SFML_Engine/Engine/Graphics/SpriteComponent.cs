@@ -15,22 +15,19 @@ namespace SFML_Engine.Engine.Graphics
 			{
 				_sprite = value;
 				Origin = new TVector2f(Sprite.GetGlobalBounds().Width / 2.0f, Sprite.GetGlobalBounds().Height / 2.0f);
+				ComponentBounds = Origin;
 			}
 		}
 
 		public override TVector2f LocalPosition
 		{
-			get => base.LocalPosition;
-			set
-			{
-				base.LocalPosition = value;
-				Sprite.Position = value;
-			}
+			get => Sprite.Position;
+			set => base.LocalPosition = value;
 		}
 
 		public override float LocalRotation
 		{
-			get => base.LocalRotation;
+			get => Sprite.Rotation;
 			set
 			{
 				base.LocalRotation = value;
@@ -40,7 +37,7 @@ namespace SFML_Engine.Engine.Graphics
 
 		public override TVector2f LocalScale
 		{
-			get => base.LocalScale;
+			get => Sprite.Scale;
 			set
 			{
 				base.LocalScale = value;
@@ -50,7 +47,7 @@ namespace SFML_Engine.Engine.Graphics
 
 		public override TVector2f Origin
 		{
-			get => base.Origin;
+			get => Sprite.Origin;
 			set
 			{
 				base.Origin = value;
@@ -67,6 +64,12 @@ namespace SFML_Engine.Engine.Graphics
 		{
 			base.Draw(target, states);
 			target.Draw(Sprite,states);
+		}
+
+		public override void Tick(float deltaTime)
+		{
+			base.Tick(deltaTime);
+			Sprite.Position = WorldPosition;
 		}
 
 		public override void Destroy(bool disposing)

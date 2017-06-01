@@ -1,11 +1,12 @@
 ﻿using SFML.Graphics;
+using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Collision.Filtering;
+using VelcroPhysics.Collision.Shapes;
 using VelcroPhysics.Dynamics;
-using VelcroPhysics.Primitives;
-using Transform = VelcroPhysics.Primitives.Transform;
+using CircleShape = VelcroPhysics.Collision.Shapes.CircleShape;
 
 namespace SFML_Engine.Engine.Physics
 {
@@ -28,26 +29,6 @@ namespace SFML_Engine.Engine.Physics
 				CollisionBody.IsSensor = _canOverlap;
 				CollisionCallbacksEnabled = collisionCallbacksEnabled;
 			}
-		}
-
-		public override TVector2f ComponentBounds
-		{
-			get
-			{
-				var aabb = new AABB();
-				foreach (var fixture in CollisionBody.FixtureList)
-				{
-					var aabbLocal = new AABB();
-					var transformable = new Transform();
-					CollisionBody.GetTransform(out transformable);
-					fixture.Shape.ComputeAABB(out aabbLocal, ref transformable, 0);
-					aabb.Combine(ref aabbLocal);
-				}
-				_componentBounds = aabb.Extents;
-				return aabb.Extents;
-			}
-
-			set { } // Since CollisionBounds are computed and handled by Velcro, we will do nothing here.
 		}
 
 		public Category CollisionResponseChannels { get; set; } = Category.All;
@@ -105,14 +86,22 @@ namespace SFML_Engine.Engine.Physics
 
 		public override TVector2f LocalPosition
 		{
-			get => CollisionBody.Position;
-			set => CollisionBody.Position = value;
+			get => base.LocalPosition;
+			set
+			{
+				base.LocalPosition = value;
+				CollisionBody.Position = value;
+			}
 		}
 
 		public override float LocalRotation
 		{
-			get => CollisionBody.Rotation;
-			set => CollisionBody.Rotation = value;
+			get => base.LocalRotation;
+			set
+			{
+				base.LocalRotation = value;
+				CollisionBody.Rotation = value;
+			}
 		}
 
 		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
@@ -138,7 +127,25 @@ namespace SFML_Engine.Engine.Physics
 		public override void Draw(RenderTarget target, RenderStates states)
 		{
 			base.Draw(target, states);
-			//TODO: Draw Global CollisionShape.
+
+			if (CollisionBody.FixtureList[0].Shape is PolygonShape)
+			{
+				var shape = (PolygonShape) CollisionBody.FixtureList[0].Shape;
+				Level.CollisionRectangle.Position = WorldPosition;
+				Level.CollisionRectangle.Rotation = LocalRotation;
+				Level.CollisionRectangle.Scale = LocalScale;
+				Level.CollisionRectangle.Origin = Origin;
+				Level.CollisionRectangle.Size = ComponentBounds * 2.0f;
+				target.Draw(Level.CollisionRectangle, states);
+			}else if (CollisionBody.FixtureList[0].Shape is CircleShape)
+			{
+				Level.CollisionCircle.Position = WorldPosition;
+				Level.CollisionCircle.Rotation = WorldRotation;
+				Level.CollisionCircle.Scale = LocalScale;
+				Level.CollisionCircle.Origin = Origin;
+				Level.CollisionCircle.Radius = CollisionBody.FixtureList[0].Shape.Radius;
+				target.Draw(Level.CollisionCircle, states);
+			}
 		}
 	}
 }

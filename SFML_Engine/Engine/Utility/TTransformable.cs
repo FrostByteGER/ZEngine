@@ -12,7 +12,7 @@ namespace SFML_Engine.Engine.Utility
 			t.Position = a.Position + b.Position;
 			t.Rotation = a.Rotation + b.Rotation;
 			t.Scale = new Vector2f(a.Scale.X * b.Scale.X, a.Scale.Y * b.Scale.Y); //TODO: Verify!
-			t.Origin = a.Origin + b.Origin;
+			t.Origin = b.Origin;
 			return t;
 		}
 
@@ -22,7 +22,7 @@ namespace SFML_Engine.Engine.Utility
 			t.Position = a.Position + b.Position;
 			t.Rotation = a.Rotation + b.Rotation;
 			t.Scale = new Vector2f(a.Scale.X * b.Scale.X, a.Scale.Y * b.Scale.Y); //TODO: Verify!
-			t.Origin = a.Origin + b.Origin;
+			t.Origin = b.Origin;
 			return t;
 		}
 
@@ -32,7 +32,7 @@ namespace SFML_Engine.Engine.Utility
 			t.Position = a.Position + b.Position;
 			t.Rotation = a.Rotation + b.Rotation;
 			t.Scale = new Vector2f(a.Scale.X * b.Scale.X, a.Scale.Y * b.Scale.Y); //TODO: Verify!
-			t.Origin = a.Origin + b.Origin;
+			t.Origin = b.Origin;
 			return t;
 		}
 	}

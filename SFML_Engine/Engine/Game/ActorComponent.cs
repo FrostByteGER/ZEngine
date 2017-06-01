@@ -1,5 +1,4 @@
 ﻿using System;
-using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Game
@@ -41,12 +40,7 @@ namespace SFML_Engine.Engine.Game
 			set => ComponentTransform.Origin = value;
 		}
 
-		protected TVector2f _componentBounds;
-		public virtual TVector2f ComponentBounds
-		{
-			get => IsRootComponent ? _componentBounds : ParentActor.ActorBounds;
-			set => _componentBounds = value;
-		}
+		public virtual TVector2f ComponentBounds { get; set; }
 
 		public TVector2f WorldPosition
 		{
