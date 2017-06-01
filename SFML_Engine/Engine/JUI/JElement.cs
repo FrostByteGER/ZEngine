@@ -92,12 +92,12 @@ namespace SFML_Engine.Engine.JUI
 			}
 		}
 
-		public virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
+		public virtual void OnMouseMoved(object sender, Vector2i position)
 		{
 
 		}
 
-		public virtual void Drag(object sender, MouseMoveEventArgs mouseMoveEventArgs)
+		public virtual void Drag(object sender, Vector2i position)
 		{
 
 		}

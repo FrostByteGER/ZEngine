@@ -23,6 +23,10 @@ namespace SFML_Engine.Engine.JUI
 
 		private JElement LastSelectedElement;
 
+		public CircleShape SelecterCircel { get; set; } = new CircleShape();
+		public Vector2i SelecterPoint { get; set; } = new Vector2i(0,0);
+		public bool UseSelector { get; set; } = false;
+
 		//Default Color (i don want to handle NullpointerExceptions), lol i don't need a Default Color to avoid NullpointerExceptions ,but i want to see something.
 		public Color DefaultElementColor { get; set; } = new Color(225, 225, 225);
 		public Color DefaultBackgroundColor { get; set; }  = new Color(0, 0, 0);
@@ -41,6 +45,9 @@ namespace SFML_Engine.Engine.JUI
 			InputManager.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+
+			SelecterCircel.FillColor = Color.Red;
+			SelecterCircel.Radius  = 6f;
 		}
 
 		public void Tick(float deltaTime)
@@ -121,6 +128,10 @@ namespace SFML_Engine.Engine.JUI
 				
 				RootContainer.Draw(target, states);
 			}
+			if (UseSelector)
+			{
+				SelecterCircel.Draw(target, states);
+			}
 		}
 
 		protected virtual void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -135,16 +146,19 @@ namespace SFML_Engine.Engine.JUI
 
 		protected virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
-			//Console.WriteLine("OnMouseMoved");
+			UseSelector = false;
+			SelecterPoint = new Vector2i(mouseMoveEventArgs.X, mouseMoveEventArgs.Y);
+			SelecterCircel.Position = new Vector2f(SelecterPoint.X - (SelecterCircel.Radius/2), SelecterPoint.Y - (SelecterCircel.Radius / 2));
+
 			if (HoverElement != null)
 			{
 				if (HoverElement.IsPressed)
 				{
-					HoverElement.Drag(sender, mouseMoveEventArgs);
+					HoverElement.Drag(sender, SelecterPoint);
 				}
 				else
 				{
-					HoverElement.OnMouseMoved(sender, mouseMoveEventArgs);
+					HoverElement.OnMouseMoved(sender, SelecterPoint);
 				}		
 			}
 		}
@@ -186,6 +200,20 @@ namespace SFML_Engine.Engine.JUI
 
 		protected virtual void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
 		{
+			UseSelector = true;
+
+			if (joystickMoveEventArgs.Axis == Joystick.Axis.X || joystickMoveEventArgs.Axis == Joystick.Axis.U)
+			{
+				SelecterPoint += new Vector2i((int)joystickMoveEventArgs.Position, 0);
+
+			}else if(joystickMoveEventArgs.Axis == Joystick.Axis.Y || joystickMoveEventArgs.Axis == Joystick.Axis.R)
+			{
+				SelecterPoint += new Vector2i(0, (int)joystickMoveEventArgs.Position);
+
+			}
+
+			Console.WriteLine(joystickMoveEventArgs.Axis+" "+Joystick.Axis.Y);
+
 			//Console.WriteLine("PlayerController: " + Name + "-" + PlayerPawn.ActorID + " Input Event: Joystick Moved: JoystickID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
 		}
 

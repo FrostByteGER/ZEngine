@@ -29,18 +29,18 @@ namespace SFML_Engine.Engine.JUI
 			Cross.FillColor = gui.DefaultElementColor;
 		}
 
-		public override void Drag(object sender, MouseMoveEventArgs mouseMoveEventArgs)
+		public override void Drag(object sender, Vector2i position)
 		{
-			base.Drag(sender, mouseMoveEventArgs);
+			base.Drag(sender, position);
 			if (DisplayTyp == HORIZONTAL)
 			{
-				SliderValue = (((float)mouseMoveEventArgs.X) - Position.X) / Size.X;
+				SliderValue = (((float)position.X) - Position.X) / Size.X;
 
 				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
 			}
 			else if(DisplayTyp == VERTICAL)
 			{
-				SliderValue = (((float)mouseMoveEventArgs.Y) - Position.Y) / Size.Y;
+				SliderValue = (((float)position.Y) - Position.Y) / Size.Y;
 
 				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 			}
