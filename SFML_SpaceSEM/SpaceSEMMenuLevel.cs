@@ -171,8 +171,7 @@ namespace SFML_SpaceSEM
 			else
 			{
 				GUI.RootContainer.addElement(null, JBorderLayout.CENTER);
-			}
-			
+			}	
 		}
 
 		protected override void LevelDraw(ref RenderWindow renderWindow)
