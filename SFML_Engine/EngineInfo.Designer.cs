@@ -61,7 +61,7 @@ namespace SFML_Engine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public uint EngineMinorVersion {
             get {
                 return ((uint)(this["EngineMinorVersion"]));
