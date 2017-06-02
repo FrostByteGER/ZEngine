@@ -65,22 +65,18 @@ namespace SFML_Engine.Engine.JUI
 		}
 
 		public virtual void Pressed() {
-			Console.WriteLine("Pressed" + Position);
 			IsPressed = true;
 
 		}
 
 		public virtual void Released() {
-			Console.WriteLine("Released" + Position);
 			IsPressed = false;
 		}
 
 		public virtual void Entered() {
-			Console.WriteLine("Entered" + Position);
 		}
 
 		public virtual void Leave() {
-			Console.WriteLine("Leave" + Position);
 			IsPressed = false;
 		}
 

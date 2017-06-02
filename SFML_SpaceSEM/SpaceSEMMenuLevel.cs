@@ -17,11 +17,14 @@ namespace SFML_SpaceSEM
 		public JContainer rootContainer;
 		public JLabel title;
 
-		public JCheckbox playCheckBox;
+		public JContainer mainLeftContainer;
 
+		public JCheckbox playCheckBox;
 		public JContainer playContainer;
 
-		public JContainer mainLeftContainer;
+		public JCheckbox optionCheckBox;
+		public JContainer optionContainer;
+
 
 		protected override void LevelTick(float deltaTime)
 		{
@@ -68,7 +71,7 @@ namespace SFML_SpaceSEM
 			playCheckBox.Text.DisplayedString = "Play";
 			playCheckBox.Something += this.ChangeCenterContainer;
 
-			JCheckbox optionCheckBox = new JCheckbox(GUI);
+			optionCheckBox = new JCheckbox(GUI);
 			optionCheckBox.Text.DisplayedString = "Options";
 
 			JCheckbox helpCheckBox = new JCheckbox(GUI);
@@ -103,7 +106,7 @@ namespace SFML_SpaceSEM
 
 			// Option Menue
 
-			JContainer optionContainer = new JContainer(GUI);
+			optionContainer = new JContainer(GUI);
 			optionContainer.Layout = new JLayout(optionContainer);
 			JLabel optionTemp = new JLabel(GUI);
 			optionTemp.Text.DisplayedString = "OptionTemp";
@@ -163,7 +166,6 @@ namespace SFML_SpaceSEM
 
 		public void ChangeCenterContainer(JElement element)
 		{
-			Console.WriteLine(playCheckBox.IsSelected);
 			if (playCheckBox.IsSelected)
 			{
 				GUI.RootContainer.addElement(playContainer, JBorderLayout.CENTER);
