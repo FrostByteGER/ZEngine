@@ -84,7 +84,7 @@ namespace SFML_Engine.Engine.Core
             _engineWindow.Closed += OnEngineWindowClose;
             _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			_engineWindow.SetFramerateLimit(FPSLimit);
-			_engineWindow.SetKeyRepeatEnabled(true);
+			_engineWindow.SetKeyRepeatEnabled(false);
 
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();

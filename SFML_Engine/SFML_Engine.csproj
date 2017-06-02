@@ -139,10 +139,12 @@
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\Material.cs" />
+    <Compile Include="Engine\Graphics\SpriteActor.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
+    <Compile Include="Engine\IO\IControllable.cs" />
     <Compile Include="Engine\Physics\OverlapComponent.cs" />
     <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\Physics\CollisionComponent.cs" />
