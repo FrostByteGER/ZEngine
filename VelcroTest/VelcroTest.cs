@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 using VelcroPhysics.Factories;
@@ -18,9 +17,6 @@ namespace VelcroTest
 		public static float FrameAccumulator;
 		public static void Main(string[] args)
 		{
-
-			Engine test = Engine.Instance;
-
 
 			// Full extent, no half extent!
 			var groundSprite = new RectangleShape(new Vector2f(200, 20));
@@ -72,8 +68,7 @@ namespace VelcroTest
 				if (FrameAccumulator >= 1.0f)
 				{
 					FramesPerSecond = Clock.FrameCount / FrameAccumulator;
-					//Console.Clear();
-					//Console.WriteLine(FramesPerSecond + " | " + Clock.RenderAverage + " | " + Clock.PhysicsAverage);
+					Console.WriteLine(FramesPerSecond + " | " + Clock.RenderAverage + " | " + Clock.PhysicsAverage);
 					FrameAccumulator = 0.0f;
 					Clock.Reset();
 				}
@@ -100,9 +95,7 @@ namespace VelcroTest
 					renderwindow.Display();
 					Clock.StopRender();
 				}
-				//Console.WriteLine(testBody.Position + " | " + floor.Position);
 			}
-			
 		}
 
 		private static void Floor_OnSeparation(Fixture otherActor, Fixture self, VelcroPhysics.Collision.ContactSystem.Contact contact)

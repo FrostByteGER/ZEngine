@@ -131,7 +131,6 @@ namespace SFML_Engine.Engine.Physics
 			{
 				if (fixture.Shape is PolygonShape)
 				{
-					var shape = (PolygonShape)fixture.Shape;
 					Level.CollisionRectangle.Position = WorldPosition;
 					Level.CollisionRectangle.Rotation = LocalRotation;
 					Level.CollisionRectangle.Scale = LocalScale;
@@ -142,7 +141,7 @@ namespace SFML_Engine.Engine.Physics
 				else if (fixture.Shape is CircleShape)
 				{
 					Level.CollisionCircle.Position = WorldPosition;
-					Level.CollisionCircle.Rotation = WorldRotation;
+					Level.CollisionCircle.Rotation = LocalRotation;
 					Level.CollisionCircle.Scale = LocalScale;
 					Level.CollisionCircle.Origin = Origin;
 					Level.CollisionCircle.Radius = fixture.Shape.Radius;

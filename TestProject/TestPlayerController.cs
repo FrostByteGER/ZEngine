@@ -7,22 +7,22 @@ namespace TestProject
 {
 	public class TestPlayerController : PlayerController
 	{
-		protected override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
+		public override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
-			var gravity = LevelReference.PhysicsEngine.Gravity;
-			if (Input.APressed)
+			if (Input.IsKeyPressed(Keyboard.Key.A))
 			{
 				LevelReference.PhysicsEngine.Gravity += new Vector2f(-9.81f, 0.0f);
-			}else if (Input.DPressed)
+			}
+			else if (Input.IsKeyPressed(Keyboard.Key.D))
 			{
 				LevelReference.PhysicsEngine.Gravity += new Vector2f(9.81f, 0.0f);
 			}
 
-			if (Input.WPressed)
+			if (Input.IsKeyPressed(Keyboard.Key.W))
 			{
 				LevelReference.PhysicsEngine.Gravity += new Vector2f(0.0f, -9.81f);
 			}
-			else if (Input.SPressed)
+			else if (Input.IsKeyPressed(Keyboard.Key.S))
 			{
 				LevelReference.PhysicsEngine.Gravity += new Vector2f(0.0f, 9.81f);
 			}

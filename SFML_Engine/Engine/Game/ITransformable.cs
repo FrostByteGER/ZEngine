@@ -19,10 +19,6 @@ namespace SFML_Engine.Engine.Game
 
 		TVector2f WorldPosition { get; set; }
 
-		float WorldRotation { get; set; }
-
-		TVector2f WorldScale { get; set; }
-
 		TVector2f ComponentBounds { get; set; }
 
 		// Location

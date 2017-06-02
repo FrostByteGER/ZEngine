@@ -421,10 +421,6 @@ namespace SFML_Engine.Engine.Game
 		{
 			foreach (var actor in Actors)
 			{
-				foreach (var comp in actor.Components)
-				{
-					comp.Dispose();
-				}
 				actor.Dispose();
 			}
 			Actors.Clear();

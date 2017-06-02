@@ -20,6 +20,14 @@ namespace SFML_Engine.Engine.Physics
 			{
 				if (PhysicsWorld != null)
 				{
+					// Only notify each body for a gravity change if the gravity has changed from its current value. If we're not doing this, bodies that are not awake will not respond to the new gravity values!
+					if (PhysicsWorld.Gravity != value)
+					{
+						foreach (var body in PhysicsWorld.BodyList)
+						{
+							body.Awake = true;
+						}
+					}
 					PhysicsWorld.Gravity = value;
 				}
 				else

@@ -23,6 +23,8 @@ namespace SFML_Engine.Engine.Utility
 			set => Vec2f = new Vector2f(Vec2f.X, value);
 		}
 
+		public static TVector2f Up { get; } = new TVector2f(0.0f, -1.0f);
+		public static TVector2f Forward { get; } = new TVector2f(1.0f, 0.0f);
 		public static float UnitX { get; } = 1.0f;
 		public static float UnitY { get; } = 1.0f;
 
@@ -274,38 +276,38 @@ namespace SFML_Engine.Engine.Utility
 
 		public static bool operator !=(float a, TVector2f b)
 		{
-			return a != b.X && a != b.Y;
+			return a != b.X || a != b.Y;
 		}
 
 		public static bool operator !=(TVector2f a, float b)
 		{
-			return a.X != b && a.Y != b;
+			return a.X != b || a.Y != b;
 		}
 
 		//TODO: Add Tolerance!
 		public static bool operator !=(TVector2f a, TVector2f b)
 		{
-			return a.X != b.X && a.Y != b.Y;
+			return a.X != b.X || a.Y != b.Y;
 		}
 
 		public static bool operator !=(Vector2f a, TVector2f b)
 		{
-			return a.X != b.X && a.Y != b.Y;
+			return a.X != b.X || a.Y != b.Y;
 		}
 
 		public static bool operator !=(TVector2f a, Vector2f b)
 		{
-			return a.X != b.X && a.Y != b.Y;
+			return a.X != b.X || a.Y != b.Y;
 		}
 
 		public static bool operator !=(Vector2 a, TVector2f b)
 		{
-			return a.X != b.X && a.Y != b.Y;
+			return a.X != b.X || a.Y != b.Y;
 		}
 
 		public static bool operator !=(TVector2f a, Vector2 b)
 		{
-			return a.X != b.X && a.Y != b.Y;
+			return a.X != b.X || a.Y != b.Y;
 		}
 
 		public static bool operator >(float a, TVector2f b)

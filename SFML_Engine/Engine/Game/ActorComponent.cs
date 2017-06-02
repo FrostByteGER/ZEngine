@@ -48,19 +48,7 @@ namespace SFML_Engine.Engine.Game
 			set => LocalPosition = ComponentTransform.InverseTransform * value;
 		}
 
-		public float WorldRotation
-		{
-			get => IsRootComponent ? ComponentTransform.Rotation : ParentActor.Rotation + ComponentTransform.Rotation;
-			set { } // TODO: Not Possible!
-		}
-
-		public TVector2f WorldScale
-		{
-			get => IsRootComponent ? (TVector2f)ComponentTransform.Scale : new TVector2f(ParentActor.Scale.X * ComponentTransform.Scale.X, ParentActor.Scale.Y * ComponentTransform.Scale.Y);
-			set { } // TODO: Not Possible!
-		}
-
-		public bool Movable { get; set; }
+		public virtual bool Movable { get; set; }
 
 		public virtual void Tick(float deltaTime)
 		{
