@@ -84,10 +84,8 @@ namespace SFML_Engine.Engine.Game
 	        foreach (var pc in Players)
 	        {
 		        renderWindow.SetView(pc.PlayerCamera);
-
 				// TODO: Evaluate Performance!
 		        var drawableActors = Actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID).ToList();
-
 				foreach (var actor in drawableActors)
 				{
 					var c1 = actor.GetComponents<RenderComponent>();
@@ -100,46 +98,16 @@ namespace SFML_Engine.Engine.Game
 						renderWindow.Draw(comp);
 					}
 				}
-				//TODO: Instead of drawing them in the order the components are arranged in the actor.Components array, get all possible and visible RenderComponents and draw them based on layers.
-				/*
-				if (comp is CollisionComponent)
-				{
-					if (comp.ComponentName == "Test")
-					{
-						Console.WriteLine("THIS");
-					}
-					var colComp = comp as CollisionComponent;
-					var colBody = colComp.CollisionBody;
-					var colShape = colBody.CollisionShape;
-					if (colComp.Visible && colBody.GetType() == typeof(RigidBody) && colShape.GetType() == typeof(BoxShape))
-					{
-						CollisionRectangle.Size = EngineMath.Vec3ToVec2f(((BoxShape)colShape).HalfExtentsWithoutMargin * 2.0f);
-						CollisionRectangle.Position = colComp.Position;
-						CollisionRectangle.Rotation = colComp.Rotation;
-						CollisionRectangle.Scale = colComp.Scale;
-						CollisionRectangle.Origin = colComp.Origin;
-						CollisionRectangle.FillColor = colComp.ComponentColor;
-
-						renderWindow.Draw(CollisionRectangle);
-					}
-					else if (colComp.Visible && colBody.GetType() == typeof(RigidBody) && colShape.GetType() == typeof(SphereShape))
-					{
-						CollisionCircle.Radius = ((SphereShape)colShape).Radius;
-						CollisionCircle.Position = colComp.Position;
-						CollisionCircle.Rotation = colComp.Rotation;
-						CollisionCircle.Scale = colComp.Scale;
-						CollisionCircle.Origin = colComp.Origin;
-						CollisionCircle.FillColor = colComp.ComponentColor;
-
-						renderWindow.Draw(CollisionCircle);
-					}
-				}*/
 			}
 		}
 
 	    public virtual void OnLevelLoad()
 	    {
 		    Console.WriteLine("Level #" + LevelID + " Loaded");
+		    foreach (var actor in Actors)
+		    {
+			    actor.InitializeActor();
+		    }
 		    foreach (var pc in Players)
 		    {
 			    pc.IsActive = pc.MarkedForInputRegistering; // If Player Controllers were marked for Input Registration, register their input now.

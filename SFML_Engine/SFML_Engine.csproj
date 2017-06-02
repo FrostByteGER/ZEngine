@@ -186,7 +186,6 @@
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
-    <Compile Include="Engine\Game\SpriteActor.cs" />
     <Compile Include="Engine\Core\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Engine\Utility\TTransformable.cs" />

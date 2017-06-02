@@ -25,30 +25,36 @@ namespace TestProject
 			var physics = level.PhysicsEngine;
 			physics.Gravity = new Vector2f(9.81f, 0.0f);
 
-			
-			
-			
+			// Creates a SpriteActor 
+			var spriteActor = new SpriteActor(new Sprite(new Texture("Assets/TestProject/TestSprite.png")), level);
+			spriteActor.GetRootComponent<PhysicsComponent>().CollisionResponseChannels &=
+				~VelcroPhysics.Collision.Filtering.Category.Cat1;
+			spriteActor.GetRootComponent<PhysicsComponent>().CollisionBody.GravityScale *= -1;
 
-			var testActor2 = new Actor();
+			// This is a normal actor that is equivalent to the spriteActor above but is manually composed.
+			var spriteActor2 = new Actor(level);
 			var spriteComponent = new SpriteComponent(new Sprite(new Texture("Assets/TestProject/TestSprite.png")));
-			physics.ConstructRectangleCollisionComponent(testActor2, true, new TVector2f(0.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 1.0f, spriteComponent.ComponentBounds, BodyType.Dynamic);
-			testActor2.AddComponent(spriteComponent);
-			testActor2.GetRootComponent<PhysicsComponent>().Visible = false;
-			testActor2.Origin = spriteComponent.Origin;
+			physics.ConstructRectangleCollisionComponent(spriteActor2, true, new TVector2f(0.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 1.0f, spriteComponent.ComponentBounds, BodyType.Dynamic);
+			spriteActor2.AddComponent(spriteComponent);
+			spriteActor2.GetRootComponent<PhysicsComponent>().Visible = false;
+			spriteActor2.GetRootComponent<PhysicsComponent>().CollisionResponseChannels &=
+				~VelcroPhysics.Collision.Filtering.Category.Cat1;
+			spriteActor2.Origin = spriteComponent.Origin;
 
-			var leftBorder = new Actor();
+			var leftBorder = new Actor(level);
 			physics.ConstructRectangleCollisionComponent(leftBorder, true, new TVector2f(-450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f,400.0f), BodyType.Static);
+			leftBorder.GetRootComponent<PhysicsComponent>().CollisionType = VelcroPhysics.Collision.Filtering.Category.Cat2;
 			leftBorder.Visible = false;
 
-			var rightBorder = new Actor();
+			var rightBorder = new Actor(level);
 			physics.ConstructRectangleCollisionComponent(rightBorder, true, new TVector2f(450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static);
 			rightBorder.Visible = false;
 
-			var topBorder = new Actor();
+			var topBorder = new Actor(level);
 			physics.ConstructRectangleCollisionComponent(topBorder, true, new TVector2f(0.0f, -450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static);
 			topBorder.Visible = false;
 
-			var bottomBorder = new Actor();
+			var bottomBorder = new Actor(level);
 			physics.ConstructRectangleCollisionComponent(bottomBorder, true, new TVector2f(0.0f, 450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static);
 			bottomBorder.Visible = false;
 			/*
@@ -81,7 +87,8 @@ rightBorder.SetRootComponent(rightComponent);*/
 
 			var player = new TestPlayerController();
 			player.SetCameraSize(800);
-			level.RegisterActor(testActor2);
+			level.RegisterActor(spriteActor);
+			level.RegisterActor(spriteActor2);
 			//level.RegisterActor(testActor);
 			level.RegisterActor(leftBorder);
 			level.RegisterActor(rightBorder);

@@ -144,8 +144,22 @@ namespace SFML_Engine.Engine.Game
 			set => RootComponent.ComponentTransform = value;
 		}
 
-		public Actor()
+		public Actor(Level level)
 		{
+
+		}
+
+		protected internal virtual void InitializeActor()
+		{
+			InitializeComponents();
+		}
+
+		protected internal virtual void InitializeComponents()
+		{
+			foreach (var comp in Components)
+			{
+				comp.OnInitializeActorComponent();
+			}
 		}
 
 		public virtual void Move(float x, float y)
@@ -203,22 +217,22 @@ namespace SFML_Engine.Engine.Game
 			//Console.WriteLine(Position);
 		}
 
-		public void OnCollide(Fixture self, Fixture other, Contact contactInfo)
+		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
+		public virtual void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
+		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}
 
-		public void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
+		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
 
 		}

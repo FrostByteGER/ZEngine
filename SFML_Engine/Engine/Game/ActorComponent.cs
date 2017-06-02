@@ -70,6 +70,11 @@ namespace SFML_Engine.Engine.Game
 			newParent.AddComponent(this);
 		}
 
+		protected internal virtual void OnInitializeActorComponent()
+		{
+			
+		}
+
 		public virtual void OnActorComponentDestroy()
 		{
 			Console.WriteLine("DESTROYING ACTORCOMPONENT: " + ComponentName + "-" + ComponentID);

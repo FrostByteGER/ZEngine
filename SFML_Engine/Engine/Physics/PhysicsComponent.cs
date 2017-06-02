@@ -31,8 +31,28 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
-		public Category CollisionResponseChannels { get; set; } = Category.All;
-		public Category CollisionType { get; set; } = Category.Cat1;
+		private Category _collisionResponseChannels = Category.All;
+
+		public Category CollisionResponseChannels
+		{
+			get => _collisionResponseChannels;
+			set
+			{
+				_collisionResponseChannels = value;
+				CollisionBody.CollidesWith = value;
+			}
+		}
+
+		private Category _collisionType = Category.Cat1;
+		public Category CollisionType
+		{
+			get => _collisionType;
+			set
+			{
+				_collisionType = value;
+				CollisionBody.CollisionCategories = value;
+			}
+		}
 
 		private bool _canOverlap = false;
 		public bool CanOverlap
