@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SFML_Engine</RootNamespace>
     <AssemblyName>SFML_Engine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -76,8 +76,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>SFML_Engine.Engine.Start</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -131,8 +130,11 @@
     <Compile Include="Engine\Events\PauseActorParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
+    <Compile Include="Engine\Events\SwitchLevelEvent.cs" />
     <Compile Include="Engine\Game\GameLevelState.cs" />
+    <Compile Include="Engine\Events\SwitchLevelParams.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\Game\PersistentGameMode.cs" />
     <Compile Include="Engine\Game\IDestroyable.cs" />
     <Compile Include="Engine\Game\LevelInfo.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
@@ -144,10 +146,22 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
     <Compile Include="Engine\IO\GenericLoader.cs" />
+    <Compile Include="Engine\JUI\JBorderLayout.cs" />
+    <Compile Include="Engine\JUI\JGridLayout.cs" />
+    <Compile Include="Engine\JUI\JGUI.cs" />
     <Compile Include="Engine\IO\IControllable.cs" />
+    <Compile Include="Engine\Physics\CollisionComponent.cs" />
     <Compile Include="Engine\Physics\OverlapComponent.cs" />
     <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
-    <Compile Include="Engine\Physics\CollisionComponent.cs" />
+    <Compile Include="Engine\JUI\JButton.cs" />
+    <Compile Include="Engine\JUI\JChackboxGroup.cs" />
+    <Compile Include="Engine\JUI\JCheckbox.cs" />
+    <Compile Include="Engine\JUI\JContainer.cs" />
+    <Compile Include="Engine\JUI\JElement.cs" />
+    <Compile Include="Engine\JUI\JLabel.cs" />
+    <Compile Include="Engine\JUI\JLayout.cs" />
+    <Compile Include="Engine\JUI\JSlider.cs" />
+    <Compile Include="Engine\JUI\MouseOverLap.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\Game\GameMode.cs" />
     <Compile Include="Engine\Game\IActorable.cs" />
@@ -166,7 +180,6 @@
     <Compile Include="Engine\Graphics\SpriteComponent.cs" />
     <Compile Include="Engine\Physics\VelcroPhysicsEngine.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
-    <Compile Include="Engine\UI\UIActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Game\SpriteActor.cs" />
@@ -205,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\OpenAL32.dll" />
-    <Content Include="Lib\VelcroPhysics.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Audio\" />

@@ -149,7 +149,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGameStart()
 	    {
-		    
+		    IsActive = true;
 	    }
 
 	    public virtual void OnGamePause()
@@ -164,7 +164,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGameEnd()
 	    {
-		    
+		    IsActive = false;
 	    }
 
 	    public void SetCameraSize(float x, float y)
