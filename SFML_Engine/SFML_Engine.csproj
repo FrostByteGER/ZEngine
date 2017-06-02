@@ -114,19 +114,38 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="VelcroPhysics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\VelcroPhysics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Actor.cs" />
-    <Compile Include="Engine\ActorComponent.cs" />
-    <Compile Include="Engine\EngineInfo.cs" />
+    <Compile Include="Engine\Events\RemovePlayerEvent.cs" />
+    <Compile Include="Engine\Events\RemovePlayerParams.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerEvent.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerParams.cs" />
+    <Compile Include="Engine\Game\Actor.cs" />
+    <Compile Include="Engine\Game\ActorComponent.cs" />
+    <Compile Include="Engine\Core\EngineInfo.cs" />
     <Compile Include="Engine\Events\EngineEventParams.cs" />
+    <Compile Include="Engine\Events\UnpauseActorEvent.cs" />
+    <Compile Include="Engine\Events\PauseActorEvent.cs" />
+    <Compile Include="Engine\Events\UnpauseActorParams.cs" />
+    <Compile Include="Engine\Events\PauseActorParams.cs" />
     <Compile Include="Engine\Events\SpawnActorEvent.cs" />
     <Compile Include="Engine\Events\SpawnActorParams.cs" />
     <Compile Include="Engine\Events\SwitchLevelEvent.cs" />
+    <Compile Include="Engine\Game\GameLevelState.cs" />
     <Compile Include="Engine\Events\SwitchLevelParams.cs" />
-    <Compile Include="Engine\GameLevelState.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
     <Compile Include="Engine\Game\PersistentGameMode.cs" />
+    <Compile Include="Engine\Game\IDestroyable.cs" />
+    <Compile Include="Engine\Game\LevelInfo.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
+    <Compile Include="Engine\Graphics\RenderComponent.cs" />
+    <Compile Include="Engine\Graphics\Material.cs" />
+    <Compile Include="Engine\Graphics\SpriteActor.cs" />
     <Compile Include="Engine\IO\AssetLoader.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigLoader.cs" />
@@ -134,6 +153,10 @@
     <Compile Include="Engine\JUI\JBorderLayout.cs" />
     <Compile Include="Engine\JUI\JGridLayout.cs" />
     <Compile Include="Engine\JUI\JGUI.cs" />
+    <Compile Include="Engine\IO\IControllable.cs" />
+    <Compile Include="Engine\Physics\CollisionComponent.cs" />
+    <Compile Include="Engine\Physics\OverlapComponent.cs" />
+    <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\JUI\JButton.cs" />
     <Compile Include="Engine\JUI\JChackboxGroup.cs" />
     <Compile Include="Engine\JUI\JCheckbox.cs" />
@@ -143,34 +166,31 @@
     <Compile Include="Engine\JUI\JLayout.cs" />
     <Compile Include="Engine\JUI\JSlider.cs" />
     <Compile Include="Engine\JUI\MouseOverLap.cs" />
-    <Compile Include="Engine\Physics\BoxShape.cs" />
-    <Compile Include="Engine\Physics\CollisionShape.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
-    <Compile Include="Engine\GameMode.cs" />
-    <Compile Include="Engine\IActorable.cs" />
+    <Compile Include="Engine\Game\GameMode.cs" />
+    <Compile Include="Engine\Game\IActorable.cs" />
+    <Compile Include="Engine\Game\IGameInterface.cs" />
     <Compile Include="Engine\Physics\ICollidable.cs" />
-    <Compile Include="Engine\IGameInterface.cs" />
-    <Compile Include="Engine\Physics\ITransformable.cs" />
+    <Compile Include="Engine\Game\ITransformable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
     <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
-    <Compile Include="Engine\ITickable.cs" />
-    <Compile Include="Engine\Level.cs" />
+    <Compile Include="Engine\Game\ITickable.cs" />
+    <Compile Include="Engine\Game\Level.cs" />
+    <Compile Include="Engine\Physics\PhysicsComponent.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
-    <Compile Include="Engine\PlayerController.cs" />
-    <Compile Include="Engine\Physics\SphereShape.cs" />
+    <Compile Include="Engine\Game\PlayerController.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
-    <Compile Include="Engine\SFML\CircleShape.cs" />
-    <Compile Include="Engine\SFML\ConvexShape.cs" />
-    <Compile Include="Engine\SFML\RectangleShape.cs" />
-    <Compile Include="Engine\SFML\Shape.cs" />
-    <Compile Include="Engine\SFML\Text.cs" />
+    <Compile Include="Engine\Graphics\SpriteComponent.cs" />
+    <Compile Include="Engine\Physics\VelcroPhysicsEngine.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
+    <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
-    <Compile Include="Engine\SFML\Sprite.cs" />
-    <Compile Include="Engine\SpriteActor.cs" />
-    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\Game\SpriteActor.cs" />
+    <Compile Include="Engine\Core\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
+    <Compile Include="Engine\Utility\TTransformable.cs" />
+    <Compile Include="Engine\Utility\TVector2f.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EngineInfo.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -201,7 +221,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\BulletSharp.dll" />
     <Content Include="Lib\OpenAL32.dll" />
   </ItemGroup>
   <ItemGroup>

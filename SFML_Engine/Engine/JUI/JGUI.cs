@@ -2,9 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SFML_Engine.Engine.Game;
 
 namespace SFML_Engine.Engine.JUI
 {
@@ -36,6 +34,9 @@ namespace SFML_Engine.Engine.JUI
 		public Color DefaultEffectColor2 { get; set; } = new Color(128,128,128);
 		public Color DefaultEffectColor3 { get; set; } = new Color(64,64,64);
 
+		public bool CanTick { get; set; } = true;
+
+
 		public JGUI(Font font, RenderWindow renderwindow, InputManager inputManager)
 		{
 			GUIFont = font;
@@ -44,7 +45,7 @@ namespace SFML_Engine.Engine.JUI
 			InputManager.RegisterEngineInput(ref this.renderwindow);
 
 			InputManager.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
-				OnKeyPressed, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
+				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
 
 			SelecterCircel.FillColor = Color.Red;
@@ -181,6 +182,11 @@ namespace SFML_Engine.Engine.JUI
 		}
 
 		protected virtual void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
+		{
+			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Keyboard Key Pressed: " + keyEventArgs.Code);
+		}
+
+		protected virtual void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
 		{
 			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Keyboard Key Pressed: " + keyEventArgs.Code);
 		}

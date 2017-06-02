@@ -15,7 +15,8 @@ namespace SFML_Engine.Engine.Events
 			if (Parameters.RemovableActor != null)
 			{
 				var actor = Parameters.RemovableActor;
-				Engine.Instance.FindLevel(actor.LevelID).UnregisterActor(actor);
+				Parameters.RemovableActor.OnGameEnd();
+				Core.Engine.Instance.ActiveLevel.UnregisterActor(actor);
 				return;
 			}
 			Console.WriteLine("Failed to Remove Actor");
