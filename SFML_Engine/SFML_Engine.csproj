@@ -120,6 +120,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Events\RemovePlayerEvent.cs" />
+    <Compile Include="Engine\Events\RemovePlayerParams.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerEvent.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerParams.cs" />
     <Compile Include="Engine\Game\Actor.cs" />
     <Compile Include="Engine\Game\ActorComponent.cs" />
     <Compile Include="Engine\Core\EngineInfo.cs" />

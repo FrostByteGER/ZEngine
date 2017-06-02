@@ -142,7 +142,8 @@ namespace SFML_Engine.Engine.Game
 		    Console.WriteLine("Level #" + LevelID + " Loaded");
 		    foreach (var pc in Players)
 		    {
-			    pc.IsActive = pc.IsActive; // If Player Controllers were set to active, register their input now.
+			    pc.IsActive = pc.MarkedForInputRegistering; // If Player Controllers were marked for Input Registration, register their input now.
+			    pc.MarkedForInputRegistering = false;
 		    }
 		    OnGameStart();
 	    }
@@ -330,7 +331,7 @@ namespace SFML_Engine.Engine.Game
 		}
 
 		/// <summary>
-		/// Registers the given PlayerController in this level and registers its input.
+		/// Registers the given PlayerController in this level and Marks for Input Registering.
 		/// </summary>
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc)
@@ -338,20 +339,19 @@ namespace SFML_Engine.Engine.Game
 			Players.Add(pc);
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
-			pc.IsActive = true;
+			pc.MarkedForInputRegistering = true;
 		}
 
 		/// <summary>
-		/// Registers the given PlayerController in this level and registers its input depending on the given boolean.
+		/// Registers the given PlayerController in this level and registers its input.
 		/// </summary>
 		/// <param name="pc"></param>
-		/// <param name="isActive">Wether or not the input of the PlayerController should be registered or not.</param>
-		public void RegisterPlayer(PlayerController pc, bool isActive)
+		public void RegisterPlayer(PlayerController pc, bool active)
 		{
 			Players.Add(pc);
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
-			pc.IsActive = isActive;
+			pc.MarkedForInputRegistering = active;
 		}
 
 		public bool UnregisterPlayer(PlayerController pc)

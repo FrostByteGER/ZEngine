@@ -1,5 +1,4 @@
-﻿using System;
-using SFML.Window;
+﻿using SFML.Window;
 
 namespace SFML_Engine.Engine.IO
 {

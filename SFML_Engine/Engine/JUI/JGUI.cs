@@ -2,9 +2,6 @@
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SFML_Engine.Engine.Game;
 
 namespace SFML_Engine.Engine.JUI

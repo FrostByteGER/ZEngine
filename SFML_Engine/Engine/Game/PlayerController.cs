@@ -21,21 +21,25 @@ namespace SFML_Engine.Engine.Game
 		public InputManager Input { get; set; }
 	    public bool CanTick { get; set; } = true;
 
-		private bool _isActive = true;
+	    internal bool MarkedForInputRegistering { get; set; } = false;
+
+		private bool _isActive = false;
 		public bool IsActive
 	    {
 		    get => _isActive;
 			set
 			{
-				_isActive = value;
-				if (value && LevelReference != null && LevelReference.LevelLoaded)
-				{
-					RegisterInput();
-				}
-				else if(!value && LevelReference != null && LevelReference.LevelLoaded)
+				
+				if (!value && LevelReference != null && LevelReference.LevelLoaded)
 				{
 					UnregisterInput();
 				}
+				else if (!_isActive && LevelReference != null && LevelReference.LevelLoaded)
+				{
+					RegisterInput();
+				}
+
+				_isActive = value;
 			}
 	    }
 
@@ -149,7 +153,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGameStart()
 	    {
-		    IsActive = true;
+
 	    }
 
 	    public virtual void OnGamePause()
