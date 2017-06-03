@@ -186,11 +186,49 @@ namespace SFML_Engine.Engine.Core
 			RequestTermination = true;
 		}
 
+		/// <summary>
+		/// Loads the given level and destroys the previous one if there was one.
+		/// </summary>
+		/// <param name="level"></param>
+		/// <returns></returns>
 		public bool LoadLevel(Level level)
 		{
 			if (level == null || level == ActiveLevel) return false;
 			ActiveLevel?.OnGameEnd();
 			ActiveLevel?.ShutdownLevel();
+			ActiveLevel = level;
+			level.EngineReference = this;
+			level.LevelLoaded = true;
+			level.OnLevelLoad();
+			level.LevelTicking = true;
+			return true;
+		}
+
+		/// <summary>
+		/// Loads the given level and either destroys the previous one or pauses and unloads it.
+		/// </summary>
+		/// <param name="level"></param>
+		/// <param name="destroyPrevious"></param>
+		/// <returns></returns>
+		public bool LoadLevel(Level level, bool destroyPrevious)
+		{
+			if (level == null || level == ActiveLevel) return false;
+
+			if (destroyPrevious)
+			{
+				ActiveLevel?.OnGameEnd();
+				ActiveLevel?.ShutdownLevel();
+			}
+			else
+			{
+				if (ActiveLevel != null)
+				{
+					ActiveLevel.OnGamePause();
+					ActiveLevel.LevelLoaded = false;
+					ActiveLevel.OnUnloadLevel();
+				}
+			}
+
 			ActiveLevel = level;
 			level.EngineReference = this;
 			level.LevelLoaded = true;

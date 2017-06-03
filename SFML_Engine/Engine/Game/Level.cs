@@ -85,14 +85,12 @@ namespace SFML_Engine.Engine.Game
 	        {
 		        renderWindow.SetView(pc.PlayerCamera);
 				// TODO: Evaluate Performance!
-		        var drawableActors = Actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID).ToList();
+		        var drawableActors = Actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID);
 				foreach (var actor in drawableActors)
 				{
 					var c1 = actor.GetComponents<RenderComponent>();
-					var c11 = c1.FindAll(c => c.Visible);
-					var c2 = c11.OrderByDescending(c => c.ComponentLayerID);
-					var drawableComps = c2.ToList();
-					if (drawableComps.Count <= 0) continue;
+					var c11 = c1.Where(c => c.Visible);
+					var drawableComps = c11.OrderByDescending(c => c.ComponentLayerID);
 					foreach (var comp in drawableComps)
 					{
 						renderWindow.Draw(comp);
@@ -171,6 +169,10 @@ namespace SFML_Engine.Engine.Game
 			{
 				actor.OnGameEnd();
 			}
+		}
+
+	    internal virtual void OnUnloadLevel()
+	    {
 		}
 
 	    internal virtual void ShutdownLevel()

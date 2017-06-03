@@ -326,9 +326,9 @@ namespace SFML_Engine.Engine.Game
 			return (T)Components.Find(comp => comp is T);
 		}
 
-		public List<T> GetComponents<T>() where T : ActorComponent
+		public IEnumerable<T> GetComponents<T>() where T : ActorComponent
 		{
-			return Components.FindAll(comp => comp is T).Cast<T>().ToList();
+			return Components.FindAll(comp => comp is T).Cast<T>();
 		}
 
 
