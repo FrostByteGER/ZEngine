@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
@@ -16,6 +17,8 @@ namespace SFML_Engine.Engine.Game
 		public uint LayerID { get; set; } = 1;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
+
+		[JsonIgnore]
 		public TVector2f ActorBounds
 		{
 			get => RootComponent.ComponentBounds;
@@ -48,7 +51,9 @@ namespace SFML_Engine.Engine.Game
 		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
 		/// </summary>
 		public float Mass { get; set; } = 1.0f;
+		[JsonIgnore]
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
+		[JsonIgnore]
 		public virtual ActorComponent RootComponent { get; private set; } = null;
 		/// <summary>
 		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
@@ -59,6 +64,7 @@ namespace SFML_Engine.Engine.Game
 		public bool Visible { get; set; } = true;
 		public bool CanTick { get; set; } = true;
 		private bool _collisionCallbacksEnabled = true;
+		[JsonIgnore]
 		public bool CollisionCallbacksEnabled
 		{
 			get => _collisionCallbacksEnabled;
@@ -67,12 +73,14 @@ namespace SFML_Engine.Engine.Game
 				_collisionCallbacksEnabled = value;
 				foreach (var comp in Components)
 				{
-					var colComp = (PhysicsComponent) comp;
-					if (colComp != null) colComp.CollisionCallbacksEnabled = value;
+					var physComp = comp as PhysicsComponent;
+					if (physComp != null) physComp.CollisionCallbacksEnabled = value;
 				}
 			}
 		}
 
+		[JsonIgnore]
+		// TODO: Move to a PhysicsActor, not an Actor.
 		public bool CanOverlap
 		{
 			get
@@ -80,8 +88,8 @@ namespace SFML_Engine.Engine.Game
 				var canoverlap = false;
 				foreach (var comp in Components)
 				{
-					var physComp = (PhysicsComponent)comp;
-					if (comp == null) continue;
+					var physComp = comp as PhysicsComponent;
+					if (physComp == null) continue;
 					canoverlap = physComp.CanOverlap;
 					if (canoverlap) break;
 				}
@@ -91,12 +99,14 @@ namespace SFML_Engine.Engine.Game
 			{
 				foreach (var comp in Components)
 				{
-					var physComp = (PhysicsComponent)comp;
-					if (comp != null) physComp.CanOverlap = value;
+					var physComp = comp as PhysicsComponent;
+					if (physComp != null) physComp.CanOverlap = value;
 				}
 			}
 		}
 
+		[JsonIgnore]
+		// TODO: Useless?
 		public bool CanOverlapAll
 		{
 			get
@@ -104,8 +114,8 @@ namespace SFML_Engine.Engine.Game
 				var canoverlap = false;
 				foreach (var comp in Components)
 				{
-					var physComp = (PhysicsComponent)comp;
-					if (comp == null) continue;
+					var physComp = comp as PhysicsComponent;
+					if (physComp == null) continue;
 					canoverlap = physComp.CanOverlap;
 					if (!canoverlap) break;
 				}
@@ -114,30 +124,35 @@ namespace SFML_Engine.Engine.Game
 			set => CanOverlap = value;
 		}
 
+		[JsonIgnore]
 		public TVector2f Position
 		{
 			get => RootComponent.LocalPosition;
 			set => RootComponent.LocalPosition = value;
 		}
 
+		[JsonIgnore]
 		public float Rotation
 		{
 			get => RootComponent.LocalRotation;
 			set => RootComponent.LocalRotation = value;
 		}
 
+		[JsonIgnore]
 		public TVector2f Scale
 		{
 			get => RootComponent.LocalScale;
 			set => RootComponent.LocalScale = value;
 		}
 
+		[JsonIgnore]
 		public TVector2f Origin
 		{
 			get => RootComponent.Origin;
 			set => RootComponent.Origin = value;
 		}
 
+		[JsonIgnore]
 		public TTransformable ActorTransform
 		{
 			get => RootComponent.ComponentTransform;

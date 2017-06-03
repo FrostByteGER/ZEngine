@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -19,12 +20,15 @@ namespace SFML_Engine.Engine.Game
 
         public SpriteActor PlayerPawn { get; set; }
 
+	    [JsonIgnore]
 		public InputManager Input { get; set; }
 	    public bool CanTick { get; set; } = true;
 
 	    internal bool MarkedForInputRegistering { get; set; } = false;
 
 		private bool _isActive = false;
+
+	    [JsonIgnore]
 		public bool IsActive
 	    {
 		    get => _isActive;

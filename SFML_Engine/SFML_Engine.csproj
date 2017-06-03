@@ -141,7 +141,7 @@
     <Compile Include="Engine\Game\GameLevelState.cs" />
     <Compile Include="Engine\Events\SwitchLevelParams.cs" />
     <Compile Include="Engine\Game\GameInfo.cs" />
-    <Compile Include="Engine\Game\PersistentGameMode.cs" />
+    <Compile Include="Engine\Game\GameInstance.cs" />
     <Compile Include="Engine\Game\IDestroyable.cs" />
     <Compile Include="Engine\Game\LevelInfo.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Core;
@@ -96,6 +98,23 @@ rightBorder.SetRootComponent(rightComponent);*/
 			level.RegisterActor(bottomBorder);
 			level.RegisterPlayer(player);
 			engine.LoadLevel(level);
+
+			Console.WriteLine(spriteActor.CanOverlap);
+
+			string levelFile = JsonConvert.SerializeObject(level, Formatting.Indented,
+				new JsonSerializerSettings
+				{
+					PreserveReferencesHandling = PreserveReferencesHandling.All,
+					ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+				});
+			File.WriteAllText(@"level.json", levelFile);
+
+
+			level = JsonConvert.DeserializeObject<Level>(levelFile, new JsonSerializerSettings
+			{
+				PreserveReferencesHandling = PreserveReferencesHandling.All,
+				ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+			});
 
 			engine.StartEngine();
 			Console.ReadLine();

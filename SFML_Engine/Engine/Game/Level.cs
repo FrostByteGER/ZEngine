@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Newtonsoft.Json;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
@@ -18,6 +19,7 @@ namespace SFML_Engine.Engine.Game
 
 		public uint ActorIDCounter { get; private set; } = 0;
 
+	    [JsonProperty()]
 		internal List<Actor> Actors { get; set; } = new List<Actor>();
 
 		/// <summary>
@@ -34,11 +36,13 @@ namespace SFML_Engine.Engine.Game
 		/// </summary>
 		public static RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
 
-        public Core.Engine EngineReference { get; set; }
+	    [JsonIgnore]
+		public Core.Engine EngineReference { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
 
-	    public VelcroPhysicsEngine PhysicsEngine { get; private set; } = new VelcroPhysicsEngine();
+	    [JsonIgnore]
+		public VelcroPhysicsEngine PhysicsEngine { get; private set; } = new VelcroPhysicsEngine();
 
 	    public bool LevelLoaded { get; set; } = false;
 		internal bool LevelTicking { get; set; } = false;

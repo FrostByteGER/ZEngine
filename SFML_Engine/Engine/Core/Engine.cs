@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using SFML.Graphics;
 using SFML.Window;
 using SFML_Engine.Engine.Events;
@@ -35,6 +36,7 @@ namespace SFML_Engine.Engine.Core
 
 
 		// Core Engine
+	    public GameInstance GameInstance { get; set; } = new GameInstance();
 		public GameInfo GameInfo { get; set; } = new GameInfo();
 	    public Level ActiveLevel { get; internal set; }
 		public uint LevelIDCounter { get; private set; } = 0;
@@ -57,7 +59,7 @@ namespace SFML_Engine.Engine.Core
 	    public uint AntiAliasingLevel { get; internal set; }  = 4;
 	    public uint MajorOpenGLVersion { get; internal set; } = 4;
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
-	    public ContextSettings.Attribute OpenGLVersion = ContextSettings.Attribute.Default;
+	    public ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
 
 
 		// Engine Settings
@@ -79,7 +81,7 @@ namespace SFML_Engine.Engine.Core
 
         public void InitEngine()
         {
-	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLVersion);
+	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType);
             _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
             _engineWindow.Closed += OnEngineWindowClose;
             _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
@@ -193,15 +195,7 @@ namespace SFML_Engine.Engine.Core
 		/// <returns></returns>
 		public bool LoadLevel(Level level)
 		{
-			if (level == null || level == ActiveLevel) return false;
-			ActiveLevel?.OnGameEnd();
-			ActiveLevel?.ShutdownLevel();
-			ActiveLevel = level;
-			level.EngineReference = this;
-			level.LevelLoaded = true;
-			level.OnLevelLoad();
-			level.LevelTicking = true;
-			return true;
+			return LoadLevel(level, true);
 		}
 
 		/// <summary>
@@ -235,6 +229,20 @@ namespace SFML_Engine.Engine.Core
 			level.OnLevelLoad();
 			level.LevelTicking = true;
 			return true;
+		}
+
+		public bool LoadLevel(string levelName)
+		{
+			return LoadLevel(levelName, true);
+		}
+
+		public bool LoadLevel(string levelName, bool destroyPrevious)
+		{
+			if (string.IsNullOrWhiteSpace(levelName)) return false;
+
+			var level = JsonConvert.DeserializeObject<Level>(levelName);
+			//TODO: Implement everything
+			return LoadLevel(level, destroyPrevious);
 		}
 
 		public void RegisterEvent(EngineEvent e)
