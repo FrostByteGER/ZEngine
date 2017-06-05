@@ -22,7 +22,7 @@ namespace SFML_Engine.Engine.JUI
 		public bool IsEnabled { get; set; } = true;
 		public bool IsHovered { get; set; } = false;
 		public bool IsPressed { get; set; } = false;
-		public delegate void doSomething(JElement instigator);
+		public delegate void doSomething();
 		public event doSomething Something;
 
 		public JElement(JGUI gui)
@@ -58,6 +58,11 @@ namespace SFML_Engine.Engine.JUI
 			}
 		}
 
+		public void ReSize()
+		{
+			ReSize(Position, Size);
+		}
+
 		public virtual void ReSize(Vector2f position, Vector2f size)
 		{
 			setPosition(position);
@@ -66,7 +71,6 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Pressed() {
 			IsPressed = true;
-
 		}
 
 		public virtual void Released() {
@@ -84,7 +88,7 @@ namespace SFML_Engine.Engine.JUI
 		{
 			if (Something != null)
 			{
-				Something(this);
+				Something();
 			}
 		}
 

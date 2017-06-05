@@ -95,6 +95,10 @@ namespace SFML_Engine.Engine.JUI
 
 			foreach (JElement e in container.Elements)
 			{
+				if (e == null || !e.IsVisable)
+				{
+					continue;
+				}
 				if (e is JContainer)
 				{
 					tempElement = getSelectedElement((JContainer)e);
@@ -121,6 +125,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public void Draw(RenderTarget target, RenderStates states)
 		{
+			target.SetView(target.DefaultView);
 
 			SelecterCircel.Position = (Vector2f)SelecterPoint;
 
@@ -128,7 +133,7 @@ namespace SFML_Engine.Engine.JUI
 			{
 				if (RootContainer.Layout != null)
 				{
-					RootContainer.Layout.ReSize();
+					//RootContainer.Layout.ReSize();
 				}
 				
 				RootContainer.Draw(target, states);
@@ -268,16 +273,8 @@ namespace SFML_Engine.Engine.JUI
 		}
 
 		// Is Called if Something interacts with the GUI
-		public virtual void Interact(JElement instigator)
+		public virtual void Interact()
 		{
-			if (instigator is JCheckbox)
-			{
-				// Console.WriteLine("testIt >|" + ((JCheckbox)instigator).Text.DisplayedString + "|<");
-			}
-			else
-			{
-				// Console.WriteLine("testIt >|" + instigator + "|<");
-			}	
 		}
 	}
 }

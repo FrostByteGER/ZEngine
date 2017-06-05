@@ -22,7 +22,8 @@ namespace SFML_SpaceSEM
 				MountainDewMode = bool.Parse(args[0]);
 			}
 
-			SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
+			//SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
+			SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
 
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
