@@ -117,12 +117,10 @@ robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /
 robocopy "$(ProjectDir)Assets" "Assets\$(ProjectName)" /COPY:DAT /DCOPY:T /E
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets" Condition="Exists('..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TriNityGER.SFML.Net.2.3.2.8\build\TriNityGER.SFML.Net.targets'))" />
     <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
   </Target>
   <Import Project="..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets" Condition="Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" />
