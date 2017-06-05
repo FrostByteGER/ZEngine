@@ -9,6 +9,7 @@ using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Dynamics;
+using SFML_SpaceSEM;
 
 namespace TestProject
 {
@@ -23,7 +24,8 @@ namespace TestProject
 			engine.InitEngine();
 
 
-			var level = new Level();
+			var level = new SpaceSEMMenuLevel();
+
 			var physics = level.PhysicsEngine;
 			physics.Gravity = new Vector2f(9.81f, 0.0f);
 

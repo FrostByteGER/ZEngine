@@ -12,7 +12,7 @@ namespace SFML_SpaceSEM
 	{
 
 		public static Font MainGameFont { get; set; }
-		private SpaceGUI GUI;
+		private JGUI GUI;
 
 		public JContainer rootContainer;
 		public JLabel title;
@@ -25,22 +25,17 @@ namespace SFML_SpaceSEM
 		public JCheckbox optionCheckBox;
 		public JContainer optionContainer;
 
-
 		protected override void LevelTick(float deltaTime)
 		{
 			base.LevelTick(deltaTime);
 			GUI.Tick(deltaTime);
 		}
 
-		public static Color ColorSelected { get; } = new Color(255, 255, 255, 255);
-		public static Color ColorUnselected { get; } = new Color(162, 160, 160, 255);
-		public object Menu { get; internal set; }
-
 		public void InitiateMenu()
 		{
 
 			// Font TODO 
-			GUI = new SpaceGUI(MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
+			GUI = new JGUI(MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
@@ -162,6 +157,7 @@ namespace SFML_SpaceSEM
 		public override void OnLevelLoad()
 		{
 			base.OnLevelLoad();
+			InitiateMenu();
 		}
 
 		public void ChangeCenterContainer(JElement element)
@@ -198,13 +194,5 @@ namespace SFML_SpaceSEM
 			base.OnGameEnd();
 			//BreakoutPersistentGameMode.BGM_Main.Stop();
 		}
-		/*
-		public override void ShutdownLevel()
-		{
-			base.ShutdownLevel();
-			UnregisterPlayers();
-			UnregisterActors();
-		}
-		*/
 	}
 }
