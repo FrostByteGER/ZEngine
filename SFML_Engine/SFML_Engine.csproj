@@ -179,12 +179,14 @@
     <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
     <Compile Include="Engine\Game\ITickable.cs" />
     <Compile Include="Engine\Game\Level.cs" />
+    <Compile Include="Engine\Physics\PhysicsActor.cs" />
     <Compile Include="Engine\Physics\PhysicsComponent.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\Game\PlayerController.cs" />
     <Compile Include="Engine\Events\RemoveActorEvent.cs" />
     <Compile Include="Engine\Events\RemoveActorParams.cs" />
     <Compile Include="Engine\Graphics\SpriteComponent.cs" />
+    <Compile Include="Engine\Physics\PhysicsType.cs" />
     <Compile Include="Engine\Physics\VelcroPhysicsEngine.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />

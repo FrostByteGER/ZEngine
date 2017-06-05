@@ -27,6 +27,7 @@ namespace SFML_Engine.Engine.Utility
 		public static TVector2f Forward { get; } = new TVector2f(1.0f, 0.0f);
 		public static float UnitX { get; } = 1.0f;
 		public static float UnitY { get; } = 1.0f;
+		public static float Epsilon { get; set; } = 0.00001f; //TODO: Implement
 
 		public float Length => (float) Math.Sqrt(Vec2f.X * Vec2f.X + Vec2f.Y * Vec2f.Y);
 

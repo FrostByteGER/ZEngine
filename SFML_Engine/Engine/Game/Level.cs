@@ -7,6 +7,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
@@ -68,7 +69,7 @@ namespace SFML_Engine.Engine.Game
 
         protected internal virtual void LevelTick(float deltaTime)
         {
-			//Console.WriteLine("Level Tick!");
+	        //Console.WriteLine("Level Tick!");
 			foreach (var pc in Players)
 			{
 				if (!pc.CanTick) continue;
@@ -135,6 +136,8 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGamePause()
 	    {
+		    LevelTicking = false;
+		    PhysicsEngine.CanTick = false;
 			GameMode.OnGamePause();
 			foreach (var pc in Players)
 			{
@@ -149,6 +152,8 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGameResume()
 	    {
+		    LevelTicking = true;
+		    PhysicsEngine.CanTick = true;
 			GameMode.OnGameResume();
 			foreach (var pc in Players)
 			{

@@ -73,6 +73,7 @@ namespace SFML_Engine.Engine.Core
 		// Other Settings
 		public uint GlobalVolume { get; set; } = 5;
 		public bool RequestTermination { get; set; } = false;
+	    public bool EngineTicking { get; set; } = true;
 
 
 		private Engine()
@@ -83,8 +84,11 @@ namespace SFML_Engine.Engine.Core
         public void InitEngine()
         {
 	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType, SRGBCompatible);
-            _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
+            _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close | Styles.Resize , settings);
             _engineWindow.Closed += OnEngineWindowClose;
+	        _engineWindow.LostFocus += OnEngineWindowFocusLost;
+			_engineWindow.GainedFocus += OnEngineWindowFocusGained;
+			_engineWindow.Resized += OnEngineWindowResized;
             _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			_engineWindow.SetFramerateLimit(FPSLimit);
 			_engineWindow.SetKeyRepeatEnabled(false);
@@ -95,6 +99,25 @@ namespace SFML_Engine.Engine.Core
 			InputManager.RegisterEngineInput(ref _engineWindow);
 
         }
+
+		private void OnEngineWindowResized(object sender, SizeEventArgs e)
+		{
+			foreach (var p in ActiveLevel.Players)
+			{
+				p.PlayerCamera.Center = new TVector2f();
+				p.PlayerCamera.Size = new TVector2f(e.Width, e.Height);
+			}
+		}
+
+		private void OnEngineWindowFocusGained(object sender, EventArgs e)
+		{
+			ActiveLevel.OnGameResume();
+		}
+
+		private void OnEngineWindowFocusLost(object sender, EventArgs e)
+	    {
+			ActiveLevel.OnGamePause();
+		}
 
 		public void StartEngine()
 		{
@@ -117,6 +140,15 @@ namespace SFML_Engine.Engine.Core
         {
             while (!RequestTermination)
             {
+	            if (!EngineTicking)
+	            {
+					// Only Handle Events like Gain Focus or Lost Focus
+					_engineWindow.DispatchEvents();
+		            continue;
+	            }
+
+
+
 				FrameDelta = EngineCoreClock.GetFrameDelta();
 				FrameAccumulator += FrameDelta;
 				if (FrameAccumulator >= 1.0f)
@@ -129,14 +161,18 @@ namespace SFML_Engine.Engine.Core
 				}
 
 				// Tick Physics
-				EngineCoreClock.StartPhysics();
-				ActiveLevel.PhysicsEngine?.PhysicsTick(FrameDelta);
-				EngineCoreClock.StopPhysics();
+	            if (ActiveLevel.PhysicsEngine.CanTick)
+	            {
+					EngineCoreClock.StartPhysics();
+					ActiveLevel.PhysicsEngine?.PhysicsTick(FrameDelta);
+					EngineCoreClock.StopPhysics();
+				}
+
 
 				// Tick Level and Actors
 				EngineCoreClock.StartUpdate();
-	            InputManager.Tick(FrameDelta);
-				ActiveLevel.LevelTick(FrameDelta);
+				if (InputManager.CanTick) InputManager.Tick(FrameDelta);
+	            if (ActiveLevel.LevelTicking) ActiveLevel.LevelTick(FrameDelta);
 				EngineCoreClock.StopUpdate();
 
 				_engineWindow.Clear();
@@ -182,12 +218,6 @@ namespace SFML_Engine.Engine.Core
             window.Close();
             RequestTermination = true;
         }
-
-		public void CloseEngineWindow()
-		{
-			_engineWindow.Close();
-			RequestTermination = true;
-		}
 
 		/// <summary>
 		/// Loads the given level and destroys the previous one if there was one.

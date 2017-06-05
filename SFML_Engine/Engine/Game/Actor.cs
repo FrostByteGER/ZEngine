@@ -25,32 +25,6 @@ namespace SFML_Engine.Engine.Game
 			set => RootComponent.ComponentBounds = value;
 		}
 
-		public bool Movable { get; set; } = true;
-
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public TVector2f Velocity { get; set; }
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public float MaxVelocity { get; set; } = -1.0f;
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public TVector2f Acceleration { get; set; }
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public float MaxAcceleration { get; set; } = -1f;
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public float Friction = 0.0f;
-		/// <summary>
-		/// TODO: CURRENTLY USELESS, NEEDS REWORK!
-		/// </summary>
-		public float Mass { get; set; } = 1.0f;
 		[JsonIgnore]
 		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
 		[JsonIgnore]

@@ -110,7 +110,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.LocalPosition = value;
-				CollisionBody.Position = value;
+				CollisionBody.Position = VelcroPhysicsEngine.ToPhysicsUnits(value);
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.LocalRotation = value;
-				CollisionBody.Rotation = value;
+				CollisionBody.Rotation = VelcroPhysicsEngine.ToPhysicsUnits(value);
 			}
 		}
 
