@@ -3,19 +3,19 @@
   <Profiles />
   <Settings>
     <Setting Name="EngineName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">SFML_Engine</Value>
+      <Value Profile="(Default)">Trigger Engine</Value>
     </Setting>
     <Setting Name="EngineVersionPrefix" Type="System.String" Scope="Application">
       <Value Profile="(Default)">v</Value>
     </Setting>
     <Setting Name="EngineVersionSuffix" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">-prealpha</Value>
+      <Value Profile="(Default)">-alpha</Value>
     </Setting>
     <Setting Name="EngineMajorVersion" Type="System.UInt32" Scope="Application">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="EngineMinorVersion" Type="System.UInt32" Scope="Application">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="EngineHotfixVersion" Type="System.UInt32" Scope="Application">
       <Value Profile="(Default)">0</Value>

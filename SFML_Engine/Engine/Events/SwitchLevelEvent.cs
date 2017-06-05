@@ -8,7 +8,7 @@
 
 		public override void ExecuteEvent()
 		{
-			Engine.Instance.LoadLevel(Parameters.NewLevel);
+			Core.Engine.Instance.LoadLevel(Parameters.NewLevel);
 		}
 	}
 }

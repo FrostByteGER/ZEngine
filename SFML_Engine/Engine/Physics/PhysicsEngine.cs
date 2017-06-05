@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SFML.System;
+using SFML_Engine.Engine.Game;
 
 namespace SFML_Engine.Engine.Physics
 {
@@ -18,7 +18,7 @@ namespace SFML_Engine.Engine.Physics
 
 
 		//var accounts = new Dictionary<string, double>();
-
+		/*
 		internal void PhysicsTick(float deltaTime, ref List<Actor> actors)
         {
 			// move Actors
@@ -65,7 +65,7 @@ namespace SFML_Engine.Engine.Physics
 								{
 									continue;
 								}
-
+								
 								//Box/Shere
 								if (passiveActor.CollisionShape.GetType() != activeActor.CollisionShape.GetType())
 								{
@@ -642,6 +642,7 @@ namespace SFML_Engine.Engine.Physics
 			return true;
 		}
 
+		/*
 		//Overlap not used
 		private bool IsOverlapping(Actor activeActor, Actor passiveActor)
 		{
@@ -726,8 +727,7 @@ namespace SFML_Engine.Engine.Physics
 				}
 			}
 			return false;
-		}
-
+		}*/
 	    internal void Shutdown()
 	    {
 		    foreach (var list in ActorGroups)

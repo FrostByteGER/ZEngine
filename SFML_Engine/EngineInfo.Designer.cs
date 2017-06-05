@@ -25,7 +25,7 @@ namespace SFML_Engine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SFML_Engine")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Trigger Engine")]
         public string EngineName {
             get {
                 return ((string)(this["EngineName"]));
@@ -43,7 +43,7 @@ namespace SFML_Engine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-prealpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-alpha")]
         public string EngineVersionSuffix {
             get {
                 return ((string)(this["EngineVersionSuffix"]));
@@ -61,7 +61,7 @@ namespace SFML_Engine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public uint EngineMinorVersion {
             get {
                 return ((uint)(this["EngineMinorVersion"]));

@@ -1,4 +1,6 @@
-﻿namespace SFML_Engine.Engine.Events
+﻿using SFML_Engine.Engine.Game;
+
+namespace SFML_Engine.Engine.Events
 {
 	public class SwitchLevelParams : EngineEventParams
 	{
