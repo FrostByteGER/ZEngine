@@ -10,7 +10,7 @@ namespace SFML_Engine.Engine.JUI
 		public JLabel(JGUI gui) : base(gui)
 		{
 			Text.Font = gui.GUIFont;
-			Text.Color = gui.DefaultTextColor;
+			Text.FillColor = gui.DefaultTextColor;
 		}
 
 		public override void setPosition(Vector2f Position)

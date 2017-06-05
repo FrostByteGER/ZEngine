@@ -60,6 +60,7 @@ namespace SFML_Engine.Engine.Core
 	    public uint MajorOpenGLVersion { get; internal set; } = 4;
 	    public uint MinorOpenGLVersion { get; internal set; } = 5;
 	    public ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
+	    public bool SRGBCompatible { get; internal set; }     = false;
 
 
 		// Engine Settings
@@ -81,7 +82,7 @@ namespace SFML_Engine.Engine.Core
 
         public void InitEngine()
         {
-	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType);
+	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType, SRGBCompatible);
             _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close , settings);
             _engineWindow.Closed += OnEngineWindowClose;
             _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
