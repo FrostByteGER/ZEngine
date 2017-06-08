@@ -15,6 +15,7 @@ namespace SFML_Engine.Engine.Game
 		public uint ActorID { get; internal set; } = 0;
 		public uint LevelID { get; internal set; } = 0;
 		public uint LayerID { get; set; } = 1;
+		public uint ComponentIDCounter { get; private set; } = 0;
 		public Level LevelReference { get; internal set; }
 		public string ActorName { get; set; } = "Actor";
 
@@ -325,6 +326,7 @@ namespace SFML_Engine.Engine.Game
 		{
 			if (Components.Contains(component)) return false;
 			Components.Add(component);
+			component.ComponentID = ++ComponentIDCounter;
 			component.ParentActor = this;
 			return true;
 		}

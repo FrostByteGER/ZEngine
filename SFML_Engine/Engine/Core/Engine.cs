@@ -285,5 +285,11 @@ namespace SFML_Engine.Engine.Core
 			e.EventID = ++EventIDCounter;
 			EngineEvents.Enqueue(e);
 	    }
+
+		// TODO: Add Compiled Lambda Dictionary 
+	    public static void ConstructActor()
+	    {
+		    
+	    }
 	}
 }

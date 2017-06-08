@@ -21,9 +21,6 @@ namespace SFML_SpaceSEM
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
-			//SpaceSEMMenuLevel.SaveSpaceLevel(wrapperData);
-
-			//SpaceSEMMenuLevel.LoadSpaceLevel("level_1.json");
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
 			EngineRef.GameInstance = new SpaceSEMGameInstance();
@@ -38,8 +35,6 @@ namespace SFML_SpaceSEM
 			//menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf"); Old
 
 			EngineRef.LoadLevel(menuLevel);
-
-			//var gameLevel = new SpaceSEMGameLevel();
 
 			EngineRef.StartEngine();
 
