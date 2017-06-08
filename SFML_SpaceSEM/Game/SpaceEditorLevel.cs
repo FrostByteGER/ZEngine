@@ -21,7 +21,18 @@ namespace SFML_SpaceSEM.Game
 		// Spawner with Time
 		private List<SpaceLevelSpawnerDataWrapper> Spawners;
 
-		private SpaceLevelSpawnerDataWrapper SelectedSpawner;
+		public SpaceLevelSpawnerDataWrapper SelectedSpawner
+		{
+			get => _SelectedSpawner;
+			set {
+				_SelectedSpawner = value;
+				loadShips();
+			}
+		}
+
+
+
+		private SpaceLevelSpawnerDataWrapper _SelectedSpawner;
 
 		private JCheckbox elementCheckBoxSpawner;
 		private JCheckbox elementCheckBoxShip1;
@@ -48,8 +59,6 @@ namespace SFML_SpaceSEM.Game
 			SpawnData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + LevelName + ".json");
 
 			Spawners = SpawnData.Spawners;
-
-			SelectedSpawner = Spawners[0];
 
 			GUI = new JGUI(((SpaceSEMGameInstance)EngineReference.GameInstance).MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
@@ -79,7 +88,7 @@ namespace SFML_SpaceSEM.Game
 			MainCenterContainer.addElement(LevelNameLable, JBorderLayout.TOP);
 
 
-			EditCenterElement CenterElement = new EditCenterElement(GUI);
+			EditCenterElement CenterElement = new EditCenterElement(GUI, this);
 			MainCenterContainer.addElement(CenterElement, JBorderLayout.CENTER);
 			CenterElement.SpawnData = SpawnData;
 
@@ -99,10 +108,8 @@ namespace SFML_SpaceSEM.Game
 			levelSlideCpntainer.addElement(sliderLable, JBorderLayout.RIGHT);
 
 			MainCenterContainer.addElement(levelSlideCpntainer, JBorderLayout.BOTTOM);
-			
 
 			// Main Right
-			
 			JContainer MainRightContainer = new JContainer(GUI);
 
 			JGridLayout RightLayout = new JGridLayout(MainRightContainer);
@@ -209,7 +216,10 @@ namespace SFML_SpaceSEM.Game
 
 			GUI.RootContainer = MainEditContainer;
 
-			loadShips();
+
+			SelectedSpawner = Spawners[0];
+
+			//loadShips();
 		}
 
 		public void addElement()
@@ -245,17 +255,22 @@ namespace SFML_SpaceSEM.Game
 		}
 
 		public void loadShips()
-		{	
+		{
+
+			shipList.Elements.Clear();
+			shipGroup.CheckBoxes.Clear();
+
 			foreach (SpaceLevelShipDataWrapper ship in SelectedSpawner.Ships)
 			{
+				JCheckbox shipCheckBox = new JCheckbox(GUI);
 
-				JCheckbox shipLable = new JCheckbox(GUI);
+				shipCheckBox.setTextString(ship.ShipType.ToString());
 
-				shipLable.setTextString(ship.ShipType.ToString());
+				shipGroup.AddBox(shipCheckBox);
 
-				shipGroup.AddBox(shipLable);
+				shipList.addElement(shipCheckBox);
 
-				shipList.addElement(shipLable);
+				shipList.ReSize();
 			}
 		}
 

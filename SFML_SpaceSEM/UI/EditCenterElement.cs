@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
+using SFML_SpaceSEM.Game;
 
 namespace SFML_SpaceSEM.UI
 {
@@ -14,9 +15,6 @@ namespace SFML_SpaceSEM.UI
 	{
 
 		public SpaceLevelDataWrapper SpawnData { get; set; }
-
-		// Spawner with Time
-		private List<SpaceLevelSpawnerDataWrapper> Spawners;
 
 		public SpaceLevelSpawnerDataWrapper SelectedSpawner { get; set; }
 
@@ -26,9 +24,11 @@ namespace SFML_SpaceSEM.UI
 
 		private RectangleShape ShipRec = new RectangleShape();
 
+		public SpaceEditorLevel Level; 
+
 		public int TimeOffset = 0;
 
-		public EditCenterElement(JGUI gui) : base(gui)
+		public EditCenterElement(JGUI gui, SpaceEditorLevel level) : base(gui)
 		{
 			SelectedRec.Size = new Vector2f(5f,5f);
 			SelectedRec.FillColor = Color.Yellow;
@@ -40,6 +40,10 @@ namespace SFML_SpaceSEM.UI
 			ShipRec.FillColor = Color.Blue;
 
 			Box.FillColor = new Color(30,30,30);
+
+			SelectedSpawner = level.SelectedSpawner;
+
+			Level = level;
 
 		}
 
@@ -58,7 +62,6 @@ namespace SFML_SpaceSEM.UI
 
 				if (Size.Y/2f > spawner.ActivationTime - TimeOffset && -Size.Y/2f < spawner.ActivationTime - TimeOffset)
 				{
-					Console.WriteLine(spawner.ActivationTime + " " + TimeOffset);
 					SpawnerRec.Position = Position + new Vector2f(-5, Size.Y/2f - (spawner.ActivationTime - TimeOffset));
 					target.Draw(SpawnerRec);
 					
@@ -66,13 +69,20 @@ namespace SFML_SpaceSEM.UI
 					{
 						SelectedRec.Position = Position + new Vector2f(-5, Size.Y / 2f - (SelectedSpawner.ActivationTime - TimeOffset));
 						target.Draw(SelectedRec);
+
+						if (!SelectedSpawner.Equals(Level.SelectedSpawner))
+						{
+							Level.SelectedSpawner = SelectedSpawner;
+						}
+
+						foreach (SpaceLevelShipDataWrapper ship in spawner.Ships)
+						{
+							ShipRec.Position = Position + new Vector2f(ship.Position.X, Size.Y / 2f - (spawner.ActivationTime - TimeOffset));
+							target.Draw(ShipRec);
+						}
 					}
 
-					foreach (SpaceLevelShipDataWrapper ship in spawner.Ships)
-					{
-						ShipRec.Position = Position + new Vector2f(ship.Position.X , Size.Y / 2f - (spawner.ActivationTime - TimeOffset));
-						target.Draw(ShipRec);
-					}
+
 				}
 			}
 		}
