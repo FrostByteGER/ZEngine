@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Actors\SpaceBullet.cs" />
+    <Compile Include="Game\SpaceEditorLevel.cs" />
     <Compile Include="Game\Actors\SpaceShipPlayer.cs" />
     <Compile Include="Game\Players\SpaceGamePlayerController.cs" />
     <Compile Include="Game\SpaceGameLevel.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="Game\Actors\SpaceSpawnerActor.cs" />
     <Compile Include="Game\Actors\WeaponComponent.cs" />
     <Compile Include="IO\SpaceLevelDataWrapper.cs" />
+    <Compile Include="UI\EditCenterElement.cs" />
+    <Compile Include="UI\EditorSlider.cs" />
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="Game\SpaceSemGameInstance.cs" />

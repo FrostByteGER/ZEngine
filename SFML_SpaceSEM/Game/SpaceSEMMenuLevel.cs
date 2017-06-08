@@ -8,7 +8,7 @@ namespace SFML_SpaceSEM.Game
 	public class SpaceSEMMenuLevel : SpaceLevel
 	{
 
-		public Font MainGameFont { get; set; }
+		//public Font MainGameFont { get; set; }
 		public JGUI GUI { get; private set; }
 
 		// Root Container
@@ -52,11 +52,11 @@ namespace SFML_SpaceSEM.Game
 		{
 
 			// Font TODO 
-			GUI = new JGUI(MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
+			GUI = new JGUI(((SpaceSEMGameInstance)EngineReference.GameInstance).MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
-			rootContainer.setBackgroundColor(new Color(0,0,0,0));
+			rootContainer.setBackgroundColor(new Color(0, 0, 0, 0));
 			rootContainer.setPosition(new Vector2f(50, 50));
 			rootContainer.setSize(new Vector2f(700, 700));
 
@@ -410,34 +410,62 @@ namespace SFML_SpaceSEM.Game
 				editCenterContainer.addElement(editCustomContainer);
 				editCenterContainer.addElement(null);
 
+				// Right Container
+
+				JContainer editRightContainer = new JContainer(GUI);
+				editRightContainer.Layout = new JLayout(editRightContainer);
+
+				JLabel editLevelInfoLable = new JLabel(GUI);
+
+				editLevelInfoLable.setTextString("Level Info");
+				editRightContainer.addElement(editLevelInfoLable);
+
+				JButton editStartButton = new JButton(GUI);
+				editStartButton.setTextString("Start");
+				editStartButton.Something += OpenEditor;
+				editRightContainer.addElement(editStartButton);
+
 				editorContainer.addElement(editCenterContainer, JBorderLayout.CENTER);
+				editorContainer.addElement(editRightContainer, JBorderLayout.RIGHT);
 			}
 			// Exit Menue
+			{
+				exitContainer = new JContainer(GUI);
+				JBorderLayout exitLayout = new JBorderLayout(exitContainer);
+				exitLayout.TopSize = 0.2f;
+				exitLayout.BottemSize = 0.2f;
+				exitLayout.LeftSize = 0.2f;
+				exitLayout.RightSize = 0.2f;
+				exitContainer.Layout = exitLayout;
 
-			exitContainer = new JContainer(GUI);
-			JBorderLayout exitLayout = new JBorderLayout(exitContainer);
-			exitLayout.TopSize = 0.2f;
-			exitLayout.BottemSize = 0.2f;
-			exitLayout.LeftSize = 0.2f;
-			exitLayout.RightSize = 0.2f;
-			exitContainer.Layout = exitLayout;
+				JContainer exitCenterContainer = new JContainer(GUI);
 
-			JContainer exitCenterContainer = new JContainer(GUI);
+				JGridLayout exitCenterLayout = new JGridLayout(exitCenterContainer);
+				exitCenterLayout.Rows = 2;
+				exitCenterContainer.Layout = exitCenterLayout;
 
-			JGridLayout exitCenterLayout = new JGridLayout(exitCenterContainer);
-			exitCenterLayout.Rows = 2;
-			exitCenterContainer.Layout = exitCenterLayout;
+				JButton exitExitButton = new JButton(GUI);
+				exitExitButton.setTextString("YES");
+				JButton exitCancelButton = new JButton(GUI);
+				exitCancelButton.setTextString("NO");
 
-			JButton exitExitButton = new JButton(GUI);
-			exitExitButton.setTextString("YES");
-			JButton exitCancelButton = new JButton(GUI);
-			exitCancelButton.setTextString("NO");
+				exitCancelButton.Something += delegate ()
+				{
+					exitCheckBox.Deselect();
+					ChangeCenterContainer();
+				};
 
-			exitCenterContainer.addElement(exitExitButton);
-			exitCenterContainer.addElement(exitCancelButton);
+				exitExitButton.Something += delegate ()
+				{
+					EngineReference.RequestTermination = true;
+					this.Dispose();
+				};
 
-			exitContainer.addElement(exitCenterContainer, JBorderLayout.CENTER);
+				exitCenterContainer.addElement(exitExitButton);
+				exitCenterContainer.addElement(exitCancelButton);
 
+				exitContainer.addElement(exitCenterContainer, JBorderLayout.CENTER);
+			}
 			//Container ^^^
 
 			rootContainer.addElement(title, JBorderLayout.TOP);
@@ -500,7 +528,6 @@ namespace SFML_SpaceSEM.Game
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
-			//BreakoutPersistentGameMode.SwitchMusic();
 		}
 
 		public override void OnGamePause()
@@ -511,12 +538,21 @@ namespace SFML_SpaceSEM.Game
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
-			//BreakoutPersistentGameMode.BGM_Main.Stop();
+			
 		}
+
+		// GUI Functions
 
 		private void PlayRightStartButton_LoadLevel()
 		{
+			GUI.IsActive = false;
 			EngineReference.LoadLevel(new SpaceGameLevel(), false);
+		}
+
+		public void OpenEditor()
+		{
+			GUI.IsActive = false;
+			EngineReference.LoadLevel(new SpaceEditorLevel(), false);
 		}
 	}
 }

@@ -29,23 +29,16 @@ namespace SFML_SpaceSEM
 			EngineRef.InitEngine();
 
 
-			//JGUI vvv
-
-
-
-			//JGUI ^^^
-
-
 			var menuLevel = new SpaceSEMMenuLevel();
 
 			//SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
-			menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
+			//menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf"); Old
 
 			EngineRef.LoadLevel(menuLevel);
 
 			EngineRef.StartEngine();
 
-			menuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
+			//menuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
 			Console.ReadLine();
 		}
 
