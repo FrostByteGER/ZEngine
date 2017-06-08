@@ -47,7 +47,7 @@ namespace SFML_SpaceSEM
 			Console.ReadLine();
 		}
 
-		public static List<List<float[]>> LoadBlockPositions()
+		public static List<List<float[]>> LoadLevels()
 		{
 			List<List<float[]>> values = new List<List<float[]>>();
 			try
