@@ -84,7 +84,7 @@ namespace SFML_Engine.Engine.Physics
 				var component = (PhysicsComponent) body.UserData;
 				if (component == null) continue;
 				component.SetLocalPosition(ToGameUnits(body.Position));
-				component.SetLocalRotation(ToGameUnits(body.Rotation));
+				component.SetLocalRotation(EngineMath.RadiansToDegrees(ToGameUnits(body.Rotation)));
 				var actor = component.ParentActor;
 				if (actor == null) continue;
 

@@ -27,8 +27,8 @@ namespace SFML_Engine.Engine.Utility
 			set => Vec2f = new Vector2f(Vec2f.X, value);
 		}
 
-		public static TVector2f Up { get; } = new TVector2f(0.0f, -1.0f);
-		public static TVector2f Forward { get; } = new TVector2f(1.0f, 0.0f);
+		public static TVector2f LocalUp { get; } = new TVector2f(0.0f, -1.0f);
+		public static TVector2f LocalForward { get; } = new TVector2f(1.0f, 0.0f);
 		public static float UnitX { get; } = 1.0f;
 		public static float UnitY { get; } = 1.0f;
 		public static float Epsilon { get; set; } = 0.00001f; //TODO: Implement
@@ -67,6 +67,33 @@ namespace SFML_Engine.Engine.Utility
 		{
 			Vec2f = new Vector2f(vec.X, vec.Y);
 		}
+
+		public TVector2f Up(float angleDegrees)
+		{
+			return Rotate(LocalUp, angleDegrees);
+		}
+
+		public TVector2f Forward(float angleDegrees)
+		{
+			return Rotate(LocalForward, angleDegrees);
+		}
+
+		public void Rotate(float angleDegrees)
+		{
+			var angleRadians = EngineMath.DegreesToRadians(angleDegrees);
+			X = X * (float)Math.Cos(angleRadians) - Y * (float)Math.Sin(angleRadians);
+			Y = X * (float)Math.Sin(angleRadians) + Y * (float)Math.Cos(angleRadians);
+		}
+
+		public TVector2f Rotate(TVector2f toRotate, float angleDegrees)
+		{
+			var rotatedVector = new TVector2f();
+			var angleRadians = EngineMath.DegreesToRadians(angleDegrees);
+			rotatedVector.X = toRotate.X * (float)Math.Cos(angleRadians) - toRotate.Y * (float)Math.Sin(angleRadians);
+			rotatedVector.Y = toRotate.X * (float)Math.Sin(angleRadians) + toRotate.Y * (float)Math.Cos(angleRadians);
+			return rotatedVector;
+		}
+
 
 		protected bool Equals(TVector2f other)
 		{

@@ -115,12 +115,12 @@ namespace SFML_Engine.Engine.Core
 
 		private void OnEngineWindowFocusGained(object sender, EventArgs e)
 		{
-			ActiveLevel.OnGameResume();
+			//ActiveLevel.OnGameResume();
 		}
 
 		private void OnEngineWindowFocusLost(object sender, EventArgs e)
 	    {
-			ActiveLevel.OnGamePause();
+			//ActiveLevel.OnGamePause();
 		}
 
 		public void StartEngine()
