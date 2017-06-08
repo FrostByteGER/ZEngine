@@ -8,7 +8,7 @@ using SFML_Engine.Engine.Utility;
 
 namespace SFML_SpaceSEM.Game
 {
-	public class SpaceSemGameInstance : GameInstance
+	public class SpaceSEMGameInstance : GameInstance
 	{
 		public uint HighScore { get; set; } = 0;
 		public uint AlltimeHighScore { get; set; } = 0;
@@ -29,7 +29,7 @@ namespace SFML_SpaceSEM.Game
 
 		public static SoundBuffer PowerUpBuffer { get; set; }
 		public static SoundBuffer BlockHitBuffer { get; set; }
-		public SpaceSemGameInstance()
+		public SpaceSEMGameInstance()
 		{
 			PowerUpBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_PowerUp.wav");
 			Console.WriteLine(PowerUpBuffer.Duration.AsMilliseconds());

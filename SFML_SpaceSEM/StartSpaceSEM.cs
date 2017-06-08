@@ -22,7 +22,7 @@ namespace SFML_SpaceSEM
 
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
-			EngineRef.GameInstance = new SpaceSemGameInstance();
+			EngineRef.GameInstance = new SpaceSEMGameInstance();
 			EngineRef.EngineWindowWidth = 800;
 			EngineRef.EngineWindowHeight = 800;
 			EngineRef.InitEngine();
