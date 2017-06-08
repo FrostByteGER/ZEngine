@@ -28,17 +28,10 @@ namespace SFML_SpaceSEM
 			EngineRef.InitEngine();
 
 
-			//JGUI vvv
-
-
-
-			//JGUI ^^^
-
-
 			var menuLevel = new SpaceSEMMenuLevel();
 
 			//SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
-			menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
+			//menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf"); Old
 
 			EngineRef.LoadLevel(menuLevel);
 

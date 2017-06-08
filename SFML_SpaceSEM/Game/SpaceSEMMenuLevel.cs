@@ -57,11 +57,11 @@ namespace SFML_SpaceSEM
 		{
 
 			// Font TODO 
-			GUI = new JGUI(MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
+			GUI = new JGUI(((SpaceSEMGameInstance)EngineReference.GameInstance).MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
-			rootContainer.setBackgroundColor(new Color(0,0,0,0));
+			rootContainer.setBackgroundColor(new Color(0, 0, 0, 0));
 			rootContainer.setPosition(new Vector2f(50, 50));
 			rootContainer.setSize(new Vector2f(700, 700));
 
@@ -418,31 +418,31 @@ namespace SFML_SpaceSEM
 				editorContainer.addElement(editCenterContainer, JBorderLayout.CENTER);
 			}
 			// Exit Menue
+			{
+				exitContainer = new JContainer(GUI);
+				JBorderLayout exitLayout = new JBorderLayout(exitContainer);
+				exitLayout.TopSize = 0.2f;
+				exitLayout.BottemSize = 0.2f;
+				exitLayout.LeftSize = 0.2f;
+				exitLayout.RightSize = 0.2f;
+				exitContainer.Layout = exitLayout;
 
-			exitContainer = new JContainer(GUI);
-			JBorderLayout exitLayout = new JBorderLayout(exitContainer);
-			exitLayout.TopSize = 0.2f;
-			exitLayout.BottemSize = 0.2f;
-			exitLayout.LeftSize = 0.2f;
-			exitLayout.RightSize = 0.2f;
-			exitContainer.Layout = exitLayout;
+				JContainer exitCenterContainer = new JContainer(GUI);
 
-			JContainer exitCenterContainer = new JContainer(GUI);
+				JGridLayout exitCenterLayout = new JGridLayout(exitCenterContainer);
+				exitCenterLayout.Rows = 2;
+				exitCenterContainer.Layout = exitCenterLayout;
 
-			JGridLayout exitCenterLayout = new JGridLayout(exitCenterContainer);
-			exitCenterLayout.Rows = 2;
-			exitCenterContainer.Layout = exitCenterLayout;
+				JButton exitExitButton = new JButton(GUI);
+				exitExitButton.setTextString("YES");
+				JButton exitCancelButton = new JButton(GUI);
+				exitCancelButton.setTextString("NO");
 
-			JButton exitExitButton = new JButton(GUI);
-			exitExitButton.setTextString("YES");
-			JButton exitCancelButton = new JButton(GUI);
-			exitCancelButton.setTextString("NO");
+				exitCenterContainer.addElement(exitExitButton);
+				exitCenterContainer.addElement(exitCancelButton);
 
-			exitCenterContainer.addElement(exitExitButton);
-			exitCenterContainer.addElement(exitCancelButton);
-
-			exitContainer.addElement(exitCenterContainer, JBorderLayout.CENTER);
-
+				exitContainer.addElement(exitCenterContainer, JBorderLayout.CENTER);
+			}
 			//Container ^^^
 
 			rootContainer.addElement(title, JBorderLayout.TOP);

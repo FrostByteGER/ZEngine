@@ -10,6 +10,8 @@ namespace SFML_SpaceSEM.Game
 {
 	public class SpaceSEMGameInstance : GameInstance
 	{
+		public Font MainGameFont { get; set; }
+
 		public uint HighScore { get; set; } = 0;
 		public uint AlltimeHighScore { get; set; } = 0;
 		public uint SecretThreshold { get; } = 9999;
@@ -30,7 +32,9 @@ namespace SFML_SpaceSEM.Game
 		public static SoundBuffer PowerUpBuffer { get; set; }
 		public static SoundBuffer BlockHitBuffer { get; set; }
 		public SpaceSEMGameInstance()
-		{
+		{	
+			MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
+
 			PowerUpBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_PowerUp.wav");
 			Console.WriteLine(PowerUpBuffer.Duration.AsMilliseconds());
 			BlockHitBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_BlockHit.wav");
