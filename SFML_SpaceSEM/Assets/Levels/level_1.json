@@ -46,7 +46,7 @@
       ]
     },
     {
-      "ActivationTime": 30.0,
+      "ActivationTime": 500.0,
       "Ships": [
         {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",

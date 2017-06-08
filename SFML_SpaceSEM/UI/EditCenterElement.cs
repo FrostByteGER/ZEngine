@@ -18,18 +18,29 @@ namespace SFML_SpaceSEM.UI
 		// Spawner with Time
 		private List<SpaceLevelSpawnerDataWrapper> Spawners;
 
-		private SpaceLevelSpawnerDataWrapper SelectedSpawner;
+		public SpaceLevelSpawnerDataWrapper SelectedSpawner { get; set; }
 
-		//public float Vector2f
+		private RectangleShape SelectedRec = new RectangleShape();
 
-		private RectangleShape Rec = new RectangleShape();
+		private RectangleShape SpawnerRec = new RectangleShape();
+
+		private RectangleShape ShipRec = new RectangleShape();
 
 		public int TimeOffset = 0;
 
 		public EditCenterElement(JGUI gui) : base(gui)
 		{
-			Rec.Size = new Vector2f(5f,5f);
-			Rec.FillColor = Color.Red;
+			SelectedRec.Size = new Vector2f(5f,5f);
+			SelectedRec.FillColor = Color.Yellow;
+
+			SpawnerRec.Size = new Vector2f(5f,5f);
+			SpawnerRec.FillColor = Color.Red;
+
+			ShipRec.Size = new Vector2f(5f,5f);
+			ShipRec.FillColor = Color.Blue;
+
+			Box.FillColor = new Color(30,30,30);
+
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
@@ -39,14 +50,49 @@ namespace SFML_SpaceSEM.UI
 			{
 				return;
 			}
+			
+			getNearestSpawner();
+
 			foreach (SpaceLevelSpawnerDataWrapper spawner in SpawnData.Spawners)
 			{
-				if (TimeOffset - Size.X < spawner.ActivationTime && TimeOffset + Size.X > spawner.ActivationTime)
-				{
 
-					Rec.Position = Position + new Vector2f(spawner.ActivationTime + TimeOffset,0);
-					Console.WriteLine(spawner.ActivationTime+" "+ TimeOffset);
-					target.Draw(Rec);
+				if (Size.Y/2f > spawner.ActivationTime - TimeOffset && -Size.Y/2f < spawner.ActivationTime - TimeOffset)
+				{
+					Console.WriteLine(spawner.ActivationTime + " " + TimeOffset);
+					SpawnerRec.Position = Position + new Vector2f(-5, Size.Y/2f - (spawner.ActivationTime - TimeOffset));
+					target.Draw(SpawnerRec);
+					
+					if (SelectedSpawner.Equals(spawner))
+					{
+						SelectedRec.Position = Position + new Vector2f(-5, Size.Y / 2f - (SelectedSpawner.ActivationTime - TimeOffset));
+						target.Draw(SelectedRec);
+					}
+
+					foreach (SpaceLevelShipDataWrapper ship in spawner.Ships)
+					{
+						ShipRec.Position = Position + new Vector2f(ship.Position.X , Size.Y / 2f - (spawner.ActivationTime - TimeOffset));
+						target.Draw(ShipRec);
+					}
+				}
+			}
+		}
+
+		private void getNearestSpawner()
+		{
+			if (SpawnData == null)
+			{
+				return;
+			}
+
+			float distance = 600f;
+
+			foreach (SpaceLevelSpawnerDataWrapper spawner in SpawnData.Spawners)
+			{
+				if (Math.Abs(TimeOffset - spawner.ActivationTime) < distance)
+				{
+					SelectedSpawner = spawner;
+
+					distance = Math.Abs(TimeOffset - spawner.ActivationTime);
 				}
 			}
 		}

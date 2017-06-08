@@ -35,6 +35,8 @@ namespace SFML_SpaceSEM.Game
 
 		public String LevelName = "";
 
+		public JCheckboxGroup shipGroup = new JCheckboxGroup();
+
 		public SpaceEditorLevel()
 		{
 
@@ -243,13 +245,15 @@ namespace SFML_SpaceSEM.Game
 		}
 
 		public void loadShips()
-		{
+		{	
 			foreach (SpaceLevelShipDataWrapper ship in SelectedSpawner.Ships)
 			{
 
-				JButton shipLable = new JButton(GUI);
+				JCheckbox shipLable = new JCheckbox(GUI);
 
 				shipLable.setTextString(ship.ShipType.ToString());
+
+				shipGroup.AddBox(shipLable);
 
 				shipList.addElement(shipLable);
 			}
