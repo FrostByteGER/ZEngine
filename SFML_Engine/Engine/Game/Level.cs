@@ -47,6 +47,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public bool LevelLoaded { get; set; } = false;
 		internal bool LevelTicking { get; set; } = false;
+	    public bool LevelPaused { get; private set; } = false;
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
 
@@ -138,6 +139,7 @@ namespace SFML_Engine.Engine.Game
 	    public virtual void OnGamePause()
 	    {
 		    LevelTicking = false;
+		    LevelPaused = true;
 		    PhysicsEngine.CanTick = false;
 			GameMode.OnGamePause();
 			foreach (var pc in Players)
@@ -153,6 +155,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnGameResume()
 	    {
+		    LevelPaused = false;
 		    LevelTicking = true;
 		    PhysicsEngine.CanTick = true;
 			GameMode.OnGameResume();

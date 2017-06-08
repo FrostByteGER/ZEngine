@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
@@ -30,6 +31,7 @@ namespace SFML_SpaceSEM.Game
 			playerActor.ActorName = "Player Sprite";
 
 			var playerController = new SpaceGamePlayerController(playerActor);
+			playerController.SetCameraSize(EngineReference.EngineWindowWidth, EngineReference.EngineWindowHeight);
 
 
 			var leftBorder = new Actor(this);
