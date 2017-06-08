@@ -16,8 +16,6 @@ namespace SFML_SpaceSEM.Game
 	public class SpaceEditorLevel : Level
 	{
 
-		//ShipeTypeList TODO
-
 		private SpaceLevelDataWrapper SpawnData { get; set; }
 
 		// Spawner with Time
@@ -81,6 +79,7 @@ namespace SFML_SpaceSEM.Game
 
 			EditCenterElement CenterElement = new EditCenterElement(GUI);
 			MainCenterContainer.addElement(CenterElement, JBorderLayout.CENTER);
+			CenterElement.SpawnData = SpawnData;
 
 
 			JContainer levelSlideCpntainer = new JContainer(GUI);
@@ -88,6 +87,7 @@ namespace SFML_SpaceSEM.Game
 			levelSliderLayout.RightSize = 0.35f;
 
 			EditorSlider levelSlider = new EditorSlider(GUI);
+			levelSlider.EditorCenter = CenterElement;
 
 			JLabel sliderLable = new JLabel(GUI);
 			levelSlider.LinkedLable = sliderLable;
@@ -252,8 +252,6 @@ namespace SFML_SpaceSEM.Game
 				shipLable.setTextString(ship.ShipType.ToString());
 
 				shipList.addElement(shipLable);
-
-				Console.WriteLine(ship.ShipType.ToString()+" "+ SelectedSpawner.Ships.Count);
 			}
 		}
 

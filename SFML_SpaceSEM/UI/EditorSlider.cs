@@ -13,6 +13,8 @@ namespace SFML_SpaceSEM.UI
 
 		public JLabel LinkedLable { set; get; }
 
+		public EditCenterElement EditorCenter { set; get; }
+
 		public EditorSlider(JGUI gui) : base(gui)
 		{
 		}
@@ -24,6 +26,11 @@ namespace SFML_SpaceSEM.UI
 			if (LinkedLable != null)
 			{
 				LinkedLable.setTextString("Time :"+((int)(600*SliderValue)).ToString());
+			}
+
+			if (EditorCenter != null)
+			{
+				EditorCenter.TimeOffset = (int) (600 * SliderValue);
 			}
 		}
 	}

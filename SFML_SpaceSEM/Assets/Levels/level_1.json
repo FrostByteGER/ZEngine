@@ -4,9 +4,27 @@
   "BeatTime": 0.0,
   "Spawners": [
     {
-      "ActivationTime": 1.0,
+      "ActivationTime": 10.0,
       "Ships": [
         {
+          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.0
+          }
+        },        {
+          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.0
+          }
+        },        {
+          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.0
+          }
+        },        {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
             "X": 0.0,
@@ -16,7 +34,7 @@
       ]
     },
     {
-      "ActivationTime": 2.0,
+      "ActivationTime": 20.0,
       "Ships": [
         {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -28,7 +46,7 @@
       ]
     },
     {
-      "ActivationTime": 3.0,
+      "ActivationTime": 30.0,
       "Ships": [
         {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
