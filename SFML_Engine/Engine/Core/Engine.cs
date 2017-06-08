@@ -102,6 +102,8 @@ namespace SFML_Engine.Engine.Core
 
 		private void OnEngineWindowResized(object sender, SizeEventArgs e)
 		{
+			EngineWindowWidth = e.Width;
+			EngineWindowHeight = e.Height;
 			foreach (var p in ActiveLevel.Players)
 			{
 				p.PlayerCamera.Center = new TVector2f();

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine;
+using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_SpaceSEM
 {
-	public class SpaceSEMPersistentGameMode : PersistentGameMode
+	public class SpaceSemGameInstance : GameInstance
 	{
 		public uint HighScore { get; set; } = 0;
 		public uint AlltimeHighScore { get; set; } = 0;
@@ -29,7 +30,7 @@ namespace SFML_SpaceSEM
 
 		public static SoundBuffer PowerUpBuffer { get; set; }
 		public static SoundBuffer BlockHitBuffer { get; set; }
-		public SpaceSEMPersistentGameMode()
+		public SpaceSemGameInstance()
 		{
 			PowerUpBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_PowerUp.wav");
 			Console.WriteLine(PowerUpBuffer.Duration.AsMilliseconds());

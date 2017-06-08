@@ -96,7 +96,7 @@ namespace SFML_SpaceSEM
 			JCheckbox exitCheckBox = new JCheckbox(GUI);
 			exitCheckBox.Text.DisplayedString = "Exit";
 
-			JCheckboxGroup mainCheckBoxGroup = new JCheckboxGroup();
+			JChackboxGroup mainCheckBoxGroup = new JChackboxGroup();
 			mainCheckBoxGroup.AddBox(playCheckBox);
 			mainCheckBoxGroup.AddBox(optionCheckBox);
 			mainCheckBoxGroup.AddBox(helpCheckBox);

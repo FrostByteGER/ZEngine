@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SFML_Engine.Engine;
-using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Physics;
-using SFML_Engine.Engine.JUI;
-using SFML.System;
-using SFML.Graphics;
+using SFML_Engine.Engine.Core;
 
 namespace SFML_SpaceSEM
 {
@@ -27,42 +23,10 @@ namespace SFML_SpaceSEM
 
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
-			EngineRef.PersistentGameMode = new SpaceSEMPersistentGameMode();
+			EngineRef.GameInstance = new SpaceSemGameInstance();
 			EngineRef.EngineWindowWidth = 800;
 			EngineRef.EngineWindowHeight = 800;
 			EngineRef.InitEngine();
-			Physics = EngineRef.PhysicsEngine;
-
-			Physics.AddGroup("Players");
-			Physics.AddGroup("Enemies");
-			Physics.AddGroup("Borders");
-			Physics.AddGroup("Obstacles");
-			Physics.AddGroup("PowerUp");
-			Physics.AddGroup("Bullets");
-
-			// Player/Enemy Collision
-			Physics.AddCollidablePartner("Players", "Enemies");
-			Physics.AddCollidablePartner("Enemies", "Players");
-
-			// Bullet Overlaps
-			Physics.AddOverlapPartners("Players", "Bullets");
-			Physics.AddOverlapPartners("Bullets", "Players");
-			Physics.AddOverlapPartners("Enemies", "Bullets");
-			Physics.AddOverlapPartners("Bullets", "Enemies");
-
-			// Border Collision
-			Physics.AddCollidablePartner("Players", "Borders");
-			Physics.AddCollidablePartner("Enemies", "Borders");
-			Physics.AddCollidablePartner("Bullets", "Borders");
-			Physics.AddCollidablePartner("PowerUp", "Borders");
-			Physics.AddCollidablePartner("Obstacles", "Borders");
-
-			// Obstacle Collision
-			Physics.AddCollidablePartner("Players", "Obstacles");
-			Physics.AddCollidablePartner("Obstacles", "Players");
-
-			// Powerup Overlaps
-			Physics.AddOverlapPartners("PowerUp", "Players");
 
 
 			//JGUI vvv
@@ -73,12 +37,9 @@ namespace SFML_SpaceSEM
 
 
 			var menuLevel = new SpaceSEMMenuLevel();
-			Engine.Instance.RegisterLevel(menuLevel);
-			menuLevel.InitiateMenu();
 			EngineRef.LoadLevel(menuLevel);
 
-			var gameLevel = new SpaceSEMGameLevel();
-			Engine.Instance.RegisterLevel(gameLevel);
+			//var gameLevel = new SpaceSEMGameLevel();
 
 			EngineRef.StartEngine();
 			

@@ -2,9 +2,9 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
+using Text = SFML_Engine.Engine.SFML.Graphics.Text;
 using SFML_Engine.Engine.JUI;
 using System;
-using SFML_Engine.Engine.Game;
 using SFML_SpaceSEM.UI;
 
 namespace SFML_SpaceSEM
@@ -37,14 +37,7 @@ namespace SFML_SpaceSEM
 		public static Color ColorUnselected { get; } = new Color(162, 160, 160, 255);
 		public object Menu { get; internal set; }
 
-
-		protected override void InitLevel()
-		{
-			base.InitLevel();
-			InitiateMenu();
-		}
-
-		private void InitiateMenu()
+		public void InitiateMenu()
 		{
 
 			// Font TODO 
@@ -96,7 +89,7 @@ namespace SFML_SpaceSEM
 			JCheckbox exitCheckBox = new JCheckbox(GUI);
 			exitCheckBox.Text.DisplayedString = "Exit";
 
-			JCheckboxGroup mainCheckBoxGroup = new JCheckboxGroup();
+			JChackboxGroup mainCheckBoxGroup = new JChackboxGroup();
 			mainCheckBoxGroup.AddBox(playCheckBox);
 			mainCheckBoxGroup.AddBox(optionCheckBox);
 			mainCheckBoxGroup.AddBox(helpCheckBox);
@@ -329,6 +322,13 @@ namespace SFML_SpaceSEM
 		{
 			base.OnGameEnd();
 			//BreakoutPersistentGameMode.BGM_Main.Stop();
+		}
+
+		public override void ShutdownLevel()
+		{
+			base.ShutdownLevel();
+			UnregisterPlayers();
+			UnregisterActors();
 		}
 	}
 }

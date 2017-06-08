@@ -4,8 +4,15 @@ using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
 using System;
+<<<<<<< HEAD
+<<<<<<< HEAD
 using SFML_Engine.Engine.Game;
+=======
+=======
+using SFML_Engine.Engine.Game;
+>>>>>>> 4215986aadffbbe207724bcf326b5a8848b2c04f
 using SFML_SpaceSEM.UI;
+>>>>>>> 9e1da42f4c41e24ffe1783bcdacea608a8ea28cf
 
 namespace SFML_SpaceSEM
 {
@@ -330,5 +337,16 @@ namespace SFML_SpaceSEM
 			base.OnGameEnd();
 			//BreakoutPersistentGameMode.BGM_Main.Stop();
 		}
+<<<<<<< HEAD
+		/*
+		public override void ShutdownLevel()
+		{
+			base.ShutdownLevel();
+			UnregisterPlayers();
+			UnregisterActors();
+		}
+		*/
+=======
+>>>>>>> 4215986aadffbbe207724bcf326b5a8848b2c04f
 	}
 }
