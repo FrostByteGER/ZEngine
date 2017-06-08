@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="SpaceSemGameInstance.cs" />
     <Compile Include="SpaceSEMBullet.cs" />
