@@ -53,10 +53,6 @@ namespace SFML_SpaceSEM
 			GUI.Tick(deltaTime);
 		}
 
-		public static Color ColorSelected { get; } = new Color(255, 255, 255, 255);
-		public static Color ColorUnselected { get; } = new Color(162, 160, 160, 255);
-		public object Menu { get; internal set; }
-
 		public void InitiateMenu()
 		{
 
@@ -65,7 +61,7 @@ namespace SFML_SpaceSEM
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
-			rootContainer.setBackgroundColor(Color.Blue);
+			rootContainer.setBackgroundColor(new Color(0,0,0,0));
 			rootContainer.setPosition(new Vector2f(50, 50));
 			rootContainer.setSize(new Vector2f(700, 700));
 
@@ -373,13 +369,53 @@ namespace SFML_SpaceSEM
 			creditContainer.addElement(creditTemp);
 
 			// Editor Menue
+			{
+				editorContainer = new JContainer(GUI);
+				JBorderLayout editContainerLayout = new JBorderLayout(editorContainer);
+				editContainerLayout.RightSize = 0.3f;
+				editorContainer.Layout = editContainerLayout;
 
-			editorContainer = new JContainer(GUI);
-			editorContainer.Layout = new JLayout(editorContainer);
-			JLabel editorTemp = new JLabel(GUI);
-			editorTemp.Text.DisplayedString = "editorContainer";
-			editorContainer.addElement(editorTemp);
+				JContainer editCenterContainer = new JContainer(GUI);
+				editCenterContainer.Layout = new JLayout(editCenterContainer);
 
+				// Custom Label
+				JLabel editCustomLabel = new JLabel(GUI);
+				editCustomLabel.setTextString("Custom");
+
+				// Custom Level
+				JContainer editCustomContainer = new JContainer(GUI);
+				JGridLayout editCustomLayout = new JGridLayout(editCustomContainer);
+				editCustomLayout.Rows = 4;
+				editCustomContainer.Layout = editCustomLayout;
+
+				JCheckbox editCustomLevel1 = new JCheckbox(GUI);
+				JCheckbox editCustomLevel2 = new JCheckbox(GUI);
+				JCheckbox editCustomLevel3 = new JCheckbox(GUI);
+				JCheckbox editCustomLevel4 = new JCheckbox(GUI);
+
+				editCustomLevel1.setTextString("01");
+				editCustomLevel2.setTextString("02");
+				editCustomLevel3.setTextString("03");
+				editCustomLevel4.setTextString("04");
+
+				editCustomContainer.addElement(editCustomLevel1);
+				editCustomContainer.addElement(editCustomLevel2);
+				editCustomContainer.addElement(editCustomLevel3);
+				editCustomContainer.addElement(editCustomLevel4);
+
+				// CheckBox Group for Level Selection
+				JCheckboxGroup editCheckboxGroup = new JCheckboxGroup();
+				editCheckboxGroup.AddBox(editCustomLevel1);
+				editCheckboxGroup.AddBox(editCustomLevel2);
+				editCheckboxGroup.AddBox(editCustomLevel3);
+				editCheckboxGroup.AddBox(editCustomLevel4);
+
+				editCenterContainer.addElement(editCustomLabel);
+				editCenterContainer.addElement(editCustomContainer);
+
+				editorContainer.addElement(editCenterContainer, JBorderLayout.CENTER);
+				//editorContainer.addElement(editCustomLabel, JBorderLayout.TOP);
+			}
 			// Exit Menue
 
 			exitContainer = new JContainer(GUI);

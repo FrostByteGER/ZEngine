@@ -37,6 +37,40 @@ namespace SFML_Engine.Engine.JUI
 
 		public bool CanTick { get; set; } = true;
 
+		private bool _isActive = false;
+
+		public bool IsActive
+		{
+			get => _isActive;
+			set
+			{
+
+				if (!value)
+				{
+					UnregisterInput();
+				}
+				else
+				{
+					RegisterInput();
+				}
+
+				_isActive = value;
+			}
+		}
+
+		public virtual void RegisterInput()
+		{
+			InputManager.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
+				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
+				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+		}
+
+		public virtual void UnregisterInput()
+		{
+			InputManager.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
+				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
+				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+		}
 
 		public JGUI(Font font, RenderWindow renderwindow, InputManager inputManager)
 		{
