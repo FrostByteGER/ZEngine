@@ -28,7 +28,7 @@ namespace TestProject
 
 			Console.WriteLine(Directory.GetCurrentDirectory());
 
-			level.MainGameFont = new SFML.Graphics.Font("./arial.ttf");
+			level.MainGameFont = new SFML.Graphics.Font("Assets/TestProject/arial.ttf");
 
 			var physics = level.PhysicsEngine;
 			physics.Gravity = new Vector2f(9.81f, 0.0f);

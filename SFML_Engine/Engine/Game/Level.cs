@@ -223,7 +223,7 @@ namespace SFML_Engine.Engine.Game
 			var removal = Actors.Remove(actor);
 			foreach (var comp in actor.Components)
 			{
-				var physComp = (PhysicsComponent)comp;
+				var physComp = comp as PhysicsComponent;
 				if (physComp != null)
 				{
 					PhysicsEngine.UnregisterPhysicsComponent(physComp);

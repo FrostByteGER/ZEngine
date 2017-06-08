@@ -268,28 +268,28 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.LocalRotation = value;
-				CollisionBody.Rotation = EngineMath.DegreesToRadians(VelcroPhysicsEngine.ToPhysicsUnits(value)); //TODO: Verify
+				CollisionBody.Rotation = VelcroPhysicsEngine.ToPhysicsUnits(EngineMath.DegreesToRadians(value)); //TODO: Verify
 			}
 		}
 
 		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
-
+			ParentActor.OnCollide(self, other, contactInfo);
 		}
 
 		public virtual void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
-
+			ParentActor.OnCollideEnd(self, other, contactInfo);
 		}
 
 		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
-
+			ParentActor.OnOverlapBegin(self, other, contactInfo);
 		}
 
 		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
-
+			ParentActor.OnOverlapEnd(self, other, contactInfo);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
