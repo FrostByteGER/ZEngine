@@ -25,6 +25,7 @@ namespace SFML_Engine.Engine.Game
 	    public bool CanTick { get; set; } = true;
 
 	    internal bool MarkedForInputRegistering { get; set; } = false;
+	    public bool DisableInputWhenPaused { get; set; } = false;
 
 		private bool _isActive = false;
 
@@ -164,12 +165,14 @@ namespace SFML_Engine.Engine.Game
 	    public virtual void OnGamePause()
 	    {
 		    CanTick = false;
+		    if (DisableInputWhenPaused) IsActive = false;
 	    }
 
 	    public virtual void OnGameResume()
 	    {
 		    CanTick = true;
-	    }
+		    if (DisableInputWhenPaused) IsActive = true;
+		}
 
 	    public virtual void OnGameEnd()
 	    {
