@@ -185,6 +185,8 @@ namespace SFML_SpaceSEM.Game
 				playCheckboxGroup.AddBox(playCustomLevel3);
 				playCheckboxGroup.AddBox(playCustomLevel4);
 
+				playCampaingnLevel1.Select();
+
 				// add Everything to Center Container
 				playCenterContainer.addElement(playCampaingnLabel);
 				playCenterContainer.addElement(playCampaignContainer);
@@ -386,7 +388,7 @@ namespace SFML_SpaceSEM.Game
 				JCheckbox editCustomLevel1 = new JCheckbox(GUI);
 				JCheckbox editCustomLevel2 = new JCheckbox(GUI);
 				JCheckbox editCustomLevel3 = new JCheckbox(GUI);
-				JCheckbox editCustomLevel4 = new JCheckbox(GUI);
+				JCheckbox editCustomLevel4 = new JCheckbox(GUI);	
 
 				editCustomLevel1.setTextString("01");
 				editCustomLevel2.setTextString("02");
@@ -397,6 +399,8 @@ namespace SFML_SpaceSEM.Game
 				editCustomContainer.addElement(editCustomLevel2);
 				editCustomContainer.addElement(editCustomLevel3);
 				editCustomContainer.addElement(editCustomLevel4);
+				editCustomLevel1.Select();
+
 
 				// CheckBox Group for Level Selection
 				JCheckboxGroup editCheckboxGroup = new JCheckboxGroup();
@@ -550,9 +554,13 @@ namespace SFML_SpaceSEM.Game
 		}
 
 		public void OpenEditor()
-		{
+		{	
 			GUI.IsActive = false;
-			EngineReference.LoadLevel(new SpaceEditorLevel(), false);
+
+			SpaceEditorLevel edit = new SpaceEditorLevel();
+			edit.LevelName = "level_1";
+
+			EngineReference.LoadLevel(edit, false);
 		}
 	}
 }
