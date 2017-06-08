@@ -12,7 +12,7 @@ namespace SFML_SpaceSEM.Game.Actors
 		public float FireRate { get; set; } = 1.0f;
 		public float BulletSpread { get; set; } = 0.0f;
 		public uint BulletsPerShot { get; set; } = 1;
-		public float BulletSpeed { get; set; } = 5.0f;
+		public float BulletSpeed { get; set; } = 400.0f;
 		//public SpaceBullet Bullet { get; set; }
 		public WeaponComponent(Sprite sprite) : base(sprite)
 		{
@@ -23,12 +23,13 @@ namespace SFML_SpaceSEM.Game.Actors
 			for (int i = 0; i < BulletsPerShot; ++i)
 			{
 				var bullet = new SpaceBullet(new Sprite(new Texture(AssetManager.AssetsPath + "Bullet_01.png")), ParentActor.LevelReference);
-				bullet.GetRootComponent<PhysicsComponent>().CollisionResponseChannels &=
-					~ParentActor.GetRootComponent<PhysicsComponent>().CollisionType;
+				var root = bullet.GetRootComponent<PhysicsComponent>();
+				root.CollisionResponseChannels &= ~ParentActor.GetRootComponent<PhysicsComponent>().CollisionType;
 				bullet.Damage = Damage;
 				bullet.Position = WorldPosition;
 				bullet.Rotation = -BulletsPerShot + (float)EngineMath.EngineRandom.NextDouble() * (BulletsPerShot - -BulletsPerShot);
-				bullet.GetRootComponent<PhysicsComponent>().CollisionBody.ApplyLinearImpulse(new TVector2f(0.0f, VelcroPhysicsEngine.ToPhysicsUnits(-BulletSpeed)));
+				root.MaxVelocity = new TVector2f(0.0f, BulletSpeed);
+				root.Velocity = new TVector2f(0.0f, -BulletSpeed);
 				ParentActor.LevelReference.SpawnActor(bullet);
 			}
 		}
