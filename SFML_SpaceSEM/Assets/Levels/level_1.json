@@ -10,25 +10,25 @@
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
             "X": 40.0,
-            "Y": 0.0
+            "Y": -30.0
           }
         },        {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
             "X": 60.0,
-            "Y": 0.0
+            "Y": 50.0
           }
         },        {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
             "X": 80.0,
-            "Y": 0.0
+            "Y": 30.0
           }
         },        {
           "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
             "X": 160.0,
-            "Y": 0.0
+            "Y": 160.0
           }
         }
       ]
