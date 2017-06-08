@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Core;
+using SFML_Engine.Engine.Graphics;
 using SFML_SpaceSEM.Game;
+using SFML_SpaceSEM.IO;
+using VelcroPhysics.Dynamics.Solver;
 
 namespace SFML_SpaceSEM
 {
@@ -18,8 +21,9 @@ namespace SFML_SpaceSEM
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
+			//SpaceSEMMenuLevel.SaveSpaceLevel(wrapperData);
 
-
+			//SpaceSEMMenuLevel.LoadSpaceLevel("level_1.json");
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
 			EngineRef.GameInstance = new SpaceSEMGameInstance();
@@ -43,42 +47,27 @@ namespace SFML_SpaceSEM
 			Console.ReadLine();
 		}
 
-		public static List<List<float[]>> LoadLevels()
+		public static SpaceLevelDataWrapper GenerateLevel()
 		{
-			List<List<float[]>> values = new List<List<float[]>>();
-			try
+			var wrapperData = new SpaceLevelDataWrapper();
+			for (var i = 0; i < 3; ++i)
 			{
-				using (StreamReader sr = new StreamReader("Assets/SFML_Breakout/Levels.cfg"))
+				wrapperData.Spawners.Add(new SpaceLevelSpawnerDataWrapper
 				{
-					string line;
-					List<float[]> levelValues = new List<float[]>();
-					float[] pair = new float[2];
-					while ((line = sr.ReadLine()) != null)
+					ActivationTime = 1 + i,
+					Ships = new List<SpaceLevelShipDataWrapper>()
 					{
-						if (line == "---")
+						new SpaceLevelShipDataWrapper
 						{
-							values.Add(levelValues);
-							levelValues = new List<float[]>();
-						}
-						else
-						{
-							line = line.Remove(line.Length - 1);
-							var valuesraw = line.Split(',');
-							pair[0] = Convert.ToSingle(valuesraw[0]);
-							pair[1] = Convert.ToSingle(valuesraw[1]);
-							levelValues.Add(pair);
-							pair = new float[2];
+							ShipType = typeof(SpriteActor),
+							Position = new SFML_Engine.Engine.Utility.TVector2f(i * 10)
 						}
 					}
-					values.Add(levelValues);
-				}
+
+
+				});
 			}
-			catch (Exception e)
-			{
-				Console.WriteLine("The file could not be read:");
-				Console.WriteLine(e.Message);
-			}
-			return values;
+			return wrapperData;
 		}
 	}
 }

@@ -229,6 +229,7 @@
     <Content Include="Lib\OpenAL32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Levels\" />
     <Folder Include="Engine\Audio\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

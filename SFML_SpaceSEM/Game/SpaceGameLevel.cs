@@ -14,6 +14,8 @@ namespace SFML_SpaceSEM.Game
 
 		public List<SpriteActor> Enemies { get; set; } = new List<SpriteActor>();
 
+		public List<SpriteActor> Spawners { get; set; } = new List<SpriteActor>();
+
 		protected override void InitLevel()
 		{
 			base.InitLevel();

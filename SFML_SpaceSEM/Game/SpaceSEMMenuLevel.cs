@@ -4,8 +4,11 @@ using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
 using System;
+using System.IO;
+using Newtonsoft.Json;
 using SFML_Engine.Engine.Game;
 using SFML_SpaceSEM.Game;
+using SFML_SpaceSEM.IO;
 using SFML_SpaceSEM.UI;
 
 namespace SFML_SpaceSEM
@@ -524,18 +527,28 @@ namespace SFML_SpaceSEM
 			EngineReference.LoadLevel(new SpaceGameLevel(), false);
 		}
 
-		public bool LoadSpaceLevel(string levelName)
+		public static SpaceLevelDataWrapper LoadSpaceLevel(string levelName)
 		{
 			return LoadSpaceLevel(levelName, true);
 		}
 
-		public bool LoadSpaceLevel(string levelName, bool destroyPrevious)
+		public static SpaceLevelDataWrapper LoadSpaceLevel(string levelName, bool destroyPrevious)
 		{
-			if (string.IsNullOrWhiteSpace(levelName)) return false;
+			if (string.IsNullOrWhiteSpace(levelName)) return null;
 
-			var level = new Level();
+			var level = new SpaceGameLevel();
 
-			return EngineReference.LoadLevel(level, destroyPrevious);
+			var wrapperData = JsonConvert.DeserializeObject<SpaceLevelDataWrapper>(File.ReadAllText("Assets/SFML_SpaceSEM/Levels/" + levelName));
+
+			//return EngineReference.LoadLevel(level, destroyPrevious);
+			return wrapperData;
+		} 
+
+		public static string SaveSpaceLevel(SpaceLevelDataWrapper data)
+		{
+			var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+			File.WriteAllText(@"level.json", jsonData);
+			return jsonData;
 		}
 	}
 }
