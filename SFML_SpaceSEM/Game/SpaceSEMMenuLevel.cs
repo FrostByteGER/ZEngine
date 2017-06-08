@@ -52,10 +52,6 @@ namespace SFML_SpaceSEM
 			GUI.Tick(deltaTime);
 		}
 
-		public static Color ColorSelected { get; } = new Color(255, 255, 255, 255);
-		public static Color ColorUnselected { get; } = new Color(162, 160, 160, 255);
-		public object Menu { get; internal set; }
-
 		public void InitiateMenu()
 		{
 
@@ -64,7 +60,7 @@ namespace SFML_SpaceSEM
 
 			// Root Container
 			rootContainer = new JContainer(GUI);
-			rootContainer.setBackgroundColor(Color.Blue);
+			rootContainer.setBackgroundColor(new Color(0,0,0,0));
 			rootContainer.setPosition(new Vector2f(50, 50));
 			rootContainer.setSize(new Vector2f(700, 700));
 
