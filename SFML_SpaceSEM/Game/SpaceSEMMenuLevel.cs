@@ -16,7 +16,7 @@ namespace SFML_SpaceSEM
 	public class SpaceSEMMenuLevel : Level
 	{
 
-		public Font MainGameFont { get; set; }
+		//public Font MainGameFont { get; set; }
 		public JGUI GUI { get; private set; }
 
 		// Root Container
@@ -418,7 +418,23 @@ namespace SFML_SpaceSEM
 				editCenterContainer.addElement(editCustomContainer);
 				editCenterContainer.addElement(null);
 
+				// Right Container
+
+				JContainer editRightContainer = new JContainer(GUI);
+				editRightContainer.Layout = new JLayout(editRightContainer);
+
+				JLabel editLevelInfoLable = new JLabel(GUI);
+
+				editLevelInfoLable.setTextString("Level Info");
+				editRightContainer.addElement(editLevelInfoLable);
+
+				JButton editStartButton = new JButton(GUI);
+				editStartButton.setTextString("Start");
+				editStartButton.Something += OpenEditor;
+				editRightContainer.addElement(editStartButton);
+
 				editorContainer.addElement(editCenterContainer, JBorderLayout.CENTER);
+				editorContainer.addElement(editRightContainer, JBorderLayout.RIGHT);
 			}
 			// Exit Menue
 			{
@@ -440,6 +456,18 @@ namespace SFML_SpaceSEM
 				exitExitButton.setTextString("YES");
 				JButton exitCancelButton = new JButton(GUI);
 				exitCancelButton.setTextString("NO");
+
+				exitCancelButton.Something += delegate ()
+				{
+					exitCheckBox.Deselect();
+					ChangeCenterContainer();
+				};
+
+				exitExitButton.Something += delegate ()
+				{
+					EngineReference.RequestTermination = true;
+					this.Dispose();
+				};
 
 				exitCenterContainer.addElement(exitExitButton);
 				exitCenterContainer.addElement(exitCancelButton);
@@ -508,7 +536,6 @@ namespace SFML_SpaceSEM
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
-			//BreakoutPersistentGameMode.SwitchMusic();
 		}
 
 		public override void OnGamePause()
@@ -519,12 +546,21 @@ namespace SFML_SpaceSEM
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
-			//BreakoutPersistentGameMode.BGM_Main.Stop();
+			
 		}
+
+		// GUI Functions
 
 		private void PlayRightStartButton_LoadLevel()
 		{
+			GUI.IsActive = false;
 			EngineReference.LoadLevel(new SpaceGameLevel(), false);
+		}
+
+		public void OpenEditor()
+		{
+			GUI.IsActive = false;
+			EngineReference.LoadLevel(new SpaceEditorLevel(), false);
 		}
 
 		public static SpaceLevelDataWrapper LoadSpaceLevel(string levelName)

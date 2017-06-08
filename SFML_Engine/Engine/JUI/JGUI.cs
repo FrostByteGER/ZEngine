@@ -44,7 +44,6 @@ namespace SFML_Engine.Engine.JUI
 			get => _isActive;
 			set
 			{
-
 				if (!value)
 				{
 					UnregisterInput();
@@ -70,6 +69,7 @@ namespace SFML_Engine.Engine.JUI
 			InputManager.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+			
 		}
 
 		public JGUI(Font font, RenderWindow renderwindow, InputManager inputManager)
@@ -316,6 +316,22 @@ namespace SFML_Engine.Engine.JUI
 		// Is Called if Something interacts with the GUI
 		public virtual void Interact()
 		{
+		}
+
+		public void Dispose()
+		{
+			if (GUIFont != null)
+			{
+				GUIFont.Dispose();
+
+				DisposeAllElements(RootContainer);
+
+			}
+		}
+
+		private void DisposeAllElements(JElement lastElement)
+		{
+			//TODO
 		}
 	}
 }

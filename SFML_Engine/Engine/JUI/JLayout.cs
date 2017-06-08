@@ -9,6 +9,7 @@ namespace SFML_Engine.Engine.JUI
 		public JLayout(JContainer container)
 		{
 			Container = container;
+			Container.Layout = this;
 		}
 
 		public virtual void ReSize()

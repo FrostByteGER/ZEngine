@@ -82,6 +82,8 @@
     <Compile Include="Game\SpaceEditorLevel.cs" />
     <Compile Include="Game\SpaceGameLevel.cs" />
     <Compile Include="IO\SpaceLevelDataWrapper.cs" />
+    <Compile Include="UI\EditCenterElement.cs" />
+    <Compile Include="UI\EditorSlider.cs" />
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="Game\SpaceSemGameInstance.cs" />

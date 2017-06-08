@@ -43,7 +43,7 @@ namespace SFML_SpaceSEM
 
 			EngineRef.StartEngine();
 
-			menuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
+			//menuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
 			Console.ReadLine();
 		}
 
