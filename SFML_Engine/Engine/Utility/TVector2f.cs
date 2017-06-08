@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using SFML.System;
 
 namespace SFML_Engine.Engine.Utility
@@ -9,7 +10,10 @@ namespace SFML_Engine.Engine.Utility
 	/// </summary>
 	public class TVector2f
 	{
+
+		[JsonIgnore]
 		public Vector2f Vec2f { get; set; }
+
 
 		public float X
 		{
@@ -29,8 +33,10 @@ namespace SFML_Engine.Engine.Utility
 		public static float UnitY { get; } = 1.0f;
 		public static float Epsilon { get; set; } = 0.00001f; //TODO: Implement
 
+		[JsonIgnore]
 		public float Length => (float) Math.Sqrt(Vec2f.X * Vec2f.X + Vec2f.Y * Vec2f.Y);
 
+		[JsonIgnore]
 		public float LengthSquared => Vec2f.X * Vec2f.X + Vec2f.Y * Vec2f.Y;
 
 		public TVector2f()
