@@ -206,6 +206,8 @@ namespace SFML_SpaceSEM.Game
 			MainEditContainer.addElement(MainRightContainer, JBorderLayout.RIGHT);
 
 			GUI.RootContainer = MainEditContainer;
+
+			loadShips();
 		}
 
 		public void addElement()
@@ -244,7 +246,14 @@ namespace SFML_SpaceSEM.Game
 		{
 			foreach (SpaceLevelShipDataWrapper ship in SelectedSpawner.Ships)
 			{
-				ship
+
+				JButton shipLable = new JButton(GUI);
+
+				shipLable.setTextString(ship.ShipType.ToString());
+
+				shipList.addElement(shipLable);
+
+				Console.WriteLine(ship.ShipType.ToString()+" "+ SelectedSpawner.Ships.Count);
 			}
 		}
 

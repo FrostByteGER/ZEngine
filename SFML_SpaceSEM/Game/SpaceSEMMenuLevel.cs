@@ -388,7 +388,7 @@ namespace SFML_SpaceSEM.Game
 				JCheckbox editCustomLevel1 = new JCheckbox(GUI);
 				JCheckbox editCustomLevel2 = new JCheckbox(GUI);
 				JCheckbox editCustomLevel3 = new JCheckbox(GUI);
-				JCheckbox editCustomLevel4 = new JCheckbox(GUI);	
+				JCheckbox editCustomLevel4 = new JCheckbox(GUI);
 
 				editCustomLevel1.setTextString("01");
 				editCustomLevel2.setTextString("02");
@@ -559,14 +559,12 @@ namespace SFML_SpaceSEM.Game
 		}
 
 		public void OpenEditor()
-		{	
+		{
 
 			SpaceEditorLevel edit = new SpaceEditorLevel();
 			edit.LevelName = "level_1";
 
 			EngineReference.LoadLevel(edit, false);
-		{
-			EngineReference.LoadLevel(new SpaceEditorLevel(), false);
 		}
 	}
 }
