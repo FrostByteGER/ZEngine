@@ -85,9 +85,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpaceSEMMenuLevel.cs" />
     <Compile Include="TestPlayerController.cs" />
     <Compile Include="TestProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\OnOffCheckbox.cs" />
+    <Compile Include="UI\SpaceGUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

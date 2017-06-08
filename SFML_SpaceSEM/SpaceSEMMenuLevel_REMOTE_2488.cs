@@ -1,10 +1,13 @@
-﻿using SFML.Graphics;
+﻿using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
+using System;
+using SFML_Engine.Engine.Game;
 using SFML_SpaceSEM.UI;
 
-namespace SFML_SpaceSEM.Game
+namespace SFML_SpaceSEM
 {
 	public class SpaceSEMMenuLevel : Level
 	{
@@ -93,7 +96,7 @@ namespace SFML_SpaceSEM.Game
 			JCheckbox exitCheckBox = new JCheckbox(GUI);
 			exitCheckBox.Text.DisplayedString = "Exit";
 
-			JCheckboxGroup mainCheckBoxGroup = new JCheckboxGroup();
+			JChackboxGroup mainCheckBoxGroup = new JChackboxGroup();
 			mainCheckBoxGroup.AddBox(playCheckBox);
 			mainCheckBoxGroup.AddBox(optionCheckBox);
 			mainCheckBoxGroup.AddBox(helpCheckBox);

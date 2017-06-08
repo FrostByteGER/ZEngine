@@ -1,10 +1,16 @@
-﻿using SFML.Graphics;
+﻿using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
+using System;
+<<<<<<< HEAD
+using SFML_Engine.Engine.Game;
+=======
 using SFML_SpaceSEM.UI;
+>>>>>>> 9e1da42f4c41e24ffe1783bcdacea608a8ea28cf
 
-namespace SFML_SpaceSEM.Game
+namespace SFML_SpaceSEM
 {
 	public class SpaceSEMMenuLevel : Level
 	{
@@ -34,14 +40,7 @@ namespace SFML_SpaceSEM.Game
 		public static Color ColorUnselected { get; } = new Color(162, 160, 160, 255);
 		public object Menu { get; internal set; }
 
-
-		protected override void InitLevel()
-		{
-			base.InitLevel();
-			InitiateMenu();
-		}
-
-		private void InitiateMenu()
+		public void InitiateMenu()
 		{
 
 			// Font TODO 
@@ -327,5 +326,13 @@ namespace SFML_SpaceSEM.Game
 			base.OnGameEnd();
 			//BreakoutPersistentGameMode.BGM_Main.Stop();
 		}
+		/*
+		public override void ShutdownLevel()
+		{
+			base.ShutdownLevel();
+			UnregisterPlayers();
+			UnregisterActors();
+		}
+		*/
 	}
 }

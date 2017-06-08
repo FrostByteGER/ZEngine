@@ -162,7 +162,7 @@
     <Compile Include="Engine\Physics\OverlapComponent.cs" />
     <Compile Include="Engine\Physics\BulletPhysicsEngine.cs" />
     <Compile Include="Engine\JUI\JButton.cs" />
-    <Compile Include="Engine\JUI\JChackboxGroup.cs" />
+    <Compile Include="Engine\JUI\JCheckboxGroup.cs" />
     <Compile Include="Engine\JUI\JCheckbox.cs" />
     <Compile Include="Engine\JUI\JContainer.cs" />
     <Compile Include="Engine\JUI\JElement.cs" />
