@@ -1,19 +1,11 @@
-﻿using System.Collections.Generic;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
-using System;
-using System.IO;
-using Newtonsoft.Json;
-using SFML_Engine.Engine.Game;
-using SFML_SpaceSEM.Game;
-using SFML_SpaceSEM.IO;
 using SFML_SpaceSEM.UI;
 
-namespace SFML_SpaceSEM
+namespace SFML_SpaceSEM.Game
 {
-	public class SpaceSEMMenuLevel : Level
+	public class SpaceSEMMenuLevel : SpaceLevel
 	{
 
 		public Font MainGameFont { get; set; }
@@ -525,30 +517,6 @@ namespace SFML_SpaceSEM
 		private void PlayRightStartButton_LoadLevel()
 		{
 			EngineReference.LoadLevel(new SpaceGameLevel(), false);
-		}
-
-		public static SpaceLevelDataWrapper LoadSpaceLevel(string levelName)
-		{
-			return LoadSpaceLevel(levelName, true);
-		}
-
-		public static SpaceLevelDataWrapper LoadSpaceLevel(string levelName, bool destroyPrevious)
-		{
-			if (string.IsNullOrWhiteSpace(levelName)) return null;
-
-			var level = new SpaceGameLevel();
-
-			var wrapperData = JsonConvert.DeserializeObject<SpaceLevelDataWrapper>(File.ReadAllText("Assets/SFML_SpaceSEM/Levels/" + levelName));
-
-			//return EngineReference.LoadLevel(level, destroyPrevious);
-			return wrapperData;
-		} 
-
-		public static string SaveSpaceLevel(SpaceLevelDataWrapper data)
-		{
-			var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
-			File.WriteAllText(@"level.json", jsonData);
-			return jsonData;
 		}
 	}
 }

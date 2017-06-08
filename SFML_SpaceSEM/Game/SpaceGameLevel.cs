@@ -1,24 +1,37 @@
 ﻿using System.Collections.Generic;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.IO;
+using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
+using SFML_SpaceSEM.Game.Actors;
+using SFML_SpaceSEM.Game.Players;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_SpaceSEM.Game
 {
-	public class SpaceGameLevel : Level
+	public class SpaceGameLevel : SpaceLevel
 	{
 
-
+		internal float LevelTime { get; set; } = 0.0f;
 		public SpriteActor Player { get; set; } = null;
 
 		public List<SpriteActor> Enemies { get; set; } = new List<SpriteActor>();
 
-		public List<SpriteActor> Spawners { get; set; } = new List<SpriteActor>();
+		public List<SpaceSpawnerActor> Spawners { get; set; } = new List<SpaceSpawnerActor>();
 
 		protected override void InitLevel()
 		{
 			base.InitLevel();
+
+
+			var playerActor = new SpaceShipPlayer(new Sprite(new Texture(AssetManager.AssetsPath + "Player_01.png")), this);
+			playerActor.ActorName = "Player Sprite";
+
+			var playerController = new SpaceGamePlayerController(playerActor);
+
+
 			var leftBorder = new Actor(this);
 			leftBorder.ActorName = "Left Border";
 			PhysicsEngine.ConstructRectangleCollisionComponent(leftBorder, true, new TVector2f(-450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static);
@@ -39,14 +52,17 @@ namespace SFML_SpaceSEM.Game
 			PhysicsEngine.ConstructRectangleCollisionComponent(bottomBorder, true, new TVector2f(0.0f, 450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static);
 			bottomBorder.Visible = true;
 
+			RegisterActor(playerActor);
 			RegisterActor(leftBorder);
 			RegisterActor(rightBorder);
 			RegisterActor(topBorder);
 			RegisterActor(bottomBorder);
+			RegisterPlayer(playerController);
 		}
 
 		protected override void LevelTick(float deltaTime)
 		{
+			LevelTime += deltaTime;
 			base.LevelTick(deltaTime);
 		}
 
@@ -74,5 +90,7 @@ namespace SFML_SpaceSEM.Game
 		{
 			base.OnGameEnd();
 		}
+
+
 	}
 }

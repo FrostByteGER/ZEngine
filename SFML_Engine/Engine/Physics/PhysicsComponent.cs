@@ -120,7 +120,7 @@ namespace SFML_Engine.Engine.Physics
 			set
 			{
 				base.LocalRotation = value;
-				CollisionBody.Rotation = VelcroPhysicsEngine.ToPhysicsUnits(value);
+				CollisionBody.Rotation = EngineMath.DegreesToRadians(VelcroPhysicsEngine.ToPhysicsUnits(value)); //TODO: Verify
 			}
 		}
 
