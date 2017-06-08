@@ -205,6 +205,10 @@ namespace SFML_SpaceSEM.Game
 
 			JButton exitButton = new JButton(GUI);
 			exitButton.setTextString("EXIT");
+			exitButton.Something += delegate ()
+			{
+				Exit();
+			};
 			exitSaveAddContainer.addElement(exitButton);
 
 			elementContainer.addElement(exitSaveAddContainer, JBorderLayout.BOTTOM);
@@ -218,8 +222,6 @@ namespace SFML_SpaceSEM.Game
 
 
 			SelectedSpawner = Spawners[0];
-
-			//loadShips();
 		}
 
 		public void addElement()
@@ -246,7 +248,7 @@ namespace SFML_SpaceSEM.Game
 
 		public void Exit()
 		{
-			Console.WriteLine("Exit");
+			EngineReference.LoadPreviousLevel();
 		}
 
 		public void Save()
@@ -264,7 +266,7 @@ namespace SFML_SpaceSEM.Game
 			{
 				JCheckbox shipCheckBox = new JCheckbox(GUI);
 
-				shipCheckBox.setTextString(ship.ShipType.ToString());
+				shipCheckBox.setTextString(ship.Position.X+" "+ship.Position.Y);
 
 				shipGroup.AddBox(shipCheckBox);
 
