@@ -46,6 +46,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="sfmlnet-audio-2">
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
       <Private>True</Private>
@@ -77,9 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\SpaceGameLevel.cs" />
+    <Compile Include="IO\SpaceLevelDataWrapper.cs" />
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="Game\SpaceSemGameInstance.cs" />
+    <None Include="Assets\arial.ttf" />
+    <None Include="Assets\comic.ttf" />
+    <None Include="Assets\Levels\level_1.json" />
     <None Include="old\SpaceSEMBullet.cs" />
     <None Include="old\SpaceSEMEnemy.cs" />
     <None Include="old\SpaceSEMGameLevel.cs" />
@@ -112,7 +119,20 @@
       <Name>SFML_Engine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\BGM_Main_1.wav" />
+    <Content Include="Assets\BGM_Main_2.wav" />
+    <Content Include="Assets\BGM_Main_3.wav" />
+    <Content Include="Assets\BGM_Main_4.wav" />
+    <Content Include="Assets\BGM_Main_5.wav" />
+    <Content Include="Assets\BGM_MLG_Final.wav" />
+    <Content Include="Assets\BGM_MLG_Main.wav" />
+    <Content Include="Assets\BGM_MLG_Secret.wav" />
+    <Content Include="Assets\Enemy_01.png" />
+    <Content Include="Assets\Player_01.png" />
+    <Content Include="Assets\SFX_BlockHit.wav" />
+    <Content Include="Assets\SFX_PowerUp.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy "$(SolutionDir)SFML_Engine\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
