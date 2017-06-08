@@ -413,19 +413,38 @@ namespace SFML_SpaceSEM
 				editCheckboxGroup.AddBox(editCustomLevel3);
 				editCheckboxGroup.AddBox(editCustomLevel4);
 
+				editCenterContainer.addElement(null);
 				editCenterContainer.addElement(editCustomLabel);
 				editCenterContainer.addElement(editCustomContainer);
+				editCenterContainer.addElement(null);
 
 				editorContainer.addElement(editCenterContainer, JBorderLayout.CENTER);
-				//editorContainer.addElement(editCustomLabel, JBorderLayout.TOP);
 			}
 			// Exit Menue
 
 			exitContainer = new JContainer(GUI);
-			exitContainer.Layout = new JLayout(exitContainer);
-			JLabel exitTemp = new JLabel(GUI);
-			exitTemp.Text.DisplayedString = "exitContainer";
-			exitContainer.addElement(exitTemp);
+			JBorderLayout exitLayout = new JBorderLayout(exitContainer);
+			exitLayout.TopSize = 0.2f;
+			exitLayout.BottemSize = 0.2f;
+			exitLayout.LeftSize = 0.2f;
+			exitLayout.RightSize = 0.2f;
+			exitContainer.Layout = exitLayout;
+
+			JContainer exitCenterContainer = new JContainer(GUI);
+
+			JGridLayout exitCenterLayout = new JGridLayout(exitCenterContainer);
+			exitCenterLayout.Rows = 2;
+			exitCenterContainer.Layout = exitCenterLayout;
+
+			JButton exitExitButton = new JButton(GUI);
+			exitExitButton.setTextString("YES");
+			JButton exitCancelButton = new JButton(GUI);
+			exitCancelButton.setTextString("NO");
+
+			exitCenterContainer.addElement(exitExitButton);
+			exitCenterContainer.addElement(exitCancelButton);
+
+			exitContainer.addElement(exitCenterContainer, JBorderLayout.CENTER);
 
 			//Container ^^^
 
