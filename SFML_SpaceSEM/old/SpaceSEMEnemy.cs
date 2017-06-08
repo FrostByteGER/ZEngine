@@ -5,6 +5,8 @@ using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
+using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
@@ -20,14 +22,11 @@ namespace SFML_SpaceSEM
 
 		public Timer RespawnTimer { get; set; } = new Timer();
 
-		public SpaceSEMEnemy()
+		public SpaceSEMEnemy(Sprite sprite, Level level) : base(sprite, level)
 		{
 		}
 
-		public SpaceSEMEnemy(Texture texture) : base(texture)
-		{
-		}
-
+		
 		public void OnHit(Actor actor)
 		{
 			if (actor is SpaceSEMPlayer || actor is SpaceSEMBullet)

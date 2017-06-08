@@ -3,6 +3,8 @@ using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.Events;
+using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 
 namespace SFML_SpaceSEM
 {
@@ -23,7 +25,7 @@ namespace SFML_SpaceSEM
 		{
 			Input = LevelReference.EngineReference.InputManager;
 
-			Input.RegisterKeyInput(OnKeyPressed, OnKeyReleased);
+			Input.RegisterKeyInput(OnKeyPressed, OnKeyDown, OnKeyReleased);
 
 			Input.RegisterJoystickInput(null, null, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}
@@ -32,7 +34,7 @@ namespace SFML_SpaceSEM
 		{
 			Input = LevelReference.EngineReference.InputManager;
 
-			Input.UnregisterKeyInput(OnKeyPressed, OnKeyReleased);
+			Input.UnregisterKeyInput(OnKeyPressed, OnKeyDown, OnKeyReleased);
 
 			Input.UnregisterJoystickInput(null, null, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved);
 		}

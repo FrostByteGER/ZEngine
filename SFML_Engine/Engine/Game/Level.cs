@@ -106,8 +106,9 @@ namespace SFML_Engine.Engine.Game
 
 	    public virtual void OnLevelLoad()
 	    {
-		    Console.WriteLine("Level #" + LevelID + " Loaded");
-		    foreach (var actor in Actors)
+		    InitLevel();
+			Console.WriteLine("Level #" + LevelID + " Loaded");
+			foreach (var actor in Actors)
 		    {
 			    actor.InitializeActor();
 		    }
