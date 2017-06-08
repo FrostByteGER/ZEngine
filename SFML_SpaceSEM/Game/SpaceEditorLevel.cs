@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
+using SFML_Engine.Engine.IO;
 
 namespace SFML_SpaceSEM.Game
 {
@@ -30,15 +31,26 @@ namespace SFML_SpaceSEM.Game
 		private JCheckbox elementCheckBoxShip3;
 		private JCheckbox elementCheckBoxShip4;
 
+		private JContainer shipList;
+
 		private JGUI GUI { get; set; }
+
+		public String LevelName = "";
 
 		public SpaceEditorLevel()
 		{
-			
+
 		}
 
 		private void initEditor()
 		{
+
+			SpawnData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + LevelName + ".json");
+
+			Spawners = SpawnData.Spawners;
+
+			SelectedSpawner = Spawners[0];
+
 			GUI = new JGUI(((SpaceSEMGameInstance)EngineReference.GameInstance).MainGameFont, EngineReference.EngineWindow, EngineReference.InputManager);
 
 			JContainer MainEditContainer = new JContainer(GUI);
@@ -108,8 +120,9 @@ namespace SFML_SpaceSEM.Game
 
 			// TODO List of all Ships is a Spawner
 
-			JLabel shipList = new JLabel(GUI);
-			shipList.setTextString("test\ntest\ntest\ntest\ntest\ntest\ntest\ntest");
+			shipList = new JContainer(GUI);
+			shipList.Layout = new JLayout(shipList);
+
 			shipContainer.addElement(shipList, JBorderLayout.CENTER);
 
 			JButton removeButton = new JButton(GUI);
@@ -175,6 +188,10 @@ namespace SFML_SpaceSEM.Game
 
 			JButton saveButton = new JButton(GUI);
 			saveButton.setTextString("SAVE");
+			saveButton.Something += delegate ()
+			{
+				Save();
+			};
 			exitSaveAddContainer.addElement(saveButton);
 
 			JButton exitButton = new JButton(GUI);
@@ -189,28 +206,55 @@ namespace SFML_SpaceSEM.Game
 			MainEditContainer.addElement(MainRightContainer, JBorderLayout.RIGHT);
 
 			GUI.RootContainer = MainEditContainer;
+
+			loadShips();
 		}
 
 		public void addElement()
 		{
 			if (elementCheckBoxSpawner.IsSelected)
 			{
-				addSpawner();
+				AddSpawner();
 			}
 			else
 			{
-				addShip();
+				AddShip();
 			}
 		}
 
-		public void addSpawner()
+		public void AddSpawner()
 		{
-			Console.WriteLine("addSpawner");
+			Console.WriteLine("AddSpawner");
 		}
 
-		public void addShip()
+		public void AddShip()
 		{
-			Console.WriteLine("addShip");
+			Console.WriteLine("AddShip");
+		}
+
+		public void Exit()
+		{
+			Console.WriteLine("Exit");
+		}
+
+		public void Save()
+		{
+			JSONManager.SaveObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + LevelName + ".json", SpawnData);
+		}
+
+		public void loadShips()
+		{
+			foreach (SpaceLevelShipDataWrapper ship in SelectedSpawner.Ships)
+			{
+
+				JButton shipLable = new JButton(GUI);
+
+				shipLable.setTextString(ship.ShipType.ToString());
+
+				shipList.addElement(shipLable);
+
+				Console.WriteLine(ship.ShipType.ToString()+" "+ SelectedSpawner.Ships.Count);
+			}
 		}
 
 		public override void OnLevelLoad()
