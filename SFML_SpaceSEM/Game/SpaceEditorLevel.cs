@@ -44,7 +44,7 @@ namespace SFML_SpaceSEM.Game
 			
 
 			JBorderLayout MainLayout = new JBorderLayout(MainEditContainer);
-			MainLayout.RightSize = 0.3f;
+			MainLayout.RightSize = 0.4f;
 			MainEditContainer.Layout = MainLayout;
 
 			// Main Center
@@ -67,8 +67,20 @@ namespace SFML_SpaceSEM.Game
 			MainCenterContainer.addElement(CenterElement, JBorderLayout.CENTER);
 
 
+			JContainer levelSlideCpntainer = new JContainer(GUI);
+			JBorderLayout levelSliderLayout = new JBorderLayout(levelSlideCpntainer);
+			levelSliderLayout.RightSize = 0.35f;
+
 			EditorSlider levelSlider = new EditorSlider(GUI);
-			MainCenterContainer.addElement(levelSlider, JBorderLayout.BOTTOM);
+
+			JLabel sliderLable = new JLabel(GUI);
+			levelSlider.LinkedLable = sliderLable;
+			sliderLable.setTextString("Time :300");
+
+			levelSlideCpntainer.addElement(levelSlider, JBorderLayout.CENTER);
+			levelSlideCpntainer.addElement(sliderLable, JBorderLayout.RIGHT);
+
+			MainCenterContainer.addElement(levelSlideCpntainer, JBorderLayout.BOTTOM);
 			
 	
 			// Main Right
@@ -87,6 +99,8 @@ namespace SFML_SpaceSEM.Game
 			MainRightContainer.addElement(test1);
 			MainRightContainer.addElement(test2);
 
+
+			JContainer ShipContainer = new JContainer(GUI);
 
 
 			MainEditContainer.addElement(MainCenterContainer, JBorderLayout.CENTER);
