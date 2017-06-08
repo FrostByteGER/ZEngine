@@ -24,7 +24,11 @@ namespace SFML_SpaceSEM.Game
 
 		private SpaceLevelSpawnerDataWrapper SelectedSpawner;
 
-		
+		private JCheckbox elementCheckBoxSpawner;
+		private JCheckbox elementCheckBoxShip1;
+		private JCheckbox elementCheckBoxShip2;
+		private JCheckbox elementCheckBoxShip3;
+		private JCheckbox elementCheckBoxShip4;
 
 		private JGUI GUI { get; set; }
 
@@ -44,7 +48,7 @@ namespace SFML_SpaceSEM.Game
 			
 
 			JBorderLayout MainLayout = new JBorderLayout(MainEditContainer);
-			MainLayout.RightSize = 0.3f;
+			MainLayout.RightSize = 0.4f;
 			MainEditContainer.Layout = MainLayout;
 
 			// Main Center
@@ -67,10 +71,22 @@ namespace SFML_SpaceSEM.Game
 			MainCenterContainer.addElement(CenterElement, JBorderLayout.CENTER);
 
 
+			JContainer levelSlideCpntainer = new JContainer(GUI);
+			JBorderLayout levelSliderLayout = new JBorderLayout(levelSlideCpntainer);
+			levelSliderLayout.RightSize = 0.35f;
+
 			EditorSlider levelSlider = new EditorSlider(GUI);
-			MainCenterContainer.addElement(levelSlider, JBorderLayout.BOTTOM);
+
+			JLabel sliderLable = new JLabel(GUI);
+			levelSlider.LinkedLable = sliderLable;
+			sliderLable.setTextString("Time :300");
+
+			levelSlideCpntainer.addElement(levelSlider, JBorderLayout.CENTER);
+			levelSlideCpntainer.addElement(sliderLable, JBorderLayout.RIGHT);
+
+			MainCenterContainer.addElement(levelSlideCpntainer, JBorderLayout.BOTTOM);
 			
-	
+
 			// Main Right
 			
 			JContainer MainRightContainer = new JContainer(GUI);
@@ -78,21 +94,123 @@ namespace SFML_SpaceSEM.Game
 			JGridLayout RightLayout = new JGridLayout(MainRightContainer);
 			RightLayout.Rows = 2;
 
-			JElement test1 = new JElement(GUI);
-			JElement test2 = new JElement(GUI);
 
-			test1.Box.FillColor = Color.Green;
-			test2.Box.FillColor = Color.Blue;
+			// Ships
+			JContainer shipContainer = new JContainer(GUI);
 
-			MainRightContainer.addElement(test1);
-			MainRightContainer.addElement(test2);
+			JBorderLayout shipContainerLayout = new JBorderLayout(shipContainer);
+			shipContainerLayout.TopSize = 0.1f;
+			shipContainerLayout.BottemSize = 0.1f;
 
+			JLabel shipLable = new JLabel(GUI);
+			shipLable.setTextString("Ships");
+			shipContainer.addElement(shipLable, JBorderLayout.TOP);
 
+			// TODO List of all Ships is a Spawner
+
+			JLabel shipList = new JLabel(GUI);
+			shipList.setTextString("test\ntest\ntest\ntest\ntest\ntest\ntest\ntest");
+			shipContainer.addElement(shipList, JBorderLayout.CENTER);
+
+			JButton removeButton = new JButton(GUI);
+			removeButton.setTextString("Remove");
+			shipContainer.addElement(removeButton, JBorderLayout.BOTTOM);
+
+			MainRightContainer.addElement(shipContainer);
+
+			// Elements
+
+			JContainer elementContainer = new JContainer(GUI);
+
+			JBorderLayout elementContainerLayout = new JBorderLayout(elementContainer);
+			elementContainerLayout.TopSize = 0.1f;
+			elementContainerLayout.BottemSize = 0.2f;
+
+			JLabel elementLabel = new JLabel(GUI);
+			elementLabel.setTextString("Elements");
+			elementContainer.addElement(elementLabel, JBorderLayout.TOP);
+
+			JContainer elementListContainer = new JContainer(GUI);
+			elementListContainer.Layout = new JLayout(elementListContainer);
+
+			elementCheckBoxSpawner = new JCheckbox(GUI);
+			elementCheckBoxShip1 = new JCheckbox(GUI);
+			elementCheckBoxShip2 = new JCheckbox(GUI);
+			elementCheckBoxShip3 = new JCheckbox(GUI);
+			elementCheckBoxShip4 = new JCheckbox(GUI);
+
+			elementCheckBoxSpawner.setTextString("Spawner");
+			elementCheckBoxShip1.setTextString("Ship1");
+			elementCheckBoxShip2.setTextString("Ship2");
+			elementCheckBoxShip3.setTextString("Ship3");
+			elementCheckBoxShip4.setTextString("Ship4");
+
+			JCheckboxGroup elementCheckboxGroup = new JCheckboxGroup();
+			elementCheckboxGroup.AddBox(elementCheckBoxSpawner);
+			elementCheckboxGroup.AddBox(elementCheckBoxShip1);
+			elementCheckboxGroup.AddBox(elementCheckBoxShip2);
+			elementCheckboxGroup.AddBox(elementCheckBoxShip3);
+			elementCheckboxGroup.AddBox(elementCheckBoxShip4);
+
+			elementListContainer.addElement(elementCheckBoxSpawner);
+			elementListContainer.addElement(elementCheckBoxShip1);
+			elementListContainer.addElement(elementCheckBoxShip2);
+			elementListContainer.addElement(elementCheckBoxShip3);
+			elementListContainer.addElement(elementCheckBoxShip4);
+
+			elementContainer.addElement(elementListContainer, JBorderLayout.CENTER);
+
+			// Exit Save add
+
+			JContainer exitSaveAddContainer = new JContainer(GUI);
+			exitSaveAddContainer.Layout = new JLayout(exitSaveAddContainer);
+
+			JButton addButton = new JButton(GUI);
+			addButton.setTextString("ADD");
+			addButton.Something += delegate ()
+			{
+				addElement();
+			};
+			exitSaveAddContainer.addElement(addButton);
+
+			JButton saveButton = new JButton(GUI);
+			saveButton.setTextString("SAVE");
+			exitSaveAddContainer.addElement(saveButton);
+
+			JButton exitButton = new JButton(GUI);
+			exitButton.setTextString("EXIT");
+			exitSaveAddContainer.addElement(exitButton);
+
+			elementContainer.addElement(exitSaveAddContainer, JBorderLayout.BOTTOM);
+
+			MainRightContainer.addElement(elementContainer);
 
 			MainEditContainer.addElement(MainCenterContainer, JBorderLayout.CENTER);
 			MainEditContainer.addElement(MainRightContainer, JBorderLayout.RIGHT);
 
 			GUI.RootContainer = MainEditContainer;
+		}
+
+		public void addElement()
+		{
+			if (elementCheckBoxSpawner.IsSelected)
+			{
+				addSpawner();
+			}
+			else
+			{
+				addShip();
+			}
+		}
+
+		public void addSpawner()
+		{
+			Console.WriteLine("addSpawner");
+		}
+
+		public void addShip()
+		{
+			Console.WriteLine("addShip");
 		}
 
 		public override void OnLevelLoad()

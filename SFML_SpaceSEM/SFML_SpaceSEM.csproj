@@ -94,6 +94,7 @@
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="Game\SpaceSemGameInstance.cs" />
+    <Compile Include="UI\SpawnerListContainer.cs" />
     <None Include="Assets\arial.ttf" />
     <None Include="Assets\comic.ttf" />
     <None Include="Assets\Levels\level_1.json" />
