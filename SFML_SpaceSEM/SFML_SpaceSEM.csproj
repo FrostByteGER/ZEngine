@@ -70,8 +70,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="VelcroPhysics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SFML_Engine\Lib\VelcroPhysics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\SpaceGameLevel.cs" />
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
     <Compile Include="Game\SpaceSemGameInstance.cs" />

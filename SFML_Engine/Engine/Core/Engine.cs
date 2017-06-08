@@ -258,6 +258,7 @@ namespace SFML_Engine.Engine.Core
 
 			ActiveLevel = level;
 			level.EngineReference = this;
+			if (level.LevelID == 0) level.LevelID = ++LevelIDCounter;
 			level.LevelLoaded = true;
 			level.OnLevelLoad();
 			level.LevelTicking = true;

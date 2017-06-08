@@ -5,6 +5,7 @@ using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
 using System;
 using SFML_Engine.Engine.Game;
+using SFML_SpaceSEM.Game;
 using SFML_SpaceSEM.UI;
 
 namespace SFML_SpaceSEM
@@ -214,6 +215,7 @@ namespace SFML_SpaceSEM
 
 				JButton playRightStartButton = new JButton(GUI);
 				playRightStartButton.setTextString("Start");
+				playRightStartButton.Something += PlayRightStartButton_LoadLevel;
 
 				playRightContainer.addElement(playRightNameLabel);
 				playRightContainer.addElement(playRightHighScoreLabel);
@@ -461,13 +463,24 @@ namespace SFML_SpaceSEM
 			base.OnGameEnd();
 			//BreakoutPersistentGameMode.BGM_Main.Stop();
 		}
-		/*
-		public override void ShutdownLevel()
+
+		private void PlayRightStartButton_LoadLevel()
 		{
-			base.ShutdownLevel();
-			UnregisterPlayers();
-			UnregisterActors();
+			EngineReference.LoadLevel(new SpaceGameLevel(), false);
 		}
-		*/
+
+		public bool LoadSpaceLevel(string levelName)
+		{
+			return LoadSpaceLevel(levelName, true);
+		}
+
+		public bool LoadSpaceLevel(string levelName, bool destroyPrevious)
+		{
+			if (string.IsNullOrWhiteSpace(levelName)) return false;
+
+			var level = new Level();
+
+			return EngineReference.LoadLevel(level, destroyPrevious);
+		}
 	}
 }
