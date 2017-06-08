@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Core;
+using SFML_SpaceSEM.Game;
 
 namespace SFML_SpaceSEM
 {

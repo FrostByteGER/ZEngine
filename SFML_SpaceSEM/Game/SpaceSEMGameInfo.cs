@@ -1,4 +1,4 @@
-﻿namespace SFML_SpaceSEM
+﻿namespace SFML_SpaceSEM.Game
 {
 	public class SpaceSEMGameInfo : SFML_Engine.Engine.Game.GameInfo
 	{

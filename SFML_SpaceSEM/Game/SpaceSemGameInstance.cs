@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using SFML.Audio;
 using SFML.Graphics;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_SpaceSEM
+namespace SFML_SpaceSEM.Game
 {
 	public class SpaceSemGameInstance : GameInstance
 	{

@@ -1,12 +1,7 @@
-﻿using System;
-using SFML.System;
-using SFML.Window;
-using SFML_Engine.Engine;
-using SFML_Engine.Engine.Events;
-using SFML_Engine.Engine.Game;
+﻿using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 
-namespace SFML_SpaceSEM
+namespace SFML_SpaceSEM.Game
 {
 	public class SpaceSEMMenuPlayerController : PlayerController
 	{

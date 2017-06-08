@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
-using SFML_Engine.Engine;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.JUI;
 
-namespace SFML_SpaceSEM
+namespace SFML_SpaceSEM.UI
 {
 	class SpaceGUI : JGUI
 	{

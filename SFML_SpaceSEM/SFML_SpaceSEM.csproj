@@ -74,22 +74,22 @@
   <ItemGroup>
     <Compile Include="UI\OnOffCheckbox.cs" />
     <Compile Include="UI\SpaceGUI.cs" />
-    <Compile Include="SpaceSemGameInstance.cs" />
+    <Compile Include="Game\SpaceSemGameInstance.cs" />
     <None Include="old\SpaceSEMBullet.cs" />
     <None Include="old\SpaceSEMEnemy.cs" />
     <None Include="old\SpaceSEMGameLevel.cs" />
     <None Include="old\SpaceSEMGameMode.cs" />
     <None Include="old\SpaceSEMPlayer.cs" />
     <None Include="old\SpaceSEMPlayerController.cs" />
-    <Compile Include="SpaceSEMMenuLevel.cs" />
-    <Compile Include="SpaceSEMMenuPlayerController.cs" />
+    <Compile Include="Game\SpaceSEMMenuLevel.cs" />
+    <Compile Include="Game\SpaceSEMMenuPlayerController.cs" />
     <Compile Include="GameInfo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameInfo.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpaceSEMGameInfo.cs" />
+    <Compile Include="Game\SpaceSEMGameInfo.cs" />
     <Compile Include="StartSpaceSEM.cs" />
   </ItemGroup>
   <ItemGroup>
