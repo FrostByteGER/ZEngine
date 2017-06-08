@@ -19,8 +19,6 @@ namespace SFML_SpaceSEM
 				MountainDewMode = bool.Parse(args[0]);
 			}
 
-			//SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
-			SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
 
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
@@ -38,13 +36,17 @@ namespace SFML_SpaceSEM
 
 
 			var menuLevel = new SpaceSEMMenuLevel();
+
+			//SpaceSEMMenuLevel.MainGameFont = new SFML.Graphics.Font(MountainDewMode ? "Assets/SFML_SpaceSEM/comic.ttf" : "Assets/SFML_SpaceSEM/arial.ttf");
+			menuLevel.MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
+
 			EngineRef.LoadLevel(menuLevel);
 
 			//var gameLevel = new SpaceSEMGameLevel();
 
 			EngineRef.StartEngine();
-			
-			SpaceSEMMenuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
+
+			menuLevel.MainGameFont.Dispose(); // I swear, one day I'll write a Manager that destroys every game object on engine shutdown...
 			Console.ReadLine();
 		}
 
