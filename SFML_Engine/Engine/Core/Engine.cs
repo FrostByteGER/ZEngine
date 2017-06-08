@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SFML.Graphics;
@@ -39,6 +40,7 @@ namespace SFML_Engine.Engine.Core
 	    public GameInstance GameInstance { get; set; } = new GameInstance();
 		public GameInfo GameInfo { get; set; } = new GameInfo();
 	    public Level ActiveLevel { get; internal set; }
+	    public List<Level> LevelStack { get; private set; } = new List<Level>();
 		public uint LevelIDCounter { get; private set; } = 0;
 
 
@@ -253,16 +255,66 @@ namespace SFML_Engine.Engine.Core
 					ActiveLevel.OnGamePause();
 					ActiveLevel.LevelLoaded = false;
 					ActiveLevel.OnUnloadLevel();
+					LevelStack.Add(ActiveLevel);
 				}
 			}
 
 			ActiveLevel = level;
-			level.EngineReference = this;
-			if (level.LevelID == 0) level.LevelID = ++LevelIDCounter;
-			level.LevelLoaded = true;
-			level.OnLevelLoad();
-			level.LevelTicking = true;
+
+			if (level.LevelID == 0)
+			{
+				level.EngineReference = this;
+				level.LevelID = ++LevelIDCounter;
+				level.LevelLoaded = true;
+				level.OnLevelLoad();
+				level.LevelTicking = true;
+			}
+			if (level.LevelPaused)
+			{
+				level.LevelLoaded = true;
+				level.OnGameResume();
+			}
+
+
+			Console.WriteLine("Levelstack Size: " + LevelStack.Count);
 			return true;
+		}
+
+	    public bool LoadLevel(uint levelID)
+	    {
+		    return LoadLevel(levelID, true);
+	    }
+
+	    public bool LoadLevel(uint levelID, bool destroyPrevious)
+	    {
+		    var index = LevelStack.FindIndex(l => l.LevelID == levelID);
+		    if (index == -1) return false;
+		    var level = LevelStack[index];
+			if (index < LevelStack.Count - 1)
+		    {
+			    for (var i = index + 1; i < LevelStack.Count; ++i)
+			    {
+				    LevelStack[i].OnGameEnd();
+				    LevelStack[i].ShutdownLevel();
+
+			    }
+		    }
+			LevelStack.RemoveRange(index, LevelStack.Count - index);
+			return LoadLevel(level, destroyPrevious);
+	    }
+
+	    public bool LoadPreviousLevel()
+	    {
+		    var level = LevelStack[LevelStack.Count - 1];
+		    LevelStack.RemoveAt(LevelStack.Count - 1);
+			return LoadLevel(level, true);
+	    }
+
+		public bool LoadPreviousLevel(bool destroyPrevious)
+		{
+			var level = LevelStack[LevelStack.Count - 1];
+			LevelStack.RemoveAt(LevelStack.Count - 1);
+			return LoadLevel(level, destroyPrevious);
 		}
 
 		public bool LoadLevel(string levelName)

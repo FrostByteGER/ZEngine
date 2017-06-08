@@ -42,6 +42,10 @@ namespace SFML_SpaceSEM.Game.Players
 			{
 				Player.FireWeapons();
 			}
+			if (Input.IsKeyPressed(Keyboard.Key.Escape))
+			{
+				LevelReference.EngineReference.LoadPreviousLevel(true);
+			}
 		}
 
 		public override void OnKeyDown(object sender, KeyEventArgs keyEventArgs)

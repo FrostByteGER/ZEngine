@@ -537,30 +537,36 @@ namespace SFML_SpaceSEM.Game
 		public override void OnGamePause()
 		{
 			base.OnGamePause();
+			GUI.IsActive = false;
+		}
+
+		public override void OnGameResume()
+		{
+			base.OnGameResume();
+			GUI.IsActive = true;
 		}
 
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
-			
 		}
 
 		// GUI Functions
 
 		private void PlayRightStartButton_LoadLevel()
 		{
-			GUI.IsActive = false;
 			EngineReference.LoadLevel(new SpaceGameLevel(), false);
 		}
 
 		public void OpenEditor()
 		{	
-			GUI.IsActive = false;
 
 			SpaceEditorLevel edit = new SpaceEditorLevel();
 			edit.LevelName = "level_1";
 
 			EngineReference.LoadLevel(edit, false);
+		{
+			EngineReference.LoadLevel(new SpaceEditorLevel(), false);
 		}
 	}
 }
