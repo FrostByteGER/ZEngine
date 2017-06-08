@@ -24,7 +24,11 @@ namespace TestProject
 			engine.InitEngine();
 
 
-			var level = new SpaceSEMMenuLevel();
+			SpaceSEMMenuLevel level = new SpaceSEMMenuLevel();
+
+			Console.WriteLine(Directory.GetCurrentDirectory());
+
+			level.MainGameFont = new SFML.Graphics.Font("./arial.ttf");
 
 			var physics = level.PhysicsEngine;
 			physics.Gravity = new Vector2f(9.81f, 0.0f);

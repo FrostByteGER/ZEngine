@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SFML_Engine.Engine.JUI
 {
-	class JChooser : JLabel
+	public class JChooser : JLabel
 	{
 
 		public List<String> Choose { get; set; } = new List<string>();
@@ -18,7 +18,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public void Next()
 		{
-			if (SelectedIndex + 1 > Choose.Count)
+			if (SelectedIndex + 1 >= Choose.Count)
 			{
 				SelectedIndex = 0;
 			}
@@ -27,11 +27,12 @@ namespace SFML_Engine.Engine.JUI
 				SelectedIndex++;
 			}
 			Text.DisplayedString = Choose[SelectedIndex];
+			ReSize();
 		}
 
 		public void Back()
 		{
-			if (SelectedIndex - 1 < Choose.Count)
+			if (SelectedIndex - 1 < 0)
 			{
 				SelectedIndex = Choose.Count-1;
 			}
@@ -40,6 +41,7 @@ namespace SFML_Engine.Engine.JUI
 				SelectedIndex--;
 			}
 			Text.DisplayedString = Choose[SelectedIndex];
+			ReSize();
 		}
 	}
 }

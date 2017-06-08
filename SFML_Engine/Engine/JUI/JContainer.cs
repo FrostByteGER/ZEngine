@@ -6,7 +6,6 @@ namespace SFML_Engine.Engine.JUI
 {
 	public class JContainer : JElement
 	{
-
 		public JLayout Layout { set; get; }
 		public List<JElement> Elements { set; get; } = new List<JElement>();
 

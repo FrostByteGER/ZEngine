@@ -2,7 +2,7 @@
 
 namespace SFML_Engine.Engine.JUI
 {
-	public class JChackboxGroup
+	public class JCheckboxGroup
 	{
 		public IList<JCheckbox> CheckBoxes { get; set; } = new List<JCheckbox>();
 

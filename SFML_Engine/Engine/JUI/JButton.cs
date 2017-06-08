@@ -34,6 +34,7 @@ namespace SFML_Engine.Engine.JUI
 			{
 				base.Pressed();
 				Box.FillColor = SelectColor;
+				this.Execute();
 			}		
 		}
 

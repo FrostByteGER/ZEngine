@@ -30,11 +30,29 @@ namespace SFML_Engine.Engine.JUI
 			{
 				SliderValue = (((float)position.X) - Position.X) / Size.X;
 
+				if (SliderValue < 0)
+				{
+					SliderValue = 0;
+				}
+				else if(SliderValue > 1)
+				{
+					SliderValue = 1;
+				}
+
 				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
 			}
 			else if(DisplayTyp == VERTICAL)
 			{
 				SliderValue = (((float)position.Y) - Position.Y) / Size.Y;
+
+				if (SliderValue < 0)
+				{
+					SliderValue = 0;
+				}
+				else if (SliderValue > 1)
+				{
+					SliderValue = 1;
+				}
 
 				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 			}

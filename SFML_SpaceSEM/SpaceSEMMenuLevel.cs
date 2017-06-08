@@ -4,7 +4,11 @@ using SFML.System;
 using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
 using System;
+<<<<<<< HEAD
 using SFML_Engine.Engine.Game;
+=======
+using SFML_SpaceSEM.UI;
+>>>>>>> 9e1da42f4c41e24ffe1783bcdacea608a8ea28cf
 
 namespace SFML_SpaceSEM
 {
@@ -73,6 +77,7 @@ namespace SFML_SpaceSEM
 
 			optionCheckBox = new JCheckbox(GUI);
 			optionCheckBox.Text.DisplayedString = "Options";
+			optionCheckBox.Something += this.ChangeCenterContainer;
 
 			JCheckbox helpCheckBox = new JCheckbox(GUI);
 			helpCheckBox.Text.DisplayedString = "Help";
@@ -87,7 +92,7 @@ namespace SFML_SpaceSEM
 			JCheckbox exitCheckBox = new JCheckbox(GUI);
 			exitCheckBox.Text.DisplayedString = "Exit";
 
-			JChackboxGroup mainCheckBoxGroup = new JChackboxGroup();
+			JCheckboxGroup mainCheckBoxGroup = new JCheckboxGroup();
 			mainCheckBoxGroup.AddBox(playCheckBox);
 			mainCheckBoxGroup.AddBox(optionCheckBox);
 			mainCheckBoxGroup.AddBox(helpCheckBox);
@@ -103,14 +108,133 @@ namespace SFML_SpaceSEM
 			playTemp.Text.DisplayedString = "PlayTemp";
 			playContainer.addElement(playTemp);
 
-
 			// Option Menue
 
 			optionContainer = new JContainer(GUI);
 			optionContainer.Layout = new JLayout(optionContainer);
-			JLabel optionTemp = new JLabel(GUI);
-			optionTemp.Text.DisplayedString = "OptionTemp";
-			optionContainer.addElement(optionTemp);
+
+			// Musik
+			JContainer musikContainer = new JContainer(GUI);
+			JBorderLayout musikContainerLayout = new JBorderLayout(musikContainer);
+			musikContainerLayout.LeftSize = 0.2f;
+			musikContainerLayout.RightSize = 0.6f; 
+			musikContainer.Layout = musikContainerLayout;
+
+			JLabel musikLabel = new JLabel(GUI);
+			musikLabel.Text.DisplayedString = "Musik";
+
+			OnOffCheckbox musikBox = new OnOffCheckbox(GUI);
+			musikBox.Select();
+
+			JSlider musikSlider = new JSlider(GUI);
+
+			musikContainer.addElement(musikLabel, JBorderLayout.LEFT);
+			musikContainer.addElement(musikBox, JBorderLayout.CENTER);
+			musikContainer.addElement(musikSlider, JBorderLayout.RIGHT);
+
+			optionContainer.addElement(musikContainer);
+
+			// Sound
+			JContainer soundContainer = new JContainer(GUI);
+			JBorderLayout soundContainerLayout = new JBorderLayout(soundContainer);
+			soundContainerLayout.LeftSize = 0.2f;
+			soundContainerLayout.RightSize = 0.6f;
+			soundContainer.Layout = soundContainerLayout;
+
+			JLabel soundLabel = new JLabel(GUI);
+			soundLabel.Text.DisplayedString = "Sound";
+
+			OnOffCheckbox soundBox = new OnOffCheckbox(GUI);
+			soundBox.Select();
+
+			JSlider soundSlider = new JSlider(GUI);
+
+			soundContainer.addElement(soundLabel, JBorderLayout.LEFT);
+			soundContainer.addElement(soundBox, JBorderLayout.CENTER);
+			soundContainer.addElement(soundSlider, JBorderLayout.RIGHT);
+
+			optionContainer.addElement(soundContainer);
+
+			// Reselutions
+
+			JContainer resContainer = new JContainer(GUI);
+			JBorderLayout resContainerLayout = new JBorderLayout(resContainer);
+			resContainerLayout.LeftSize = 0.2f;
+			resContainerLayout.RightSize = 0.2f;
+			resContainer.Layout = resContainerLayout;
+
+			JButton resIncButton = new JButton(GUI);
+			resIncButton.Text.DisplayedString = ">";
+
+			JButton resDecButton = new JButton(GUI);
+			resDecButton.Text.DisplayedString = "<";
+
+			JChooser resChooser = new JChooser(GUI);
+			resChooser.Choose.Add("800 X 800");
+			resChooser.Choose.Add("1000 X 1000");
+			resChooser.Choose.Add("1200 X 1200");
+			resChooser.Next();
+
+			resIncButton.Something += resChooser.Next;
+			resDecButton.Something += resChooser.Back;
+
+			resContainer.addElement(resDecButton, JBorderLayout.LEFT);
+			resContainer.addElement(resChooser, JBorderLayout.CENTER);
+			resContainer.addElement(resIncButton, JBorderLayout.RIGHT);
+
+			optionContainer.addElement(resContainer);
+
+			// ScreenMode
+
+			JContainer screenModeContainer = new JContainer(GUI);
+			JBorderLayout screenModeContainerLayout = new JBorderLayout(screenModeContainer);
+			screenModeContainerLayout.LeftSize = 0.2f;
+			screenModeContainerLayout.RightSize = 0.2f;
+			screenModeContainer.Layout = screenModeContainerLayout;
+
+			JButton screenModeIncButton = new JButton(GUI);
+			screenModeIncButton.Text.DisplayedString = ">";
+
+			JButton screenModeDecButton = new JButton(GUI);
+			screenModeDecButton.Text.DisplayedString = "<";
+
+			JChooser screenModeLabel = new JChooser(GUI);
+
+			screenModeLabel.Choose.Add("Window");
+			screenModeLabel.Choose.Add("Window Borderless");
+			screenModeLabel.Choose.Add("Fullscreen");
+			screenModeLabel.Next();
+
+			screenModeIncButton.Something += screenModeLabel.Next;
+			screenModeDecButton.Something += screenModeLabel.Back;
+
+			screenModeContainer.addElement(screenModeDecButton, JBorderLayout.LEFT);
+			screenModeContainer.addElement(screenModeLabel, JBorderLayout.CENTER);
+			screenModeContainer.addElement(screenModeIncButton, JBorderLayout.RIGHT);
+
+			optionContainer.addElement(screenModeContainer);
+
+			// Default Apply Cancel
+
+			JContainer optionBottemContainer = new JContainer(GUI);
+			JGridLayout optionBottemLayout = new JGridLayout(optionBottemContainer);
+			optionBottemLayout.Rows = 3;
+			optionBottemContainer.Layout = optionBottemLayout;
+			
+			JButton defaultOptionButton = new JButton(GUI);
+			defaultOptionButton.Text.DisplayedString = "Default";
+
+			JButton applyOptionButton = new JButton(GUI);
+			applyOptionButton.Text.DisplayedString = "Apply";
+
+			JButton cancelOptionButton = new JButton(GUI);
+			cancelOptionButton.Text.DisplayedString = "Cancel";
+
+			optionBottemContainer.addElement(defaultOptionButton);
+			optionBottemContainer.addElement(applyOptionButton);
+			optionBottemContainer.addElement(cancelOptionButton);
+
+			optionContainer.addElement(optionBottemContainer);
 
 			// Help Menue
 
@@ -164,11 +288,15 @@ namespace SFML_SpaceSEM
 			base.OnLevelLoad();
 		}
 
-		public void ChangeCenterContainer(JElement element)
+		public void ChangeCenterContainer()
 		{
 			if (playCheckBox.IsSelected)
 			{
 				GUI.RootContainer.addElement(playContainer, JBorderLayout.CENTER);
+			}
+			else if (optionCheckBox.IsSelected)
+			{
+				GUI.RootContainer.addElement(optionContainer, JBorderLayout.CENTER);
 			}
 			else
 			{

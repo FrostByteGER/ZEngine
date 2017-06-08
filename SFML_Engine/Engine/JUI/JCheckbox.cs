@@ -9,7 +9,7 @@ namespace SFML_Engine.Engine.JUI
 		public Color HoverColor { get; set; }
 		public Color SelectColor { get; set; }
 
-		public JChackboxGroup Group { get; set; }
+		public JCheckboxGroup Group { get; set; }
 		public bool IsSelected { get; set; } = false;
 
 		public JCheckbox(JGUI gui) : base(gui)
