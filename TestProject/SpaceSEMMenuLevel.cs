@@ -367,7 +367,7 @@ namespace SFML_SpaceSEM
 			creditContainer = new JContainer(GUI);
 			creditContainer.Layout = new JLayout(creditContainer);
 			JLabel creditTemp = new JLabel(GUI);
-			creditTemp.Text.DisplayedString = "creditContainer";
+			creditTemp.Text.DisplayedString = "Made By Kevin Kügler and Jan Schult";
 			creditContainer.addElement(creditTemp);
 
 			// Editor Menue
