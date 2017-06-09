@@ -26,32 +26,7 @@ namespace SFML_SpaceSEM.Game.Actors
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			if(Position.X < 400) FireWeapons();
-
-			if (Position.X + ActorBounds.X > 400)
-			{
-				Velocity += new TVector2f(-100, 0);
-			}
-			else if(Position.X - ActorBounds.X < -400)
-			{
-				Velocity += new TVector2f(100, 0);
-			}
-
-			if (Position.Y + ActorBounds.Y > 250)
-			{
-				Velocity += new TVector2f(0, -100);
-
-			}
-			else if (Position.Y - ActorBounds.Y < -400)
-			{
-				Velocity += new TVector2f(0, 100);
-				
-			}
-
-			if(Position.X - ActorBounds.X/2f < -400)
-			{
-				Velocity = new TVector2f(-Velocity.X, -Velocity.Y);
-			}
+			FireWeapons();
 		}
 
 		public override void OnDeath()

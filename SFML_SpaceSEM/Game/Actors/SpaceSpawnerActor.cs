@@ -13,6 +13,8 @@ namespace SFML_SpaceSEM.Game.Actors
 	public class SpaceSpawnerActor : Actor
 	{
 		public float ActivationTime { get; set; } = 1.0f;
+		public float SpawnGap { get; set; } = 1.5f;
+		public int SpawnIndex { get; set; } = 0;
 		public List<SpaceLevelShipDataWrapper> Ships { get; set; } = new List<SpaceLevelShipDataWrapper>();
 
 		public SpaceSpawnerActor(Level level) : base(level)
@@ -24,8 +26,7 @@ namespace SFML_SpaceSEM.Game.Actors
 		{
 			// Spawn Ships here.
 			Console.WriteLine("SPAWNER ACTIVATED!");
-			foreach (var ship in Ships)
-			{
+			var ship = Ships[SpawnIndex];
 				if (ship.ShipType == typeof(SpaceShipEnemyFighter))
 				{
 					var spawned = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")), LevelReference);
@@ -46,6 +47,14 @@ namespace SFML_SpaceSEM.Game.Actors
 					}
 					LevelReference.SpawnActor(this, spawned);
 				}
+			if (SpawnIndex >= Ships.Count - 1)
+			{
+				((SpaceGameLevel) LevelReference).Spawners.Remove(this);
+				LevelReference.DestroyActor(this);
+			}
+			else
+			{
+				++SpawnIndex;
 			}
 		}
 
@@ -62,11 +71,9 @@ namespace SFML_SpaceSEM.Game.Actors
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			if (((SpaceGameLevel) LevelReference).LevelTime >= ActivationTime)
+			if (((SpaceGameLevel) LevelReference).LevelTime >= ActivationTime + SpawnGap * SpawnIndex)
 			{
-				OnActivate(((SpaceGameLevel) LevelReference).LevelTime);
-				((SpaceGameLevel) LevelReference).Spawners.Remove(this);
-				LevelReference.DestroyActor(this);
+				OnActivate(((SpaceGameLevel)LevelReference).LevelTime);
 			}
 		}
 

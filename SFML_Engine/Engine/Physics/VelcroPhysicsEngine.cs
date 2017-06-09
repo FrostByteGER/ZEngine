@@ -81,7 +81,7 @@ namespace SFML_Engine.Engine.Physics
 			PhysicsWorld.Step(deltaTime);
 			foreach (var body in PhysicsWorld.BodyList)
 			{
-				var component = (PhysicsComponent) body.UserData;
+				var component = body.UserData as PhysicsComponent;
 				if (component == null) continue;
 				component.SetLocalPosition(ToGameUnits(body.Position));
 				component.SetLocalRotation(EngineMath.RadiansToDegrees(ToGameUnits(body.Rotation)));

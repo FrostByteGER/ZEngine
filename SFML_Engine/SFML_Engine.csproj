@@ -153,6 +153,7 @@
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigManager.cs" />
     <Compile Include="Engine\IO\GenericIOManager.cs" />
+    <Compile Include="Engine\IO\TextureManager.cs" />
     <Compile Include="Engine\JUI\JBorderLayout.cs" />
     <Compile Include="Engine\JUI\JChooser.cs" />
     <Compile Include="Engine\JUI\JGridLayout.cs" />

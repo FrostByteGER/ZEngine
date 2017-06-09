@@ -49,11 +49,11 @@ namespace SFML_SpaceSEM
 			for (var i = 0; i < 10; ++i)
 			{  
 				var shipType = EngineMath.EngineRandom.Next(0, 4);
-				var shipCount = EngineMath.EngineRandom.Next(1, 10);
+				var shipCount = EngineMath.EngineRandom.Next(1, 5);
 
 				var spawnerData = new SpaceLevelSpawnerDataWrapper();
 				spawnerData.Ships = new List<SpaceLevelShipDataWrapper>();
-				spawnerData.ActivationTime = 1 + i * 2;
+				spawnerData.ActivationTime = 1 + i * 3;
 
 				SpaceLevelShipDataWrapper shipData = new SpaceLevelShipDataWrapper();
 
@@ -65,13 +65,13 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(400 + j * 100, 0 + j * -50),
+							Position = new TVector2f(-350 + j * 100, -400),
 							BulletDamage = 1,
 							BulletSpeed = 150,
 							BulletsPerShot = 1,
 							CooldownTime = 1.5f,
 							BulletSpread = 0.0f,
-							Velocity = new TVector2f(-100, 5)
+							Velocity = new TVector2f(0.0f, 80)
 						};
 					}
 					else if (shipType == 1)
@@ -79,13 +79,13 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(400 + j * 100, 0 + j * -50),
+							Position = new TVector2f(-350 + j * 100, -400),
 							BulletDamage = 2,
 							BulletSpeed = 120,
 							BulletsPerShot = 3,
 							CooldownTime = 2.55f,
 							BulletSpread = 15.0f,
-							Velocity = new TVector2f(-100, 5)
+							Velocity = new TVector2f(0.0f, 75)
 						};
 					}
 					else if (shipType == 2)
@@ -93,13 +93,13 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(400 + j * 100, 0 + j * -50),
+							Position = new TVector2f(-350 + j * 100, -400),
 							BulletDamage = 3,
 							BulletSpeed = 100,
 							BulletsPerShot = 4,
 							CooldownTime = 4.75f,
 							BulletSpread = 20.0f,
-							Velocity = new TVector2f(-50, 5)
+							Velocity = new TVector2f(0.0f, 50)
 						};
 					}
 					else if (shipType == 3)
@@ -107,13 +107,13 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(400 + j * 100, 0 + j * -50),
+							Position = new TVector2f(-350 + j * 100, -400),
 							BulletDamage = 5,
 							BulletSpeed = 65,
 							BulletsPerShot = 2,
 							CooldownTime = 5.80f,
 							BulletSpread = 10.0f,
-							Velocity = new TVector2f(-50, 5)
+							Velocity = new TVector2f(0.0f, 10)
 						};
 					}
 					spawnerData.Ships.Add(shipData);

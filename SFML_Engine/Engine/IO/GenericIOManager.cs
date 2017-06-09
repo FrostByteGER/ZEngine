@@ -25,8 +25,8 @@ namespace SFML_Engine.Engine.IO
 			File.WriteAllText(path, data);
 		}
 
-		public abstract T Load<T>(string path);
+		protected abstract T Load<T>(string path);
 
-		public abstract void Save<T>(string path, T data);
+		protected abstract void Save<T>(string path, T data);
 	}
 }
