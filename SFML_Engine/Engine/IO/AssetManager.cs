@@ -13,10 +13,15 @@ namespace SFML_Engine.Engine.IO
 		public JSONManager JSONManager { get; set; }
 		public ConfigManager GameConfigManager { get; set; }
 
+		public TexturePoolManager TextureManager { get; }
+		public SoundPoolManager AudioManager { get; }
+
 		public AssetManager()
 		{
 			JSONManager = new JSONManager();
 			GameConfigManager = new ConfigManager();
+			TextureManager = new TexturePoolManager();
+			AudioManager = new SoundPoolManager();
 		}
 
 

@@ -76,7 +76,7 @@ namespace SFML_Engine.Engine.Graphics
 		{
 			base.Destroy(disposing);
 			Sprite?.Dispose();
-			Sprite?.Texture?.Dispose();
+			//Sprite?.Texture?.Dispose();
 		}
 	}
 }

@@ -8,9 +8,9 @@ namespace SFML_Engine.Engine.IO
 {
 	public class TexturePoolManager
 	{
+		public static string TexturesPath { get; } = AssetManager.AssetsPath + "Textures/";
+
 		private readonly Dictionary<string, Texture> _texturePool = new Dictionary<string, Texture>();
-
-
 		public ReadOnlyDictionary<string, Texture> TexturePool => new ReadOnlyDictionary<string, Texture>(_texturePool);
 
 		public uint PoolSize { get; set; } = 256;
@@ -24,6 +24,15 @@ namespace SFML_Engine.Engine.IO
 		public TexturePoolManager(uint poolSize)
 		{
 			PoolSize = poolSize;
+		}
+
+		public void ClearPool()
+		{
+			foreach (var item in _texturePool)
+			{
+				item.Value.Dispose();
+			}
+			_texturePool.Clear();
 		}
 
 		public Texture LoadTexture(string textureName)

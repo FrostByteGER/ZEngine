@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using System;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
@@ -9,7 +10,7 @@ namespace SFML_SpaceSEM.Game.Actors
 	public abstract class SpaceShipEnemy : SpaceShipActor
 	{
 
-		public uint Score { get; set; } = 1;
+		public uint Score { get; set; } = 10;
 
 		protected SpaceShipEnemy(Sprite sprite, Level level) : base(sprite, level)
 		{
@@ -28,10 +29,14 @@ namespace SFML_SpaceSEM.Game.Actors
 				Healthpoints = hp.Clamp<uint>(0, MaxHealthpoints);
 				if (Healthpoints <= 0)
 				{
+					var spaceShipPlayer = otherActor.Instigator as SpaceShipPlayer;
+					if (spaceShipPlayer != null)
+					{
+						spaceShipPlayer.ControllerRef.Score += Score;
+					}
 					OnDeath();
 				}
-				var spaceShipPlayer = otherActor.Instigator as SpaceShipPlayer;
-				if (spaceShipPlayer != null) spaceShipPlayer.ControllerRef.Score += Score;
+
 			}
 		}
 	}

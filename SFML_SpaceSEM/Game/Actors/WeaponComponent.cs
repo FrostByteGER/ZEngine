@@ -17,7 +17,6 @@ namespace SFML_SpaceSEM.Game.Actors
 		public float CooldownTime { get; set; } = 0.1f;
 
 		public float CurrentCooldownTime { get; set; } = 0.0f;
-		//public SpaceBullet Bullet { get; set; }
 		public WeaponComponent(Sprite sprite) : base(sprite)
 		{
 		}
@@ -38,13 +37,14 @@ namespace SFML_SpaceSEM.Game.Actors
 		{
 			if (CurrentCooldownTime > 0.0f) return;
 
-			//var fireSound = new Sound(new SoundBuffer(AssetManager.AssetsPath + "SFX_Laser_01.ogg"));
-			//fireSound.Volume = ParentActor.LevelReference.EngineReference.GlobalVolume;
-			//fireSound.Play();
+			var fireSound = ParentActor.LevelReference.EngineReference.AssetManager.AudioManager.LoadSound(AssetManager.AssetsPath + "SFX_Laser_01.ogg");
+			fireSound.Volume = ParentActor.LevelReference.EngineReference.GlobalVolume;
+			fireSound.Play();
 
 			for (int i = 0; i < BulletsPerShot; ++i)
 			{
-				var bullet = new SpaceBullet(new Sprite(new Texture(AssetManager.AssetsPath + "Bullet_01.png")), ParentActor.LevelReference);
+				var texture = ParentActor.LevelReference.EngineReference.AssetManager.TextureManager.LoadTexture(AssetManager.AssetsPath + "Bullet_01.png");
+				var bullet = new SpaceBullet(new Sprite(texture), ParentActor.LevelReference);
 				bullet.Instigator = ParentActor;
 				var root = bullet.GetRootComponent<PhysicsComponent>();
 				root.CanOverlap = true;

@@ -247,6 +247,8 @@ namespace SFML_Engine.Engine.Core
 			{
 				ActiveLevel?.OnGameEnd();
 				ActiveLevel?.ShutdownLevel();
+				AssetManager.TextureManager.ClearPool();
+				AssetManager.AudioManager.ClearPool();
 			}
 			else
 			{

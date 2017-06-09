@@ -8,9 +8,9 @@ namespace SFML_Engine.Engine.IO
 {
 	public class SoundPoolManager
 	{
+		public static string SFXPath { get; } = AssetManager.AssetsPath + "SFX/";
+
 		private readonly Dictionary<string, SoundBuffer> _soundBufferPool = new Dictionary<string, SoundBuffer>();
-
-
 		public ReadOnlyDictionary<string, SoundBuffer> SoundBufferPool => new ReadOnlyDictionary<string, SoundBuffer>(_soundBufferPool);
 
 		public uint PoolSize { get; set; } = 64;
@@ -28,6 +28,15 @@ namespace SFML_Engine.Engine.IO
 		public SoundPoolManager(uint poolSize)
 		{
 			PoolSize = poolSize;
+		}
+
+		public void ClearPool()
+		{
+			foreach (var item in _soundBufferPool)
+			{
+				item.Value.Dispose();
+			}
+			_soundBufferPool.Clear();
 		}
 
 		public SoundBuffer LoadSoundBuffer(string soundName)
