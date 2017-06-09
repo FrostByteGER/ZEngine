@@ -220,7 +220,6 @@ namespace SFML_SpaceSEM.Game
 
 			GUI.RootContainer = MainEditContainer;
 
-
 			SelectedSpawner = Spawners[0];
 		}
 

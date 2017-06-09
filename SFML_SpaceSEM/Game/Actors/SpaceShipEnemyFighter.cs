@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
+using System;
 
 namespace SFML_SpaceSEM.Game.Actors
 {
@@ -21,7 +22,17 @@ namespace SFML_SpaceSEM.Game.Actors
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			FireWeapons();
+			//FireWeapons();
+			if (Position.X + ActorBounds.X / 2f > 400)
+			{
+				Velocity = new TVector2f(-100,0);
+				Console.WriteLine(Position.X);
+			}
+			else if(Position.X - ActorBounds.X/2f < -400)
+			{
+				Velocity = new TVector2f(100, 0);
+				Console.WriteLine(Position.X);
+			}
 		}
 
 		public override void OnDeath()

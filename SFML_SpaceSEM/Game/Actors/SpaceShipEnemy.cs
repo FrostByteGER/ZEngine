@@ -33,8 +33,6 @@ namespace SFML_SpaceSEM.Game.Actors
 				var spaceShipPlayer = otherActor.Instigator as SpaceShipPlayer;
 				if (spaceShipPlayer != null) spaceShipPlayer.ControllerRef.Score += Score;
 			}
-
-			
 		}
 	}
 }

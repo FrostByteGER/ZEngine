@@ -29,7 +29,6 @@ namespace SFML_SpaceSEM.Game
 		{
 			base.InitLevel();
 
-
 			var playerActor = new SpaceShipPlayer(new Sprite(new Texture(AssetManager.AssetsPath + "Player_01.png")), this);
 			playerActor.ActorName = "Player 1";
 			playerActor.Position = new TVector2f(0.0f, 300.0f);
