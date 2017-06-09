@@ -2,7 +2,7 @@
 
 namespace SFML_Engine.Engine.IO
 {
-	public abstract class GenericIOManager
+	public static class GenericIOManager
 	{
 
 		public static string[] LoadFileAsArray(string path)
@@ -24,9 +24,5 @@ namespace SFML_Engine.Engine.IO
 		{
 			File.WriteAllText(path, data);
 		}
-
-		protected abstract T Load<T>(string path);
-
-		protected abstract void Save<T>(string path, T data);
 	}
 }

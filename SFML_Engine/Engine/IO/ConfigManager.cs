@@ -1,16 +1,17 @@
 ﻿namespace SFML_Engine.Engine.IO
 {
-	public class ConfigManager : GenericIOManager
+	public class ConfigManager
 	{
 
 		public static string EngineConfigFolderPath { get; } = AssetManager.AssetsPath + "Engine/Config/";
 		public static string GameConfigFolderPath { get; } = AssetManager.AssetsPath + "SFML_Pong";
-		public override T Load<T>(string path)
+
+		protected virtual T Load<T>(string path)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public override void Save<T>(string path, T data)
+		protected virtual void Save(string path, string data)
 		{
 			throw new System.NotImplementedException();
 		}

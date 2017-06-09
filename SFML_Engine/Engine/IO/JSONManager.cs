@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 
 namespace SFML_Engine.Engine.IO
 {
-	public class JSONManager : GenericIOManager
+	public class JSONManager
 	{
 
 		public static T LoadObject<T>(string filename)
 		{
-			var data = LoadFileAsString(filename);
+			var data = GenericIOManager.LoadFileAsString(filename);
 			return JsonConvert.DeserializeObject<T>(data);
 		}
 
@@ -24,16 +24,6 @@ namespace SFML_Engine.Engine.IO
 			var serializedData = JsonConvert.SerializeObject(data, Formatting.None);
 			File.WriteAllText(filename, serializedData);
 			return serializedData;
-		}
-
-		public override T Load<T>(string path)
-		{
-			return LoadObject<T>(path);
-		}
-
-		public override void Save<T>(string path, T data)
-		{
-			SaveObject(path, data);
 		}
 	}
 }
