@@ -13,6 +13,7 @@ namespace SFML_SpaceSEM.Game.Actors
 
 		public SpaceShipPlayer(Sprite sprite, Level level) : base(sprite, level)
 		{
+			MaxVelocity = new TVector2f(600);
 			var weapon1 = new WeaponComponent(new Sprite());
 			var weapon2 = new WeaponComponent(new Sprite());
 			weapon1.LocalPosition += new TVector2f(26.0f, 15.0f);
