@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
@@ -10,7 +9,6 @@ using SFML_SpaceSEM.Game.Actors;
 using SFML_SpaceSEM.Game.Players;
 using SFML_SpaceSEM.IO;
 using VelcroPhysics.Collision.Filtering;
-using VelcroPhysics.Collision.Narrowphase;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_SpaceSEM.Game

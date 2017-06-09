@@ -7,7 +7,6 @@ using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 

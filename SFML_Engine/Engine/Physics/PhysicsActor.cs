@@ -1,7 +1,5 @@
-﻿using System;
-using SFML_Engine.Engine.Game;
+﻿using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
-using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_Engine.Engine.Physics

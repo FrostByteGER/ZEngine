@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game.Players;

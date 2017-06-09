@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Core;
-using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game;
 using SFML_SpaceSEM.Game.Actors;
 using SFML_SpaceSEM.IO;
-using VelcroPhysics.Dynamics.Solver;
 
 namespace SFML_SpaceSEM
 {

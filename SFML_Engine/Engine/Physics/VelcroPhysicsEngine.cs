@@ -1,5 +1,4 @@
-﻿using System;
-using SFML_Engine.Engine.Game;
+﻿using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.Filtering;
 using VelcroPhysics.Dynamics;

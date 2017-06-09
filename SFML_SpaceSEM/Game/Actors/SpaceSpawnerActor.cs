@@ -4,7 +4,6 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
-using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.IO;
 using VelcroPhysics.Collision.Filtering;
 

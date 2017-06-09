@@ -1,10 +1,6 @@
 ﻿using SFML_Engine.Engine.JUI;
 using SFML_SpaceSEM.IO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML_SpaceSEM.Game;

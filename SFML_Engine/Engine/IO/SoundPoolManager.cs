@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SFML.Audio;
-using SFML.Graphics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.IO

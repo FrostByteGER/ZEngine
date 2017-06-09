@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine;
 using SFML_Engine.Engine.JUI;
-using System;
 using SFML_Engine.Engine.Game;
 using SFML_SpaceSEM.UI;
 

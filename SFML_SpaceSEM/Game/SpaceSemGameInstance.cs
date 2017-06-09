@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SFML.Audio;
 using SFML.Graphics;
-using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Utility;
 
 namespace SFML_SpaceSEM.Game
 {

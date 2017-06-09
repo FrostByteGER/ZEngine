@@ -1,6 +1,5 @@
 ﻿using System;
 using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Graphics;
 
 namespace SFML_Engine.Engine
 {
