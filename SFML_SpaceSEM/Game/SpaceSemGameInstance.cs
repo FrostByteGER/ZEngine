@@ -34,26 +34,6 @@ namespace SFML_SpaceSEM.Game
 		public SpaceSEMGameInstance()
 		{	
 			MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
-
-			PowerUpBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_PowerUp.wav");
-			Console.WriteLine(PowerUpBuffer.Duration.AsMilliseconds());
-			BlockHitBuffer = new SoundBuffer("Assets/SFML_SpaceSEM/SFX_BlockHit.wav");
-			Console.WriteLine(BlockHitBuffer.Duration.AsMilliseconds());
-
-			BGM_Main = new Music(StartSpaceSEM.MountainDewMode ? BGM_MLG_Current : MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
-			BGM_Main.Loop = true;
-			BGM_Main.Volume = Engine.Instance.GlobalVolume;
-
-			EnemyTexture = new Texture("Assets/SFML_SpaceSEM/Enemy_01.png");
-		}
-
-		public static void SwitchMusic()
-		{
-			BGM_Main.Stop();
-			BGM_Main = new Music(StartSpaceSEM.MountainDewMode ? BGM_MLG_Current : MusicTracks[EngineMath.EngineRandom.Next(0, MusicTracks.Count)]);
-			BGM_Main.Loop = true;
-			BGM_Main.Volume = Engine.Instance.GlobalVolume;
-			BGM_Main.Play();
 		}
 	}
 }

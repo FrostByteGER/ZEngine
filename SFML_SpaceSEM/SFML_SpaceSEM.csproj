@@ -100,12 +100,6 @@
     <None Include="Assets\arial.ttf" />
     <None Include="Assets\comic.ttf" />
     <None Include="Assets\Levels\level_1.json" />
-    <None Include="old\SpaceSEMBullet.cs" />
-    <None Include="old\SpaceSEMEnemy.cs" />
-    <None Include="old\SpaceSEMGameLevel.cs" />
-    <None Include="old\SpaceSEMGameMode.cs" />
-    <None Include="old\SpaceSEMPlayer.cs" />
-    <None Include="old\SpaceSEMPlayerController.cs" />
     <Compile Include="Game\SpaceSEMMenuLevel.cs" />
     <Compile Include="Game\SpaceSEMMenuPlayerController.cs" />
     <Compile Include="GameInfo.Designer.cs">
