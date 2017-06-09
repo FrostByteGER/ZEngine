@@ -28,13 +28,22 @@ namespace SFML_SpaceSEM.Game.Actors
 			{
 				if (ship.ShipType == typeof(SpaceShipEnemyFighter))
 				{
-					var spawned = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")),LevelReference);
+					var spawned = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")), LevelReference);
 					var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
 					spawnedRoot.CollisionType = Category.Cat3;
 					spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+					spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
 					spawned.ActorName = "Enemy Fighter";
 					spawned.Position = ship.Position;
-					spawned.Velocity = new TVector2f(-100.0f,0.0f);
+					spawned.Velocity = ship.Velocity;
+					foreach (var weapon in spawned.WeaponSystems)
+					{
+						weapon.BulletSpeed = ship.BulletSpeed * -1;
+						weapon.BulletsPerShot = ship.BulletsPerShot;
+						weapon.BulletSpread = ship.BulletSpread;
+						weapon.Damage = ship.BulletDamage;
+						weapon.CooldownTime = ship.CooldownTime;
+					}
 					LevelReference.SpawnActor(this, spawned);
 				}
 			}

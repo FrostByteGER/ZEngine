@@ -9,6 +9,17 @@ namespace SFML_SpaceSEM.IO
 	{
 		public Type ShipType { get; set; }
 		public TVector2f Position { get; set; }
+
+		public TVector2f Velocity { get; set; }
+
+		public float BulletSpread { get; set; }
+
+		public uint BulletsPerShot { get; set; }
+
+		public float BulletSpeed { get; set; }
+
+		public float CooldownTime { get; set; }
+		public uint BulletDamage { get; set; }
 	}
 
 	public struct SpaceLevelSpawnerDataWrapper

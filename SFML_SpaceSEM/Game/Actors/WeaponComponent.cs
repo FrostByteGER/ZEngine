@@ -11,7 +11,6 @@ namespace SFML_SpaceSEM.Game.Actors
 	public class WeaponComponent : SpriteComponent
 	{
 		public uint Damage { get; set; } = 1;
-		public float FireRate { get; set; } = 1.0f;
 		public float BulletSpread { get; set; } = 0.0f;
 		public uint BulletsPerShot { get; set; } = 1;
 		public float BulletSpeed { get; set; } = 400.0f;
@@ -50,7 +49,9 @@ namespace SFML_SpaceSEM.Game.Actors
 				bullet.Instigator = ParentActor;
 				var root = bullet.GetRootComponent<PhysicsComponent>();
 				root.CanOverlap = true;
+				root.CollisionType = VelcroPhysics.Collision.Filtering.Category.Cat4;
 				root.CollisionResponseChannels &= ~ParentActor.GetRootComponent<PhysicsComponent>().CollisionType;
+				root.CollisionResponseChannels &= ~root.CollisionType;
 				bullet.CollisionCallbacksEnabled = true;
 				bullet.Damage = Damage;
 				bullet.Position = WorldPosition;
