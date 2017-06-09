@@ -28,7 +28,6 @@ namespace SFML_SpaceSEM.Game.Actors
 			base.Tick(deltaTime);
 			if(Position.X < 400) FireWeapons();
 
-			//FireWeapons();
 			if (Position.X + ActorBounds.X > 400)
 			{
 				Velocity += new TVector2f(-100, 0);
@@ -41,7 +40,6 @@ namespace SFML_SpaceSEM.Game.Actors
 			if (Position.Y + ActorBounds.Y > 250)
 			{
 				Velocity += new TVector2f(0, -100);
-				Console.WriteLine(Position);
 
 			}
 			else if (Position.Y - ActorBounds.Y < -400)
@@ -50,22 +48,9 @@ namespace SFML_SpaceSEM.Game.Actors
 				
 			}
 
-			if (timer > 90)
-			{
-				timer -= 90;
-			}
-			else
-			{
-				timer += deltaTime;
-			//if (Position.X + ActorBounds.X / 2f > 400)
-			{
-				//Velocity = new TVector2f(-Velocity.X, -Velocity.Y);
-				//Console.WriteLine(Position.X);
-			}
 			if(Position.X - ActorBounds.X/2f < -400)
 			{
 				Velocity = new TVector2f(-Velocity.X, -Velocity.Y);
-				Console.WriteLine(Position.X);
 			}
 		}
 
