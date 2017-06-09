@@ -17,7 +17,6 @@ namespace SFML_SpaceSEM
 	{
 		public static bool MountainDewMode { get; set; } = true;
 		public static Engine EngineRef = Engine.Instance;
-		public static PhysicsEngine Physics;
 		public static void Main(string[] args)
 		{
 			if (args.Length >= 1)

@@ -42,7 +42,7 @@ namespace SFML_SpaceSEM.Game
 			enemyActor.Position = new TVector2f(0.0f, -300.0f);
 
 
-			var wrapperData = EngineReference.AssetManager.JSONManager.Load<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_2.json");
+			var wrapperData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_2.json");
 			foreach (var spawnerData in wrapperData.Spawners)
 			{
 				var spawner = new SpaceSpawnerActor(this);

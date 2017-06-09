@@ -25,7 +25,7 @@ namespace SFML_SpaceSEM.Game
 		{
 			if (string.IsNullOrWhiteSpace(levelName)) return null;
 
-			var wrapperData = Engine.Instance.AssetManager.JSONManager.Load<SpaceLevelDataWrapper>(AssetManager.LevelsPath + levelName);
+			var wrapperData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + levelName);
 
 			//return EngineReference.LoadLevel(level, destroyPrevious);
 			return wrapperData;
@@ -33,7 +33,7 @@ namespace SFML_SpaceSEM.Game
 
 		public static void SaveSpaceLevel(string levelName, SpaceLevelDataWrapper data)
 		{
-			Engine.Instance.AssetManager.JSONManager.Save(AssetManager.LevelsPath + levelName, data);
+			JSONManager.SaveObject(AssetManager.LevelsPath + levelName, data);
 		}
 	}
 }

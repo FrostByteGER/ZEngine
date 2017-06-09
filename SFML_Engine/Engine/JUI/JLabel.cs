@@ -1,7 +1,6 @@
 ﻿using System;
 using SFML.Graphics;
 using SFML.System;
-using System;
 
 namespace SFML_Engine.Engine.JUI
 {

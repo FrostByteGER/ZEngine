@@ -1,10 +1,8 @@
-﻿using System;
-using SFML.Audio;
+﻿using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
-using System;
 
 namespace SFML_SpaceSEM.Game.Actors
 {
