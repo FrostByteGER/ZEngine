@@ -77,12 +77,10 @@ namespace SFML_SpaceSEM.UI
 
 						foreach (SpaceLevelShipDataWrapper ship in spawner.Ships)
 						{
-							ShipRec.Position = Position + new Vector2f(ship.Position.X, Size.Y / 2f - (spawner.ActivationTime - TimeOffset));
+							ShipRec.Position = Position + new Vector2f(ship.Position.X, Size.Y / 2f - ship.Position.Y);
 							target.Draw(ShipRec);
 						}
 					}
-
-
 				}
 			}
 		}
