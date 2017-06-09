@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\SFML_Engine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{5603FFEA-9B95-4218-A4E5-9F0970F96478}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_SpaceSEM", "SFML_SpaceSEM\SFML_SpaceSEM.csproj", "{9B289967-904A-46E4-8201-A4456621F6DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_TowerDefense", "SFML_TowerDefense\SFML_TowerDefense.csproj", "{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.Build.0 = Debug|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.ActiveCfg = Release|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.Build.0 = Release|x64
-		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Debug|x64.ActiveCfg = Debug|x64
-		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Debug|x64.Build.0 = Debug|x64
-		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Release|x64.ActiveCfg = Release|x64
-		{5603FFEA-9B95-4218-A4E5-9F0970F96478}.Release|x64.Build.0 = Release|x64
 		{9B289967-904A-46E4-8201-A4456621F6DC}.Debug|x64.ActiveCfg = Debug|x64
 		{9B289967-904A-46E4-8201-A4456621F6DC}.Debug|x64.Build.0 = Debug|x64
 		{9B289967-904A-46E4-8201-A4456621F6DC}.Release|x64.ActiveCfg = Release|x64
 		{9B289967-904A-46E4-8201-A4456621F6DC}.Release|x64.Build.0 = Release|x64
+		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|x64.ActiveCfg = Debug|x64
+		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|x64.Build.0 = Debug|x64
+		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.ActiveCfg = Release|x64
+		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
