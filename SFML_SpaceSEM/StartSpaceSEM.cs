@@ -67,9 +67,9 @@ namespace SFML_SpaceSEM
 							ShipType = typeof(SpaceShipEnemyFighter),
 							Position = new TVector2f(400 + j * 100, 0 + j * -50),
 							BulletDamage = 1,
-							BulletSpeed = 400,
+							BulletSpeed = 150,
 							BulletsPerShot = 1,
-							CooldownTime = 0.1f,
+							CooldownTime = 1.5f,
 							BulletSpread = 0.0f,
 							Velocity = new TVector2f(-100, 5)
 						};
@@ -81,9 +81,9 @@ namespace SFML_SpaceSEM
 							ShipType = typeof(SpaceShipEnemyFighter),
 							Position = new TVector2f(400 + j * 100, 0 + j * -50),
 							BulletDamage = 2,
-							BulletSpeed = 400,
+							BulletSpeed = 120,
 							BulletsPerShot = 3,
-							CooldownTime = 0.15f,
+							CooldownTime = 2.55f,
 							BulletSpread = 15.0f,
 							Velocity = new TVector2f(-100, 5)
 						};
@@ -95,9 +95,9 @@ namespace SFML_SpaceSEM
 							ShipType = typeof(SpaceShipEnemyFighter),
 							Position = new TVector2f(400 + j * 100, 0 + j * -50),
 							BulletDamage = 3,
-							BulletSpeed = 300,
+							BulletSpeed = 100,
 							BulletsPerShot = 4,
-							CooldownTime = 0.3f,
+							CooldownTime = 4.75f,
 							BulletSpread = 20.0f,
 							Velocity = new TVector2f(-50, 5)
 						};
@@ -109,9 +109,9 @@ namespace SFML_SpaceSEM
 							ShipType = typeof(SpaceShipEnemyFighter),
 							Position = new TVector2f(400 + j * 100, 0 + j * -50),
 							BulletDamage = 5,
-							BulletSpeed = 200,
+							BulletSpeed = 65,
 							BulletsPerShot = 2,
-							CooldownTime = 0.55f,
+							CooldownTime = 5.80f,
 							BulletSpread = 10.0f,
 							Velocity = new TVector2f(-50, 5)
 						};

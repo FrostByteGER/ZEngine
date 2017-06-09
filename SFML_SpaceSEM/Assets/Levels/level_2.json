@@ -13,14 +13,14 @@
             "Y": 0.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 0.0,
-          "BulletsPerShot": 1,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.1,
-          "BulletDamage": 1
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -29,14 +29,14 @@
             "Y": -50.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 0.0,
-          "BulletsPerShot": 1,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.1,
-          "BulletDamage": 1
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -45,46 +45,14 @@
             "Y": -100.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 0.0,
-          "BulletsPerShot": 1,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.1,
-          "BulletDamage": 1
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 700.0,
-            "Y": -150.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 0.0,
-          "BulletsPerShot": 1,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.1,
-          "BulletDamage": 1
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 800.0,
-            "Y": -200.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 0.0,
-          "BulletsPerShot": 1,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.1,
-          "BulletDamage": 1
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         }
       ]
     },
@@ -103,8 +71,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -119,8 +87,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -135,8 +103,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -151,8 +119,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -167,8 +135,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -183,8 +151,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         },
         {
@@ -199,24 +167,8 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
-          "BulletDamage": 3
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 1100.0,
-            "Y": -350.0
-          },
-          "Velocity": {
-            "X": -50.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 20.0,
-          "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         }
       ]
@@ -231,14 +183,14 @@
             "Y": 0.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -247,14 +199,14 @@
             "Y": -50.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -263,14 +215,62 @@
             "Y": -100.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 700.0,
+            "Y": -150.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 800.0,
+            "Y": -200.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 900.0,
+            "Y": -250.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         }
       ]
     },
@@ -284,14 +284,14 @@
             "Y": 0.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -300,14 +300,14 @@
             "Y": -50.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -316,30 +316,14 @@
             "Y": -100.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 700.0,
-            "Y": -150.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         }
       ]
     },
@@ -356,11 +340,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -372,11 +356,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -388,11 +372,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -404,11 +388,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -420,11 +404,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -436,11 +420,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -452,27 +436,11 @@
             "X": -100.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 1100.0,
-            "Y": -350.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 0.0,
+          "BulletsPerShot": 1,
+          "BulletSpeed": 150.0,
+          "CooldownTime": 1.5,
+          "BulletDamage": 1
         }
       ]
     },
@@ -491,8 +459,136 @@
           },
           "BulletSpread": 20.0,
           "BulletsPerShot": 4,
-          "BulletSpeed": 300.0,
-          "CooldownTime": 0.3,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 500.0,
+            "Y": -50.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 600.0,
+            "Y": -100.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 700.0,
+            "Y": -150.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 800.0,
+            "Y": -200.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 900.0,
+            "Y": -250.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 1000.0,
+            "Y": -300.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 1100.0,
+            "Y": -350.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 1200.0,
+            "Y": -400.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
           "BulletDamage": 3
         }
       ]
@@ -510,11 +606,11 @@
             "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 10.0,
-          "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
-          "BulletDamage": 5
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -526,11 +622,11 @@
             "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 10.0,
-          "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
-          "BulletDamage": 5
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -542,11 +638,11 @@
             "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 10.0,
-          "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
-          "BulletDamage": 5
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -558,11 +654,11 @@
             "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 10.0,
-          "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
-          "BulletDamage": 5
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -574,11 +670,27 @@
             "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 10.0,
-          "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
-          "BulletDamage": 5
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 900.0,
+            "Y": -250.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 20.0,
+          "BulletsPerShot": 4,
+          "BulletSpeed": 100.0,
+          "CooldownTime": 4.75,
+          "BulletDamage": 3
         }
       ]
     },
@@ -597,72 +709,8 @@
           },
           "BulletSpread": 15.0,
           "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 500.0,
-            "Y": -50.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 600.0,
-            "Y": -100.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 700.0,
-            "Y": -150.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
-        },
-        {
-          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Position": {
-            "X": 800.0,
-            "Y": -200.0
-          },
-          "Velocity": {
-            "X": -100.0,
-            "Y": 5.0
-          },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
+          "BulletSpeed": 120.0,
+          "CooldownTime": 2.55,
           "BulletDamage": 2
         }
       ]
@@ -677,14 +725,14 @@
             "Y": 0.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -693,14 +741,14 @@
             "Y": -50.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         },
         {
           "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -709,14 +757,14 @@
             "Y": -100.0
           },
           "Velocity": {
-            "X": -100.0,
+            "X": -50.0,
             "Y": 5.0
           },
-          "BulletSpread": 15.0,
-          "BulletsPerShot": 3,
-          "BulletSpeed": 400.0,
-          "CooldownTime": 0.15,
-          "BulletDamage": 2
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
         }
       ]
     },
@@ -735,8 +783,8 @@
           },
           "BulletSpread": 10.0,
           "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
           "BulletDamage": 5
         },
         {
@@ -751,8 +799,88 @@
           },
           "BulletSpread": 10.0,
           "BulletsPerShot": 2,
-          "BulletSpeed": 200.0,
-          "CooldownTime": 0.55,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 600.0,
+            "Y": -100.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 700.0,
+            "Y": -150.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 800.0,
+            "Y": -200.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 900.0,
+            "Y": -250.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
+          "BulletDamage": 5
+        },
+        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 1000.0,
+            "Y": -300.0
+          },
+          "Velocity": {
+            "X": -50.0,
+            "Y": 5.0
+          },
+          "BulletSpread": 10.0,
+          "BulletsPerShot": 2,
+          "BulletSpeed": 65.0,
+          "CooldownTime": 5.8,
           "BulletDamage": 5
         }
       ]
