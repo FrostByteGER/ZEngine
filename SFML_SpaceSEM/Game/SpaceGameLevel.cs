@@ -8,6 +8,7 @@ using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game.Actors;
 using SFML_SpaceSEM.Game.Players;
+using SFML_SpaceSEM.IO;
 using VelcroPhysics.Collision.Filtering;
 using VelcroPhysics.Collision.Narrowphase;
 using VelcroPhysics.Dynamics;
@@ -36,6 +37,24 @@ namespace SFML_SpaceSEM.Game
 			var playerController = new SpaceGamePlayerController(playerActor);
 			playerController.SetCameraSize(EngineReference.EngineWindowWidth, EngineReference.EngineWindowHeight);
 
+			var enemyActor = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")), this);
+			enemyActor.GetRootComponent<PhysicsComponent>().CollisionType = Category.Cat3;
+			enemyActor.ActorName = "Enemy 1";
+			enemyActor.Position = new TVector2f(0.0f, -300.0f);
+
+
+			var wrapperData = EngineReference.AssetManager.JSONManager.Load<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_1.json");
+			foreach (var spawnerData in wrapperData.Spawners)
+			{
+				var spawner = new SpaceSpawnerActor(this);
+				spawner.ActivationTime = spawnerData.ActivationTime;
+				spawner.Ships = spawnerData.Ships;
+				Spawners.Add(spawner); // TODO:
+				RegisterActor(spawner);
+			}
+
+
+
 
 			var leftBorder = new Actor(this);
 			leftBorder.ActorName = "Left Border";
@@ -58,6 +77,7 @@ namespace SFML_SpaceSEM.Game
 			bottomBorder.Visible = true;
 
 			RegisterActor(playerActor);
+			RegisterActor(enemyActor);
 			RegisterActor(leftBorder);
 			RegisterActor(rightBorder);
 			RegisterActor(topBorder);

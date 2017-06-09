@@ -97,6 +97,7 @@ namespace SFML_Engine.Engine.Core
 
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();
+	        AssetManager = new AssetManager();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref _engineWindow);
 

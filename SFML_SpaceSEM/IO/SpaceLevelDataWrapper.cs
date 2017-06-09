@@ -28,7 +28,6 @@ namespace SFML_SpaceSEM.IO
 		public float BeatTime { get; set; } = 0.0f;
 
 		public List<SpaceLevelSpawnerDataWrapper> Spawners { get; set; } = new List<SpaceLevelSpawnerDataWrapper>();
-
 	}
 
 }

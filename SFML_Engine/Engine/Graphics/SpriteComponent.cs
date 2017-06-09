@@ -75,8 +75,8 @@ namespace SFML_Engine.Engine.Graphics
 		public override void Destroy(bool disposing)
 		{
 			base.Destroy(disposing);
-			Sprite.Dispose();
-			Sprite.Texture.Dispose();
+			Sprite?.Dispose();
+			Sprite?.Texture?.Dispose();
 		}
 	}
 }

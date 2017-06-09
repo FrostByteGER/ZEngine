@@ -11,6 +11,8 @@ namespace SFML_SpaceSEM.Game.Players
 	{
 		public SpaceShipPlayer Player { get; set; }
 
+		public uint Score { get; set; } = 0;
+
 		public SpaceGamePlayerController()
 		{
 		}
@@ -18,6 +20,7 @@ namespace SFML_SpaceSEM.Game.Players
 		public SpaceGamePlayerController(SpriteActor playerPawn) : base(playerPawn)
 		{
 			Player = playerPawn as SpaceShipPlayer;
+			Player.ControllerRef = this;
 		}
 
 		public override void RegisterInput()

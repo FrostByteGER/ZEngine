@@ -4,55 +4,61 @@
   "BeatTime": 0.0,
   "Spawners": [
     {
-      "ActivationTime": 10.0,
+      "ActivationTime": 2.5,
       "Ships": [
         {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 40.0,
-            "Y": 0.0
+            "X": 400.0,
+            "Y": -100.0
           }
         },        {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 60.0,
-            "Y": 0.0
+            "X": 600.0,
+            "Y": -150.0
           }
         },        {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 80.0,
-            "Y": 0.0
+            "X": 800.0,
+            "Y": -200.0
           }
         },        {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 160.0,
-            "Y": 0.0
+            "X": 1000.0,
+            "Y": -300.0
           }
         }
       ]
     },
-    {
-      "ActivationTime": 20.0,
+	{
+      "ActivationTime": 5.0,
       "Ships": [
         {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 10.0,
-            "Y": 10.0
+            "X": 400.0,
+            "Y": -100.0
           }
-        }
-      ]
-    },
-    {
-      "ActivationTime": 500.0,
-      "Ships": [
-        {
-          "ShipType": "SFML_Engine.Engine.Graphics.SpriteActor, SFML_Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        },        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Position": {
-            "X": 20.0,
-            "Y": 20.0
+            "X": 600.0,
+            "Y": -150.0
+          }
+        },        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 800.0,
+            "Y": -200.0
+          }
+        },        {
+          "ShipType": "SFML_SpaceSEM.Game.Actors.SpaceShipEnemyFighter, SFML_SpaceSEM, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Position": {
+            "X": 1000.0,
+            "Y": -300.0
           }
         }
       ]

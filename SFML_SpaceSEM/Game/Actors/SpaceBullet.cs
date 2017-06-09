@@ -10,6 +10,7 @@ namespace SFML_SpaceSEM.Game.Actors
 	public class SpaceBullet : SpriteActor
 	{
 		public uint Damage { get; set; } = 1;
+		public Actor Instigator { get; set; } = null;
 		public SpaceBullet(Sprite sprite, Level level) : base(sprite, level)
 		{
 		}
@@ -30,6 +31,7 @@ namespace SFML_SpaceSEM.Game.Actors
 		{
 			base.OnOverlapBegin(self, other, contactInfo);
 			Console.WriteLine("OVERLAP");
+			LevelReference.DestroyActor(this);
 		}
 	}
 }

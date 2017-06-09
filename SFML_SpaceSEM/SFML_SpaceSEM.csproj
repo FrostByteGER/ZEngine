@@ -80,6 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Actors\SpaceBullet.cs" />
+    <Compile Include="Game\Actors\SpaceShipEnemy.cs" />
+    <Compile Include="Game\Actors\SpaceShipEnemyFighter.cs" />
     <Compile Include="Game\SpaceEditorLevel.cs" />
     <Compile Include="Game\Actors\SpaceShipPlayer.cs" />
     <Compile Include="Game\Players\SpaceGamePlayerController.cs" />

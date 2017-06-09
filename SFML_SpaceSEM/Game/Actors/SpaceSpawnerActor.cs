@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.IO;
+using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.IO;
+using VelcroPhysics.Collision.Filtering;
 
 namespace SFML_SpaceSEM.Game.Actors
 {
@@ -19,6 +24,20 @@ namespace SFML_SpaceSEM.Game.Actors
 		{
 			// Spawn Ships here.
 			Console.WriteLine("SPAWNER ACTIVATED!");
+			foreach (var ship in Ships)
+			{
+				if (ship.ShipType == typeof(SpaceShipEnemyFighter))
+				{
+					var spawned = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")),LevelReference);
+					var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
+					spawnedRoot.CollisionType = Category.Cat3;
+					spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+					spawned.ActorName = "Enemy Fighter";
+					spawned.Position = ship.Position;
+					spawned.Velocity = new TVector2f(-100.0f,0.0f);
+					LevelReference.SpawnActor(this, spawned);
+				}
+			}
 		}
 
 		protected override void InitializeActor()
@@ -38,6 +57,7 @@ namespace SFML_SpaceSEM.Game.Actors
 			{
 				OnActivate(((SpaceGameLevel) LevelReference).LevelTime);
 				((SpaceGameLevel) LevelReference).Spawners.Remove(this);
+				LevelReference.DestroyActor(this);
 			}
 		}
 

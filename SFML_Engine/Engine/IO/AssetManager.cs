@@ -13,6 +13,12 @@ namespace SFML_Engine.Engine.IO
 		public JSONManager JSONManager { get; set; }
 		public ConfigManager GameConfigManager { get; set; }
 
+		public AssetManager()
+		{
+			JSONManager = new JSONManager();
+			GameConfigManager = new ConfigManager();
+		}
+
 
 		public T LoadLevelFromFile<T>(string levelName) where T : Level
 		{

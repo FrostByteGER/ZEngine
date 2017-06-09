@@ -272,6 +272,11 @@ namespace SFML_Engine.Engine.Physics
 			}
 		}
 
+		protected PhysicsComponent()
+		{
+			Visible = false;
+		}
+
 		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
 			ParentActor.OnCollide(self, other, contactInfo);
