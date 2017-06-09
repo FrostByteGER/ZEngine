@@ -49,7 +49,9 @@ namespace SFML_SpaceSEM.Game.Actors
 				bullet.Instigator = ParentActor;
 				var root = bullet.GetRootComponent<PhysicsComponent>();
 				root.CanOverlap = true;
+				root.CollisionType = VelcroPhysics.Collision.Filtering.Category.Cat4;
 				root.CollisionResponseChannels &= ~ParentActor.GetRootComponent<PhysicsComponent>().CollisionType;
+				root.CollisionResponseChannels &= ~root.CollisionType;
 				bullet.CollisionCallbacksEnabled = true;
 				bullet.Damage = Damage;
 				bullet.Position = WorldPosition;

@@ -4,6 +4,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
+using System;
 
 namespace SFML_SpaceSEM.Game.Actors
 {
@@ -24,6 +25,17 @@ namespace SFML_SpaceSEM.Game.Actors
 			base.Tick(deltaTime);
 			if(Position.X < 400) FireWeapons();
 
+			//FireWeapons();
+			//if (Position.X + ActorBounds.X / 2f > 400)
+			{
+				//Velocity = new TVector2f(-Velocity.X, -Velocity.Y);
+				//Console.WriteLine(Position.X);
+			}
+			if(Position.X - ActorBounds.X/2f < -400)
+			{
+				Velocity = new TVector2f(-Velocity.X, -Velocity.Y);
+				Console.WriteLine(Position.X);
+			}
 		}
 
 		public override void OnDeath()
