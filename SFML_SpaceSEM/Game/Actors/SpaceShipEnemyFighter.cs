@@ -1,4 +1,5 @@
-﻿using SFML.Audio;
+﻿using System;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
@@ -21,11 +22,13 @@ namespace SFML_SpaceSEM.Game.Actors
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-			FireWeapons();
+			if(Position.X < 400) FireWeapons();
+
 		}
 
 		public override void OnDeath()
 		{
+
 			var killSound = new Sound(new SoundBuffer(AssetManager.AssetsPath + "SFX_Explosion_01.ogg"));
 			killSound.Volume = LevelReference.EngineReference.GlobalVolume;
 			killSound.Play();
