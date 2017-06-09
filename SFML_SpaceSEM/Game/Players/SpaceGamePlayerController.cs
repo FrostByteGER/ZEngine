@@ -71,14 +71,14 @@ namespace SFML_SpaceSEM.Game.Players
 			}
 			if (Input.IsKeyDown(Keyboard.Key.A))
 			{
-				Player.Velocity = new TVector2f(-100.0f, 0.0f);
+				Player.Velocity = new TVector2f(-400.0f, 0.0f);
 				//var test = Player.Position.Up(Player.Rotation);
 				//Console.WriteLine(test + " " + Player.Rotation);
 				//Player.Position -= test;
 			}
 			if (Input.IsKeyDown(Keyboard.Key.D))
 			{
-				Player.Velocity = new TVector2f(100.0f, 0.0f);
+				Player.Velocity = new TVector2f(400.0f, 0.0f);
 				//var test = Player.Position.Up(Player.Rotation);
 				//Console.WriteLine(test + " " + Player.Rotation);
 				//Player.Position += test;
