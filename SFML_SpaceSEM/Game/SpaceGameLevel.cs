@@ -23,6 +23,8 @@ namespace SFML_SpaceSEM.Game
 
 		public List<SpaceSpawnerActor> Spawners { get; set; } = new List<SpaceSpawnerActor>();
 
+		public uint SpaceLevelID { get; set; } = 1;
+
 		protected override void InitLevel()
 		{
 			base.InitLevel();
@@ -34,13 +36,8 @@ namespace SFML_SpaceSEM.Game
 			var playerController = new SpaceGamePlayerController(playerActor);
 			playerController.SetCameraSize(EngineReference.EngineWindowWidth, EngineReference.EngineWindowHeight);
 
-			var enemyActor = new SpaceShipEnemyFighter(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_01.png")), this);
-			enemyActor.GetRootComponent<PhysicsComponent>().CollisionType = Category.Cat3;
-			enemyActor.ActorName = "Enemy 1";
-			enemyActor.Position = new TVector2f(0.0f, -300.0f);
 
-
-			var wrapperData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_2.json");
+			var wrapperData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_" + SpaceLevelID + ".json");
 			foreach (var spawnerData in wrapperData.Spawners)
 			{
 				var spawner = new SpaceSpawnerActor(this);
@@ -51,6 +48,8 @@ namespace SFML_SpaceSEM.Game
 			}
 
 
+			var background = new BackgroundActor(new Sprite(new Texture(AssetManager.AssetsPath + "Background.png")), this);
+			background.ActorName = "Background";
 
 
 			var leftBorder = new Actor(this);
@@ -73,8 +72,8 @@ namespace SFML_SpaceSEM.Game
 			PhysicsEngine.ConstructRectangleCollisionComponent(bottomBorder, true, new TVector2f(0.0f, 450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static, Category.Cat2, Category.All);
 			bottomBorder.Visible = true;
 
+			RegisterActor(background);
 			RegisterActor(playerActor);
-			RegisterActor(enemyActor);
 			RegisterActor(leftBorder);
 			RegisterActor(rightBorder);
 			RegisterActor(topBorder);

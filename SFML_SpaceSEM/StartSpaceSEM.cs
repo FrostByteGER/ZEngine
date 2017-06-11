@@ -5,6 +5,7 @@ using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game;
 using SFML_SpaceSEM.Game.Actors;
+using SFML_SpaceSEM.Game.Actors.Enemies;
 using SFML_SpaceSEM.IO;
 
 namespace SFML_SpaceSEM
@@ -19,8 +20,14 @@ namespace SFML_SpaceSEM
 			{
 				MountainDewMode = bool.Parse(args[0]);
 			}
-			var levelData = GenerateLevel();
-			JSONManager.SaveObject("level_2.json", levelData);
+
+			for (int i = 0; i < 4; ++i)
+			{
+				var levelData = GenerateLevel(5 + i * 3, 5 + i * 2);
+				JSONManager.SaveObject(@"../../../Assets/Levels/level_" + (i + 1) + ".json", levelData);
+				JSONManager.SaveObject(@"Assets/SFML_SpaceSEM/Levels/level_" + (i + 1) + ".json", levelData);
+			}
+
 
 			EngineRef.GameInfo = new SpaceSEMGameInfo();
 			EngineRef.GameInstance = new SpaceSEMGameInstance();
@@ -38,33 +45,37 @@ namespace SFML_SpaceSEM
 			Console.ReadLine();
 		}
 
-		public static SpaceLevelDataWrapper GenerateLevel()
+		public static SpaceLevelDataWrapper GenerateLevel(int maxwaves, int shipCountPerWave)
 		{
 			var wrapperData = new SpaceLevelDataWrapper();
-			for (var i = 0; i < 10; ++i)
+			var time = 1;
+			for (var i = 0; i < maxwaves; ++i)
 			{  
 				var shipType = EngineMath.EngineRandom.Next(0, 4);
-				var shipCount = EngineMath.EngineRandom.Next(1, 5);
+				var shipCount = EngineMath.EngineRandom.Next(shipCountPerWave - 2, shipCountPerWave);
 
 				var spawnerData = new SpaceLevelSpawnerDataWrapper();
 				spawnerData.Ships = new List<SpaceLevelShipDataWrapper>();
-				spawnerData.ActivationTime = 1 + i * 3;
+				spawnerData.ActivationTime = 1 + time;
+				time += 8;
 
 				SpaceLevelShipDataWrapper shipData = new SpaceLevelShipDataWrapper();
 
 
 				for (int j = 0; j < shipCount; ++j)
 				{
+
+					var position = EngineMath.EngineRandom.Next(-350, 350);
 					if (shipType == 0)
 					{
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(-350 + j * 100, -400),
+							Position = new TVector2f(position, -400),
 							BulletDamage = 1,
 							BulletSpeed = 150,
 							BulletsPerShot = 1,
-							CooldownTime = 1.5f,
+							CooldownTime = 3.5f,
 							BulletSpread = 0.0f,
 							Velocity = new TVector2f(0.0f, 80)
 						};
@@ -73,12 +84,12 @@ namespace SFML_SpaceSEM
 					{
 						shipData = new SpaceLevelShipDataWrapper
 						{
-							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(-350 + j * 100, -400),
+							ShipType = typeof(SpaceShipEnemyCorvette),
+							Position = new TVector2f(position, -400),
 							BulletDamage = 2,
 							BulletSpeed = 120,
 							BulletsPerShot = 3,
-							CooldownTime = 2.55f,
+							CooldownTime = 4.25f,
 							BulletSpread = 15.0f,
 							Velocity = new TVector2f(0.0f, 75)
 						};
@@ -87,28 +98,28 @@ namespace SFML_SpaceSEM
 					{
 						shipData = new SpaceLevelShipDataWrapper
 						{
-							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(-350 + j * 100, -400),
+							ShipType = typeof(SpaceShipEnemyFrigate),
+							Position = new TVector2f(position, -400),
 							BulletDamage = 3,
 							BulletSpeed = 100,
 							BulletsPerShot = 4,
-							CooldownTime = 4.75f,
+							CooldownTime = 6.75f,
 							BulletSpread = 20.0f,
-							Velocity = new TVector2f(0.0f, 50)
+							Velocity = new TVector2f(0.0f, 60)
 						};
 					}
 					else if (shipType == 3)
 					{
 						shipData = new SpaceLevelShipDataWrapper
 						{
-							ShipType = typeof(SpaceShipEnemyFighter),
-							Position = new TVector2f(-350 + j * 100, -400),
+							ShipType = typeof(SpaceShipEnemyDestroyer),
+							Position = new TVector2f(position, -400),
 							BulletDamage = 5,
 							BulletSpeed = 65,
 							BulletsPerShot = 2,
-							CooldownTime = 5.80f,
+							CooldownTime = 8.80f,
 							BulletSpread = 10.0f,
-							Velocity = new TVector2f(0.0f, 10)
+							Velocity = new TVector2f(0.0f, 40)
 						};
 					}
 					spawnerData.Ships.Add(shipData);
