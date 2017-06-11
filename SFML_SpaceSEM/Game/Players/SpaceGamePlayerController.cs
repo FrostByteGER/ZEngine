@@ -54,33 +54,13 @@ namespace SFML_SpaceSEM.Game.Players
 			{
 				Player.FireWeapons();
 			}
-			if (Input.IsKeyDown(Keyboard.Key.S))
-			{
-				//Player.Velocity = new TVector2f(-100.0f, 0.0f);
-				//var test = Player.Position.Forward(Player.Rotation);
-				//Console.WriteLine(test + " " + Player.Rotation);
-				//Player.Position -= test;
-			}
-			if (Input.IsKeyDown(Keyboard.Key.W))
-			{
-				//Player.Velocity = new TVector2f(100.0f, 0.0f);
-				//var test = Player.Position.Forward(Player.Rotation);
-				//Console.WriteLine(test + " " + Player.Rotation);
-				//Player.Position += test;
-			}
 			if (Input.IsKeyDown(Keyboard.Key.A))
 			{
-				Player.Velocity = new TVector2f(-400.0f, 0.0f);
-				//var test = Player.Position.Up(Player.Rotation);
-				//Console.WriteLine(test + " " + Player.Rotation);
-				//Player.Position -= test;
+				Player.Velocity = Input.IsKeyDown(Keyboard.Key.LShift) ? new TVector2f(-200.0f, 0.0f) : new TVector2f(-400.0f, 0.0f);
 			}
 			if (Input.IsKeyDown(Keyboard.Key.D))
 			{
-				Player.Velocity = new TVector2f(400.0f, 0.0f);
-				//var test = Player.Position.Up(Player.Rotation);
-				//Console.WriteLine(test + " " + Player.Rotation);
-				//Player.Position += test;
+				Player.Velocity = Input.IsKeyDown(Keyboard.Key.LShift) ? new TVector2f(200.0f, 0.0f) : new TVector2f(400.0f, 0.0f);
 			}
 		}
 

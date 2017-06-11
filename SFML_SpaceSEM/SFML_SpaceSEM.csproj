@@ -79,10 +79,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Actors\BackgroundActor.cs" />
+    <Compile Include="Game\Actors\Enemies\SpaceShipEnemyDestroyer.cs" />
+    <Compile Include="Game\Actors\Enemies\SpaceShipEnemyFrigate.cs" />
     <Compile Include="Game\Actors\SpaceBullet.cs" />
     <Compile Include="Game\Actors\SpaceShipEnemy.cs" />
-    <Compile Include="Game\Actors\SpaceShipEnemyFighter.cs" />
-    <Compile Include="Game\Actors\SpaceShipEnemyTank.cs" />
+    <Compile Include="Game\Actors\Enemies\SpaceShipEnemyFighter.cs" />
+    <Compile Include="Game\Actors\Enemies\SpaceShipEnemyCorvette.cs" />
     <Compile Include="Game\SpaceEditorLevel.cs" />
     <Compile Include="Game\Actors\SpaceShipPlayer.cs" />
     <Compile Include="Game\Players\SpaceGamePlayerController.cs" />

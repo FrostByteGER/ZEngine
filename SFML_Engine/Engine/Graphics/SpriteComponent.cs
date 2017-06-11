@@ -62,7 +62,7 @@ namespace SFML_Engine.Engine.Graphics
 
 		public override void Draw(RenderTarget target, RenderStates states)
 		{
-			base.Draw(target, states);
+			states.Shader = ComponentMaterial.MaterialShader;
 			target.Draw(Sprite,states);
 		}
 

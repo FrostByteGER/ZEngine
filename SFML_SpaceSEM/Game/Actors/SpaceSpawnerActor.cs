@@ -4,6 +4,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
+using SFML_SpaceSEM.Game.Actors.Enemies;
 using SFML_SpaceSEM.IO;
 using VelcroPhysics.Collision.Filtering;
 
@@ -45,7 +46,67 @@ namespace SFML_SpaceSEM.Game.Actors
 						weapon.CooldownTime = ship.CooldownTime;
 					}
 					LevelReference.SpawnActor(this, spawned);
+			}
+			else if (ship.ShipType == typeof(SpaceShipEnemyCorvette))
+			{
+				var spawned = new SpaceShipEnemyCorvette(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_02.png")), LevelReference);
+				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
+				spawnedRoot.CollisionType = Category.Cat3;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
+				spawned.ActorName = "Enemy Fighter";
+				spawned.Position = ship.Position;
+				spawned.Velocity = ship.Velocity;
+				foreach (var weapon in spawned.WeaponSystems)
+				{
+					weapon.BulletSpeed = ship.BulletSpeed * -1;
+					weapon.BulletsPerShot = ship.BulletsPerShot;
+					weapon.BulletSpread = ship.BulletSpread;
+					weapon.Damage = ship.BulletDamage;
+					weapon.CooldownTime = ship.CooldownTime;
 				}
+				LevelReference.SpawnActor(this, spawned);
+			}
+			else if (ship.ShipType == typeof(SpaceShipEnemyFrigate))
+			{
+				var spawned = new SpaceShipEnemyFrigate(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_03.png")), LevelReference);
+				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
+				spawnedRoot.CollisionType = Category.Cat3;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
+				spawned.ActorName = "Enemy Fighter";
+				spawned.Position = ship.Position;
+				spawned.Velocity = ship.Velocity;
+				foreach (var weapon in spawned.WeaponSystems)
+				{
+					weapon.BulletSpeed = ship.BulletSpeed * -1;
+					weapon.BulletsPerShot = ship.BulletsPerShot;
+					weapon.BulletSpread = ship.BulletSpread;
+					weapon.Damage = ship.BulletDamage;
+					weapon.CooldownTime = ship.CooldownTime;
+				}
+				LevelReference.SpawnActor(this, spawned);
+			}
+			else if (ship.ShipType == typeof(SpaceShipEnemyDestroyer))
+			{
+				var spawned = new SpaceShipEnemyDestroyer(new Sprite(new Texture(AssetManager.AssetsPath + "Enemy_04.png")), LevelReference);
+				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
+				spawnedRoot.CollisionType = Category.Cat3;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
+				spawned.ActorName = "Enemy Fighter";
+				spawned.Position = ship.Position;
+				spawned.Velocity = ship.Velocity;
+				foreach (var weapon in spawned.WeaponSystems)
+				{
+					weapon.BulletSpeed = ship.BulletSpeed * -1;
+					weapon.BulletsPerShot = ship.BulletsPerShot;
+					weapon.BulletSpread = ship.BulletSpread;
+					weapon.Damage = ship.BulletDamage;
+					weapon.CooldownTime = ship.CooldownTime;
+				}
+				LevelReference.SpawnActor(this, spawned);
+			}
 			if (SpawnIndex >= Ships.Count - 1)
 			{
 				((SpaceGameLevel) LevelReference).Spawners.Remove(this);

@@ -1,17 +1,15 @@
-﻿using SFML.Audio;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_SpaceSEM.Game.Actors
+namespace SFML_SpaceSEM.Game.Actors.Enemies
 {
-	class SpaceShipEnemyFighter : SpaceShipEnemy
+	public class SpaceShipEnemyCorvette : SpaceShipEnemy
 	{
-
 		private float timer = 0.0f;
 
-		public SpaceShipEnemyFighter(Sprite sprite, Level level) : base(sprite, level)
+		public SpaceShipEnemyCorvette(Sprite sprite, Level level) : base(sprite, level)
 		{
 			Healthpoints = MaxHealthpoints;
 			var weapon1 = new WeaponComponent(new Sprite());
