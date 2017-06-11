@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML_Engine.Engine.JUI;
 using SFML_SpaceSEM.UI;
+using System;
 
 namespace SFML_SpaceSEM.Game
 {
@@ -41,6 +42,11 @@ namespace SFML_SpaceSEM.Game
 
 		// Exit Container
 		public JContainer exitContainer;
+
+		private JCheckbox playCampaingnLevel1;
+		private JCheckbox playCampaingnLevel2;
+		private JCheckbox playCampaingnLevel3;
+		private JCheckbox playCampaingnLevel4;
 
 		protected override void LevelTick(float deltaTime)
 		{
@@ -133,10 +139,10 @@ namespace SFML_SpaceSEM.Game
 				playCampaingnLayout.Rows = 4;
 				playCampaignContainer.Layout = playCampaingnLayout;
 
-				JCheckbox playCampaingnLevel1 = new JCheckbox(GUI);
-				JCheckbox playCampaingnLevel2 = new JCheckbox(GUI);
-				JCheckbox playCampaingnLevel3 = new JCheckbox(GUI);
-				JCheckbox playCampaingnLevel4 = new JCheckbox(GUI);
+				playCampaingnLevel1 = new JCheckbox(GUI);
+				playCampaingnLevel2 = new JCheckbox(GUI);
+				playCampaingnLevel3 = new JCheckbox(GUI);
+				playCampaingnLevel4 = new JCheckbox(GUI);
 
 				playCampaingnLevel1.setTextString("01");
 				playCampaingnLevel2.setTextString("02");
@@ -555,7 +561,30 @@ namespace SFML_SpaceSEM.Game
 
 		private void PlayRightStartButton_LoadLevel()
 		{
-			EngineReference.LoadLevel(new SpaceGameLevel(), false);
+
+			SpaceGameLevel level = new SpaceGameLevel();
+
+			Console.WriteLine(playCampaingnLevel1);
+
+			if (playCampaingnLevel1.IsSelected)
+			{
+				level.SpaceLevelID = 1;
+			}
+			else if (playCampaingnLevel2.IsSelected)
+			{
+				level.SpaceLevelID = 2;
+			}
+			else if (playCampaingnLevel3.IsSelected)
+			{
+				level.SpaceLevelID = 3;
+			}
+			else if (playCampaingnLevel4.IsSelected)
+			{
+				level.SpaceLevelID = 4;
+			}
+
+
+			EngineReference.LoadLevel(level, false);
 		}
 
 		public void OpenEditor()
