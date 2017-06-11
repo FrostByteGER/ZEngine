@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using SFML.System;
 
 namespace SFML_Engine.Engine.Utility
 {
@@ -14,12 +15,17 @@ namespace SFML_Engine.Engine.Utility
 	/// </summary>
 	public class EngineClock
 	{
-		Stopwatch _physicsTimer = new Stopwatch();
-		Stopwatch _updateTimer = new Stopwatch();
-		Stopwatch _renderTimer = new Stopwatch();
-		Stopwatch _frameTimer = new Stopwatch();
+		private Clock _engineTimer = new Clock();
+		private Stopwatch _physicsTimer = new Stopwatch();
+		private Stopwatch _updateTimer = new Stopwatch();
+		private Stopwatch _renderTimer = new Stopwatch();
+		private Stopwatch _frameTimer = new Stopwatch();
 
 		public long FrameCount { get; private set; }
+
+		public float EngineElapsedSeconds => _engineTimer.ElapsedTime.AsSeconds();
+		public float EngineElapsedMilliseconds => _engineTimer.ElapsedTime.AsMilliseconds();
+		public float EngineElapsedMicroseconds => _engineTimer.ElapsedTime.AsMicroseconds();
 
 		public float PhysicsAverage
 		{

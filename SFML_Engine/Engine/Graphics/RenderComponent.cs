@@ -22,6 +22,8 @@ namespace SFML_Engine.Engine.Graphics
 		/// <param name="states"></param>
 		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
+			//TODO: Totally useless as states is a struct and is copied...
+			states = new RenderStates(states);
 			if(ComponentMaterial?.MaterialShader != null) states.Shader = ComponentMaterial.MaterialShader;
 			states.Transform = WorldTransform.Transform; // TODO: Is necessary?
 
