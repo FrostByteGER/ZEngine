@@ -15,7 +15,7 @@ namespace SFML_SpaceSEM.Game.Actors.Enemies
 			Healthpoints = MaxHealthpoints;
 			var weapon1 = new WeaponComponent(new Sprite());
 			weapon1.BulletSpeed = weapon1.BulletSpeed * -1;
-			weapon1.LocalPosition += new TVector2f(0.0f, 30.0f);
+			weapon1.LocalPosition += new TVector2f(0.0f, 62.0f);
 			AddComponent(weapon1);
 			WeaponSystems.Add(weapon1);
 		}
