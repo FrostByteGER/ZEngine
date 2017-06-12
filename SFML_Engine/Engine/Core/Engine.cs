@@ -72,8 +72,49 @@ namespace SFML_Engine.Engine.Core
 
 
 		// Other Settings
-		public uint GlobalVolume { get; set; } = 5;
-		public bool RequestTermination { get; set; } = false;
+		private bool _globalVolumeEnabled = true;
+		public bool GlobalVolumeEnabled
+	    {
+		    get => _globalVolumeEnabled;
+		    set {_globalVolumeEnabled = value;}
+	    }
+
+	    private uint _globalVolume = 5;
+		public uint GlobalVolume
+	    {
+		    get => _globalVolume;
+		    set { _globalVolume = value; }
+	    }
+
+	    private bool _globalMusicEnabled = true;
+		public bool GlobalMusicEnabled
+	    {
+		    get => _globalMusicEnabled;
+		    set { _globalMusicEnabled = value; }
+	    }
+
+	    private uint _globalMusicVolume = 5;
+		public uint GlobalMusicVolume
+	    {
+		    get => _globalMusicVolume;
+		    set { _globalMusicVolume = value; }
+	    }
+
+		private bool _globalSoundEnabled = true;
+		public bool GlobalSoundEnabled
+	    {
+		    get => _globalSoundEnabled;
+		    set { _globalSoundEnabled = value; }
+	    }
+
+	    private uint _globalSoundVolume = 5;
+		public uint GlobalSoundVolume
+	    {
+		    get => _globalSoundVolume;
+		    set { _globalSoundVolume = value; }
+	    }
+
+	    public bool RequestTermination { get; set; } = false;
 	    public bool EngineTicking { get; set; } = true;
 
 

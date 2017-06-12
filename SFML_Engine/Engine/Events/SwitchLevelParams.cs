@@ -6,10 +6,12 @@ namespace SFML_Engine.Engine.Events
 	{
 
 		public Level NewLevel { get; set; }
+		public bool DestroyPrevious { get; set; } = true;
 
-		public SwitchLevelParams(object instigator, Level newLevel) : base(instigator)
+		public SwitchLevelParams(object instigator, Level newLevel, bool destroyPrevious) : base(instigator)
 		{
 			NewLevel = newLevel;
+			DestroyPrevious = destroyPrevious;
 		}
 	}
 }
