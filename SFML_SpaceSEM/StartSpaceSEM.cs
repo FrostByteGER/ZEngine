@@ -4,7 +4,6 @@ using SFML_Engine.Engine.Core;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game;
-using SFML_SpaceSEM.Game.Actors;
 using SFML_SpaceSEM.Game.Actors.Enemies;
 using SFML_SpaceSEM.IO;
 

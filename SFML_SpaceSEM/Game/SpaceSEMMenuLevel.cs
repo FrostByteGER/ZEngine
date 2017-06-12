@@ -3,6 +3,8 @@ using SFML.System;
 using SFML_Engine.Engine.JUI;
 using SFML_SpaceSEM.UI;
 using System;
+using SFML.Audio;
+using SFML_Engine.Engine.IO;
 
 namespace SFML_SpaceSEM.Game
 {
@@ -48,10 +50,25 @@ namespace SFML_SpaceSEM.Game
 		private JCheckbox playCampaingnLevel3;
 		private JCheckbox playCampaingnLevel4;
 
+		private JSlider soundSlider { get; set; }
+		private JSlider musicSlider { get; set; }
+
+		public Music MenuMusic { get; set; }
+
 		protected override void LevelTick(float deltaTime)
 		{
 			base.LevelTick(deltaTime);
 			GUI.Tick(deltaTime);
+		}
+
+
+		protected override void InitLevel()
+		{
+			base.InitLevel();
+			MenuMusic = SoundPoolManager.LoadMusic(SoundPoolManager.SFXPath + "BGM_MainMenu.ogg");
+
+			MenuMusic.Loop = true;
+			MenuMusic.Volume = EngineReference.GlobalMusicVolume;
 		}
 
 		public void InitiateMenu()
@@ -101,6 +118,7 @@ namespace SFML_SpaceSEM.Game
 				editorsCheckBox = new JCheckbox(GUI);
 				editorsCheckBox.Text.DisplayedString = "Editor";
 				editorsCheckBox.Something += this.ChangeCenterContainer;
+				editorsCheckBox.IsVisable = false;
 
 
 				exitCheckBox = new JCheckbox(GUI);
@@ -131,7 +149,7 @@ namespace SFML_SpaceSEM.Game
 
 				// Campain Label
 				JLabel playCampaingnLabel = new JLabel(GUI);
-				playCampaingnLabel.setTextString("Campaingn");
+				playCampaingnLabel.setTextString("Campaign");
 
 				// Campain Level
 				JContainer playCampaignContainer = new JContainer(GUI);
@@ -157,6 +175,7 @@ namespace SFML_SpaceSEM.Game
 				// Custom Label
 				JLabel playCustomLabel = new JLabel(GUI);
 				playCustomLabel.setTextString("Custom");
+				playCustomLabel.IsVisable = false;
 
 				// Custom Level
 				JContainer playCustomContainer = new JContainer(GUI);
@@ -168,6 +187,11 @@ namespace SFML_SpaceSEM.Game
 				JCheckbox playCustomLevel2 = new JCheckbox(GUI);
 				JCheckbox playCustomLevel3 = new JCheckbox(GUI);
 				JCheckbox playCustomLevel4 = new JCheckbox(GUI);
+
+				playCustomLevel1.IsVisable = false;
+				playCustomLevel2.IsVisable = false;
+				playCustomLevel3.IsVisable = false;
+				playCustomLevel4.IsVisable = false;
 
 				playCustomLevel1.setTextString("01");
 				playCustomLevel2.setTextString("02");
@@ -205,12 +229,16 @@ namespace SFML_SpaceSEM.Game
 
 				JLabel playRightNameLabel = new JLabel(GUI);
 				playRightNameLabel.setTextString("Name");
+				playRightNameLabel.IsVisable = false;
+
 
 				JLabel playRightHighScoreLabel = new JLabel(GUI);
 				playRightHighScoreLabel.setTextString("HighScore");
+				playRightHighScoreLabel.IsVisable = false;
 
 				JLabel playRightDoneLabel = new JLabel(GUI);
 				playRightDoneLabel.setTextString("Done");
+				playRightDoneLabel.IsVisable = false;
 
 				JButton playRightStartButton = new JButton(GUI);
 				playRightStartButton.setTextString("Start");
@@ -240,16 +268,18 @@ namespace SFML_SpaceSEM.Game
 				musikContainer.Layout = musikContainerLayout;
 
 				JLabel musikLabel = new JLabel(GUI);
-				musikLabel.Text.DisplayedString = "Musik";
+				musikLabel.Text.DisplayedString = "Music";
 
 				OnOffCheckbox musikBox = new OnOffCheckbox(GUI);
 				musikBox.Select();
+				musikBox.Something += MusikBox_Something;
 
-				JSlider musikSlider = new JSlider(GUI);
+				musicSlider = new JSlider(GUI);
+				musicSlider.Something += MusicSlider_Something;
 
 				musikContainer.addElement(musikLabel, JBorderLayout.LEFT);
 				musikContainer.addElement(musikBox, JBorderLayout.CENTER);
-				musikContainer.addElement(musikSlider, JBorderLayout.RIGHT);
+				musikContainer.addElement(musicSlider, JBorderLayout.RIGHT);
 
 				optionContainer.addElement(musikContainer);
 
@@ -265,8 +295,10 @@ namespace SFML_SpaceSEM.Game
 
 				OnOffCheckbox soundBox = new OnOffCheckbox(GUI);
 				soundBox.Select();
+				soundBox.Something += SoundBox_Something;
 
-				JSlider soundSlider = new JSlider(GUI);
+				soundSlider = new JSlider(GUI);
+				soundSlider.Something += SoundSlider_Something;
 
 				soundContainer.addElement(soundLabel, JBorderLayout.LEFT);
 				soundContainer.addElement(soundBox, JBorderLayout.CENTER);
@@ -284,15 +316,18 @@ namespace SFML_SpaceSEM.Game
 
 				JButton resIncButton = new JButton(GUI);
 				resIncButton.Text.DisplayedString = ">";
+				resIncButton.IsVisable = false;
 
 				JButton resDecButton = new JButton(GUI);
 				resDecButton.Text.DisplayedString = "<";
+				resDecButton.IsVisable = false;
 
 				JChooser resChooser = new JChooser(GUI);
 				resChooser.Choose.Add("800 X 800");
 				resChooser.Choose.Add("1000 X 1000");
 				resChooser.Choose.Add("1200 X 1200");
 				resChooser.Next();
+				resChooser.IsVisable = false;
 
 				resIncButton.Something += resChooser.Next;
 				resDecButton.Something += resChooser.Back;
@@ -313,9 +348,11 @@ namespace SFML_SpaceSEM.Game
 
 				JButton screenModeIncButton = new JButton(GUI);
 				screenModeIncButton.Text.DisplayedString = ">";
+				screenModeIncButton.IsVisable = false;
 
 				JButton screenModeDecButton = new JButton(GUI);
 				screenModeDecButton.Text.DisplayedString = "<";
+				screenModeDecButton.IsVisable = false;
 
 				JChooser screenModeLabel = new JChooser(GUI);
 
@@ -323,6 +360,7 @@ namespace SFML_SpaceSEM.Game
 				screenModeLabel.Choose.Add("Window Borderless");
 				screenModeLabel.Choose.Add("Fullscreen");
 				screenModeLabel.Next();
+				screenModeLabel.IsVisable = false;
 
 				screenModeIncButton.Something += screenModeLabel.Next;
 				screenModeDecButton.Something += screenModeLabel.Back;
@@ -342,12 +380,15 @@ namespace SFML_SpaceSEM.Game
 
 				JButton defaultOptionButton = new JButton(GUI);
 				defaultOptionButton.Text.DisplayedString = "Default";
+				defaultOptionButton.IsVisable = false;
 
 				JButton applyOptionButton = new JButton(GUI);
 				applyOptionButton.Text.DisplayedString = "Apply";
+				applyOptionButton.IsVisable = false;
 
 				JButton cancelOptionButton = new JButton(GUI);
 				cancelOptionButton.Text.DisplayedString = "Cancel";
+				cancelOptionButton.IsVisable = false;
 
 				optionBottemContainer.addElement(defaultOptionButton);
 				optionBottemContainer.addElement(applyOptionButton);
@@ -384,6 +425,7 @@ namespace SFML_SpaceSEM.Game
 				// Custom Label
 				JLabel editCustomLabel = new JLabel(GUI);
 				editCustomLabel.setTextString("Custom");
+				editCustomLabel.IsVisable = false;
 
 				// Custom Level
 				JContainer editCustomContainer = new JContainer(GUI);
@@ -491,6 +533,30 @@ namespace SFML_SpaceSEM.Game
 			GUI.RootContainer = rootContainer;
 		}
 
+		private void MusicSlider_Something()
+		{
+			EngineReference.GlobalMusicVolume = (uint) musicSlider.SliderValue;
+			MenuMusic.Volume = EngineReference.GlobalMusicVolume;
+		}
+
+		private void SoundSlider_Something()
+		{
+			EngineReference.GlobalSoundVolume = (uint)soundSlider.SliderValue;
+		}
+
+		private void MusikBox_Something()
+		{
+			EngineReference.GlobalMusicEnabled = !EngineReference.GlobalMusicEnabled;
+			EngineReference.GlobalMusicVolume = (uint) (EngineReference.GlobalMusicEnabled ? 50 : 0);
+			MenuMusic.Volume = EngineReference.GlobalMusicVolume;
+		}
+
+		private void SoundBox_Something()
+		{
+			EngineReference.GlobalSoundEnabled = !EngineReference.GlobalSoundEnabled;
+			EngineReference.GlobalSoundVolume = (uint)(EngineReference.GlobalMusicEnabled ? 50 : 0);
+		}
+
 		public override void OnLevelLoad()
 		{
 			base.OnLevelLoad();
@@ -538,23 +604,27 @@ namespace SFML_SpaceSEM.Game
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
+			MenuMusic.Play();
 		}
 
 		public override void OnGamePause()
 		{
 			base.OnGamePause();
 			GUI.IsActive = false;
+			MenuMusic.Stop();
 		}
 
 		public override void OnGameResume()
 		{
 			base.OnGameResume();
 			GUI.IsActive = true;
+			MenuMusic.Play();
 		}
 
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
+			MenuMusic.Stop();
 		}
 
 		// GUI Functions

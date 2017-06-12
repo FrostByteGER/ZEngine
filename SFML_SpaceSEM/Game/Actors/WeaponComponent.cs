@@ -37,8 +37,8 @@ namespace SFML_SpaceSEM.Game.Actors
 		{
 			if (CurrentCooldownTime > 0.0f) return;
 
-			var fireSound = ParentActor.LevelReference.EngineReference.AssetManager.AudioManager.LoadSound(AssetManager.AssetsPath + "SFX_Laser_01.ogg");
-			fireSound.Volume = ParentActor.LevelReference.EngineReference.GlobalVolume;
+			var fireSound = ParentActor.LevelReference.EngineReference.AssetManager.AudioManager.LoadSound(SoundPoolManager.SFXPath + "SFX_Laser_01.ogg");
+			fireSound.Volume = ParentActor.LevelReference.EngineReference.GlobalSoundVolume;
 			fireSound.Play();
 
 			for (int i = 0; i < BulletsPerShot; ++i)

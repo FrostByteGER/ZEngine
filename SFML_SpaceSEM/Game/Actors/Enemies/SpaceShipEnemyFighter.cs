@@ -28,9 +28,9 @@ namespace SFML_SpaceSEM.Game.Actors.Enemies
 
 		public override void OnDeath()
 		{
-			var killSound = LevelReference.EngineReference.AssetManager.AudioManager.LoadSound(AssetManager.AssetsPath + "SFX_Explosion_01.ogg");
+			var killSound = LevelReference.EngineReference.AssetManager.AudioManager.LoadSound(SoundPoolManager.SFXPath + "SFX_Explosion_01.ogg");
 			//var fireSound = new Sound(new SoundBuffer(AssetManager.AssetsPath + "SFX_Laser_01.ogg"));
-			killSound.Volume = LevelReference.EngineReference.GlobalVolume;
+			killSound.Volume = LevelReference.EngineReference.GlobalSoundVolume;
 			killSound.Play();
 			LevelReference.DestroyActor(this);
 			base.OnDeath();

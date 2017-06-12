@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.IO;
-using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_SpaceSEM.Game.Actors;
 using SFML_SpaceSEM.Game.Players;
@@ -24,6 +24,8 @@ namespace SFML_SpaceSEM.Game
 		public List<SpaceSpawnerActor> Spawners { get; set; } = new List<SpaceSpawnerActor>();
 
 		public uint SpaceLevelID { get; set; } = 1;
+
+		public Music GameMusic { get; set; }
 
 		protected override void InitLevel()
 		{
@@ -83,6 +85,11 @@ namespace SFML_SpaceSEM.Game
 			RegisterActor(topBorder);
 			RegisterActor(bottomBorder);
 			RegisterPlayer(playerController);
+
+			GameMusic = SoundPoolManager.LoadMusic(SoundPoolManager.SFXPath + "BGM_Battle_0" + SpaceLevelID + ".ogg");
+
+			GameMusic.Loop = true;
+			GameMusic.Volume = EngineReference.GlobalMusicVolume;
 		}
 
 		protected override void LevelTick(float deltaTime)
@@ -99,21 +106,25 @@ namespace SFML_SpaceSEM.Game
 		public override void OnGameStart()
 		{
 			base.OnGameStart();
+			GameMusic.Play();
 		}
 
 		public override void OnGamePause()
 		{
 			base.OnGamePause();
+			GameMusic.Pause();
 		}
 
 		public override void OnGameResume()
 		{
 			base.OnGameResume();
+			GameMusic.Play();
 		}
 
 		public override void OnGameEnd()
 		{
 			base.OnGameEnd();
+			GameMusic.Stop();
 		}
 
 
