@@ -8,6 +8,8 @@ namespace SFML_SpaceSEM.IO
 	public struct SpaceLevelShipDataWrapper
 	{
 		public Type ShipType { get; set; }
+		public uint Healthpoints { get; set; }
+		public uint Score { get; set; }
 		public TVector2f Position { get; set; }
 
 		public TVector2f Velocity { get; set; }

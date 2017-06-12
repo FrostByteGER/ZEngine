@@ -372,7 +372,10 @@ namespace SFML_Engine.Engine.Physics
 
 		internal void ShutdownPhysicsEngine()
 		{
-			
+			CanTick = false;
+			PhysicsWorld.Enabled = false;
+			PhysicsWorld.ClearForces();
+			PhysicsWorld.Clear();
 		}
 
 		public static TVector2f ToGameUnits(TVector2f physicsUnits)

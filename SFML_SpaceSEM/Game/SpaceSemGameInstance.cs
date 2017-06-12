@@ -30,7 +30,7 @@ namespace SFML_SpaceSEM.Game
 		public static SoundBuffer BlockHitBuffer { get; set; }
 		public SpaceSEMGameInstance()
 		{	
-			MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/arial.ttf");
+			MainGameFont = new SFML.Graphics.Font("Assets/SFML_SpaceSEM/Main.ttf");
 		}
 	}
 }

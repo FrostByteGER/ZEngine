@@ -33,8 +33,12 @@ namespace SFML_SpaceSEM.Game.Actors
 					var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
 					spawnedRoot.CollisionType = Category.Cat3;
 					spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+					spawnedRoot.CollisionResponseChannels &= ~Category.Cat1;
 					spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
 					spawned.ActorName = "Enemy Fighter";
+					spawned.Healthpoints = ship.Healthpoints;
+					spawned.MaxHealthpoints = ship.Healthpoints;
+					spawned.Score = ship.Score;
 					spawned.Position = ship.Position;
 					spawned.Velocity = ship.Velocity;
 					foreach (var weapon in spawned.WeaponSystems)
@@ -53,8 +57,12 @@ namespace SFML_SpaceSEM.Game.Actors
 				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
 				spawnedRoot.CollisionType = Category.Cat3;
 				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat1;
 				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
-				spawned.ActorName = "Enemy Fighter";
+				spawned.ActorName = "Enemy Corvette";
+				spawned.Healthpoints = ship.Healthpoints;
+				spawned.MaxHealthpoints = ship.Healthpoints;
+				spawned.Score = ship.Score;
 				spawned.Position = ship.Position;
 				spawned.Velocity = ship.Velocity;
 				foreach (var weapon in spawned.WeaponSystems)
@@ -73,8 +81,12 @@ namespace SFML_SpaceSEM.Game.Actors
 				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
 				spawnedRoot.CollisionType = Category.Cat3;
 				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat1;
 				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
-				spawned.ActorName = "Enemy Fighter";
+				spawned.ActorName = "Enemy Frigate";
+				spawned.Healthpoints = ship.Healthpoints;
+				spawned.MaxHealthpoints = ship.Healthpoints;
+				spawned.Score = ship.Score;
 				spawned.Position = ship.Position;
 				spawned.Velocity = ship.Velocity;
 				foreach (var weapon in spawned.WeaponSystems)
@@ -93,8 +105,12 @@ namespace SFML_SpaceSEM.Game.Actors
 				var spawnedRoot = spawned.GetRootComponent<PhysicsComponent>();
 				spawnedRoot.CollisionType = Category.Cat3;
 				spawnedRoot.CollisionResponseChannels &= ~Category.Cat2;
+				spawnedRoot.CollisionResponseChannels &= ~Category.Cat1;
 				spawnedRoot.CollisionResponseChannels &= ~spawnedRoot.CollisionType;
-				spawned.ActorName = "Enemy Fighter";
+				spawned.ActorName = "Enemy Destroyer";
+				spawned.Healthpoints = ship.Healthpoints;
+				spawned.MaxHealthpoints = ship.Healthpoints;
+				spawned.Score = ship.Score;
 				spawned.Position = ship.Position;
 				spawned.Velocity = ship.Velocity;
 				foreach (var weapon in spawned.WeaponSystems)

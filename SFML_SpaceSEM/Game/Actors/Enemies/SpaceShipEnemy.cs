@@ -1,11 +1,10 @@
-﻿using System;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
 
-namespace SFML_SpaceSEM.Game.Actors
+namespace SFML_SpaceSEM.Game.Actors.Enemies
 {
 	public abstract class SpaceShipEnemy : SpaceShipActor
 	{
@@ -17,11 +16,16 @@ namespace SFML_SpaceSEM.Game.Actors
 			CollisionCallbacksEnabled = true;
 		}
 
-		public abstract void OnDeath();
+		public virtual void OnDeath()
+		{
+			--(LevelReference.GameMode as SpaceGameMode).EnemiesRemaining;
+		}
 
 		public override void OnCollide(Fixture self, Fixture other, Contact contactInfo)
 		{
+			
 			var otherComp = other.Body.UserData as ActorComponent;
+			if (otherComp?.ParentActor.ActorName == "Bottom Border") OnDeath();
 			var otherActor = otherComp?.ParentActor as SpaceBullet;
 			if (otherActor != null)
 			{

@@ -29,6 +29,9 @@ namespace SFML_SpaceSEM.Game
 		{
 			base.InitLevel();
 
+			var gameMode = new SpaceGameMode();
+			GameMode = gameMode;
+
 			var playerActor = new SpaceShipPlayer(new Sprite(new Texture(AssetManager.AssetsPath + "Player_01.png")), this);
 			playerActor.ActorName = "Player 1";
 			playerActor.Position = new TVector2f(0.0f, 300.0f);
@@ -36,30 +39,31 @@ namespace SFML_SpaceSEM.Game
 			var playerController = new SpaceGamePlayerController(playerActor);
 			playerController.SetCameraSize(EngineReference.EngineWindowWidth, EngineReference.EngineWindowHeight);
 
-
 			var wrapperData = JSONManager.LoadObject<SpaceLevelDataWrapper>(AssetManager.LevelsPath + "level_" + SpaceLevelID + ".json");
 			foreach (var spawnerData in wrapperData.Spawners)
 			{
 				var spawner = new SpaceSpawnerActor(this);
 				spawner.ActivationTime = spawnerData.ActivationTime;
 				spawner.Ships = spawnerData.Ships;
+				gameMode.EnemiesRemaining += (uint)spawnerData.Ships.Count;
 				Spawners.Add(spawner);
 				RegisterActor(spawner);
 			}
 
 
-			var background = new BackgroundActor(new Sprite(new Texture(AssetManager.AssetsPath + "Background.png")), this);
+
+			var background = new BackgroundActor(new Sprite(new Texture(AssetManager.AssetsPath + "Background_0" + SpaceLevelID + ".png")), this);
 			background.ActorName = "Background";
 
 
 			var leftBorder = new Actor(this);
 			leftBorder.ActorName = "Left Border";
-			PhysicsEngine.ConstructRectangleCollisionComponent(leftBorder, true, new TVector2f(-450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static, Category.Cat2, Category.All);
+			PhysicsEngine.ConstructRectangleCollisionComponent(leftBorder, true, new TVector2f(-450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static, Category.Cat4, Category.All);
 			leftBorder.Visible = true;
 
 			var rightBorder = new Actor(this);
 			rightBorder.ActorName = "Right Border";
-			PhysicsEngine.ConstructRectangleCollisionComponent(rightBorder, true, new TVector2f(450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static, Category.Cat2, Category.All);
+			PhysicsEngine.ConstructRectangleCollisionComponent(rightBorder, true, new TVector2f(450.0f, 0.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(50.0f, 400.0f), BodyType.Static, Category.Cat4, Category.All);
 			rightBorder.Visible = true;
 
 			var topBorder = new Actor(this);
@@ -69,7 +73,7 @@ namespace SFML_SpaceSEM.Game
 
 			var bottomBorder = new Actor(this);
 			bottomBorder.ActorName = "Bottom Border";
-			PhysicsEngine.ConstructRectangleCollisionComponent(bottomBorder, true, new TVector2f(0.0f, 450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static, Category.Cat2, Category.All);
+			PhysicsEngine.ConstructRectangleCollisionComponent(bottomBorder, true, new TVector2f(0.0f, 450.0f), 0.0f, new TVector2f(1.0f, 1.0f), 0.0f, new TVector2f(400.0f, 50.0f), BodyType.Static, Category.Cat4, Category.All);
 			bottomBorder.Visible = true;
 
 			RegisterActor(background);

@@ -71,6 +71,8 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFighter),
+							Healthpoints = 4,
+							Score = 10,
 							Position = new TVector2f(position, -400),
 							BulletDamage = 1,
 							BulletSpeed = 150,
@@ -85,6 +87,8 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyCorvette),
+							Healthpoints = 7,
+							Score = 30,
 							Position = new TVector2f(position, -400),
 							BulletDamage = 2,
 							BulletSpeed = 120,
@@ -99,6 +103,8 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyFrigate),
+							Healthpoints = 11,
+							Score = 70,
 							Position = new TVector2f(position, -400),
 							BulletDamage = 3,
 							BulletSpeed = 100,
@@ -113,6 +119,8 @@ namespace SFML_SpaceSEM
 						shipData = new SpaceLevelShipDataWrapper
 						{
 							ShipType = typeof(SpaceShipEnemyDestroyer),
+							Healthpoints = 15,
+							Score = 120,
 							Position = new TVector2f(position, -400),
 							BulletDamage = 5,
 							BulletSpeed = 65,

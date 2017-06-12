@@ -33,6 +33,7 @@ namespace SFML_SpaceSEM.Game.Actors.Enemies
 			killSound.Volume = LevelReference.EngineReference.GlobalVolume;
 			killSound.Play();
 			LevelReference.DestroyActor(this);
+			base.OnDeath();
 		}
 
 		public override void FireWeapons()

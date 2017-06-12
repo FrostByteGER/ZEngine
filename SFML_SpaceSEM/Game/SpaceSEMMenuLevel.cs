@@ -73,7 +73,7 @@ namespace SFML_SpaceSEM.Game
 
 			// Title
 			title = new JLabel(GUI);
-			title.Text.DisplayedString = "Game Title";
+			title.Text.DisplayedString = "Space SEM";
 
 			// Main Menue
 			{
