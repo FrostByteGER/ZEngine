@@ -1,4 +1,4 @@
-﻿namespace SFML_TowerDefense.Game
+﻿namespace SFML_TowerDefense.Source
 {
 	public class TDGameInfo : SFML_Engine.Engine.Game.GameInfo
 	{
