@@ -190,7 +190,10 @@ namespace SFML_Engine.Engine.Game
 	    internal virtual void ShutdownLevel()
 	    {
 		    LevelLoaded = false;
-		    PhysicsEngine.ShutdownPhysicsEngine();
+
+		    UnregisterActors();
+			UnregisterPlayers();
+			PhysicsEngine.ShutdownPhysicsEngine();
 			Dispose();
 	    }
 
@@ -214,6 +217,25 @@ namespace SFML_Engine.Engine.Game
 			}
 			Actors.Add(actor);
 		}
+
+	    public void UnregisterActors()
+	    {
+			Console.WriteLine("Removing all Actors!");
+
+			foreach (var actor in Actors)
+			{
+				actor.OnActorDestroy();
+				foreach (var comp in actor.Components)
+				{
+					var physComp = comp as PhysicsComponent;
+					if (physComp != null)
+					{
+						PhysicsEngine.UnregisterPhysicsComponent(physComp);
+					}
+				}
+			}
+		    Actors.Clear();
+	    }
 
 		public bool UnregisterActor(Actor actor)
 		{
@@ -285,12 +307,12 @@ namespace SFML_Engine.Engine.Game
 
 	    public void SpawnActor(Actor instigator, Actor actor)
 	    {
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actor, LevelID)));
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actor, this)));
 		}
 
 		public void SpawnActor(Actor actor)
 		{
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, LevelID)));
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, this)));
 		}
 
 		public void PauseActor(Actor instigator, Actor actor)
@@ -334,6 +356,16 @@ namespace SFML_Engine.Engine.Game
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
 			pc.MarkedForInputRegistering = active;
+		}
+
+		public void UnregisterPlayers()
+		{
+			Console.WriteLine("Removing all Players!");
+			foreach (var pc in Players)
+			{
+				pc.IsActive = false;
+			}
+			Players.Clear();
 		}
 
 		public bool UnregisterPlayer(PlayerController pc)

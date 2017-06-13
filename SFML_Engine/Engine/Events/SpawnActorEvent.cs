@@ -8,7 +8,7 @@
 
 		public override void ExecuteEvent()
 		{
-			Core.Engine.Instance.ActiveLevel.RegisterActor(Parameters.SpawnableActor);
+			Parameters.LevelRef.RegisterActor(Parameters.SpawnableActor);
 			Parameters.SpawnableActor.OnGameStart();
 		}
 	}

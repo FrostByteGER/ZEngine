@@ -9,7 +9,7 @@
 		public override void ExecuteEvent()
 		{
 			var player = Parameters.SpawnablePlayer;
-			Core.Engine.Instance.ActiveLevel.RegisterPlayer(player);
+			Parameters.LevelRef.RegisterPlayer(player);
 			player.IsActive = player.MarkedForInputRegistering;
 			player.MarkedForInputRegistering = false;
 			player.OnGameStart();

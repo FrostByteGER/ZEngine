@@ -149,6 +149,8 @@
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\Material.cs" />
     <Compile Include="Engine\Graphics\SpriteActor.cs" />
+    <Compile Include="Engine\Graphics\TextActor.cs" />
+    <Compile Include="Engine\Graphics\TextComponent.cs" />
     <Compile Include="Engine\IO\JSONManager.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigManager.cs" />
