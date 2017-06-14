@@ -50,6 +50,8 @@ namespace SFML_Engine.Engine.Game
 
 		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
 
+	    public TimerManager TimerManager { get; private set; } = new TimerManager();
+
 		/// <summary>
 		/// Count of Layers. ZERO-BASED! ACTUAL LAYER COUNT IS LAYERS+1.
 		/// <para>Layers are sorted from front to back. So 0 is the front and Layers.MaxValue is the back. Usually the most front layer(0) is the UI layer.</para>
@@ -80,8 +82,8 @@ namespace SFML_Engine.Engine.Game
 	            if (!actor.CanTick) continue;
 				actor.Tick(deltaTime);
             }
-	        if (!GameMode.CanTick) return;
-			GameMode.Tick(deltaTime);
+	        if (GameMode.CanTick) GameMode.Tick(deltaTime);
+	        if (TimerManager.CanTick) TimerManager.Tick(deltaTime);
         }
 
         protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
@@ -390,6 +392,21 @@ namespace SFML_Engine.Engine.Game
 		public T FindPlayer<T>(uint playerID) where T : PlayerController
 		{
 			return (T)Players.Find(x => x.ID == playerID);
+		}
+
+	    public void RegisterTimer(Timer timer)
+	    {
+		    TimerManager.AddTimer(timer);
+	    }
+
+		public void UnregisterTimer(Timer timer)
+		{
+			TimerManager.RemoveTimer(timer);
+		}
+
+		public void UnregisterTimer(int index)
+		{
+			TimerManager.RemoveTimer(index);
 		}
 
 		protected bool Equals(Level other)
