@@ -23,10 +23,7 @@ namespace SFML_Engine.Engine.Game
 		private List<Actor> _actors = new List<Actor>();
 
 	    [JsonIgnore]
-	    internal ReadOnlyCollection<Actor> Actors
-	    {
-		    get { return new ReadOnlyCollection<Actor>(_actors); }
-	    }
+	    internal ReadOnlyCollection<Actor> Actors => new ReadOnlyCollection<Actor>(_actors);
 
 	    /// <summary>
 	    /// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.

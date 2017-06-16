@@ -151,11 +151,14 @@
     <Compile Include="Engine\Game\TimerManager.cs" />
     <Compile Include="Engine\Graphics\AnimationComponent.cs" />
     <Compile Include="Engine\Graphics\AnimationSprite.cs" />
+    <Compile Include="Engine\Graphics\InstancedRenderComponent.cs" />
+    <Compile Include="Engine\Graphics\InstancedSpriteComponent.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\Material.cs" />
     <Compile Include="Engine\Graphics\SpriteActor.cs" />
+    <Compile Include="Engine\Graphics\SpriteSheet.cs" />
     <Compile Include="Engine\Graphics\TextActor.cs" />
     <Compile Include="Engine\Graphics\TextComponent.cs" />
     <Compile Include="Engine\IO\Config.cs" />
