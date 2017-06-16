@@ -149,6 +149,8 @@
     <Compile Include="Engine\Game\LevelInfo.cs" />
     <Compile Include="Engine\Game\Timer.cs" />
     <Compile Include="Engine\Game\TimerManager.cs" />
+    <Compile Include="Engine\Graphics\AnimationComponent.cs" />
+    <Compile Include="Engine\Graphics\AnimationSprite.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
