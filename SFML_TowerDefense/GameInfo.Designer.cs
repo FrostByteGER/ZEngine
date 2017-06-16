@@ -76,5 +76,59 @@ namespace SFML_TowerDefense {
                 return ((uint)(this["GameHotfixVersion"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Textures")]
+        public string TextureFolder {
+            get {
+                return ((string)(this["TextureFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SFX")]
+        public string SoundFolder {
+            get {
+                return ((string)(this["SoundFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Configs")]
+        public string ConfigFolder {
+            get {
+                return ((string)(this["ConfigFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Fonts")]
+        public string FontFolder {
+            get {
+                return ((string)(this["FontFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shaders")]
+        public string ShaderFolder {
+            get {
+                return ((string)(this["ShaderFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Levels")]
+        public string LevelFolder {
+            get {
+                return ((string)(this["LevelFolder"]));
+            }
+        }
     }
 }

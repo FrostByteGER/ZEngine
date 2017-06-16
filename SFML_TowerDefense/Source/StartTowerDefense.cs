@@ -1,9 +1,21 @@
-﻿namespace SFML_TowerDefense.Source
+﻿using System;
+using SFML.Graphics;
+using SFML_Engine.Engine.Core;
+
+namespace SFML_TowerDefense.Source
 {
-	class StartTowerDefense
+	internal sealed class StartTowerDefense
 	{
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
+			var engine = Engine.Instance;
+			engine.EngineWindowWidth = 800;
+			engine.EngineWindowHeight = 800;
+			engine.GameInfo = new TDGameInfo();
+			engine.InitEngine();
+
+			engine.StartEngine();
+			Console.ReadLine();
 		}
 	}
 }
