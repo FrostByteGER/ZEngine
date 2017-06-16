@@ -96,6 +96,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Schema, Version=3.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.1\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
+    </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
@@ -153,6 +156,7 @@
     <Compile Include="Engine\Graphics\SpriteActor.cs" />
     <Compile Include="Engine\Graphics\TextActor.cs" />
     <Compile Include="Engine\Graphics\TextComponent.cs" />
+    <Compile Include="Engine\IO\Config.cs" />
     <Compile Include="Engine\IO\JSONManager.cs" />
     <Compile Include="Engine\IO\AssetManager.cs" />
     <Compile Include="Engine\IO\ConfigManager.cs" />

@@ -8,7 +8,7 @@ namespace SFML_Engine.Engine.IO
 {
 	public class SoundPoolManager
 	{
-		public static string SFXPath { get; } = AssetManager.AssetsPath + "SFX/";
+		public static string SFXPath { get; } = AssetManager.GameAssetsPath + "SFX/";
 
 		private readonly Dictionary<string, SoundBuffer> _soundBufferPool = new Dictionary<string, SoundBuffer>();
 		public ReadOnlyDictionary<string, SoundBuffer> SoundBufferPool => new ReadOnlyDictionary<string, SoundBuffer>(_soundBufferPool);

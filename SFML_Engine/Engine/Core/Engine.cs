@@ -55,67 +55,49 @@ namespace SFML_Engine.Engine.Core
 
 
 		// Engine OpenGL Settings
-		public uint DepthBufferSize { get; internal set; }    = 24;
-	    public uint StencilBufferSize { get; internal set; }  = 8;
-	    public uint AntiAliasingLevel { get; internal set; }  = 4;
-	    public uint MajorOpenGLVersion { get; internal set; } = 4;
-	    public uint MinorOpenGLVersion { get; internal set; } = 5;
-	    public ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
-	    public bool SRGBCompatible { get; internal set; }     = false;
+		public uint DepthBufferSize { get; internal set; }     = 24;
+	    public uint StencilBufferSize { get; internal set; }   = 8;
+	    public uint AntiAliasingLevel { get; internal set; }   = 4;
+	    public uint MajorOpenGLVersion { get; internal set; }  = 4;
+	    public uint MinorOpenGLVersion { get; internal set; }  = 5;
+	    private ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
+	    public bool SRGBCompatible { get; internal set; }      = false;
 
 
 		// Engine Settings
-	    public uint EngineWindowHeight { get; set; } = 800;
-	    public uint EngineWindowWidth { get; set; }  = 600;
-		public bool VSyncEnabled { get; set; }       = false;
-		public uint FPSLimit { get; set; }           = 120;
-
-
-		// Other Settings
-		private bool _globalVolumeEnabled = true;
-		public bool GlobalVolumeEnabled
+	    public uint EngineWindowHeight { get; set; }        = 800;
+	    public uint EngineWindowWidth { get; set; }         = 600;
+		public bool VSyncEnabled { get; set; }              = false;
+		public uint FPSLimit { get; set; }                  = 120;
+	    public bool EngineInitialized { get; private set; } = false;
+		private bool _pauseEngineOnWindowFocusLose          = false;
+		public bool PauseEngineOnWindowFocusLose
 	    {
-		    get => _globalVolumeEnabled;
-		    set {_globalVolumeEnabled = value;}
+		    get => _pauseEngineOnWindowFocusLose;
+		    set
+		    {
+				if (!value && EngineInitialized)
+				{
+					_engineWindow.LostFocus -= OnEngineWindowFocusLost;
+					_engineWindow.GainedFocus -= OnEngineWindowFocusGained;
+				}
+				else if (!_pauseEngineOnWindowFocusLose && EngineInitialized)
+				{
+					_engineWindow.LostFocus += OnEngineWindowFocusLost;
+					_engineWindow.GainedFocus += OnEngineWindowFocusGained;
+				}
+				_pauseEngineOnWindowFocusLose = value;
+		    }
 	    }
 
-	    private uint _globalVolume = 5;
-		public uint GlobalVolume
-	    {
-		    get => _globalVolume;
-		    set { _globalVolume = value; }
-	    }
 
-	    private bool _globalMusicEnabled = true;
-		public bool GlobalMusicEnabled
-	    {
-		    get => _globalMusicEnabled;
-		    set { _globalMusicEnabled = value; }
-	    }
-
-	    private uint _globalMusicVolume = 5;
-		public uint GlobalMusicVolume
-	    {
-		    get => _globalMusicVolume;
-		    set { _globalMusicVolume = value; }
-	    }
-
-		private bool _globalSoundEnabled = true;
-		public bool GlobalSoundEnabled
-	    {
-		    get => _globalSoundEnabled;
-		    set { _globalSoundEnabled = value; }
-	    }
-
-	    private uint _globalSoundVolume = 5;
-		public uint GlobalSoundVolume
-	    {
-		    get => _globalSoundVolume;
-		    set { _globalSoundVolume = value; }
-	    }
+	    // Other Settings
+	    public uint GlobalVolume { get; set; }      = 100;
+	    public uint GlobalMusicVolume { get; set; } = 100;
+	    public uint GlobalSoundVolume { get; set; } = 100;
 
 	    public bool RequestTermination { get; set; } = false;
-	    public bool EngineTicking { get; set; } = true;
+	    public bool EngineTicking { get; set; }      = true;
 
 
 		private Engine()
@@ -125,11 +107,9 @@ namespace SFML_Engine.Engine.Core
 
         public void InitEngine()
         {
-	        ContextSettings settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType, SRGBCompatible);
+	        var settings = new ContextSettings(DepthBufferSize, StencilBufferSize, AntiAliasingLevel, MajorOpenGLVersion, MinorOpenGLVersion, OpenGLContextType, SRGBCompatible);
             _engineWindow = new RenderWindow(new VideoMode(EngineWindowWidth, EngineWindowHeight), GameInfo.GenerateFullGameName() , Styles.Titlebar | Styles.Close | Styles.Resize , settings);
             _engineWindow.Closed += OnEngineWindowClose;
-	        _engineWindow.LostFocus += OnEngineWindowFocusLost;
-			_engineWindow.GainedFocus += OnEngineWindowFocusGained;
 			_engineWindow.Resized += OnEngineWindowResized;
             _engineWindow.SetVerticalSyncEnabled(VSyncEnabled);
 			_engineWindow.SetFramerateLimit(FPSLimit);
@@ -138,8 +118,16 @@ namespace SFML_Engine.Engine.Core
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();
 	        AssetManager = new AssetManager();
+			AssetManager.TextureFolderName = GameInfo.GameTextureFolderName;
+			AssetManager.SoundFolderName = GameInfo.GameSoundFolderName;
+			AssetManager.ConfigFolderName = GameInfo.GameConfigFolderName;
+			AssetManager.FontFolderName = GameInfo.GameFontFolderName;
+			AssetManager.ShaderFolderName = GameInfo.GameShaderFolderName;
+			AssetManager.LevelFolderName = GameInfo.GameLevelFolderName;
+			AssetManager.InitPackages();
 			InputManager = new InputManager();
 			InputManager.RegisterEngineInput(ref _engineWindow);
+	        EngineInitialized = true;
 
         }
 
@@ -156,12 +144,12 @@ namespace SFML_Engine.Engine.Core
 
 		private void OnEngineWindowFocusGained(object sender, EventArgs e)
 		{
-			//ActiveLevel.OnGameResume();
+			ActiveLevel.OnGameResume();
 		}
 
 		private void OnEngineWindowFocusLost(object sender, EventArgs e)
 	    {
-			//ActiveLevel.OnGamePause();
+			ActiveLevel.OnGamePause();
 		}
 
 		public void StartEngine()

@@ -10,6 +10,13 @@
 		public virtual uint GameMinorVersion { get; protected set; } = 0;
 		public virtual uint GameHotfixVersion { get; protected set; } = 0;
 
+		public virtual string GameTextureFolderName { get; protected set; } = "Textures";
+		public virtual string GameSoundFolderName { get; protected set; } = "Sounds";
+		public virtual string GameConfigFolderName { get; protected set; } = "Configs";
+		public virtual string GameFontFolderName { get; protected set; } = "Fonts";
+		public virtual string GameShaderFolderName { get; protected set; } = "Shaders";
+		public virtual string GameLevelFolderName { get; protected set; } = "Levels";
+
 		public string GameFullName = "GENERATE_ME";
 
 		public virtual string GenerateFullGameName()

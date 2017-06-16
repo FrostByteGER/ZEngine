@@ -8,7 +8,7 @@ namespace SFML_Engine.Engine.IO
 {
 	public class TexturePoolManager
 	{
-		public static string TexturesPath { get; } = AssetManager.AssetsPath + "Textures/";
+		public static string TexturesPath { get; } = AssetManager.GameAssetsPath + "Textures/";
 
 		private readonly Dictionary<string, Texture> _texturePool = new Dictionary<string, Texture>();
 		public ReadOnlyDictionary<string, Texture> TexturePool => new ReadOnlyDictionary<string, Texture>(_texturePool);
