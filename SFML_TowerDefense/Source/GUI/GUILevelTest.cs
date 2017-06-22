@@ -2,13 +2,8 @@
 using SFML.System;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.JUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SFML_TowerDefense.Source.Game.GUI
+namespace SFML_TowerDefense.Source.GUI
 {
 	public class GUILevelTest : Level 
 	{

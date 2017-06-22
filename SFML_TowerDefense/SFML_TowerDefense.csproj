@@ -39,6 +39,7 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\GUI\TileElement.cs" />
     <Compile Include="Source\Game\TDActor.cs" />
     <Compile Include="Source\Game\TDActorComponent.cs" />
     <Compile Include="Source\Game\TDBuilding.cs" />
