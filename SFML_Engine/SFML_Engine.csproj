@@ -210,7 +210,9 @@
     <Compile Include="Engine\Core\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
     <Compile Include="Engine\Utility\TTransformable.cs" />
+    <Compile Include="Engine\Utility\TVector2.cs" />
     <Compile Include="Engine\Utility\TVector2f.cs" />
+    <Compile Include="Engine\Utility\TVector2i.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EngineInfo.Designer.cs">
       <AutoGen>True</AutoGen>
