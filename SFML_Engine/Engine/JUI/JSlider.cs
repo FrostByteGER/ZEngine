@@ -23,9 +23,9 @@ namespace SFML_Engine.Engine.JUI
 			Cross.FillColor = gui.DefaultElementColor;
 		}
 
-		public override void Drag(object sender, Vector2i position)
+		public override void Drag(Vector2i position)
 		{
-			base.Drag(sender, position);
+			base.Drag(position);
 			if (DisplayTyp == HORIZONTAL)
 			{
 				SliderValue = (((float)position.X) - Position.X) / Size.X;

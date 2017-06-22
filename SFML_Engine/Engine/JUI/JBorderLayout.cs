@@ -19,12 +19,9 @@ namespace SFML_Engine.Engine.JUI
 
 		public JBorderLayout(JContainer container) : base(container)
 		{
-			//
-			Console.WriteLine(container.Elements.Count);
 			for (int i = 0; 5 >= container.Elements.Count; i++)
 			{
 				Container.Elements.Insert(i,null);
-				Console.WriteLine(container.Elements.Count);
 			}
 		}
 
@@ -32,28 +29,35 @@ namespace SFML_Engine.Engine.JUI
 		{
 			if (Container.Elements[TOP] != null)
 			{
-				Container.Elements[TOP].ReSize(Container.Position
-					, new Vector2f(Container.Size.X, Container.Size.Y * TopSize));
+				//Container.Elements[TOP].ReSize(Container.Position
+				//	, new Vector2f(Container.Size.X, Container.Size.Y * TopSize));
+
+				setElementSizeAndPosition(TOP, Container.Position, new Vector2f(Container.Size.X, Container.Size.Y * TopSize));
 			}
 			if (Container.Elements[BOTTOM] != null)
 			{
-				Container.Elements[BOTTOM].ReSize(new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * (1 - BottemSize)),
-					new Vector2f(Container.Size.X, Container.Size.Y * BottemSize));
+				//Container.Elements[BOTTOM].ReSize(new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * (1 - BottemSize)),
+				//	new Vector2f(Container.Size.X, Container.Size.Y * BottemSize));
+
+				setElementSizeAndPosition(BOTTOM, new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * (1 - BottemSize)), new Vector2f(Container.Size.X, Container.Size.Y * BottemSize));
 			}
 			if (Container.Elements[LEFT] != null)
 			{
-				Container.Elements[LEFT].ReSize(new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * TopSize),
-					new Vector2f(Container.Size.X * LeftSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
-
+				//Container.Elements[LEFT].ReSize(new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * TopSize),
+				//	new Vector2f(Container.Size.X * LeftSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
+				setElementSizeAndPosition(LEFT, new Vector2f(Container.Position.X, Container.Position.Y + Container.Size.Y * TopSize), new Vector2f(Container.Size.X * LeftSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
 			}
 			if (Container.Elements[RIGHT] != null)
 			{
-				Container.Elements[RIGHT].ReSize(new Vector2f(Container.Position.X + Container.Size.X * (1 - RightSize), Container.Position.Y + Container.Size.Y * TopSize)
-					, new Vector2f(Container.Size.X * RightSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
+				//Container.Elements[RIGHT].ReSize(new Vector2f(Container.Position.X + Container.Size.X * (1 - RightSize), Container.Position.Y + Container.Size.Y * TopSize)
+				//	, new Vector2f(Container.Size.X * RightSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
+				setElementSizeAndPosition(RIGHT, new Vector2f(Container.Position.X + Container.Size.X * (1 - RightSize), Container.Position.Y + Container.Size.Y * TopSize), new Vector2f(Container.Size.X * RightSize, Container.Size.Y - Container.Size.Y * TopSize - Container.Size.Y * BottemSize));
 			}
 			if (Container.Elements[CENTER] != null)
 			{
-				Container.Elements[CENTER].ReSize(new Vector2f(Container.Position.X + Container.Size.X * LeftSize, Container.Position.Y + Container.Size.Y * TopSize),
+				//Container.Elements[CENTER].ReSize(new Vector2f(Container.Position.X + Container.Size.X * LeftSize, Container.Position.Y + Container.Size.Y * TopSize),
+				//	new Vector2f(Container.Size.X * (1 - (LeftSize + RightSize)), Container.Size.Y * (1 - (TopSize + BottemSize))));
+				setElementSizeAndPosition(CENTER, new Vector2f(Container.Position.X + Container.Size.X * LeftSize, Container.Position.Y + Container.Size.Y * TopSize),
 					new Vector2f(Container.Size.X * (1 - (LeftSize + RightSize)), Container.Size.Y * (1 - (TopSize + BottemSize))));
 			}
 		}

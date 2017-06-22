@@ -165,6 +165,7 @@
     <Compile Include="Engine\IO\TexturePoolManager.cs" />
     <Compile Include="Engine\JUI\JBorderLayout.cs" />
     <Compile Include="Engine\JUI\JChooser.cs" />
+    <Compile Include="Engine\JUI\JDistanceContainer.cs" />
     <Compile Include="Engine\JUI\JGridLayout.cs" />
     <Compile Include="Engine\JUI\JGUI.cs" />
     <Compile Include="Engine\IO\IControllable.cs" />

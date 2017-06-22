@@ -1,6 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
 using SFML_Engine.Engine.Core;
+using SFML_TowerDefense.Source.Game.GUI;
 
 namespace SFML_TowerDefense.Source
 {
@@ -13,6 +14,8 @@ namespace SFML_TowerDefense.Source
 			engine.EngineWindowHeight = 800;
 			engine.GameInfo = new TDGameInfo();
 			engine.InitEngine();
+
+			engine.LoadLevel(new GUILevelTest());
 
 			engine.StartEngine();
 			Console.ReadLine();

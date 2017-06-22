@@ -1,4 +1,5 @@
 ﻿using SFML.System;
+using System;
 
 namespace SFML_Engine.Engine.JUI
 {
@@ -12,6 +13,15 @@ namespace SFML_Engine.Engine.JUI
 			Container.Layout = this;
 		}
 
+		protected void setElementSizeAndPosition(int eindex, Vector2f p, Vector2f s)
+		{
+
+			Container.Elements[eindex].ReSize(p + Container.Margin.GetSizeWithDistanceTopLeft(Container.Size), s - (Container.Margin.GetSizeWithDistanceTopLeft(Container.Size) + Container.Margin.GetSizeWithDistanceBottemRight(Container.Size)));
+
+			//Container.Elements[eindex].Position = ;
+			//Container.Elements[eindex].Size = ;
+		}
+
 		public virtual void ReSize()
 		{
 			Vector2f size = new Vector2f(Container.Box.Size.X, Container.Box.Size.Y/ Container.Elements.Count);
@@ -20,7 +30,9 @@ namespace SFML_Engine.Engine.JUI
 			{
 				if (Container.Elements[i] != null)
 				{
-					Container.Elements[i].ReSize(Container.Box.Position + new Vector2f(0, size.Y * i), size);
+					//Container.Elements[i].ReSize(Container.Box.Position + new Vector2f(0, size.Y * i), size);
+
+					setElementSizeAndPosition(i, Container.Box.Position + new Vector2f(0, size.Y * i), size);
 				}
 			}
 		}

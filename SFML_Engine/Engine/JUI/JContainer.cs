@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
+using System;
 
 namespace SFML_Engine.Engine.JUI
 {
@@ -8,6 +9,7 @@ namespace SFML_Engine.Engine.JUI
 	{
 		public JLayout Layout { set; get; }
 		public List<JElement> Elements { set; get; } = new List<JElement>();
+		public JDistanceContainer Margin { get; set; } = new JDistanceContainer();
 
 		public JContainer(JGUI gui) : base(gui)
 		{
