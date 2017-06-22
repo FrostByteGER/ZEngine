@@ -39,8 +39,31 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Source\Game\GUI\GUILevelTest.cs" />
+    <Compile Include="Source\Game\TDActor.cs" />
+    <Compile Include="Source\Game\TDActorComponent.cs" />
+    <Compile Include="Source\Game\TDBuilding.cs" />
+    <Compile Include="Source\Game\TDFieldActor.cs" />
+    <Compile Include="Source\Game\TDLevel.cs" />
+    <Compile Include="Source\Game\TDMapJsonWrapper.cs" />
+    <Compile Include="Source\Game\TDMapTestLevel.cs" />
+    <Compile Include="Source\Game\TDMine.cs" />
+    <Compile Include="Source\Game\TDPlayerController.cs" />
+    <Compile Include="Source\Game\TDResource.cs" />
+    <Compile Include="Source\Game\TDSpawner.cs" />
+    <Compile Include="Source\Game\TDTower.cs" />
+    <Compile Include="Source\Game\TDUnit.cs" />
+    <Compile Include="Source\Game\TDUnitInfo.cs" />
+    <Compile Include="Source\Game\TDWave.cs" />
+    <Compile Include="Source\Game\TDWaypoint.cs" />
+    <Compile Include="Source\Game\TDWeaponComponent.cs" />
+    <Compile Include="Source\GUI\GUILevelTest.cs" />
+    <Compile Include="Source\Game\TDMap.cs" />
+    <Compile Include="Source\Game\TDTile.cs" />
     <Compile Include="Source\TDGameInfo.cs" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
