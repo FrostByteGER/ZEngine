@@ -52,19 +52,28 @@ namespace SFML_TowerDefense.Source.Game.GUI
 
 			JElement e = new JContainer(GUI);
 			e.Padding.setAll(0.01f);
-			e.setBackgroundColor(Color.Red);
+			e.setBackgroundColor(Color.Yellow);
+			Root.addElement(e, JBorderLayout.RIGHT);
 
-			Root.addElement(e, JBorderLayout.CENTER);
+			JContainer c = new JContainer(GUI);
+			c.setBackgroundColor(Color.Blue);
+			c.Layout = new JLayout(c);
+
 			e = new JElement(GUI);
-			e.setBackgroundColor(Color.Blue);
+			c.addElement(e);
+			//c.Padding.setAll(0.01f);
+			e.Padding.setAll(0.01f);
+
+			Root.addElement(c, JBorderLayout.CENTER);
+
+			e = new JElement(GUI);
+			e.setBackgroundColor(Color.Red);
 			Root.addElement(e, JBorderLayout.LEFT);
 
 			e = new JElement(GUI);
-			e.setBackgroundColor(Color.Yellow);
-			Root.addElement(e, JBorderLayout.RIGHT);
-			e = new JElement(GUI);
 			e.setBackgroundColor(Color.Cyan);
 			Root.addElement(e, JBorderLayout.TOP);
+
 			e = new JElement(GUI);
 			e.setBackgroundColor(Color.Green);
 			Root.addElement(e, JBorderLayout.BOTTOM);
