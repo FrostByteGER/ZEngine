@@ -10,7 +10,21 @@ namespace SFML_Engine.Engine.JUI
 	public class JGUI : ITickable, Drawable
 	{
 		public Font GUIFont { get; set; }
-		public JContainer RootContainer { get; set; }
+		private JContainer _RootContainer { get; set; }
+
+		public JContainer RootContainer {
+			get => _RootContainer;
+			set
+			{
+				_RootContainer = value;
+				_RootContainer.setPosition(GUISpace.Position);
+				_RootContainer.setSize(GUISpace.Size);
+				_RootContainer.ReSize();
+			}			
+		}
+
+		
+		public RectangleShape GUISpace { get; set; } = new RectangleShape();
 
 		public InputManager InputManager { get; set; }
 

@@ -26,6 +26,8 @@ namespace SFML_Engine.Engine.JUI
 		public override void Drag(Vector2i position)
 		{
 			base.Drag(position);
+			if (!IsEnabled) return;
+
 			if (DisplayTyp == HORIZONTAL)
 			{
 				SliderValue = (((float)position.X) - Position.X) / Size.X;

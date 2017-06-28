@@ -2,6 +2,8 @@
 using SFML.System;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.JUI;
+using System;
+using System.IO;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -10,72 +12,239 @@ namespace SFML_TowerDefense.Source.GUI
 
 		public JGUI GUI;
 
-		public RectangleShape test = new RectangleShape();
+		private JContainer MenueContainer;
+		private JContainer StartContainer;
+		private JContainer OptionContainer;
+		private JContainer CreditContainer;
+		private JContainer ExitContainer;
 
 		protected override void InitLevel()
 		{
 			base.InitLevel();
-
-			GUI = new JGUI(null, EngineReference.EngineWindow, EngineReference.InputManager);
-
 			initGUI();
-
-			test.FillColor = Color.Cyan;
-			test.Position = new Vector2f(0,0);
-			test.Size = new Vector2f(100,100);
 		}
 
 		private void initGUI()
 		{
-			JContainer Root = new JContainer(GUI);
+			GUI = new JGUI(new Font("./Assets/Game/Fonts/Main.ttf"), EngineReference.EngineWindow, EngineReference.InputManager);
 
-			Root.setPosition(new Vector2f(50,50));
-			Root.setSize(new Vector2f(600,600));
+			GUI.GUISpace.Position = new Vector2f(50,50);
+			GUI.GUISpace.Size = new Vector2f(700,700);
 
-			Root.setBackgroundColor(new Color(200,200,100));
+			MenueContainer = initMainMenue();
+			StartContainer = initStart();
+			CreditContainer = initCredis();
+			OptionContainer = initOption();
+			ExitContainer = initExit();
 
-			Root.Margin.setAll(0.01f);
+			GUI.RootContainer = MenueContainer;
+		}
 
-			JBorderLayout layout = new JBorderLayout(Root);
+		private JContainer initMainMenue()
+		{
+			JContainer container = new JContainer(GUI);
 
-			layout.TopSize = 0.1f;
-			layout.BottemSize = 0.1f;
-			layout.LeftSize = 0.1f;
-			layout.RightSize = 0.1f;
+			container.Layout = new JLayout(container);
 
-			Root.Layout = layout;
+			JButton start = new JButton(GUI);
+			start.setTextString("START");
+			start.OnExecute += OnStartButton;
+			container.addElement(start);
 
-			JElement e = new JContainer(GUI);
-			e.Padding.setAll(0.01f);
-			e.setBackgroundColor(Color.Yellow);
-			Root.addElement(e, JBorderLayout.RIGHT);
+			JButton options = new JButton(GUI);
+			options.setTextString("OPTION");
+			options.OnExecute += OnOptionsButton;
+			container.addElement(options);
 
-			JContainer c = new JContainer(GUI);
-			c.setBackgroundColor(Color.Blue);
-			c.Layout = new JLayout(c);
+			JButton credits = new JButton(GUI);
+			credits.setTextString("CREDITS");
+			credits.OnExecute += OnCreditsButton;
+			container.addElement(credits);
 
-			e = new JElement(GUI);
-			c.addElement(e);
-			//c.Padding.setAll(0.01f);
-			e.Padding.setAll(0.01f);
+			JButton exit = new JButton(GUI);
+			exit.setTextString("EXIT");
+			exit.OnExecute += OnExitButton;
+			container.addElement(exit);
 
-			Root.addElement(c, JBorderLayout.CENTER);
+			return container;
+		}
 
-			e = new JElement(GUI);
-			e.setBackgroundColor(Color.Red);
-			Root.addElement(e, JBorderLayout.LEFT);
+		private JContainer initStart()
+		{
+			JContainer container = new JContainer(GUI);
+			container.Layout = new JLayout(container);
 
-			e = new JElement(GUI);
-			e.setBackgroundColor(Color.Cyan);
-			Root.addElement(e, JBorderLayout.TOP);
+			JButton back = new JButton(GUI);
+			back.setTextString("BACK");
+			back.OnExecute += BackToMainMenue;
+			container.addElement(back);
 
-			e = new JElement(GUI);
-			e.setBackgroundColor(Color.Green);
-			Root.addElement(e, JBorderLayout.BOTTOM);
+			return container;
+		}
 
-			Root.ReSize();
+		private JContainer initOption()
+		{
+			JContainer container = new JContainer(GUI);
+			container.Layout = new JLayout(container);
 
-			GUI.RootContainer = Root;
+			container.addElement(CreateOptionSlider("SOUND"));
+			container.addElement(CreateOptionSlider("MUSIK"));
+
+			JButton back = new JButton(GUI);
+			back.setTextString("BACK");
+			back.OnExecute += BackToMainMenue;
+			container.addElement(back);
+
+			return container;
+		}
+
+		private JContainer initCredis()
+		{
+			JContainer container = new JContainer(GUI);
+			container.Layout = new JLayout(container);
+
+			JLabel creditLable = new JLabel(GUI);
+			creditLable.setTextString("Made by Kevin and Jan");
+			container.addElement(creditLable);
+
+			JButton back = new JButton(GUI);
+			back.setTextString("BACK");
+			back.OnExecute += BackToMainMenue;
+			container.addElement(back);
+
+			return container;
+		}
+
+		private JContainer initExit()
+		{
+			JContainer container = new JContainer(GUI);
+
+			JGridLayout layout = new JGridLayout(container);
+
+			layout.Rows = 2;
+
+			container.Layout = layout;
+
+			JButton yes = new JButton(GUI);
+			yes.setTextString("YES");
+			yes.OnExecute += delegate ()
+			{
+				EngineReference.RequestTermination = true;
+			};
+			container.addElement(yes);
+
+			JButton no = new JButton(GUI);
+			no.setTextString("NO");
+			no.OnExecute += BackToMainMenue;
+			container.addElement(no);
+
+			return container;
+		}
+
+		private JContainer CreateOptionSlider(String name)
+		{
+			JContainer container = new JContainer(GUI);
+
+			JGridLayout layout = new JGridLayout(container);
+			layout.Rows = 2;
+
+			JContainer nameOnOffContainer = new JContainer(GUI);
+			container.addElement(nameOnOffContainer);
+
+			JBorderLayout layout2 = new JBorderLayout(nameOnOffContainer);
+			layout2.RightSize = 0.2f;
+
+			nameOnOffContainer.Layout = layout2;
+
+			JLabel nameLabel = new JLabel(GUI);
+			nameLabel.setTextString(name);
+			nameOnOffContainer.addElement(nameLabel, JBorderLayout.CENTER);
+
+			JCheckbox checkBox = CreateYesOnBox();
+			nameOnOffContainer.addElement(checkBox, JBorderLayout.RIGHT);
+
+			JContainer sliderValueContainer = new JContainer(GUI);
+			container.addElement(sliderValueContainer);
+
+			JBorderLayout layout3 = new JBorderLayout(sliderValueContainer);
+			layout3.RightSize = 0.3f;
+
+			sliderValueContainer.Layout = layout3;
+
+			JSlider slider = new JSlider(GUI);
+			sliderValueContainer.addElement(slider, JBorderLayout.CENTER);
+			checkBox.OnExecute += delegate ()
+			{
+				if (checkBox.IsSelected)
+				{
+					slider.IsEnabled = true;
+				}
+				else
+				{
+					slider.IsEnabled = false;
+				}
+			};
+			checkBox.Select();
+			checkBox.Execute();
+
+			JLabel value = new JLabel(GUI);
+			value.setTextString(((int)(slider.SliderValue * 100)) + "%");
+			slider.OnDrag += delegate ()
+			{
+				value.setTextString(((int)(slider.SliderValue * 100)) + "%");
+			};
+			sliderValueContainer.addElement(value, JBorderLayout.RIGHT);
+
+			return container;
+		}
+
+		private JCheckbox CreateYesOnBox()
+		{
+			JCheckbox checkbox = new JCheckbox(GUI);
+
+			checkbox.OnExecute += delegate ()
+			{
+				if (checkbox.IsSelected)
+				{
+					checkbox.setTextString("ON");
+				}
+				else
+				{
+					checkbox.setTextString("OFF");
+				}
+			};
+			return checkbox;
+		}
+
+		public void OnStartButton()
+		{
+			GUI.RootContainer = StartContainer;
+		}
+
+		public void OnOptionsButton()
+		{
+			GUI.RootContainer = OptionContainer;
+		}
+
+		public void OnCreditsButton()
+		{
+			GUI.RootContainer = CreditContainer;
+		}
+
+		public void OnExitButton()
+		{
+			GUI.RootContainer = ExitContainer;
+		}
+
+		public void BackToMainMenue()
+		{
+			GUI.RootContainer = MenueContainer;
+		}
+
+		protected override void LevelTick(float deltaTime)
+		{
+			base.LevelTick(deltaTime);
+			GUI.Tick(deltaTime);
 		}
 
 		protected override void LevelDraw(ref RenderWindow renderWindow)

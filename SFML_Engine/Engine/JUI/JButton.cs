@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using System;
 
 namespace SFML_Engine.Engine.JUI
 {
