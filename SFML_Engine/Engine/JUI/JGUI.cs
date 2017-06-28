@@ -100,7 +100,7 @@ namespace SFML_Engine.Engine.JUI
 			SelecterCircel.Radius  = 6f;
 		}
 
-		public void Tick(float deltaTime)
+		public virtual void Tick(float deltaTime)
 		{
 			if (InputManager != null)
 			{

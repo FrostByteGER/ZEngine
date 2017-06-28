@@ -12,8 +12,15 @@ namespace SFML_TowerDefense.Source.GUI
 {
 	public class GameHud : JGUI
 	{
-
-		public TDFieldActor SelectedField { get; set; }
+		public TDFieldActor _SelectedField;
+		public TDFieldActor SelectedField {
+			get => _SelectedField;
+			set
+			{
+				_SelectedField = value;
+				ChangeSelectedField(SelectedField);
+			}
+		}
 
 		// Contains PlayerInfo Money etc.
 		public JContainer InfoContainer;
@@ -97,6 +104,7 @@ namespace SFML_TowerDefense.Source.GUI
 			if (fieldActor == null)
 			{
 				FieldContainer = null;
+				return;
 			}
 			else if(fieldActor is TDTower){
 				FieldContainer = TowerContainer;
@@ -125,6 +133,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			if (FieldContainer == null)
 			{
+				return;
 			}
 			else if (FieldContainer is TDTower)
 			{
@@ -141,6 +150,12 @@ namespace SFML_TowerDefense.Source.GUI
 			else if (FieldContainer is TDFieldActor)
 			{
 			}
+		}
+
+		public override void Tick(float deltaTime)
+		{
+			base.Tick(deltaTime);
+			UpdateFieldContainer();
 		}
 	}
 }
