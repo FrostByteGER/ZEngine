@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.IO;
+﻿using SFML.Graphics;
 
 namespace SFML_TowerDefense.Source.Game
 {

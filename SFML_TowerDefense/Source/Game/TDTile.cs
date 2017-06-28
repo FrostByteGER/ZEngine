@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using SFML_Engine.Engine.Game;
+﻿using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game
