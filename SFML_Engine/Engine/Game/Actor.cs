@@ -136,7 +136,7 @@ namespace SFML_Engine.Engine.Game
 
 		public Actor(Level level)
 		{
-
+			ActorName = GetType().Name;
 		}
 
 		protected internal virtual void InitializeActor()
@@ -324,6 +324,7 @@ namespace SFML_Engine.Engine.Game
 
 		public bool AddComponent(ActorComponent component)
 		{
+			Console.WriteLine("Trying to add ActorComponent: " + component + " to Actor: " + this);
 			if (Components.Contains(component)) return false;
 			Components.Add(component);
 			component.ComponentID = ++ComponentIDCounter;

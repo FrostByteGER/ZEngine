@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFML_Engine.Engine.Events
+﻿namespace SFML_Engine.Engine.Events
 {
 	public class SwitchLevelEvent<T> : EngineEvent<T> where T : SwitchLevelParams
 	{

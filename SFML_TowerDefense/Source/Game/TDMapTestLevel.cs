@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.IO;
+﻿using SFML.Graphics;
 
 namespace SFML_TowerDefense.Source.Game
 {
@@ -11,7 +7,7 @@ namespace SFML_TowerDefense.Source.Game
 		protected override void InitLevel()
 		{
 			base.InitLevel();
-			var tdMap = new TDMap(this);
+			var tdMap = new TDMap("test" ,this);
 
 			var pc = new TDPlayerController();
 			RegisterActor(tdMap);

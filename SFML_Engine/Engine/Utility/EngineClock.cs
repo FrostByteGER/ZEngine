@@ -27,12 +27,39 @@ namespace SFML_Engine.Engine.Utility
 		public float EngineElapsedMilliseconds => _engineTimer.ElapsedTime.AsMilliseconds();
 		public float EngineElapsedMicroseconds => _engineTimer.ElapsedTime.AsMicroseconds();
 
+		public float PhysicsAverageSeconds
+		{
+			get
+			{
+				if (FrameCount == 0) return 0;
+				return (((float)_physicsTimer.ElapsedTicks / Stopwatch.Frequency) / FrameCount);
+			}
+		}
+
+		public float UpdateAverageSeconds
+		{
+			get
+			{
+				if (FrameCount == 0) return 0;
+				return (((float)_updateTimer.ElapsedTicks / Stopwatch.Frequency) / FrameCount);
+			}
+		}
+
+		public float RenderAverageSeconds
+		{
+			get
+			{
+				if (FrameCount == 0) return 0;
+				return (((float)_renderTimer.ElapsedTicks / Stopwatch.Frequency) / FrameCount);
+			}
+		}
+
 		public float PhysicsAverage
 		{
 			get
 			{
 				if (FrameCount == 0) return 0;
-				return (((float)_physicsTimer.ElapsedTicks / Stopwatch.Frequency) / FrameCount) * 1000.0f;
+				return (((float) _physicsTimer.ElapsedTicks / Stopwatch.Frequency) / FrameCount) * 1000.0f;
 			}
 		}
 

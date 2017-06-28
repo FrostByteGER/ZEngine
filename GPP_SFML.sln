@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_TowerDefense", "SFML_TowerDefense\SFML_TowerDefense.csproj", "{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Packager", "SFML_Packager\SFML_Packager.csproj", "{5E3BD030-4485-43A0-ADA0-2128E5138997}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|x64.Build.0 = Debug|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.ActiveCfg = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.Build.0 = Release|x64
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.ActiveCfg = Debug|x64
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.Build.0 = Debug|x64
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.ActiveCfg = Release|x64
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
