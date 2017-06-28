@@ -87,6 +87,10 @@ namespace SFML_TowerDefense.Source.GUI
 			JContainer container = new JContainer(GUI);
 			container.Layout = new JLayout(container);
 
+			JDistanceContainer margin = new JDistanceContainer();
+
+			margin.setAll(0.01f);
+
 			container.addElement(CreateOptionSlider("MUSIK"));
 			container.addElement(CreateOptionSlider("SOUND"));
 
@@ -94,6 +98,7 @@ namespace SFML_TowerDefense.Source.GUI
 			back.setTextString("BACK");
 			back.OnExecute += BackToMainMenue;
 			container.addElement(back);
+			container.Margin = margin;
 
 			return container;
 		}
