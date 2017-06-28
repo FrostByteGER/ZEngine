@@ -131,23 +131,26 @@ namespace SFML_TowerDefense.Source.GUI
 		//TODO
 		private void UpdateFieldContainer()
 		{
-			if (FieldContainer == null)
+			if (SelectedField == null)
 			{
 				return;
 			}
-			else if (FieldContainer is TDTower)
+			else if (SelectedField is TDTower)
+			{
+				TDTower fieldActor = (TDTower)SelectedField;
+
+				
+			}
+			else if (SelectedField is TDMine)
 			{
 			}
-			else if (FieldContainer is TDMine)
+			else if (SelectedField is TDResource)
 			{
 			}
-			else if (FieldContainer is TDResource)
+			else if (SelectedField is TDBuilding)
 			{
 			}
-			else if (FieldContainer is TDBuilding)
-			{
-			}
-			else if (FieldContainer is TDFieldActor)
+			else if (SelectedField is TDFieldActor)
 			{
 			}
 		}
