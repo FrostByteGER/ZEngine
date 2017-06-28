@@ -3,7 +3,6 @@ using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Game;
-using System;
 
 namespace SFML_Engine.Engine.JUI
 {
