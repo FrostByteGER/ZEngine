@@ -17,25 +17,5 @@ namespace SFML_TowerDefense.Source.Game
 		public TDTile(Sprite sprite) : base(sprite)
 		{
 		}
-
-		public TVector2i WorldCoordsToTileCoords(float worldX, float worldY)
-		{
-			return null;
-		}
-
-		public TVector2i WorldCoordsToTileCoords(TVector2f worldCoords)
-		{
-			return null;
-		}
-
-		public TVector2f TileCoordsToWorldCoords(int tileX, int tileY)
-		{
-			return null;
-		}
-
-		public TVector2f TileCoordsToWorldCoords(TVector2i tileCoords)
-		{
-			return null;
-		}
 	}
 }

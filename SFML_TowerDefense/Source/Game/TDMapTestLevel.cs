@@ -11,7 +11,7 @@ namespace SFML_TowerDefense.Source.Game
 		protected override void InitLevel()
 		{
 			base.InitLevel();
-			var tdMap = new TDMap(this);
+			var tdMap = new TDMap("test" ,this);
 
 			var pc = new TDPlayerController();
 			RegisterActor(tdMap);
