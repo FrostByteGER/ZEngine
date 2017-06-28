@@ -87,8 +87,8 @@ namespace SFML_TowerDefense.Source.GUI
 			JContainer container = new JContainer(GUI);
 			container.Layout = new JLayout(container);
 
-			container.addElement(CreateOptionSlider("SOUND"));
 			container.addElement(CreateOptionSlider("MUSIK"));
+			container.addElement(CreateOptionSlider("SOUND"));
 
 			JButton back = new JButton(GUI);
 			back.setTextString("BACK");
@@ -168,11 +168,18 @@ namespace SFML_TowerDefense.Source.GUI
 
 			JBorderLayout layout3 = new JBorderLayout(sliderValueContainer);
 			layout3.RightSize = 0.3f;
+			layout3.LeftSize = 0.05f;
 
 			sliderValueContainer.Layout = layout3;
 
 			JSlider slider = new JSlider(GUI);
 			sliderValueContainer.addElement(slider, JBorderLayout.CENTER);
+			JDistanceContainer padding = new JDistanceContainer();
+
+			padding.SetVertikal(0.1f);
+
+			slider.Padding = padding;
+
 			checkBox.OnExecute += delegate ()
 			{
 				if (checkBox.IsSelected)

@@ -26,5 +26,17 @@ namespace SFML_Engine.Engine.JUI
 			Left = value;
 			Right = value;
 		}
+
+		public void SetHorizontal(float value)
+		{
+			Left = value;
+			Right = value;
+		}
+
+		public void SetVertikal(float value)
+		{
+			Top = value;
+			Bottem = value;
+		}
 	}
 }

@@ -97,7 +97,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Entered() {
 			IsHovered = true;
-			if (OnHover != null && IsEnabled) OnHover();
+			if (OnHover != null && IsEnabled) OnEnter();
 		}
 
 		public virtual void Leave() {

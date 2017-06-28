@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using System;
 
 namespace SFML_Engine.Engine.JUI
 {
@@ -25,9 +26,7 @@ namespace SFML_Engine.Engine.JUI
 
 		public override void Drag(Vector2i position)
 		{
-			base.Drag(position);
 			if (!IsEnabled) return;
-
 			if (DisplayTyp == HORIZONTAL)
 			{
 				SliderValue = (((float)position.X) - Position.X) / Size.X;
@@ -58,6 +57,7 @@ namespace SFML_Engine.Engine.JUI
 
 				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 			}
+			base.Drag(position);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
@@ -74,14 +74,14 @@ namespace SFML_Engine.Engine.JUI
 			if (DisplayTyp == HORIZONTAL)
 			{
 				Slider.Size = new Vector2f(SliderSize, Size.Y);
-				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f, Position.Y);
+				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
 				Cross.Size = new Vector2f(Size.X, CrossSize);
 				Cross.Position = new Vector2f(position.X, position.Y + size.Y/2f - Cross.Size.Y);
 			}
 			else if(DisplayTyp == VERTICAL)
 			{
 				Slider.Size = new Vector2f(Size.X, SliderSize);
-				Slider.Position = new Vector2f(position.X, position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f);
+				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 				Cross.Size = new Vector2f(CrossSize, Size.Y);
 				Cross.Position = new Vector2f(position.X + size.X / 2f - Cross.Size.X, position.Y);
 			}

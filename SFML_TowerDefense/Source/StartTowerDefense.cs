@@ -15,8 +15,8 @@ namespace SFML_TowerDefense.Source
 			engine.GameInfo = new TDGameInfo();
 			engine.InitEngine();
 
-			//engine.LoadLevel(new GUILevelTest());
-			engine.LoadLevel(new TDMapTestLevel());
+			engine.LoadLevel(new GUILevelTest());
+			//engine.LoadLevel(new TDMapTestLevel());
 
 			engine.StartEngine();
 			Console.ReadLine();
