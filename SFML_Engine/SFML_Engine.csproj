@@ -209,6 +209,7 @@
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Core\Engine.cs" />
     <Compile Include="Engine\Start.cs" />
+    <Compile Include="Engine\Utility\ActorSpawner.cs" />
     <Compile Include="Engine\Utility\TTransformable.cs" />
     <Compile Include="Engine\Utility\TVector2.cs" />
     <Compile Include="Engine\Utility\TVector2f.cs" />

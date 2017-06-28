@@ -61,10 +61,12 @@ namespace SFML_Engine.Engine.Game
 		/// </summary>
 	    public uint Layers { get; set; } = 2;
 
+	    public ActorSpawner Spawner { get; set; } = new ActorSpawner();
+
 
 		public Level()
-        {
-        }
+		{
+		}
 
 	    protected internal virtual void InitLevel()
 	    {
@@ -202,24 +204,51 @@ namespace SFML_Engine.Engine.Game
 			Dispose();
 	    }
 
-		public void RegisterActorComponent(ActorComponent component)
+	    public T SpawnActor<T>() where T : Actor
+	    {
+			var actor =  Spawner.SpawnObject<T>(this);
+		    RegisterActor(actor);
+			return actor;
+	    }
+
+		public Actor SpawnActor(Type actorType)
 		{
-			component.ComponentID = ActorIDCounter;
-			++ActorIDCounter;
-			Console.WriteLine("Trying to register ActorComponent: " + component);
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
+			var actor = Spawner.SpawnObject(actorType, this) as Actor;
+			RegisterActor(actor);
+			return actor;
+		}
+
+		public void SpawnActorDeferred<T>(Actor instigator) where T : Actor
+		{
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this)));
+		}
+
+		public void SpawnActorDeferred<T>() where T : Actor
+		{
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this)));
+		}
+
+		public void SpawnActorDeferred(Actor instigator, Type actorType)
+		{
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this)));
+		}
+
+		public void SpawnActorDeferred(Type actorType)
+		{
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;
+			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this)));
 		}
 
 		public void RegisterActor(Actor actor)
 		{
+			if (ContainsActorInLevel(actor)) return;
 			actor.ActorID = ActorIDCounter;
 			++ActorIDCounter;
 			actor.LevelID = LevelID;
 			actor.LevelReference = this;
 			Console.WriteLine("Trying to register Actor: " + actor);
-			foreach (var component in actor.Components)
-			{
-				RegisterActorComponent(component);
-			}
 			_actors.Add(actor);
 		}
 
@@ -265,6 +294,16 @@ namespace SFML_Engine.Engine.Game
 			return UnregisterActor(actor);
 		}
 
+	    public bool ContainsActorInLevel(string name)
+	    {
+		    return FindActorInLevel(name) != null;
+	    }
+
+	    public bool ContainsActorInLevel(Actor actor)
+	    {
+		    return _actors.Contains(actor);
+	    }
+
 		public Actor FindActorInLevel(string name)
 	    {
 		    return _actors.Find(x => x.ActorName == name);
@@ -305,16 +344,6 @@ namespace SFML_Engine.Engine.Game
 			return _actors.FindAll(x => x is T).Cast<T>();
 		}
 
-	    public void SpawnActor(Actor instigator, Actor actor)
-	    {
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actor, this)));
-		}
-
-		public void SpawnActor(Actor actor)
-		{
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actor, this)));
-		}
-
 		public void PauseActor(Actor instigator, Actor actor)
 		{
 
@@ -340,10 +369,7 @@ namespace SFML_Engine.Engine.Game
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc)
 		{
-			Players.Add(pc);
-			pc.LevelReference = this;
-			pc.ID = (uint)Players.Count - 1;
-			pc.MarkedForInputRegistering = true;
+			RegisterPlayer(pc, true);
 		}
 
 		/// <summary>
@@ -352,9 +378,9 @@ namespace SFML_Engine.Engine.Game
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc, bool active)
 		{
-			Players.Add(pc);
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
+			Players.Add(pc);
 			pc.MarkedForInputRegistering = active;
 		}
 
