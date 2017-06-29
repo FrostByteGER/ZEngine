@@ -4,6 +4,8 @@ namespace SFML_TowerDefense.Source.Game
 {
 	public class TDWaypoint : TDFieldActor
 	{
+		public TDWaypoint NextWaypoint { get; set; }
+
 		public TDWaypoint(Level level) : base(level)
 		{
 		}

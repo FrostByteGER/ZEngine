@@ -5,12 +5,13 @@ namespace SFML_TowerDefense.Source.Game
 {
 	public class TDWave : TDActor
 	{
-
-		public List<TDUnit> Units { get; set; }
+		public float SpawnSpeed { get; set; } = 1;
+		public int Amount { get; set; } = 1;
+		public TDUnit UnitType { get; set; }
 
 		public TDWave(Level level) : base(level)
 		{
-			Units = new List<TDUnit>();
+			
 		}
 	}
 }
