@@ -50,6 +50,17 @@ namespace SFML_Engine.Engine.Game
 
 		public virtual bool Movable { get; set; }
 
+
+		public ActorComponent()
+		{
+			ComponentName = GetType().Name;
+		}
+
+		public ActorComponent(string componentName)
+		{
+			ComponentName = componentName;
+		}
+
 		public virtual void Tick(float deltaTime)
 		{
 			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);

@@ -20,7 +20,7 @@ namespace SFML_Engine.Engine.Game
 		public string ActorName { get; set; } = "Actor";
 
 		[JsonIgnore]
-		public TVector2f ActorBounds
+		public virtual TVector2f ActorBounds
 		{
 			get => RootComponent.ComponentBounds;
 			set => RootComponent.ComponentBounds = value;
@@ -36,7 +36,7 @@ namespace SFML_Engine.Engine.Game
 		public bool HasGravity { get; set; } = false;
 
 		public bool MarkedForRemoval { get; internal set; } = false;
-		public bool Visible { get; set; } = true;
+		public virtual bool Visible { get; set; } = true;
 		public bool CanTick { get; set; } = true;
 		private bool _collisionCallbacksEnabled = true;
 		[JsonIgnore]
@@ -100,35 +100,35 @@ namespace SFML_Engine.Engine.Game
 		}
 
 		[JsonIgnore]
-		public TVector2f Position
+		public virtual TVector2f Position
 		{
 			get => RootComponent.LocalPosition;
 			set => RootComponent.LocalPosition = value;
 		}
 
 		[JsonIgnore]
-		public float Rotation
+		public virtual float Rotation
 		{
 			get => RootComponent.LocalRotation;
 			set => RootComponent.LocalRotation = value;
 		}
 
 		[JsonIgnore]
-		public TVector2f Scale
+		public virtual TVector2f Scale
 		{
 			get => RootComponent.LocalScale;
 			set => RootComponent.LocalScale = value;
 		}
 
 		[JsonIgnore]
-		public TVector2f Origin
+		public virtual TVector2f Origin
 		{
 			get => RootComponent.Origin;
 			set => RootComponent.Origin = value;
 		}
 
 		[JsonIgnore]
-		public TTransformable ActorTransform
+		public virtual TTransformable ActorTransform
 		{
 			get => RootComponent.ComponentTransform;
 			set => RootComponent.ComponentTransform = value;
@@ -258,6 +258,7 @@ namespace SFML_Engine.Engine.Game
 		{
 			if (root == null && RootComponent == null) return false;
 			if (root == null && RootComponent != null) return RemoveRootComponent();
+			Console.WriteLine("Trying to set Root-ActorComponent " + root.ComponentName + " on Actor " + this);
 			RemoveRootComponent();
 
 			if (Components.Contains(root))
@@ -284,6 +285,7 @@ namespace SFML_Engine.Engine.Game
 		public bool RemoveRootComponent()
 		{
 			if (RootComponent == null) return false;
+			Console.WriteLine("Trying to remove RootComponent " + RootComponent.ComponentName + " from " + this);
 			RemoveComponent(RootComponent);
 			RootComponent.IsRootComponent = false;
 			RootComponent = null;
@@ -324,7 +326,7 @@ namespace SFML_Engine.Engine.Game
 
 		public bool AddComponent(ActorComponent component)
 		{
-			Console.WriteLine("Trying to add ActorComponent: " + component + " to Actor: " + this);
+			Console.WriteLine("Trying to add "+ component.ComponentName + " to " + this);
 			if (Components.Contains(component)) return false;
 			Components.Add(component);
 			component.ComponentID = ++ComponentIDCounter;
