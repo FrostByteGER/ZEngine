@@ -233,6 +233,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			//GUI.RootContainer = StartContainer;
 			EngineReference.LoadLevel(new TDMapTestLevel());
+			GUI.IsActive = false;
 		}
 
 		public void OnOptionsButton()

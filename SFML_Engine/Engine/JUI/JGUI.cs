@@ -172,7 +172,7 @@ namespace SFML_Engine.Engine.JUI
 			return null;
 		}
 
-		public void Draw(RenderTarget target, RenderStates states)
+		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
 			target.SetView(target.DefaultView);
 

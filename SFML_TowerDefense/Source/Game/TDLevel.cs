@@ -1,13 +1,18 @@
 ﻿using System;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Player;
+using SFML_TowerDefense.Source.GUI;
+using SFML.System;
 
 namespace SFML_TowerDefense.Source.Game
 {
 	public class TDLevel : Level
 	{
 		public TDMap Map { get; protected set; } = null;
+
+		public GameHud Hud { get; protected set; }
 
 		public TDLevel()
 		{
@@ -18,6 +23,11 @@ namespace SFML_TowerDefense.Source.Game
 			base.InitLevel();
 			var pc = new TDPlayerController();
 			RegisterPlayer(pc);
+
+			Hud = new GameHud(new Font("./Assets/Game/Fonts/Main.ttf"), EngineReference.EngineWindow, EngineReference.InputManager);
+
+			Hud.RootContainer.setPosition(new Vector2f(50, 50));
+			Hud.RootContainer.setSize(new Vector2f(700, 700));
 		}
 
 		// TODO: Verify working
@@ -78,7 +88,14 @@ namespace SFML_TowerDefense.Source.Game
 
 		protected override void LevelTick(float deltaTime)
 		{
-			base.LevelTick(deltaTime);
+			base.LevelTick(deltaTime);	
+		}
+
+		protected override void LevelDraw(ref RenderWindow renderWindow)
+		{		
+			renderWindow.Draw(Hud);
+			Hud.Tick(0.00001f);
+			base.LevelDraw(ref renderWindow);
 		}
 
 		public TDTile GetTileByTileCoords(TVector2i tileCoords)

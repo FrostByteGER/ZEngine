@@ -93,11 +93,12 @@ namespace SFML_Engine.Engine.Game
 
         protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
         {
-	        foreach (var pc in Players)
+			
+			foreach (var pc in Players)
 	        {
-		        renderWindow.SetView(pc.PlayerCamera);
+				renderWindow.SetView(pc.PlayerCamera);
 				// TODO: Evaluate Performance!
-		        var drawableActors = _actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID);
+				var drawableActors = _actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID);
 				foreach (var actor in drawableActors)
 				{
 					var c1 = actor.GetComponents<RenderComponent>();

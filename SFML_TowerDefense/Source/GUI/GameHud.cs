@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML_TowerDefense.Source.Game;
+using SFML.System;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -46,11 +47,31 @@ namespace SFML_TowerDefense.Source.GUI
 			TowerContainer = InitTowerContainer();
 			ResouceContainer = InitResouceContainer();
 
+			RootContainer = new JContainer(this);
+			RootContainer.setBackgroundColor(new Color(255,255,255,0));
+
+			JBorderLayout layout = new JBorderLayout(RootContainer);
+
+			RootContainer.Layout = layout;
+		
+			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
+
+			RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(800, 800));
 		}
 
 		private JContainer InitInfoContainer()
 		{
 			JContainer container = new JContainer(this);
+
+			JGridLayout layout = new JGridLayout(container);
+			layout.Rows = 2;
+
+			container.Layout = layout;
+
+			JButton wave = new JButton(this);
+			wave.setTextString("WAVE X / X");
+
+			container.addElement(wave);
 
 			return container;
 		}
@@ -159,6 +180,11 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			base.Tick(deltaTime);
 			UpdateFieldContainer();
+		}
+
+		public override void Draw(RenderTarget target, RenderStates states)
+		{
+			base.Draw(target, states);
 		}
 	}
 }
