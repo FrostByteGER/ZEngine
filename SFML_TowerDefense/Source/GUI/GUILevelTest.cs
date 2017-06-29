@@ -4,6 +4,7 @@ using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.JUI;
 using System;
 using System.IO;
+using SFML_TowerDefense.Source.Game;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -230,7 +231,8 @@ namespace SFML_TowerDefense.Source.GUI
 
 		public void OnStartButton()
 		{
-			GUI.RootContainer = StartContainer;
+			//GUI.RootContainer = StartContainer;
+			EngineReference.LoadLevel(new TDMapTestLevel());
 		}
 
 		public void OnOptionsButton()

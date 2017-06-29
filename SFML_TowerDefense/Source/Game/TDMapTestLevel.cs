@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML_TowerDefense.Source.Game.Player;
 
 namespace SFML_TowerDefense.Source.Game
 {
@@ -7,10 +8,10 @@ namespace SFML_TowerDefense.Source.Game
 		protected override void InitLevel()
 		{
 			base.InitLevel();
-			var tdMap = new TDMap("test" ,this);
+			Map = new TDMap("test" ,this);
 
 			var pc = new TDPlayerController();
-			RegisterActor(tdMap);
+			RegisterActor(Map);
 			RegisterPlayer(pc);
 		}
 

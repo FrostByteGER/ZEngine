@@ -49,7 +49,7 @@
     <Compile Include="Source\Game\TDMapJsonWrapper.cs" />
     <Compile Include="Source\Game\TDMapTestLevel.cs" />
     <Compile Include="Source\Game\TDMine.cs" />
-    <Compile Include="Source\Game\TDPlayerController.cs" />
+    <Compile Include="Source\Game\Player\TDPlayerController.cs" />
     <Compile Include="Source\Game\TDResource.cs" />
     <Compile Include="Source\Game\TDSpawner.cs" />
     <Compile Include="Source\Game\TDTower.cs" />

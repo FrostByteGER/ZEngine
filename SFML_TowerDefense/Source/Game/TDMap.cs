@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
@@ -16,6 +17,10 @@ namespace SFML_TowerDefense.Source.Game
 		public int TileSizeY { get; private set; } = 0;
 		public int GameSizeX => SizeX * TileSizeX;
 		public int GameSizeY => SizeY * TileSizeY;
+
+		public override TVector2f ActorBounds { get; set; }
+
+		public override TVector2f Origin { get; set; }
 
 
 		public TDMap(string levelName ,Level level) : base(level)
@@ -81,18 +86,21 @@ namespace SFML_TowerDefense.Source.Game
 			SizeX = mapWidth;
 			SizeY = mapHeight;
 
+			ActorBounds = new TVector2f(GameSizeX / 2.0f, GameSizeY / 2.0f);
+			Origin = ActorBounds;
+
+			SetRootComponent(new ActorComponent("SceneComponent"));
 			int j = 0;
 			int k = 0;
 			foreach (var l in layerData)
 			{
 				var tile = new TDTile(new Sprite(texture, new IntRect((l - 1) * tilewidth, 0, tilewidth, tileheight)));
-				tile.LocalPosition = new TVector2f(k * tilewidth, (j / mapWidth) * tileheight);
+				tile.LocalPosition = new TVector2f(k * tilewidth - ActorBounds.X + tilewidth / 2.0f, (j / mapWidth) * tileheight - ActorBounds.Y + tileheight / 2.0f);
 				AddComponent(tile);
 				Tiles.Add(tile);
 				k = k >= mapWidth - 1 ? 0 : k + 1;
 				++j;
 			}
-			SetRootComponent(Tiles[0]);
 
 		}
 
