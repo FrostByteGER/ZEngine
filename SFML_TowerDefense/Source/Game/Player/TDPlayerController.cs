@@ -15,6 +15,8 @@ namespace SFML_TowerDefense.Source.Game.Player
 		public TDTile CurrentlySelectedTile { get; private set; }
 		private float DeltaTime { get; set; } = 0;
 
+		public int Money = 0;
+
 		public override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
 			base.OnKeyPressed(sender, keyEventArgs);

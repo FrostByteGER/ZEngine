@@ -6,14 +6,14 @@ namespace SFML_TowerDefense.Source.Game
 	public class TDMine : TDBuilding
 	{
 
-		public float MineTime = 0;
-		public float MineSpeed = 5;
+		public float MineTime { get; set; } = 0;
+		public float MineSpeed { get; set; } = 5;
 
-		public int MineAmount = 1;
+		public int MineAmount { get; set; } = 1;
 
-		public TDResource Resouce;
+		public TDResource Resouce { get; set; }
 
-		public TDPlayerController Owner;
+		public TDPlayerController Owner { get; set; }
 
 		public TDMine(Level level) : base(level)
 		{
@@ -21,12 +21,10 @@ namespace SFML_TowerDefense.Source.Game
 
 		public void MineRecouse()
 		{
+			if (Resouce == null || Owner == null) return;
 			if (Resouce.ResourceAmount > 0)
 			{
-				int amount = Resouce.Mine(MineAmount);
-
-				// TODO Give Owner Gold
-				//Owner
+				Owner.Money += Resouce.Mine(MineAmount);
 			}
 		}
 
