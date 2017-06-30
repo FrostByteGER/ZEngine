@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game.Player
@@ -19,11 +20,21 @@ namespace SFML_TowerDefense.Source.Game.Player
 
 		public override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
-			base.OnKeyPressed(sender, keyEventArgs);
+			if (Input.IsKeyPressed(Keyboard.Key.F))
+			{
+				var actor = LevelRef.SpawnActor<TDFieldActor>();
+				var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
+				var spriteGun = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+				actor.SetRootComponent(sprite);
+				actor.AddComponent(spriteGun);
+				actor.Position = CurrentlySelectedTile.WorldPosition;
+				CurrentlySelectedTile.FieldActors.Add(actor);
+			}
 		}
 
 		public override void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
 		{
+
 			if (Input.IsKeyDown(Keyboard.Key.W))
 			{
 				PlayerCamera.Move(new TVector2f(0, -100 * DeltaTime));
@@ -40,6 +51,7 @@ namespace SFML_TowerDefense.Source.Game.Player
 			{
 				PlayerCamera.Move(new TVector2f(100 * DeltaTime, 0));
 			}
+
 		}
 
 		public override void OnGameStart()
@@ -51,7 +63,7 @@ namespace SFML_TowerDefense.Source.Game.Player
 		public override void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
 			base.OnMouseMoved(sender, mouseMoveEventArgs);
-			MouseCoords = LevelRef.EngineReference.EngineWindow.MapPixelToCoords(new Vector2i(mouseMoveEventArgs.X, mouseMoveEventArgs.Y));
+			MouseCoords = LevelRef.EngineReference.EngineWindow.MapPixelToCoords(new Vector2i(mouseMoveEventArgs.X, mouseMoveEventArgs.Y), PlayerCamera);
 		}
 
 		public override void Tick(float deltaTime)
@@ -60,8 +72,8 @@ namespace SFML_TowerDefense.Source.Game.Player
 			DeltaTime = deltaTime;
 			var coords = LevelRef.WorldCoordsToTileCoords(MouseCoords);
 			if (ReferenceEquals(coords, null)) return;
-			Console.WriteLine("TO TILE: " + coords);
-			Console.WriteLine("TO WORLD: " + LevelRef.TileCoordsToWorldCoords(coords));
+			//Console.WriteLine("TO TILE: " + coords);
+			//Console.WriteLine("TO WORLD: " + LevelRef.TileCoordsToWorldCoords(coords));
 
 			var newTile = LevelRef.GetTileByTileCoords(coords);
 			if (CurrentlySelectedTile != null && newTile != CurrentlySelectedTile)

@@ -30,7 +30,6 @@ namespace SFML_TowerDefense.Source.Game
 			Hud.RootContainer.setSize(new Vector2f(700, 700));
 		}
 
-		// TODO: Verify working
 		public TVector2i WorldCoordsToTileCoords(float worldX, float worldY)
 		{
 			return WorldCoordsToTileCoords(new TVector2f(worldX, worldY));
@@ -88,14 +87,14 @@ namespace SFML_TowerDefense.Source.Game
 
 		protected override void LevelTick(float deltaTime)
 		{
-			base.LevelTick(deltaTime);	
+			base.LevelTick(deltaTime);
+			Hud.Tick(deltaTime);
 		}
 
 		protected override void LevelDraw(ref RenderWindow renderWindow)
 		{		
-			renderWindow.Draw(Hud);
-			Hud.Tick(0.00001f);
 			base.LevelDraw(ref renderWindow);
+			renderWindow.Draw(Hud);
 		}
 
 		public TDTile GetTileByTileCoords(TVector2i tileCoords)

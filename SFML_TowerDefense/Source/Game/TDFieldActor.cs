@@ -24,5 +24,10 @@ namespace SFML_TowerDefense.Source.Game
 		public TDFieldActor(Level level) : base(level)
 		{
 		}
+
+		public override void Tick(float deltaTime)
+		{
+			base.Tick(deltaTime);
+		}
 	}
 }

@@ -13,9 +13,7 @@ namespace SFML_TowerDefense.Source.Game
 			base.InitLevel();
 			Map = new TDMap("test" ,this);
 
-			var pc = new TDPlayerController();
 			RegisterActor(Map);
-			RegisterPlayer(pc);
 		}
 
 		protected override void LevelTick(float deltaTime)
