@@ -265,11 +265,13 @@ namespace SFML_Engine.Engine.Game
 			{
 				var comp = Components.Find(x => x.ComponentID == root.ComponentID);
 				if (comp == null) return false;
+				root.ComponentID = 1;
 				RootComponent = comp;
 				comp.IsRootComponent = true;
 				return true;
 			}
 			Components.Add(root);
+			root.ComponentID = 1;
 			root.ParentActor = this;
 			RootComponent = root;
 			root.IsRootComponent = true;

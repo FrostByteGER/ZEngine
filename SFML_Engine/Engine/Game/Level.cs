@@ -379,10 +379,12 @@ namespace SFML_Engine.Engine.Game
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc, bool active)
 		{
+			if (Players.Contains(pc)) return;
 			pc.LevelReference = this;
 			pc.ID = (uint)Players.Count - 1;
 			Players.Add(pc);
 			pc.MarkedForInputRegistering = active;
+			Console.WriteLine("Trying to Register Player: " + pc);
 		}
 
 		public void UnregisterPlayers()

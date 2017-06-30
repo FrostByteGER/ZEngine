@@ -90,7 +90,6 @@ namespace SFML_Engine.Engine.JUI
 			GUIFont = font;
 			this.renderwindow = renderwindow;
 			this.InputManager = inputManager;
-			InputManager.RegisterEngineInput(ref this.renderwindow);
 
 			InputManager.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
