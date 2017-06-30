@@ -81,6 +81,7 @@ namespace SFML_Engine.Engine.Game
 			{
 				if (!pc.CanTick) continue;
 				pc.Tick(deltaTime);
+				if (pc.Hud != null) pc.Hud.Tick(deltaTime);
 			}
 			foreach (var actor in _actors)
             {
@@ -93,9 +94,9 @@ namespace SFML_Engine.Engine.Game
 
         protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
         {
-			
 			foreach (var pc in Players)
 	        {
+				
 				renderWindow.SetView(pc.PlayerCamera);
 				// TODO: Evaluate Performance!
 				var drawableActors = _actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID);
@@ -109,6 +110,7 @@ namespace SFML_Engine.Engine.Game
 						renderWindow.Draw(comp);
 					}
 				}
+				if (pc.Hud != null) renderWindow.Draw(pc.Hud);
 			}
 		}
 

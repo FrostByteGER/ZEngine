@@ -3,6 +3,7 @@ using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Game;
+using System;
 
 namespace SFML_Engine.Engine.JUI
 {
@@ -19,14 +20,31 @@ namespace SFML_Engine.Engine.JUI
 				_RootContainer.setPosition(GUISpace.Position);
 				_RootContainer.setSize(GUISpace.Size);
 				_RootContainer.ReSize();
-			}			
+			}
 		}
-		
+
 		public RectangleShape GUISpace { get; set; } = new RectangleShape();
 
-		public InputManager InputManager { get; set; }
+		private InputManager _InputManager { get; set; }
+		public InputManager InputManager {
+			get => _InputManager;
+			set
+			{
+				if(value == null) return;
+				if (InputManager != null)
+				{
+					UnregisterInput();
+				}
 
-		public RenderWindow renderwindow;
+				_InputManager = value;
+
+				Console.WriteLine(InputManager+" Input Manager");
+
+				RegisterInput();
+			}
+		}
+
+		public RenderWindow Renderwindow;
 
 		private MouseOverLap MOL = new MouseOverLap();
 
@@ -34,18 +52,20 @@ namespace SFML_Engine.Engine.JUI
 
 		private JElement LastSelectedElement;
 
+		public View GuiView { get; set; }
+
 		public CircleShape SelecterCircel { get; set; } = new CircleShape();
-		public Vector2i SelecterPoint { get; set; } = new Vector2i(0,0);
-		public Vector2i SelectorMovment { get; set; } = new Vector2i(0,0);
+		public Vector2i SelecterPoint { get; set; } = new Vector2i(0, 0);
+		public Vector2i SelectorMovment { get; set; } = new Vector2i(0, 0);
 		public bool UseSelector { get; set; } = false;
 
 		//Default Color (i don want to handle NullpointerExceptions), lol i don't need a Default Color to avoid NullpointerExceptions ,but i want to see something.
 		public Color DefaultElementColor { get; set; } = new Color(225, 225, 225);
-		public Color DefaultBackgroundColor { get; set; }  = new Color(0, 0, 0);
-		public Color DefaultTextColor { get; set; }  = new Color(255, 255, 255);
-		public Color DefaultEffectColor1 { get; set; } = new Color(162,162,162);
-		public Color DefaultEffectColor2 { get; set; } = new Color(128,128,128);
-		public Color DefaultEffectColor3 { get; set; } = new Color(64,64,64);
+		public Color DefaultBackgroundColor { get; set; } = new Color(0, 0, 0);
+		public Color DefaultTextColor { get; set; } = new Color(255, 255, 255);
+		public Color DefaultEffectColor1 { get; set; } = new Color(162, 162, 162);
+		public Color DefaultEffectColor2 { get; set; } = new Color(128, 128, 128);
+		public Color DefaultEffectColor3 { get; set; } = new Color(64, 64, 64);
 
 		public bool CanTick { get; set; } = true;
 
@@ -81,31 +101,47 @@ namespace SFML_Engine.Engine.JUI
 			InputManager.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
 				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
-			
+
 		}
 
 		public JGUI(Font font, RenderWindow renderwindow, InputManager inputManager)
 		{
 			GUIFont = font;
-			this.renderwindow = renderwindow;
+			this.Renderwindow = renderwindow;
 			this.InputManager = inputManager;
-			InputManager.RegisterEngineInput(ref this.renderwindow);
-
-			InputManager.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
-				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
-				OnTouchBegan, OnTouchEnded, OnTouchMoved);
 
 			SelecterCircel.FillColor = Color.Red;
-			SelecterCircel.Radius  = 6f;
+			SelecterCircel.Radius = 6f;
 
 			renderwindow.Resized += Renderwindow_Resized;
+
+			GuiView = renderwindow.DefaultView;
 		}
+
+		public JGUI(Font font, RenderWindow renderwindow)
+		{
+			GUIFont = font;
+			this.Renderwindow = renderwindow;
+
+			SelecterCircel.FillColor = Color.Red;
+			SelecterCircel.Radius = 6f;
+
+			renderwindow.Resized += Renderwindow_Resized;
+
+			GuiView = renderwindow.DefaultView;
+		}
+			
 
 		private void Renderwindow_Resized(object sender, SizeEventArgs e)
 		{
-			GUISpace.Position = new Vector2f(0, 0);
-			GUISpace.Size = new Vector2f(e.Width, e.Height);
 			//RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(e.Width,e.Height));
+
+			GuiView.Size = new Vector2f(e.Width, e.Height);
+			GuiView.Center = new Vector2f(e.Width/2f, e.Height/2f);
+
+			RootContainer.Position = new Vector2f(50, 50);
+			RootContainer.Size = new Vector2f(e.Width - 100, e.Height - 100);
+
 		}
 
 		public virtual void Tick(float deltaTime)
@@ -182,12 +218,11 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
-			RootContainer.setPosition((Vector2f)target.MapCoordsToPixel(new Vector2f(0,0)));
-			RootContainer.setSize((Vector2f)target.MapCoordsToPixel(GUISpace.Size));
+			if (Renderwindow == null) return;
 
-			// (Vector2f)target.MapCoordsToPixel(SelecterPoint)
+			Renderwindow.SetView(GuiView);
 
-			SelecterCircel.Position = (Vector2f)target.MapCoordsToPixel((Vector2f)SelecterPoint);
+			SelecterCircel.Position = (Vector2f)SelecterPoint;
 
 			if (RootContainer != null)
 			{
@@ -195,12 +230,15 @@ namespace SFML_Engine.Engine.JUI
 				{
 					RootContainer.Layout.ReSize();
 				}
-				
-				RootContainer.Draw(target, states);
+
+				Renderwindow.Draw(RootContainer);
+
+				//RootContainer.Draw(target, states);
 			}
 			if (UseSelector)
 			{
-				SelecterCircel.Draw(target, states);
+				Renderwindow.Draw(SelecterCircel);
+				//SelecterCircel.Draw(target, states);
 			}
 		}
 
@@ -223,10 +261,15 @@ namespace SFML_Engine.Engine.JUI
 		}
 
 		protected virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
-		{
-			UseSelector = false;
+		{ 
+
+			UseSelector = true;
+
+			// new Vector2f(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f))
 
 			SelecterPoint = new Vector2i(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f));
+
+			//SelecterPoint = new Vector2i(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f));
 
 			if (HoverElement != null)
 			{
