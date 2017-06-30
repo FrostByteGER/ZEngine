@@ -133,6 +133,8 @@ namespace SFML_Engine.Engine.Core
 
 		private void OnEngineWindowResized(object sender, SizeEventArgs e)
 		{
+			Console.WriteLine("---");
+			Console.WriteLine("1: "+EngineWindow.GetView());
 			EngineWindowWidth = e.Width;
 			EngineWindowHeight = e.Height;
 			foreach (var p in ActiveLevel.Players)
@@ -140,6 +142,8 @@ namespace SFML_Engine.Engine.Core
 				p.PlayerCamera.Center = new TVector2f();
 				p.PlayerCamera.Size = new TVector2f(e.Width, e.Height);
 			}
+			Console.WriteLine("2: "+EngineWindow.GetView());
+			EngineWindow.SetView(new View(new TVector2f(e.Width/2f, e.Height/2f), new TVector2f(e.Width, e.Height)));
 		}
 
 		private void OnEngineWindowFocusGained(object sender, EventArgs e)

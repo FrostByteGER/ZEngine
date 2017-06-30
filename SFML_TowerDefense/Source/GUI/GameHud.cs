@@ -35,8 +35,13 @@ namespace SFML_TowerDefense.Source.GUI
 		public JContainer TowerContainer;
 		public JContainer ResouceContainer;
 
+		public JButton wave;
+
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
 		{
+
+			GUISpace.Position = new Vector2f(0,0);
+			GUISpace.Size = new Vector2f(800,800);
 
 			InfoContainer = InitInfoContainer();
 			FieldContainer = InitFieldContainer();
@@ -51,12 +56,11 @@ namespace SFML_TowerDefense.Source.GUI
 			RootContainer.setBackgroundColor(new Color(255,255,255,0));
 
 			JBorderLayout layout = new JBorderLayout(RootContainer);
+			layout.TopSize = 0.2f;
 
 			RootContainer.Layout = layout;
 		
 			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
-
-			RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(800, 800));
 		}
 
 		private JContainer InitInfoContainer()
@@ -68,8 +72,13 @@ namespace SFML_TowerDefense.Source.GUI
 
 			container.Layout = layout;
 
-			JButton wave = new JButton(this);
+			wave = new JButton(this);
 			wave.setTextString("WAVE X / X");
+
+			wave.OnEnter += delegate ()
+			{
+				Console.WriteLine("OnEnter");
+			};
 
 			container.addElement(wave);
 
@@ -82,8 +91,6 @@ namespace SFML_TowerDefense.Source.GUI
 
 			return container;
 		}
-
-
 
 		private JContainer InitBuildingCointainer()
 		{
@@ -160,7 +167,6 @@ namespace SFML_TowerDefense.Source.GUI
 			{
 				TDTower fieldActor = (TDTower)SelectedField;
 
-				
 			}
 			else if (SelectedField is TDMine)
 			{
@@ -183,7 +189,7 @@ namespace SFML_TowerDefense.Source.GUI
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
-		{
+		{	
 			base.Draw(target, states);
 		}
 	}

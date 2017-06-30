@@ -6,12 +6,13 @@ using SFML.Window;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
+using SFML_Engine.Engine.JUI;
 
 namespace SFML_Engine.Engine.Game
 {
     public class PlayerController : Transformable, ITickable, IGameInterface, IControllable
     {
-	    
+
 	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; } = new View(new TVector2f(), new TVector2f(400.0f));
@@ -19,6 +20,8 @@ namespace SFML_Engine.Engine.Game
 		public Level LevelReference { get; set; } = null;
 
         public SpriteActor PlayerPawn { get; set; }
+
+		public JGUI Hud { get; set; }
 
 	    [JsonIgnore]
 		public InputManager Input { get; set; }
@@ -64,6 +67,7 @@ namespace SFML_Engine.Engine.Game
 			Input.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled, 
 				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
+			if (Hud != null) Hud.InputManager = Input;
 		}
 
 		public virtual void UnregisterInput()
