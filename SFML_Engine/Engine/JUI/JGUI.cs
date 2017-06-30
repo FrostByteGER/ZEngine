@@ -21,7 +21,6 @@ namespace SFML_Engine.Engine.JUI
 				_RootContainer.ReSize();
 			}			
 		}
-
 		
 		public RectangleShape GUISpace { get; set; } = new RectangleShape();
 
@@ -98,6 +97,15 @@ namespace SFML_Engine.Engine.JUI
 
 			SelecterCircel.FillColor = Color.Red;
 			SelecterCircel.Radius  = 6f;
+
+			renderwindow.Resized += Renderwindow_Resized;
+		}
+
+		private void Renderwindow_Resized(object sender, SizeEventArgs e)
+		{
+			GUISpace.Position = new Vector2f(0, 0);
+			GUISpace.Size = new Vector2f(e.Width, e.Height);
+			//RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(e.Width,e.Height));
 		}
 
 		public virtual void Tick(float deltaTime)
@@ -174,9 +182,12 @@ namespace SFML_Engine.Engine.JUI
 
 		public virtual void Draw(RenderTarget target, RenderStates states)
 		{
-			target.SetView(target.DefaultView);
+			RootContainer.setPosition((Vector2f)target.MapCoordsToPixel(new Vector2f(0,0)));
+			RootContainer.setSize((Vector2f)target.MapCoordsToPixel(GUISpace.Size));
 
-			SelecterCircel.Position = (Vector2f)SelecterPoint;
+			// (Vector2f)target.MapCoordsToPixel(SelecterPoint)
+
+			SelecterCircel.Position = (Vector2f)target.MapCoordsToPixel((Vector2f)SelecterPoint);
 
 			if (RootContainer != null)
 			{
@@ -214,6 +225,7 @@ namespace SFML_Engine.Engine.JUI
 		protected virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
 			UseSelector = false;
+
 			SelecterPoint = new Vector2i(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f));
 
 			if (HoverElement != null)

@@ -38,6 +38,9 @@ namespace SFML_TowerDefense.Source.GUI
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
 		{
 
+			GUISpace.Position = new Vector2f(0,0);
+			GUISpace.Size = new Vector2f(800,800);
+
 			InfoContainer = InitInfoContainer();
 			FieldContainer = InitFieldContainer();
 
@@ -55,8 +58,6 @@ namespace SFML_TowerDefense.Source.GUI
 			RootContainer.Layout = layout;
 		
 			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
-
-			RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(800, 800));
 		}
 
 		private JContainer InitInfoContainer()
@@ -183,7 +184,7 @@ namespace SFML_TowerDefense.Source.GUI
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
-		{
+		{	
 			base.Draw(target, states);
 		}
 	}
