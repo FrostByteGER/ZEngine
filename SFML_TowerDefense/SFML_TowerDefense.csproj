@@ -39,22 +39,31 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Game\Buildings\Towers\TDLaserTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDLaserTowerWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDTowerState.cs" />
+    <Compile Include="Source\Game\TDDamageType.cs" />
+    <Compile Include="Source\Game\TDProjectile.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDTowerWeaponComponent.cs" />
+    <Compile Include="Source\Game\Utility\Statistics.cs" />
+    <Compile Include="Source\Game\Utility\StatisticsValue.cs" />
     <Compile Include="Source\GUI\GameHud.cs" />
     <Compile Include="Source\GUI\TileElement.cs" />
     <Compile Include="Source\Game\TDActor.cs" />
     <Compile Include="Source\Game\TDActorComponent.cs" />
-    <Compile Include="Source\Game\TDBuilding.cs" />
+    <Compile Include="Source\Game\Buildings\TDBuilding.cs" />
     <Compile Include="Source\Game\TDFieldActor.cs" />
     <Compile Include="Source\Game\TDLevel.cs" />
     <Compile Include="Source\Game\TDMapJsonWrapper.cs" />
     <Compile Include="Source\Game\TDMapTestLevel.cs" />
-    <Compile Include="Source\Game\TDMine.cs" />
+    <Compile Include="Source\Game\Buildings\TDMine.cs" />
     <Compile Include="Source\Game\Player\TDPlayerController.cs" />
     <Compile Include="Source\Game\TDResource.cs" />
     <Compile Include="Source\Game\TDSpawner.cs" />
-    <Compile Include="Source\Game\TDTower.cs" />
-    <Compile Include="Source\Game\TDUnit.cs" />
-    <Compile Include="Source\Game\TDUnitInfo.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDTower.cs" />
+    <Compile Include="Source\Game\Units\TDUnit.cs" />
+    <Compile Include="Source\Game\Units\TDUnitInfo.cs" />
     <Compile Include="Source\Game\TDWave.cs" />
     <Compile Include="Source\Game\TDWaypoint.cs" />
     <Compile Include="Source\Game\TDWeaponComponent.cs" />

@@ -1,7 +1,7 @@
 using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.Player;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.Buildings
 {
 	public class TDMine : TDBuilding
 	{
@@ -11,7 +11,7 @@ namespace SFML_TowerDefense.Source.Game
 
 		public int MineAmount { get; set; } = 1;
 
-		public TDResource Resouce { get; set; }
+		public TDResource ResourceField { get; set; }
 
 		public TDPlayerController Owner { get; set; }
 
@@ -19,12 +19,12 @@ namespace SFML_TowerDefense.Source.Game
 		{
 		}
 
-		public void MineRecouse()
+		public void MineResource()
 		{
-			if (Resouce == null || Owner == null) return;
-			if (Resouce.ResourceAmount > 0)
+			if (ResourceField == null || Owner == null) return;
+			if (ResourceField.ResourceAmount > 0)
 			{
-				Owner.Money += Resouce.Mine(MineAmount);
+				Owner.Money += ResourceField.Mine(MineAmount);
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace SFML_TowerDefense.Source.Game
 			base.Tick(deltaTime);
 			if (MineTime <= 0)
 			{
-				MineRecouse();
+				MineResource();
 				MineTime += MineSpeed;
 			}
 			MineTime -= deltaTime;

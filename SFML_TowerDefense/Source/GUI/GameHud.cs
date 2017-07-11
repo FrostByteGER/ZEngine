@@ -8,6 +8,8 @@ using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML_TowerDefense.Source.Game;
 using SFML.System;
+using SFML_TowerDefense.Source.Game.Buildings;
+using SFML_TowerDefense.Source.Game.Buildings.Towers;
 
 namespace SFML_TowerDefense.Source.GUI
 {

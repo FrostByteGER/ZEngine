@@ -7,24 +7,29 @@ namespace SFML_TowerDefense.Source.Game
 
 		public int ResourceAmount = 100;
 
+		/// <summary>
+		/// Is this Resourcefield depleted or not.
+		/// </summary>
+		public bool Depleted => ResourceAmount == 0;
+
 		public TDResource(Level level) : base(level)
 		{
 		}
 
-		public int Mine(int Amount)
+		public int Mine(int amount)
 		{
-			int end = ResourceAmount;
+			
 
-			if (ResourceAmount - Amount < 0)
+			if (ResourceAmount - amount < 0)
 			{
-				end = ResourceAmount;
+				var end = ResourceAmount;
 				ResourceAmount = 0;
 				return end;
 			}
 
-			ResourceAmount -= Amount;
+			ResourceAmount -= amount;
 
-			return Amount;
+			return amount;
 		}
 	}
 }
