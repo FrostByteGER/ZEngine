@@ -32,10 +32,12 @@ namespace SFML_TowerDefense.Source.GUI
 		public JContainer FieldContainer;
 
 		public JContainer GeneralFieldContainer;
-		public JContainer BuildingCointainer;
 		public JContainer MineContainer;
-		public JContainer TowerContainer;
 		public JContainer ResouceContainer;
+		public JContainer TowerContainer;
+		public JContainer BuildingContainer;
+		public JContainer BuildingFieldContainer;
+
 
 		public JButton wave;
 
@@ -49,20 +51,21 @@ namespace SFML_TowerDefense.Source.GUI
 			FieldContainer = InitFieldContainer();
 
 			GeneralFieldContainer = InitGeneralFieldContainer();
-			BuildingCointainer = InitBuildingCointainer();
 			MineContainer = InitMineContainer();
-			TowerContainer = InitTowerContainer();
 			ResouceContainer = InitResouceContainer();
+			TowerContainer = InitTowerContainer();
+			BuildingContainer = InitBuildingCointainer();
+			BuildingFieldContainer = InitBuildingFieldContainer();
 
 			RootContainer = new JContainer(this);
 			RootContainer.setBackgroundColor(new Color(255,255,255,0));
 
 			JBorderLayout layout = new JBorderLayout(RootContainer);
-			layout.TopSize = 0.2f;
-
+			layout.TopSize = 0.1f;
+			layout.BottemSize = 0.2f;
 			RootContainer.Layout = layout;
-		
 			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
+			RootContainer.addElement(BuildingFieldContainer, JBorderLayout.BOTTOM);
 		}
 
 		private JContainer InitInfoContainer()
@@ -70,19 +73,41 @@ namespace SFML_TowerDefense.Source.GUI
 			JContainer container = new JContainer(this);
 
 			JGridLayout layout = new JGridLayout(container);
-			layout.Rows = 2;
+			layout.Rows = 7;
 
 			container.Layout = layout;
 
 			wave = new JButton(this);
-			wave.setTextString("WAVE X / X");
-
-			wave.OnEnter += delegate ()
-			{
-				Console.WriteLine("OnEnter");
-			};
-
+			wave.Text.CharacterSize = 12;
+			wave.setTextString("WAVE X of X");
 			container.addElement(wave);
+
+			JButton enemieRemaining = new JButton(this);
+			enemieRemaining.Text.CharacterSize = 12;
+			enemieRemaining.setTextString("Enemies: X");
+			container.addElement(enemieRemaining);
+
+			JButton health = new JButton(this);
+			health.Text.CharacterSize = 12;
+			health.setTextString("Health: X");
+			container.addElement(health);
+
+			JButton gold = new JButton(this);
+			gold.Text.CharacterSize = 12;
+			gold.setTextString("Gold: X");
+			container.addElement(gold);
+
+			JButton score = new JButton(this);
+			score.Text.CharacterSize = 12;
+			score.setTextString("Score: X");
+			container.addElement(score);
+
+			container.addElement(null);
+
+			JButton menu = new JButton(this);
+			menu.Text.CharacterSize = 12;
+			menu.setTextString("Menu");
+			container.addElement(menu);
 
 			return container;
 		}
@@ -129,6 +154,46 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
+		private JContainer InitBuildingFieldContainer()
+		{
+			JContainer container = new JContainer(this);
+
+			JBorderLayout layout = new JBorderLayout(container);
+			layout.LeftSize = 0.2f;
+
+			JContainer leftContainer = new JContainer(this);
+			leftContainer.Layout = new JLayout(leftContainer);
+			container.addElement(leftContainer, JBorderLayout.LEFT);
+
+			JCheckbox tower1 = new JCheckbox(this);
+			tower1.setTextString("Tower1");
+			tower1.Select();
+			leftContainer.addElement(tower1);
+
+			JCheckbox tower2 = new JCheckbox(this);
+			tower2.setTextString("Tower2");
+			leftContainer.addElement(tower2);
+
+			JCheckbox tower3 = new JCheckbox(this);
+			tower3.setTextString("Tower3");
+			leftContainer.addElement(tower3);
+
+			JButton build = new JButton(this);
+			build.setTextString("Build");
+			leftContainer.addElement(build);
+
+			JCheckboxGroup towerGroup = new JCheckboxGroup();
+			towerGroup.AddBox(tower1);
+			towerGroup.AddBox(tower2);
+			towerGroup.AddBox(tower3);
+
+			JLabel stats = new JLabel(this);
+			stats.setTextString("TowerStats");
+			container.addElement(stats, JBorderLayout.CENTER);
+
+			return container;
+		}
+
 		private void ChangeSelectedField(TDFieldActor fieldActor)
 		{
 			if (fieldActor == null)
@@ -149,7 +214,7 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else if (fieldActor is TDBuilding)
 			{
-				FieldContainer = BuildingCointainer;
+				FieldContainer = BuildingContainer;
 			}
 			else if(fieldActor is TDFieldActor)
 			{

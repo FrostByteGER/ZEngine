@@ -222,7 +222,7 @@ namespace SFML_Engine.Engine.JUI
 
 			Renderwindow.SetView(GuiView);
 
-			SelecterCircel.Position = (Vector2f)SelecterPoint;
+			SelecterCircel.Position = (Vector2f)SelecterPoint - new Vector2f(SelecterCircel.Radius/2f, SelecterCircel.Radius/2f);
 
 			if (RootContainer != null)
 			{
