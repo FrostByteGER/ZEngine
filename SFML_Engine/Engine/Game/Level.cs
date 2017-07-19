@@ -209,7 +209,7 @@ namespace SFML_Engine.Engine.Game
 
 	    public T SpawnActor<T>() where T : Actor
 	    {
-			var actor =  Spawner.SpawnObject<T>(this);
+			var actor = Spawner.SpawnObject<T>(this);
 		    RegisterActor(actor);
 			return actor;
 	    }
