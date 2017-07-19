@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
+using SFML_TowerDefense.Source.Game.AI;
 
 namespace SFML_TowerDefense.Source.Game
 {
@@ -68,11 +71,41 @@ namespace SFML_TowerDefense.Source.Game
 			int[] layerData = layer0.data.ToObject<int[]>();
 			// Object Layer
 			var layer1 = layers[1];
-			//IEnumerable objects = layer1.objects.ToObject<IEnumerable>();
-			//foreach (var mapObject in objects)
-			//{
-				//TODO: Spawn Objects here
-			//}
+			var objects = layer1.objects.ToObject<IEnumerable<dynamic>>();
+			foreach (var mapObject in objects)
+			{
+				var objectType = mapObject.type.ToObject<string>();
+				if (objectType == "TDSpawner")
+				{
+					
+				}else if (objectType == "TDNexus")
+				{
+
+				}
+				else if (objectType == "TDOrefield")
+				{
+					var resourceField = new TDResource(LevelReference);
+					resourceField.ResourceAmount = mapObject.properties.Value.ToObject<int>();
+				}
+				else if (objectType == "TDPath")
+				{
+					var xOrigin = mapObject.x.ToObject<int>();
+					var yOrigin = mapObject.y.ToObject<int>();
+					var waypoints = mapObject.polyline.ToObject<IEnumerable<dynamic>>();
+					var waypointObjects = new List<TDWaypoint>(); //TODO Add To Level!
+					TDWaypoint previousWaypoint = null;
+					foreach (var waypoint in waypoints)
+					{
+						var xLocal = waypoint.x.ToObject<int>();
+						var yLocal = waypoint.y.ToObject<int>();
+						var wp = new TDWaypoint(LevelReference);
+						wp.Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal);
+						if (previousWaypoint != null) previousWaypoint.NextWaypoint = wp;
+						waypointObjects.Add(wp);
+						previousWaypoint = wp;
+					}
+				}
+			}
 
 			// Map Tile Width. Currently not needed, defined inside the Sheet Data
 			int tileWidth = mapData.tilewidth.ToObject<int>();
@@ -108,7 +141,5 @@ namespace SFML_TowerDefense.Source.Game
 		{
 			base.Tick(deltaTime);
 		}
-
-
 	}
 }

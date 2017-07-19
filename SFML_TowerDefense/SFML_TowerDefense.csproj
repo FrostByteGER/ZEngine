@@ -63,12 +63,12 @@
     <Compile Include="Source\Game\Buildings\TDMine.cs" />
     <Compile Include="Source\Game\Player\TDPlayerController.cs" />
     <Compile Include="Source\Game\TDResource.cs" />
-    <Compile Include="Source\Game\TDSpawner.cs" />
+    <Compile Include="Source\Game\AI\TDSpawner.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTower.cs" />
     <Compile Include="Source\Game\Units\TDUnit.cs" />
     <Compile Include="Source\Game\Units\TDUnitInfo.cs" />
-    <Compile Include="Source\Game\TDWave.cs" />
-    <Compile Include="Source\Game\TDWaypoint.cs" />
+    <Compile Include="Source\Game\AI\TDWave.cs" />
+    <Compile Include="Source\Game\AI\TDWaypoint.cs" />
     <Compile Include="Source\Game\TDWeaponComponent.cs" />
     <Compile Include="Source\GUI\GUILevelTest.cs" />
     <Compile Include="Source\Game\TDMap.cs" />

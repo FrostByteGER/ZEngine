@@ -1,8 +1,7 @@
 ﻿using SFML_Engine.Engine.Game;
-using System.Collections.Generic;
 using SFML_TowerDefense.Source.Game.Units;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.AI
 {
 	public class TDWave : TDActor
 	{

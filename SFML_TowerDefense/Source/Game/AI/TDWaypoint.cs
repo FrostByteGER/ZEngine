@@ -1,6 +1,6 @@
 ﻿using SFML_Engine.Engine.Game;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.AI
 {
 	public class TDWaypoint : TDFieldActor
 	{
@@ -8,6 +8,7 @@ namespace SFML_TowerDefense.Source.Game
 
 		public TDWaypoint(Level level) : base(level)
 		{
+			SetRootComponent(new ActorComponent());
 		}
 	}
 }

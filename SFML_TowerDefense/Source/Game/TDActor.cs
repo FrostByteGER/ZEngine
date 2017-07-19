@@ -13,6 +13,19 @@ namespace SFML_TowerDefense.Source.Game
 			TDLevelRef = level as TDLevel;
 		}
 
+		public virtual void ApplyDamage(int damage)
+		{
 
+		}
+
+		public virtual void ApplyDamage(TDActor instigator, int damage)
+		{
+
+		}
+
+		public virtual void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
+		{
+			
+		}
 	}
 }

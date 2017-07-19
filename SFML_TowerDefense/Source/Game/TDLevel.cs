@@ -21,9 +21,7 @@ namespace SFML_TowerDefense.Source.Game
 			base.InitLevel();
 			var pc = new TDPlayerController();
 			RegisterPlayer(pc);
-
-			// EngineReference.InputManager
-
+			
 			GameHud Hud = new GameHud(new Font("./Assets/Game/Fonts/Main.ttf"), EngineReference.EngineWindow, pc.Input);
 
 			Hud.RootContainer.setPosition(new Vector2f(50, 50));

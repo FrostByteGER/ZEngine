@@ -1,8 +1,8 @@
-using SFML_Engine.Engine.Game;
 using System.Collections.Generic;
+using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.Units;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.AI
 {
 	public class TDSpawner : TDFieldActor
 	{
@@ -49,10 +49,9 @@ namespace SFML_TowerDefense.Source.Game
 
 		private void SpawnUnit()
 		{
-			TDUnit spawnedUnit = LevelReference.SpawnActor<TDUnit>();
-
+			var spawnedUnit = LevelReference.SpawnActor<TDUnit>();
 			spawnedUnit.Position = SpawnPoint.Position;
-			spawnedUnit.Waypoint = SpawnPoint;
+			spawnedUnit.CurrentWaypoint = SpawnPoint;
 		}
 	}
 }
