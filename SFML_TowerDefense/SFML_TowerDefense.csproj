@@ -40,12 +40,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Source\Game\Buildings\Towers\TDLaserTower.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDLaserTowerWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerState.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDWeaponType.cs" />
     <Compile Include="Source\Game\TDDamageType.cs" />
     <Compile Include="Source\Game\TDProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerWeaponComponent.cs" />
+    <Compile Include="Source\Game\TDWeaponState.cs" />
+    <Compile Include="Source\Game\Units\TDUnitState.cs" />
     <Compile Include="Source\Game\Utility\Statistics.cs" />
     <Compile Include="Source\Game\Utility\StatisticsValue.cs" />
     <Compile Include="Source\GUI\GameHud.cs" />

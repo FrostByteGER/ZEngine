@@ -6,6 +6,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 	{
 
 		public TDTowerState TowerState { get; set; } = TDTowerState.Idle;
+		public TDTowerBaseComponent TowerBase { get; set; }
 		protected TDTower(Level level) : base(level)
 		{
 			

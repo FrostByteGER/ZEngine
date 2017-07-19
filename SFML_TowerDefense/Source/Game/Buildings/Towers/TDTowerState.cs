@@ -3,6 +3,7 @@
 	public enum TDTowerState
 	{
 		Idle,
+		ReadyToFire,
 		Charging,
 		Firing,
 		Disabled

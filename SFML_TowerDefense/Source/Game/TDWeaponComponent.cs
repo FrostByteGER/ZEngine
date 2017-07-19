@@ -1,16 +1,17 @@
-﻿namespace SFML_TowerDefense.Source.Game
+﻿using SFML_TowerDefense.Source.Game.Buildings.Towers;
+
+namespace SFML_TowerDefense.Source.Game
 {
 	public class TDWeaponComponent : TDActorComponent
 	{
-
-		public int Damage = 1;
-		public float FireRate = 2;
-		public float CoolDown = 0;
-
-		public uint Range { get; private set; }
-
-
-
-
+		public TDWeaponType WeaponType { get; set; } = TDWeaponType.Hitscan;
+		public uint WeaponDamage { get; set; } = 1;
+		public float FireRate { get; set; } = 1;
+		public virtual uint WeaponRange { get; set; } = 1;
+		public float RechargeTime { get; set; } = 0.5f;
+		public float CurrentRechargeTime { get; set; } = 0.0f;
+		public TDDamageType DamageType { get; set; } = TDDamageType.Normal;
+		public string WeaponAbility { get; set; } = "NONE";
+		public TDWeaponState WeaponState { get; set; } = TDWeaponState.ReadyToFire;
 	}
 }
