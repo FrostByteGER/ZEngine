@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFML_Engine.Engine.Physics;
 using SFML_TowerDefense.Source.Game.Units;
+using System;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -21,6 +22,17 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		{
 			EnemiesInRange.Remove(enemyOutOfRange);
 			//TODO: Sort Remaining Enemies in Range by Distance and pick the furthest one as next target.
+
+			float rang = float.MaxValue; // range ^ 2 
+
+			foreach (TDUnit enemy in EnemiesInRange)
+			{
+				if ( Math.Pow(enemy.Position.X - ParentTower.Position.X,2) + Math.Pow(enemy.Position.Y - ParentTower.Position.Y, 2) < rang)
+				{
+					CurrentTarget = enemy;
+				}
+			}
+
 			if (EnemiesInRange.Count > 0) return; 
 			CurrentTarget = null;
 		}
