@@ -11,6 +11,38 @@ namespace SFML_Engine.Engine.Utility
 
 		public static Random EngineRandom { get; set; } = new Random();
 
+
+		public static TVector2f VInterpTo(TVector2f currentPosition, TVector2f targetPosition, float deltaTime, float interpSpeed)
+		{
+			if (interpSpeed <= 0.0f) return targetPosition;
+
+			var distance = targetPosition - currentPosition;
+			
+			if (distance.LengthSquared < TVector2f.Epsilon) return targetPosition;
+			
+			var deltaMove = distance * Clamp(deltaTime * interpSpeed, 0.0f, 1.0f);
+			return currentPosition + deltaMove;
+		}
+
+		public static TVector2f VInterpToConstant(TVector2f currentPosition, TVector2f targetPosition, float deltaTime, float interpSpeed)
+		{
+			var delta = targetPosition - currentPosition;
+			var deltaM = delta.Length;
+			var maxStep = interpSpeed * deltaTime;
+
+			if (deltaM > maxStep)
+			{
+				if (maxStep > 0.0f)
+				{
+					var deltaN = delta / deltaM;
+					return currentPosition + deltaN * maxStep;
+				}
+				return currentPosition;
+			}
+
+			return targetPosition;
+		}
+
 		/// <summary>
 		/// TODO: Check if Inclusive bounds.
 		/// Clamps the given value between min and max.
