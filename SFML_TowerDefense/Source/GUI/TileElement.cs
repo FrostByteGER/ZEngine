@@ -1,5 +1,6 @@
 ﻿using SFML_Engine.Engine.JUI;
 using SFML_TowerDefense.Source.Game;
+using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.GUI
 {

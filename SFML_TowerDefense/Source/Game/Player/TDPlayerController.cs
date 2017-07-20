@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
+using SFML_TowerDefense.Source.Game.AI;
+using SFML_TowerDefense.Source.Game.Buildings;
+using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_TowerDefense.Source.Game.Units;
 
 namespace SFML_TowerDefense.Source.Game.Player
 {
@@ -14,9 +20,26 @@ namespace SFML_TowerDefense.Source.Game.Player
 
 		private TVector2f MouseCoords { get; set; } = new TVector2f();
 		public TDTile CurrentlySelectedTile { get; private set; }
-		private float DeltaTime { get; set; } = 0;
+		
+		public List<TDNexus> PlayerNexus = new List<TDNexus>();
+		public uint Health
+		{
+			get
+			{
+				uint health = 0;
+				foreach (var nexus in PlayerNexus)
+				{
+					health += nexus.Health;
+				}
+				return health;
+			}
+		}
 
-		public int Money = 0;
+		private float DeltaTime { get; set; } = 0;
+		public uint Gold { get; set; } = 0;
+		public uint Score { get; set; } = 0;
+
+		public float ZoomSpeed { get; set; } = 0.1f;
 
 		public override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
@@ -29,6 +52,11 @@ namespace SFML_TowerDefense.Source.Game.Player
 				actor.AddComponent(spriteGun);
 				actor.Position = CurrentlySelectedTile.WorldPosition;
 				CurrentlySelectedTile.FieldActors.Add(actor);
+
+				var testActor = LevelRef.SpawnActor<TDUnit>();
+				testActor.Position = new TVector2f(100,100);
+				testActor.CurrentWaypoint = new TDWaypoint(LevelRef);
+				testActor.CurrentWaypoint.Position = CurrentlySelectedTile.WorldPosition;
 			}
 		}
 
@@ -58,12 +86,20 @@ namespace SFML_TowerDefense.Source.Game.Player
 		{
 			base.OnGameStart();
 			LevelRef = LevelReference as TDLevel;
+			PlayerNexus = LevelRef?.FindActorsInLevel<TDNexus>().ToList();
 		}
 
 		public override void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
 		{
 			base.OnMouseMoved(sender, mouseMoveEventArgs);
 			MouseCoords = LevelRef.EngineReference.EngineWindow.MapPixelToCoords(new Vector2i(mouseMoveEventArgs.X, mouseMoveEventArgs.Y), PlayerCamera);
+		}
+
+		public override void OnMouseScrolled(object sender, MouseWheelScrollEventArgs mouseWheelScrollEventArgs)
+		{
+			var zoomLevel = 1 + -mouseWheelScrollEventArgs.Delta * ZoomSpeed;
+			PlayerCamera.Zoom(zoomLevel);
+
 		}
 
 		public override void Tick(float deltaTime)

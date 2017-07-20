@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.TileMap
 {
 	public struct LayerJsonWrapper
 	{

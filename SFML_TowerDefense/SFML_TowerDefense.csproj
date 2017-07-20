@@ -44,7 +44,9 @@
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerState.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDWeaponType.cs" />
+    <Compile Include="Source\Game\Buildings\TDNexus.cs" />
     <Compile Include="Source\Game\TDDamageType.cs" />
+    <Compile Include="Source\Game\TDGameMode.cs" />
     <Compile Include="Source\Game\TDProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerWeaponComponent.cs" />
     <Compile Include="Source\Game\TDWeaponState.cs" />
@@ -58,8 +60,8 @@
     <Compile Include="Source\Game\Buildings\TDBuilding.cs" />
     <Compile Include="Source\Game\TDFieldActor.cs" />
     <Compile Include="Source\Game\TDLevel.cs" />
-    <Compile Include="Source\Game\TDMapJsonWrapper.cs" />
-    <Compile Include="Source\Game\TDMapTestLevel.cs" />
+    <Compile Include="Source\Game\TileMap\TDMapJsonWrapper.cs" />
+    <Compile Include="Source\Game\TileMap\TDMapTestLevel.cs" />
     <Compile Include="Source\Game\Buildings\TDMine.cs" />
     <Compile Include="Source\Game\Player\TDPlayerController.cs" />
     <Compile Include="Source\Game\TDResource.cs" />
@@ -71,8 +73,8 @@
     <Compile Include="Source\Game\AI\TDWaypoint.cs" />
     <Compile Include="Source\Game\TDWeaponComponent.cs" />
     <Compile Include="Source\GUI\GUILevelTest.cs" />
-    <Compile Include="Source\Game\TDMap.cs" />
-    <Compile Include="Source\Game\TDTile.cs" />
+    <Compile Include="Source\Game\TileMap\TDMap.cs" />
+    <Compile Include="Source\Game\TileMap\TDTile.cs" />
     <Compile Include="Source\TDGameInfo.cs" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

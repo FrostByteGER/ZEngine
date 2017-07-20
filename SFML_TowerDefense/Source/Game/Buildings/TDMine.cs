@@ -9,7 +9,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 		public float MineTime { get; set; } = 0;
 		public float MineSpeed { get; set; } = 5;
 
-		public int MineAmount { get; set; } = 1;
+		public uint MineAmount { get; set; } = 1;
 
 		public TDResource ResourceField { get; set; }
 
@@ -24,7 +24,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			if (ResourceField == null || Owner == null) return;
 			if (ResourceField.ResourceAmount > 0)
 			{
-				Owner.Money += ResourceField.Mine(MineAmount);
+				Owner.Gold += ResourceField.Mine(MineAmount);
 			}
 		}
 

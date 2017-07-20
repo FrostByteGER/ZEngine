@@ -1,5 +1,8 @@
 ﻿using System;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.AI;
 
 namespace SFML_TowerDefense.Source.Game.Units
@@ -10,11 +13,13 @@ namespace SFML_TowerDefense.Source.Game.Units
 		public int HP { get; set; } = 100;
 		public float MovmentSpeed { get; set; } = 1;
 		public TDWaypoint CurrentWaypoint { get; set; }
-		public float WaypointThreshold { get; set; } = 5.0f;
+		public float WaypointThreshold { get; set; } = 0.0f;
 		public TDUnitState UnitState { get; set; } = TDUnitState.Walking;
 
 		public TDUnit(Level level) : base(level)
 		{
+			SetRootComponent(
+				new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2"))));
 		}
 
 		public override void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
@@ -41,7 +46,7 @@ namespace SFML_TowerDefense.Source.Game.Units
 			{
 				if ((Position - CurrentWaypoint.Position).LengthSquared > WaypointThreshold * WaypointThreshold)
 				{
-
+					Position = EngineMath.VInterpTo(Position, CurrentWaypoint.Position, deltaTime, 1.0f);
 				}
 				else
 				{

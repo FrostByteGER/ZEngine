@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.AI;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.TileMap
 {
 	public class TDMap : TDActor
 	{
@@ -85,7 +82,7 @@ namespace SFML_TowerDefense.Source.Game
 				else if (objectType == "TDOrefield")
 				{
 					var resourceField = new TDResource(LevelReference);
-					resourceField.ResourceAmount = mapObject.properties.Value.ToObject<int>();
+					resourceField.ResourceAmount = mapObject.properties.Value.ToObject<uint>();
 				}
 				else if (objectType == "TDPath")
 				{

@@ -2,7 +2,7 @@
 using SFML.Graphics;
 using SFML_Engine.Engine.Graphics;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.TileMap
 {
 	public class TDTile : SpriteComponent
 	{

@@ -5,7 +5,7 @@ namespace SFML_TowerDefense.Source.Game
 	public class TDResource : TDFieldActor
 	{
 
-		public int ResourceAmount = 100;
+		public uint ResourceAmount { get; set; } = 100;
 
 		/// <summary>
 		/// Is this Resourcefield depleted or not.
@@ -16,11 +16,11 @@ namespace SFML_TowerDefense.Source.Game
 		{
 		}
 
-		public int Mine(int amount)
+		public uint Mine(uint amount)
 		{
 			
 
-			if (ResourceAmount - amount < 0)
+			if (amount >= ResourceAmount)
 			{
 				var end = ResourceAmount;
 				ResourceAmount = 0;

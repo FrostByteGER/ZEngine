@@ -5,6 +5,7 @@ using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Player;
 using SFML_TowerDefense.Source.GUI;
 using SFML.System;
+using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.Game
 {
@@ -19,6 +20,7 @@ namespace SFML_TowerDefense.Source.Game
 		protected override void InitLevel()
 		{
 			base.InitLevel();
+			GameMode = new TDGameMode();
 			var pc = new TDPlayerController();
 			RegisterPlayer(pc);
 			
@@ -30,7 +32,6 @@ namespace SFML_TowerDefense.Source.Game
 			pc.Hud = Hud;
 		}
 
-		// TODO: Verify working
 		public TVector2i WorldCoordsToTileCoords(float worldX, float worldY)
 		{
 			return WorldCoordsToTileCoords(new TVector2f(worldX, worldY));

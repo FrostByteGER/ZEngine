@@ -7,7 +7,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 		//TODO: Maybe a Building should not know how expensive it is, rather the GUI or the "Building-Spawner" should know this.
 		//public int Cost { get; set; } = 0;
 
-		public int Health { get; set; } = 1;
+		public uint Health { get; set; } = 1;
 
 
 		public TDBuilding(Level level) : base(level)
