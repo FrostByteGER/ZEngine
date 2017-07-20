@@ -57,7 +57,7 @@ namespace SFML_Engine.Engine.Core
 		// Engine OpenGL Settings
 		public uint DepthBufferSize { get; internal set; }     = 24;
 	    public uint StencilBufferSize { get; internal set; }   = 8;
-	    public uint AntiAliasingLevel { get; internal set; }   = 4;
+	    public uint AntiAliasingLevel { get; internal set; }   = 8;
 	    public uint MajorOpenGLVersion { get; internal set; }  = 4;
 	    public uint MinorOpenGLVersion { get; internal set; }  = 5;
 	    private ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
@@ -191,7 +191,7 @@ namespace SFML_Engine.Engine.Core
 				if (FrameAccumulator >= 1.0f)
 				{
 					FramesPerSecond = EngineCoreClock.FrameCount / FrameAccumulator;
-					_engineWindow.SetTitle(GameInfo.GameFullName + " FPS: " + FramesPerSecond + " | Frame: " + FrameDelta + " | Render: " + EngineCoreClock.RenderAverage + " | Update: " + EngineCoreClock.UpdateAverage + " | Physics: " + EngineCoreClock.PhysicsAverage);
+					_engineWindow.SetTitle(GameInfo.GameFullName + " FPS: " + FramesPerSecond + " | Frame: " + FrameDelta + "s | Render: " + EngineCoreClock.RenderAverage + "ms | Update: " + EngineCoreClock.UpdateAverage + "ms | Physics: " + EngineCoreClock.PhysicsAverage + "ms");
 
 					FrameAccumulator = 0.0f;
 					EngineCoreClock.Reset();
