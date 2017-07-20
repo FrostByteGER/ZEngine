@@ -28,6 +28,11 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			{
 				Owner.Gold += ResourceField.Mine(MineAmount);
 			}
+			else
+			{
+				MineState = TDMineState.Depleted;
+				CanTick = false; // Disable ticking, we don't need it anymore!
+			}
 		}
 
 		public override void OnGameStart()
