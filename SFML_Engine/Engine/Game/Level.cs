@@ -383,7 +383,7 @@ namespace SFML_Engine.Engine.Game
 		{
 			if (Players.Contains(pc)) return;
 			pc.LevelReference = this;
-			pc.ID = (uint)Players.Count - 1;
+			pc.ID = Players.Count > 0 ? (uint)Players.Count - 1 : 0;
 			Players.Add(pc);
 			pc.MarkedForInputRegistering = active;
 			Console.WriteLine("Trying to Register Player: " + pc);
