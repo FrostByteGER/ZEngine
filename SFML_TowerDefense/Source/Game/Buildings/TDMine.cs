@@ -1,5 +1,6 @@
 using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.Player;
+using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.Game.Buildings
 {
@@ -14,6 +15,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 		public TDResource ResourceField { get; set; }
 
 		public TDPlayerController Owner { get; set; }
+		public TDMineState MineState { get; set; } = TDMineState.Mining;
 
 		public TDMine(Level level) : base(level)
 		{
@@ -28,6 +30,12 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			}
 		}
 
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+			Owner = LevelReference.FindPlayer<TDPlayerController>(0);
+		}
+
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -38,5 +46,11 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			}
 			MineTime -= deltaTime;
 		}
+	}
+
+	public enum TDMineState
+	{
+		Mining,
+		Depleted
 	}
 }

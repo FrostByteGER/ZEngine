@@ -1,6 +1,6 @@
 ﻿using SFML_Engine.Engine.Game;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.TileMap
 {
 	public class TDResource : TDFieldActor
 	{

@@ -1,8 +1,7 @@
-﻿using System;
-using SFML_Engine.Engine.Game;
+﻿using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.Player;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.Core
 {
 	public class TDGameMode : GameMode
 	{

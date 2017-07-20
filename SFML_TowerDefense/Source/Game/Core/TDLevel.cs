@@ -1,13 +1,12 @@
-﻿using System;
-using SFML.Graphics;
+﻿using SFML.Graphics;
+using SFML.System;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Player;
-using SFML_TowerDefense.Source.GUI;
-using SFML.System;
 using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_TowerDefense.Source.GUI;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.Core
 {
 	public class TDLevel : Level
 	{

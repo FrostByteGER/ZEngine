@@ -10,6 +10,7 @@ using SFML_TowerDefense.Source.Game;
 using SFML.System;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
+using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.GUI
 {

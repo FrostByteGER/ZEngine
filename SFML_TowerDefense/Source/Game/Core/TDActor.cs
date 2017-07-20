@@ -1,7 +1,6 @@
 ﻿using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Utility;
 
-namespace SFML_TowerDefense.Source.Game
+namespace SFML_TowerDefense.Source.Game.Core
 {
 	public class TDActor : Actor
 	{

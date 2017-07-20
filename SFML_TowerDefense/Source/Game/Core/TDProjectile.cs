@@ -1,4 +1,4 @@
-﻿namespace SFML_TowerDefense.Source.Game
+﻿namespace SFML_TowerDefense.Source.Game.Core
 {
 	public class TDProjectile
 	{

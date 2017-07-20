@@ -9,6 +9,7 @@ using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.AI;
 using SFML_TowerDefense.Source.Game.Buildings;
+using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 using SFML_TowerDefense.Source.Game.Units;
 
@@ -19,8 +20,9 @@ namespace SFML_TowerDefense.Source.Game.Player
 		public TDLevel LevelRef { get; set; }
 
 		private TVector2f MouseCoords { get; set; } = new TVector2f();
+		public TDTile CurrentlyHoveredTile { get; private set; }
 		public TDTile CurrentlySelectedTile { get; private set; }
-		
+
 		public List<TDNexus> PlayerNexus = new List<TDNexus>();
 		public uint Health
 		{
@@ -50,13 +52,13 @@ namespace SFML_TowerDefense.Source.Game.Player
 				var spriteGun = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
 				actor.SetRootComponent(sprite);
 				actor.AddComponent(spriteGun);
-				actor.Position = CurrentlySelectedTile.WorldPosition;
-				CurrentlySelectedTile.FieldActors.Add(actor);
+				actor.Position = CurrentlyHoveredTile.WorldPosition;
+				CurrentlyHoveredTile.FieldActors.Add(actor);
 
 				var testActor = LevelRef.SpawnActor<TDUnit>();
 				testActor.Position = new TVector2f(100,100);
 				testActor.CurrentWaypoint = new TDWaypoint(LevelRef);
-				testActor.CurrentWaypoint.Position = CurrentlySelectedTile.WorldPosition;
+				testActor.CurrentWaypoint.Position = CurrentlyHoveredTile.WorldPosition;
 			}
 		}
 
@@ -102,6 +104,23 @@ namespace SFML_TowerDefense.Source.Game.Player
 
 		}
 
+		public override void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+		{
+			base.OnMouseButtonPressed(sender, mouseButtonEventArgs);
+			switch (mouseButtonEventArgs.Button)
+			{
+				case Mouse.Button.Left:
+					CurrentlySelectedTile = CurrentlyHoveredTile;
+					break;
+				case Mouse.Button.Right:
+					CurrentlySelectedTile.Sprite.Color = Color.White;
+					CurrentlySelectedTile = null;
+					break;
+				default:
+					break;
+			}
+		}
+
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
@@ -112,15 +131,15 @@ namespace SFML_TowerDefense.Source.Game.Player
 			//Console.WriteLine("TO WORLD: " + LevelRef.TileCoordsToWorldCoords(coords));
 
 			var newTile = LevelRef.GetTileByTileCoords(coords);
-			if (CurrentlySelectedTile != null && newTile != CurrentlySelectedTile)
+			if (CurrentlyHoveredTile != null && newTile != CurrentlyHoveredTile)
 			{
-				CurrentlySelectedTile.Sprite.Color = Color.White;
-				CurrentlySelectedTile = newTile;
-				CurrentlySelectedTile.Sprite.Color = Color.Green;
-			}else if (CurrentlySelectedTile == null)
+				if(CurrentlyHoveredTile != CurrentlySelectedTile) CurrentlyHoveredTile.Sprite.Color = Color.White;
+				CurrentlyHoveredTile = newTile;
+				CurrentlyHoveredTile.Sprite.Color = Color.Green;
+			}else if (CurrentlyHoveredTile == null)
 			{
-				CurrentlySelectedTile = newTile;
-				CurrentlySelectedTile.Sprite.Color = Color.Green;
+				CurrentlyHoveredTile = newTile;
+				CurrentlyHoveredTile.Sprite.Color = Color.Green;
 			}
 		}
 	}
