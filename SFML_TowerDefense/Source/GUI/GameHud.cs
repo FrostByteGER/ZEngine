@@ -28,6 +28,11 @@ namespace SFML_TowerDefense.Source.GUI
 
 		// Contains PlayerInfo Money etc.
 		public JContainer InfoContainer;
+		public JLabel wave;
+		public JLabel enemieRemaining;
+		public JLabel health;
+		public JLabel gold;
+		public JLabel score;
 
 		// Contains Info of Selected Field
 		public JContainer FieldContainer;
@@ -41,14 +46,15 @@ namespace SFML_TowerDefense.Source.GUI
 
 		public JContainer MenuDropDownContainer;
 
-		public JLabel wave;
-
 		//Tower
-		public JCheckbox tower1;
-		public JCheckbox tower2;
-		public JCheckbox tower3;
+		public JCheckbox LaserTower;
+		public JCheckbox PlasmaTower;
+		public JCheckbox RailgunTower;
 
 		public JLabel stats;
+
+		//public TDGameInfo GameInfoHud;
+		public TDGameMode GameModeHud;
 
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
 		{
@@ -69,10 +75,10 @@ namespace SFML_TowerDefense.Source.GUI
 			MenuDropDownContainer = InitMenuDropDownContainer();
 
 			RootContainer = new JContainer(this);
-			RootContainer.setBackgroundColor(new Color(255,255,255,0));
+			RootContainer.setBackgroundColor(Color.Transparent);
 
 			JBorderLayout layout = new JBorderLayout(RootContainer);
-			layout.TopSize = 0.1f;
+			layout.TopSize = 0.05f;
 			layout.BottemSize = 0.2f;
 			layout.RightSize = 0.2f;
 			RootContainer.Layout = layout;
@@ -83,6 +89,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitInfoContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.setBackgroundColor(Color.Transparent);
 
 			JGridLayout layout = new JGridLayout(container);
 			layout.Rows = 7;
@@ -94,22 +101,22 @@ namespace SFML_TowerDefense.Source.GUI
 			wave.setTextString("WAVE X of X");
 			container.addElement(wave);
 
-			JLabel enemieRemaining = new JLabel(this);
+			enemieRemaining = new JLabel(this);
 			enemieRemaining.Text.CharacterSize = 12;
 			enemieRemaining.setTextString("Enemies: X");
 			container.addElement(enemieRemaining);
 
-			JLabel health = new JLabel(this);
+			health = new JLabel(this);
 			health.Text.CharacterSize = 12;
 			health.setTextString("Health: X");
 			container.addElement(health);
 
-			JLabel gold = new JLabel(this);
+			gold = new JLabel(this);
 			gold.Text.CharacterSize = 12;
 			gold.setTextString("Gold: X");
 			container.addElement(gold);
 
-			JLabel score = new JLabel(this);
+			score = new JLabel(this);
 			score.Text.CharacterSize = 12;
 			score.setTextString("Score: X");
 			container.addElement(score);
@@ -171,6 +178,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitBuildingFieldContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.BackGroundColor = Color.Transparent;
 
 			JBorderLayout layout = new JBorderLayout(container);
 			layout.LeftSize = 0.2f;
@@ -179,21 +187,21 @@ namespace SFML_TowerDefense.Source.GUI
 			leftContainer.Layout = new JLayout(leftContainer);
 			container.addElement(leftContainer, JBorderLayout.LEFT);
 
-			tower1 = new JCheckbox(this);
-			tower1.setTextString("Tower1");
-			tower1.Select();
-			tower1.OnPressed += UpdateStats;
-			leftContainer.addElement(tower1);
+			LaserTower = new JCheckbox(this);
+			LaserTower.setTextString("Laser");
+			LaserTower.Select();
+			LaserTower.OnPressed += UpdateStats;
+			leftContainer.addElement(LaserTower);
 
-			tower2 = new JCheckbox(this);
-			tower2.setTextString("Tower2");
-			tower2.OnPressed += UpdateStats;
-			leftContainer.addElement(tower2);
+			PlasmaTower = new JCheckbox(this);
+			PlasmaTower.setTextString("Plasma");
+			PlasmaTower.OnPressed += UpdateStats;
+			leftContainer.addElement(PlasmaTower);
 
-			tower3 = new JCheckbox(this);
-			tower3.setTextString("Tower3");
-			tower3.OnPressed += UpdateStats;
-			leftContainer.addElement(tower3);
+			RailgunTower = new JCheckbox(this);
+			RailgunTower.setTextString("Railgun");
+			RailgunTower.OnPressed += UpdateStats;
+			leftContainer.addElement(RailgunTower);
 
 			JButton build = new JButton(this);
 			build.setTextString("Build");
@@ -201,9 +209,9 @@ namespace SFML_TowerDefense.Source.GUI
 			leftContainer.addElement(build);
 
 			JCheckboxGroup towerGroup = new JCheckboxGroup();
-			towerGroup.AddBox(tower1);
-			towerGroup.AddBox(tower2);
-			towerGroup.AddBox(tower3);
+			towerGroup.AddBox(LaserTower);
+			towerGroup.AddBox(PlasmaTower);
+			towerGroup.AddBox(RailgunTower);
 
 			stats = new JLabel(this);
 			stats.setTextString("TowerStats");
@@ -216,7 +224,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			JContainer container = new JContainer(this);
 			container.Layout = new JLayout(container);
-			container.Padding.Bottem = 0.7f;
+			container.Padding.Bottem = 0.85f;
 			container.Padding.Left = 0.3f;
 
 			JButton resume = new JButton(this);
@@ -289,9 +297,23 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 		}
 
-		private void ExitGame()
+		private void UpdateInfoContainer()
 		{
 
+			GameModeHud = (TDGameMode)LevelRef.GameMode;
+
+			// GameInfoHud
+			wave.setTextString("WAVE :"+ GameModeHud.CurrentWave+" of " + GameModeHud.WaveCount);
+			enemieRemaining.setTextString("Enemie :"+GameModeHud.EnemiesLeftInCurrentWave);
+			health.setTextString("Health :"+GameModeHud.PlayerHealth);
+			gold.setTextString("Gold :" + GameModeHud.PlayerGold);
+			score.setTextString("Score :" +GameModeHud.PlayerScore);
+
+		}
+
+		private void ExitGame()
+		{
+			Console.WriteLine(LevelRef);
 		}
 
 		private void OpenMenu()
@@ -310,31 +332,31 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("BuildTower");
 
 			// Build Tower
-			if (tower1.IsSelected)
+			if (LaserTower.IsSelected)
 			{
-				BuildTower1();
+				BuildLaserTower();
 			}
-			else if (tower2.IsSelected)
+			else if (PlasmaTower.IsSelected)
 			{
-				BuildTower2();
+				BuildPlasmaTower();
 			}
-			else if (tower3.IsSelected)
+			else if (RailgunTower.IsSelected)
 			{
-				BuildTower3();
+				BuildRailgunTower();
 			}
 		}
 
-		private void BuildTower1()
+		private void BuildLaserTower()
 		{
 
 		}
 
-		private void BuildTower2()
+		private void BuildPlasmaTower()
 		{
 
 		}
 
-		private void BuildTower3()
+		private void BuildRailgunTower()
 		{
 
 		}
@@ -343,12 +365,32 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			//TODO
 			Console.WriteLine("UpdateStats");
+			if (LaserTower.IsSelected)
+			{
+				stats.setTextString("LaserTowerStats");
+				BuildLaserTower();
+			}
+			else if (PlasmaTower.IsSelected)
+			{
+				stats.setTextString("PlasmaTowerStats");
+				BuildPlasmaTower();
+			}
+			else if (RailgunTower.IsSelected)
+			{
+				stats.setTextString("RailgunTowerStats");
+				BuildRailgunTower();
+			}
+			else
+			{
+				stats.setTextString("None");
+			}
 		}
 
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			UpdateFieldContainer();
+			UpdateInfoContainer();
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)

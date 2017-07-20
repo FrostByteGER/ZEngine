@@ -67,7 +67,12 @@ namespace SFML_Engine.Engine.Game
 			Input.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled, 
 				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
 				OnTouchBegan, OnTouchEnded, OnTouchMoved);
-			if (Hud != null) Hud.InputManager = Input;
+			if (Hud != null)
+			{
+				Hud.InputManager = Input;
+				Hud.LevelRef = LevelReference;
+
+			};
 		}
 
 		public virtual void UnregisterInput()

@@ -7,8 +7,10 @@ using System;
 
 namespace SFML_Engine.Engine.JUI
 {
+
 	public class JGUI : ITickable, Drawable
 	{
+		public Level LevelRef;
 		public Font GUIFont { get; set; }
 		private JContainer _RootContainer { get; set; }
 
