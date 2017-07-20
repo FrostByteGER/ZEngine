@@ -17,8 +17,8 @@ namespace SFML_TowerDefense.Source.GUI
 {
 	public class GameHud : JGUI
 	{
-		public TDFieldActor _SelectedField;
-		public TDFieldActor SelectedField {
+		public TDTile _SelectedField;
+		public TDTile SelectedField {
 			get => _SelectedField;
 			set
 			{
@@ -244,65 +244,25 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
-		private void ChangeSelectedField(TDFieldActor fieldActor)
+		private void ChangeSelectedField(TDTile tile)
 		{
-			if (fieldActor == null)
+			Console.WriteLine("ChangeSelectedField");
+			foreach (TDFieldActor actor in tile.FieldActors)
 			{
-				FieldContainer = null;
-				return;
+				Console.WriteLine(actor.GetType());
 			}
-			else if(fieldActor is TDTower){
-				FieldContainer = TowerContainer;
-			}
-			else if (fieldActor is TDMine)
-			{
-				FieldContainer = MineContainer;
-			}
-			else if (fieldActor is TDResource)
-			{
-				FieldContainer = ResouceContainer;
-			}
-			else if (fieldActor is TDBuilding)
-			{
-				FieldContainer = BuildingContainer;
-			}
-			else if(fieldActor is TDFieldActor)
-			{
-				FieldContainer = GeneralFieldContainer;
-			}
-			UpdateFieldContainer();
 		}
 
 		//TODO
 		private void UpdateFieldContainer()
 		{
-			if (SelectedField == null)
-			{
-				return;
-			}
-			else if (SelectedField is TDTower)
-			{
-				TDTower fieldActor = (TDTower)SelectedField;
+			if (SelectedField == GameModeHud.Player.CurrentlySelectedTile) return;
+			SelectedField = GameModeHud.Player.CurrentlySelectedTile;
 
-			}
-			else if (SelectedField is TDMine)
-			{
-			}
-			else if (SelectedField is TDResource)
-			{
-			}
-			else if (SelectedField is TDBuilding)
-			{
-			}
-			else if (SelectedField is TDFieldActor)
-			{
-			}
 		}
 
 		private void UpdateInfoContainer()
 		{
-
-			GameModeHud = (TDGameMode)LevelRef.GameMode;
 
 			// GameInfoHud
 			wave.setTextString("WAVE :"+ GameModeHud.CurrentWave+" of " + GameModeHud.WaveCount);
@@ -403,6 +363,9 @@ namespace SFML_TowerDefense.Source.GUI
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			if (LevelRef.GameMode == null) return;
+			if (GameModeHud == null) GameModeHud = (TDGameMode)LevelRef.GameMode;
+
 			UpdateFieldContainer();
 			UpdateInfoContainer();
 		}
