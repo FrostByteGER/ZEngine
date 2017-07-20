@@ -41,6 +41,10 @@ namespace SFML_TowerDefense.Source.GUI
 		public JContainer MenuDropDownContainer;
 
 		public JLabel wave;
+		public JLabel enemieRemaining;
+		public JLabel health;
+		public JLabel gold;
+		public JLabel score;
 
 		//Tower
 		public JCheckbox tower1;
@@ -48,6 +52,9 @@ namespace SFML_TowerDefense.Source.GUI
 		public JCheckbox tower3;
 
 		public JLabel stats;
+
+		//public TDGameInfo GameInfoHud;
+		public TDGameMode GameModeHud;
 
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
 		{
@@ -68,10 +75,10 @@ namespace SFML_TowerDefense.Source.GUI
 			MenuDropDownContainer = InitMenuDropDownContainer();
 
 			RootContainer = new JContainer(this);
-			RootContainer.setBackgroundColor(new Color(255,255,255,0));
+			RootContainer.setBackgroundColor(Color.Transparent);
 
 			JBorderLayout layout = new JBorderLayout(RootContainer);
-			layout.TopSize = 0.1f;
+			layout.TopSize = 0.05f;
 			layout.BottemSize = 0.2f;
 			layout.RightSize = 0.2f;
 			RootContainer.Layout = layout;
@@ -82,6 +89,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitInfoContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.setBackgroundColor(Color.Transparent);
 
 			JGridLayout layout = new JGridLayout(container);
 			layout.Rows = 7;
@@ -93,22 +101,22 @@ namespace SFML_TowerDefense.Source.GUI
 			wave.setTextString("WAVE X of X");
 			container.addElement(wave);
 
-			JLabel enemieRemaining = new JLabel(this);
+			enemieRemaining = new JLabel(this);
 			enemieRemaining.Text.CharacterSize = 12;
 			enemieRemaining.setTextString("Enemies: X");
 			container.addElement(enemieRemaining);
 
-			JLabel health = new JLabel(this);
+			health = new JLabel(this);
 			health.Text.CharacterSize = 12;
 			health.setTextString("Health: X");
 			container.addElement(health);
 
-			JLabel gold = new JLabel(this);
+			gold = new JLabel(this);
 			gold.Text.CharacterSize = 12;
 			gold.setTextString("Gold: X");
 			container.addElement(gold);
 
-			JLabel score = new JLabel(this);
+			score = new JLabel(this);
 			score.Text.CharacterSize = 12;
 			score.setTextString("Score: X");
 			container.addElement(score);
@@ -170,6 +178,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitBuildingFieldContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.BackGroundColor = Color.Transparent;
 
 			JBorderLayout layout = new JBorderLayout(container);
 			layout.LeftSize = 0.2f;
@@ -215,7 +224,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			JContainer container = new JContainer(this);
 			container.Layout = new JLayout(container);
-			container.Padding.Bottem = 0.7f;
+			container.Padding.Bottem = 0.85f;
 			container.Padding.Left = 0.3f;
 
 			JButton resume = new JButton(this);
@@ -288,9 +297,30 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 		}
 
-		private void ExitGame()
+		private void UpdateInfoContainer()
 		{
 
+			GameModeHud = (TDGameMode)LevelRef.GameMode;
+
+			// GameInfoHud
+			wave.setTextString("WAVE :"+ GameModeHud.CurrentWave+" of " + GameModeHud.WaveCount);
+			enemieRemaining.setTextString("Enemie :"+GameModeHud.EnemiesLeftInCurrentWave);
+			health.setTextString("Health :"+GameModeHud.PlayerHealth);
+			gold.setTextString("Gold :" + GameModeHud.PlayerGold);
+			score.setTextString("Score :" +GameModeHud.PlayerScore);
+
+			//
+			//public JLabel wave;
+			//public JLabel enemieRemaining;
+			//public JLabel health;
+			//public JLabel gold;
+			//public JLabel score;
+			//
+		}
+
+		private void ExitGame()
+		{
+			Console.WriteLine(LevelRef);
 		}
 
 		private void OpenMenu()
@@ -348,6 +378,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			base.Tick(deltaTime);
 			UpdateFieldContainer();
+			UpdateInfoContainer();
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
