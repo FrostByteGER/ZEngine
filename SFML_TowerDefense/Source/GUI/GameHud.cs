@@ -27,6 +27,11 @@ namespace SFML_TowerDefense.Source.GUI
 
 		// Contains PlayerInfo Money etc.
 		public JContainer InfoContainer;
+		public JLabel wave;
+		public JLabel enemieRemaining;
+		public JLabel health;
+		public JLabel gold;
+		public JLabel score;
 
 		// Contains Info of Selected Field
 		public JContainer FieldContainer;
@@ -40,16 +45,10 @@ namespace SFML_TowerDefense.Source.GUI
 
 		public JContainer MenuDropDownContainer;
 
-		public JLabel wave;
-		public JLabel enemieRemaining;
-		public JLabel health;
-		public JLabel gold;
-		public JLabel score;
-
 		//Tower
-		public JCheckbox tower1;
-		public JCheckbox tower2;
-		public JCheckbox tower3;
+		public JCheckbox LaserTower;
+		public JCheckbox PlasmaTower;
+		public JCheckbox RailgunTower;
 
 		public JLabel stats;
 
@@ -187,21 +186,21 @@ namespace SFML_TowerDefense.Source.GUI
 			leftContainer.Layout = new JLayout(leftContainer);
 			container.addElement(leftContainer, JBorderLayout.LEFT);
 
-			tower1 = new JCheckbox(this);
-			tower1.setTextString("Tower1");
-			tower1.Select();
-			tower1.OnPressed += UpdateStats;
-			leftContainer.addElement(tower1);
+			LaserTower = new JCheckbox(this);
+			LaserTower.setTextString("Laser");
+			LaserTower.Select();
+			LaserTower.OnPressed += UpdateStats;
+			leftContainer.addElement(LaserTower);
 
-			tower2 = new JCheckbox(this);
-			tower2.setTextString("Tower2");
-			tower2.OnPressed += UpdateStats;
-			leftContainer.addElement(tower2);
+			PlasmaTower = new JCheckbox(this);
+			PlasmaTower.setTextString("Plasma");
+			PlasmaTower.OnPressed += UpdateStats;
+			leftContainer.addElement(PlasmaTower);
 
-			tower3 = new JCheckbox(this);
-			tower3.setTextString("Tower3");
-			tower3.OnPressed += UpdateStats;
-			leftContainer.addElement(tower3);
+			RailgunTower = new JCheckbox(this);
+			RailgunTower.setTextString("Railgun");
+			RailgunTower.OnPressed += UpdateStats;
+			leftContainer.addElement(RailgunTower);
 
 			JButton build = new JButton(this);
 			build.setTextString("Build");
@@ -209,9 +208,9 @@ namespace SFML_TowerDefense.Source.GUI
 			leftContainer.addElement(build);
 
 			JCheckboxGroup towerGroup = new JCheckboxGroup();
-			towerGroup.AddBox(tower1);
-			towerGroup.AddBox(tower2);
-			towerGroup.AddBox(tower3);
+			towerGroup.AddBox(LaserTower);
+			towerGroup.AddBox(PlasmaTower);
+			towerGroup.AddBox(RailgunTower);
 
 			stats = new JLabel(this);
 			stats.setTextString("TowerStats");
@@ -309,13 +308,6 @@ namespace SFML_TowerDefense.Source.GUI
 			gold.setTextString("Gold :" + GameModeHud.PlayerGold);
 			score.setTextString("Score :" +GameModeHud.PlayerScore);
 
-			//
-			//public JLabel wave;
-			//public JLabel enemieRemaining;
-			//public JLabel health;
-			//public JLabel gold;
-			//public JLabel score;
-			//
 		}
 
 		private void ExitGame()
@@ -339,31 +331,31 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("BuildTower");
 
 			// Build Tower
-			if (tower1.IsSelected)
+			if (LaserTower.IsSelected)
 			{
-				BuildTower1();
+				BuildLaserTower();
 			}
-			else if (tower2.IsSelected)
+			else if (PlasmaTower.IsSelected)
 			{
-				BuildTower2();
+				BuildPlasmaTower();
 			}
-			else if (tower3.IsSelected)
+			else if (RailgunTower.IsSelected)
 			{
-				BuildTower3();
+				BuildRailgunTower();
 			}
 		}
 
-		private void BuildTower1()
+		private void BuildLaserTower()
 		{
 
 		}
 
-		private void BuildTower2()
+		private void BuildPlasmaTower()
 		{
 
 		}
 
-		private void BuildTower3()
+		private void BuildRailgunTower()
 		{
 
 		}
@@ -372,6 +364,25 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			//TODO
 			Console.WriteLine("UpdateStats");
+			if (LaserTower.IsSelected)
+			{
+				stats.setTextString("LaserTowerStats");
+				BuildLaserTower();
+			}
+			else if (PlasmaTower.IsSelected)
+			{
+				stats.setTextString("PlasmaTowerStats");
+				BuildPlasmaTower();
+			}
+			else if (RailgunTower.IsSelected)
+			{
+				stats.setTextString("RailgunTowerStats");
+				BuildRailgunTower();
+			}
+			else
+			{
+				stats.setTextString("None");
+			}
 		}
 
 		public override void Tick(float deltaTime)
