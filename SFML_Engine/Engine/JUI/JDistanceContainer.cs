@@ -11,12 +11,12 @@ namespace SFML_Engine.Engine.JUI
 
 		public Vector2f GetSizeWithDistanceTopLeft(Vector2f size)
 		{
-			return new Vector2f(size.X * Top, size.Y * Left);
+			return new Vector2f(size.X * Left, size.Y * Top);
 		}
 
 		public Vector2f GetSizeWithDistanceBottemRight(Vector2f size)
 		{
-			return new Vector2f(size.X * Bottem, size.Y * Right);
+			return new Vector2f(size.X * Right, size.Y * Bottem);
 		}
 
 		public void setAll(float value)
