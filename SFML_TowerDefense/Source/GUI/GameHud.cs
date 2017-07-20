@@ -216,6 +216,7 @@ namespace SFML_TowerDefense.Source.GUI
 
 			stats = new JLabel(this);
 			stats.setTextString("TowerStats");
+			stats.Text.CharacterSize = 16;
 			container.addElement(stats, JBorderLayout.CENTER);
 
 			return container;
@@ -368,17 +369,29 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("UpdateStats");
 			if (LaserTower.IsSelected)
 			{
-				stats.setTextString("LaserTowerStats");
+				stats.setTextString("Cost : LOL\n" +
+									"Weapon-Type : Beam\n" +
+									"Damage : 420inS\n" +
+									"Range : -88\n" +
+									"Element : Weed\n");
 				BuildLaserTower();
 			}
 			else if (PlasmaTower.IsSelected)
 			{
-				stats.setTextString("PlasmaTowerStats");
+				stats.setTextString("Cost : LOL More\n" +
+									"Weapon-Type : Beam\n" +
+									"Damage : 420inS\n" +
+									"Range : -88\n" +
+									"Element : Weed\n");
 				BuildPlasmaTower();
 			}
 			else if (RailgunTower.IsSelected)
 			{
-				stats.setTextString("RailgunTowerStats");
+				stats.setTextString("Cost : LOL More More\n" +
+									"Weapon-Type : Beam\n" +
+									"Damage : 420inS\n" +
+									"Range : -88\n" +
+									"Element : Weed\n");
 				BuildRailgunTower();
 			}
 			else
