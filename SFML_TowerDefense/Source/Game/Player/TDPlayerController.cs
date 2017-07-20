@@ -110,7 +110,15 @@ namespace SFML_TowerDefense.Source.Game.Player
 			switch (mouseButtonEventArgs.Button)
 			{
 				case Mouse.Button.Left:
-					CurrentlySelectedTile = CurrentlyHoveredTile;
+					if (CurrentlySelectedTile == null)
+					{
+						CurrentlySelectedTile = CurrentlyHoveredTile;
+					}
+					else
+					{
+						CurrentlySelectedTile.Sprite.Color = Color.White;
+						CurrentlySelectedTile = CurrentlyHoveredTile;
+					}
 					break;
 				case Mouse.Button.Right:
 					CurrentlySelectedTile.Sprite.Color = Color.White;
