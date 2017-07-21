@@ -1,4 +1,6 @@
-﻿using SFML_Engine.Engine.Game;
+﻿using SFML.Graphics;
+using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 
 namespace SFML_TowerDefense.Source.Game.TileMap
 {
@@ -14,6 +16,9 @@ namespace SFML_TowerDefense.Source.Game.TileMap
 
 		public TDResource(Level level) : base(level)
 		{
+			var resourceSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreField")));
+			SetRootComponent(resourceSprite);
+			Origin = resourceSprite.Origin;
 		}
 
 		public uint Mine(uint amount)

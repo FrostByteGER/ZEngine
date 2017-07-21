@@ -6,6 +6,7 @@ namespace SFML_TowerDefense.Source.Game.AI
 	public class TDWaypoint : TDFieldActor
 	{
 		public TDWaypoint NextWaypoint { get; set; }
+		public uint TargetNexus { get; set; } = 0;
 
 		public TDWaypoint(Level level) : base(level)
 		{

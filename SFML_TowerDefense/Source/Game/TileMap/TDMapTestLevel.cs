@@ -9,9 +9,6 @@ namespace SFML_TowerDefense.Source.Game.TileMap
 		protected override void InitLevel()
 		{
 			base.InitLevel();
-			Map = new TDMap("test" ,this);
-
-			RegisterActor(Map);
 		}
 
 		protected override void LevelTick(float deltaTime)

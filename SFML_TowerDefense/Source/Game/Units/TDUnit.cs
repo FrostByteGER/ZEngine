@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.AI;
+using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
 
 namespace SFML_TowerDefense.Source.Game.Units
@@ -14,7 +16,8 @@ namespace SFML_TowerDefense.Source.Game.Units
 		public int HP { get; set; } = 100;
 		public float MovmentSpeed { get; set; } = 1;
 		public TDWaypoint CurrentWaypoint { get; set; }
-		public float WaypointThreshold { get; set; } = 0.0f;
+		public uint Damage { get; set; } = 1;
+		public float WaypointThreshold { get; set; } = 2.0f;
 		public TDUnitState UnitState { get; set; } = TDUnitState.Walking;
 
 		public TDUnit(Level level) : base(level)
@@ -38,6 +41,9 @@ namespace SFML_TowerDefense.Source.Game.Units
 		public void Explode()
 		{
 			Console.WriteLine("ACTOR: " + GenerateFullName() + " MAKES BOOM!");
+			var target = LevelReference.FindActorsInLevel<TDNexus>().FirstOrDefault(nexus => nexus.NexusID == CurrentWaypoint.TargetNexus);
+			target?.ApplyDamage(this, (int) Damage);
+			LevelReference.DestroyActor(this, this);
 		}
 
 		public override void Tick(float deltaTime)
@@ -51,8 +57,13 @@ namespace SFML_TowerDefense.Source.Game.Units
 				}
 				else
 				{
+					if (CurrentWaypoint.NextWaypoint == null)
+					{
+						Explode();
+						return;
+					}
 					CurrentWaypoint = CurrentWaypoint.NextWaypoint;
-					if (CurrentWaypoint != null) Explode();
+					
 				}
 			}
 			else

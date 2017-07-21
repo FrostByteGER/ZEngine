@@ -30,6 +30,14 @@
                  "height":32,
                  "id":12,
                  "name":"Spawner01",
+                 "properties":
+                    {
+                     "Cooldown":15
+                    },
+                 "propertytypes":
+                    {
+                     "Cooldown":"float"
+                    },
                  "rotation":0,
                  "type":"TDSpawner",
                  "visible":true,
@@ -112,6 +120,78 @@
                  "width":32,
                  "x":448,
                  "y":448
+                }, 
+                {
+                 "height":32,
+                 "id":25,
+                 "name":"Nexus",
+                 "properties":
+                    {
+                     "Health":30,
+                     "NexusID":2
+                    },
+                 "propertytypes":
+                    {
+                     "Health":"int",
+                     "NexusID":"int"
+                    },
+                 "rotation":0,
+                 "type":"TDNexus",
+                 "visible":true,
+                 "width":32,
+                 "x":224,
+                 "y":448
+                }, 
+                {
+                 "height":32,
+                 "id":26,
+                 "name":"Nexus",
+                 "properties":
+                    {
+                     "Health":30,
+                     "NexusID":3
+                    },
+                 "propertytypes":
+                    {
+                     "Health":"int",
+                     "NexusID":"int"
+                    },
+                 "rotation":0,
+                 "type":"TDNexus",
+                 "visible":true,
+                 "width":32,
+                 "x":224,
+                 "y":288
+                }, 
+                {
+                 "height":32,
+                 "id":27,
+                 "name":"OreField",
+                 "properties":
+                    {
+                     "Value":100
+                    },
+                 "propertytypes":
+                    {
+                     "Value":"int"
+                    },
+                 "rotation":0,
+                 "type":"TDOrefield",
+                 "visible":true,
+                 "width":32,
+                 "x":544,
+                 "y":352
+                }, 
+                {
+                 "height":32,
+                 "id":28,
+                 "name":"OreMiner",
+                 "rotation":0,
+                 "type":"TDMine",
+                 "visible":true,
+                 "width":32,
+                 "x":544,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -119,7 +199,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":25,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.2",

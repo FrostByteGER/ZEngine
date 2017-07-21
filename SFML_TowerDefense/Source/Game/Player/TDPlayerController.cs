@@ -121,7 +121,7 @@ namespace SFML_TowerDefense.Source.Game.Player
 					}
 					break;
 				case Mouse.Button.Right:
-					CurrentlySelectedTile.Sprite.Color = Color.White;
+					if(CurrentlySelectedTile != null) CurrentlySelectedTile.Sprite.Color = Color.White;
 					CurrentlySelectedTile = null;
 					break;
 				default:
