@@ -91,8 +91,62 @@ namespace SFML_TowerDefense.Source.GUI
 
 			margin.setAll(0.01f);
 
-			container.addElement(CreateOptionSlider("MUSIK"));
-			container.addElement(CreateOptionSlider("SOUND"));
+			JSlider muskiSlider = new JSlider(GUI);
+			muskiSlider.OnDrag += delegate ()
+			{
+				EngineReference.GlobalMusicVolume = (uint)(muskiSlider.SliderValue * 100f);
+			};
+
+			JCheckbox muskiCheckbox = new JCheckbox(GUI);
+			muskiCheckbox.OnExecute += delegate ()
+			{
+				if (muskiCheckbox.IsSelected)
+				{
+					EngineReference.GlobalMusicVolume = 0;
+				}
+				else
+				{
+					EngineReference.GlobalMusicVolume = (uint)(muskiSlider.SliderValue * 100f);
+				}
+			};
+
+			container.addElement(CreateOptionSlider("MUSIK", muskiSlider, muskiCheckbox));
+
+			JSlider soundSlider = new JSlider(GUI);
+			soundSlider.OnDrag += delegate ()
+			{
+				EngineReference.GlobalMusicVolume = (uint)(soundSlider.SliderValue * 100f);
+			};
+
+			JCheckbox soundCheckbox = new JCheckbox(GUI);
+			soundCheckbox.OnExecute += delegate ()
+			{
+				if (soundCheckbox.IsSelected)
+				{
+					EngineReference.GlobalMusicVolume = 0;
+				}
+				else
+				{
+					EngineReference.GlobalMusicVolume = (uint)(soundSlider.SliderValue * 100f);
+				}
+			};
+
+			container.addElement(CreateOptionSlider("SOUND", soundSlider, soundCheckbox));
+
+			JButton windowMode = new JButton(GUI);
+			windowMode.setTextString("Window");
+			windowMode.OnExecute += delegate ()
+			{
+				if (windowMode.Text.DisplayedString == "Window")
+				{
+					windowMode.setTextString("Fullscreen");
+				}
+				else
+				{
+					windowMode.setTextString("Window");
+				}
+			};
+			container.addElement(windowMode);
 
 			JButton back = new JButton(GUI);
 			back.setTextString("BACK");
@@ -146,7 +200,7 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
-		private JContainer CreateOptionSlider(String name)
+		private JContainer CreateOptionSlider(String name,  JSlider slider, JCheckbox checkbox)
 		{
 			JContainer container = new JContainer(GUI);
 
@@ -177,7 +231,7 @@ namespace SFML_TowerDefense.Source.GUI
 
 			sliderValueContainer.Layout = layout3;
 
-			JSlider slider = new JSlider(GUI);
+			//JSlider slider = new JSlider(GUI);
 			sliderValueContainer.addElement(slider, JBorderLayout.CENTER);
 			JDistanceContainer padding = new JDistanceContainer();
 
@@ -253,6 +307,16 @@ namespace SFML_TowerDefense.Source.GUI
 		public void BackToMainMenue()
 		{
 			GUI.RootContainer = MenueContainer;
+		}
+
+		public void SetWindowModeToFullscreen()
+		{
+			Console.WriteLine("SetWindowModeToFullscreen");
+		}
+
+		public void SetWindowModeToWindowMode()
+		{
+			Console.WriteLine("SetWindowModeToWindowMode");
 		}
 
 		protected override void LevelTick(float deltaTime)
