@@ -382,7 +382,7 @@ namespace SFML_TowerDefense.Source.GUI
 			actor.SetRootComponent(sprite);
 			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
 			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, false,
-				actor.TDLevelRef.TileCoordsToWorldCoords(actor.TilePosition), 0, new TVector2f(1.0f), 0.0f, 100.0f, VelcroPhysics.Dynamics.BodyType.Static);
+				new TVector2f(), 0, new TVector2f(1.0f), 0.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
 			actor.AddComponent(gun);
 
 			attackArea.Visible = true;
