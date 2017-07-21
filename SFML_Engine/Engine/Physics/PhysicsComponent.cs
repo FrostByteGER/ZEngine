@@ -307,8 +307,8 @@ namespace SFML_Engine.Engine.Physics
 					Level.CollisionRectangle.Position = WorldPosition;
 					Level.CollisionRectangle.Rotation = LocalRotation;
 					Level.CollisionRectangle.Scale = LocalScale;
-					Level.CollisionRectangle.Origin = Origin;
 					Level.CollisionRectangle.Size = ComponentBounds * 2.0f;
+					Level.CollisionRectangle.Origin = Origin;
 					target.Draw(Level.CollisionRectangle, states);
 				}
 				else if (fixture.Shape is CircleShape)
@@ -316,8 +316,8 @@ namespace SFML_Engine.Engine.Physics
 					Level.CollisionCircle.Position = WorldPosition;
 					Level.CollisionCircle.Rotation = LocalRotation;
 					Level.CollisionCircle.Scale = LocalScale;
-					Level.CollisionCircle.Origin = Origin;
 					Level.CollisionCircle.Radius = ComponentBounds.X / 2.0f;
+					Level.CollisionCircle.Origin = Origin;
 					target.Draw(Level.CollisionCircle, states);
 				}
 			}
