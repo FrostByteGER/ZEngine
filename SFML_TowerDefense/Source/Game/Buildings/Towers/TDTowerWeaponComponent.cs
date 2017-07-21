@@ -6,6 +6,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Core;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -81,6 +82,17 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 					ParentTower.TowerState = TDTowerState.ReadyToFire;
 				}
 			}
+		}
+
+		public void RotateWaponTo(TDUnit target)
+		{
+			//Need Testing
+			TVector2f dic = WorldPosition - target.Position;
+
+			dic = new TVector2f(dic.X / (dic.X + dic.Y), dic.Y / (dic.X + dic.Y));
+
+			RotateLocal((float)(Math.Atan2(dic.X, dic.Y) * 180 / Math.PI));
+
 		}
 
 		protected TDTowerWeaponComponent(Sprite sprite) : base(sprite)
