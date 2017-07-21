@@ -13,6 +13,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		{
 			base.OnEnemyLeavesRange(enemyOutOfRange);
 			if (WeaponState == TDWeaponState.Firing) EndFire();
+			Console.WriteLine("Entered");
 		}
 
 		protected override void StartFire()

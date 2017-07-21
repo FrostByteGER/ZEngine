@@ -449,8 +449,6 @@ namespace SFML_TowerDefense.Source.GUI
 
 			UpdateFieldContainer();
 			UpdateInfoContainer();
-
-			Console.WriteLine(IsHovered);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)
