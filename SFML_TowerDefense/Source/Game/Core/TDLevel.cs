@@ -258,5 +258,16 @@ namespace SFML_TowerDefense.Source.Game.Core
 			var index = (Map.SizeY / 2 + tileCoords.Y) * Map.SizeX + (Map.SizeY / 2 + tileCoords.X);
 			return Map.Tiles[index];
 		}
+
+		/// <summary>
+		/// UNFINISHED!
+		/// </summary>
+		/// <param name="tile"></param>
+		/// <returns></returns>
+		public TVector2i GetTileCoordsByTile(TDTile tile)
+		{
+			var tileCoords = new TVector2i();
+			return tileCoords;
+		}
 	}
 }

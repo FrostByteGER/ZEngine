@@ -7,12 +7,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
 	public class TDLaserWeaponComponent : TDTowerWeaponComponent
 	{
-		private Sprite sprite;
 
-		public TDLaserWeaponComponent(Sprite sprite)
-		{
-			this.sprite = sprite;
-		}
 
 		protected override void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
 		{
@@ -39,6 +34,10 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+		}
+
+		public TDLaserWeaponComponent(Sprite sprite) : base(sprite)
+		{
 		}
 	}
 }

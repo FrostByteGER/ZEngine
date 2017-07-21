@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SFML.Graphics;
 using SFML.System;
@@ -7,21 +6,20 @@ using SFML.Window;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.AI;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_TowerDefense.Source.Game.Units;
 
 namespace SFML_TowerDefense.Source.Game.Player
 {
 	public class TDPlayerController : PlayerController
 	{
 		public TDLevel LevelRef { get; set; }
-
 		private TVector2f MouseCoords { get; set; } = new TVector2f();
 		public TDTile CurrentlyHoveredTile { get; private set; }
 		public TDTile CurrentlySelectedTile { get; private set; }
+		public TVector2i CurrentlyHoveredTileCoords { get; private set; }
+		public TVector2i CurrentlySelectedTileCoords { get; private set; }
 
 		public List<TDNexus> PlayerNexus = new List<TDNexus>();
 		public uint Health
@@ -29,6 +27,7 @@ namespace SFML_TowerDefense.Source.Game.Player
 			get
 			{
 				uint health = 0;
+				// TODO: Cache the result
 				foreach (var nexus in PlayerNexus)
 				{
 					health += nexus.Health;
@@ -107,16 +106,19 @@ namespace SFML_TowerDefense.Source.Game.Player
 				case Mouse.Button.Left:
 					if (CurrentlySelectedTile == null)
 					{
+						CurrentlySelectedTileCoords = LevelRef.WorldCoordsToTileCoords(MouseCoords);
 						CurrentlySelectedTile = CurrentlyHoveredTile;
 					}
 					else
 					{
+						CurrentlySelectedTileCoords = LevelRef.WorldCoordsToTileCoords(MouseCoords);
 						CurrentlySelectedTile.Sprite.Color = Color.White;
 						CurrentlySelectedTile = CurrentlyHoveredTile;
 					}
 					break;
 				case Mouse.Button.Right:
 					if(CurrentlySelectedTile != null) CurrentlySelectedTile.Sprite.Color = Color.White;
+					CurrentlySelectedTileCoords = null;
 					CurrentlySelectedTile = null;
 					break;
 				default:
@@ -137,10 +139,12 @@ namespace SFML_TowerDefense.Source.Game.Player
 			if (CurrentlyHoveredTile != null && newTile != CurrentlyHoveredTile)
 			{
 				if(CurrentlyHoveredTile != CurrentlySelectedTile) CurrentlyHoveredTile.Sprite.Color = Color.White;
+				CurrentlyHoveredTileCoords = coords;
 				CurrentlyHoveredTile = newTile;
 				CurrentlyHoveredTile.Sprite.Color = Color.Green;
 			}else if (CurrentlyHoveredTile == null)
 			{
+				CurrentlyHoveredTileCoords = coords;
 				CurrentlyHoveredTile = newTile;
 				CurrentlyHoveredTile.Sprite.Color = Color.Green;
 			}

@@ -2,6 +2,7 @@
 using SFML_Engine.Engine.Physics;
 using SFML_TowerDefense.Source.Game.Units;
 using System;
+using SFML.Graphics;
 using SFML_TowerDefense.Source.Game.Core;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
@@ -78,6 +79,10 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 					ParentTower.TowerState = TDTowerState.ReadyToFire;
 				}
 			}
+		}
+
+		protected TDTowerWeaponComponent(Sprite sprite) : base(sprite)
+		{
 		}
 	}
 }

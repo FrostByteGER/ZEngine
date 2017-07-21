@@ -6,7 +6,9 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 	public class TDBuilding : TDFieldActor
 	{
 		//TODO: Maybe a Building should not know how expensive it is, rather the GUI or the "Building-Spawner" should know this.
-		//public int Cost { get; set; } = 0;
+		public uint Cost { get; set; } = 0;
+
+		public float ScrapMultiplier { get; set; } = 0.75f;
 
 		public uint Health { get; set; } = 1;
 

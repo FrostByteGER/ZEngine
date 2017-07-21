@@ -1,4 +1,5 @@
 ﻿using SFML_Engine.Engine.Game;
+using SFML_TowerDefense.Source.Game.Player;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -20,5 +21,13 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		}
 
 		protected abstract void CreateTower();
+
+		public void ScrapTower()
+		{
+			var returnedGold = Cost * ScrapMultiplier;
+			var pc = LevelReference.FindPlayer<TDPlayerController>(0);
+			pc.Gold += (uint)returnedGold;
+			LevelReference.DestroyActor(this);
+		}
 	}
 }

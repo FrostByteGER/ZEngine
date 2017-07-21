@@ -7,6 +7,7 @@ using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_TowerDefense.Source.Game.Buildings.Towers;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -126,6 +127,8 @@ namespace SFML_TowerDefense.Source.GUI
 
 			return container;
 		}
+		
+		
 
 		private JContainer InitFieldContainer()
 		{
@@ -376,7 +379,7 @@ namespace SFML_TowerDefense.Source.GUI
 
 			actor.SetRootComponent(sprite);
 			actor.AddComponent(gun);
-			actor.Position = new Vector2f(0,0);
+			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
 		}
 
 		private void BuildPlasmaTower()
