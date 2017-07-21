@@ -100,7 +100,7 @@ namespace SFML_TowerDefense.Source.GUI
 			JCheckbox muskiCheckbox = CreateYesOnBox();
 			muskiCheckbox.OnExecute += delegate ()
 			{
-				if (muskiCheckbox.IsSelected)
+				if (!muskiCheckbox.IsSelected)
 				{
 					EngineReference.GlobalMusicVolume = 0;
 				}
@@ -115,14 +115,14 @@ namespace SFML_TowerDefense.Source.GUI
 			JSlider soundSlider = new JSlider(GUI);
 			soundSlider.OnDrag += delegate ()
 			{
-				EngineReference.GlobalMusicVolume = (uint)(soundSlider.SliderValue * 100f);
+				EngineReference.GlobalSoundVolume = (uint)(soundSlider.SliderValue * 100f);
 			};
 
 			JCheckbox soundCheckbox = CreateYesOnBox();
 			soundCheckbox.OnExecute += delegate ()
 			{
 
-				if (soundCheckbox.IsSelected)
+				if (!soundCheckbox.IsSelected)
 				{
 					EngineReference.GlobalSoundVolume = 0;
 				}
