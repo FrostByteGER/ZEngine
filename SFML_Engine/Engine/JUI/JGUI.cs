@@ -71,6 +71,8 @@ namespace SFML_Engine.Engine.JUI
 
 		public bool CanTick { get; set; } = true;
 
+		public bool IsHovered = false;
+
 		private bool _isActive = false;
 
 		public bool IsActive
@@ -170,6 +172,15 @@ namespace SFML_Engine.Engine.JUI
 
 					HoverElement = element;
 				}
+			}
+
+			if (HoverElement != null && HoverElement.BackGroundColor == Color.Transparent)
+			{
+				IsHovered = false;
+			}
+			else
+			{
+				IsHovered = true;
 			}
 		}
 
