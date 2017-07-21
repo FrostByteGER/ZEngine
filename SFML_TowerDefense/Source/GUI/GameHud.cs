@@ -38,12 +38,11 @@ namespace SFML_TowerDefense.Source.GUI
 		// Contains Info of Selected Field
 		public JContainer FieldContainer;
 
-		public JContainer GeneralFieldContainer;
 		public JContainer MineContainer;
 		public JContainer ResouceContainer;
 		public JContainer TowerContainer;
-		public JContainer BuildingContainer;
 		public JContainer BuildingFieldContainer;
+		public JContainer NexusContainer;
 
 		public JContainer MenuDropDownContainer;
 
@@ -64,14 +63,13 @@ namespace SFML_TowerDefense.Source.GUI
 			GUISpace.Size = new Vector2f(800,800);
 
 			InfoContainer = InitInfoContainer();
-			FieldContainer = InitFieldContainer();
 
-			GeneralFieldContainer = InitGeneralFieldContainer();
+			//GeneralFieldContainer = InitGeneralFieldContainer();
 			MineContainer = InitMineContainer();
 			ResouceContainer = InitResouceContainer();
 			TowerContainer = InitTowerContainer();
-			BuildingContainer = InitBuildingCointainer();
 			BuildingFieldContainer = InitBuildingFieldContainer();
+			NexusContainer = InitNexusContainer();
 
 			MenuDropDownContainer = InitMenuDropDownContainer();
 
@@ -141,16 +139,14 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
-		private JContainer InitBuildingCointainer()
-		{
-			JContainer container = new JContainer(this);
-
-			return container;
-		}
-
 		private JContainer InitGeneralFieldContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.Layout = new JLayout(container);
+
+			JLabel label = new JLabel(this);
+			label.setTextString("Field");
+			container.addElement(label);
 
 			return container;
 		}
@@ -158,6 +154,12 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitMineContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.Layout = new JLayout(container);
+
+			JLabel label = new JLabel(this);
+			label.setTextString("Mine\nProducest 5 Gold for every Second");
+			label.Text.CharacterSize = 14;
+			container.addElement(label);
 
 			return container;
 		}
@@ -165,6 +167,11 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitTowerContainer()
 		{
 			JContainer container = new JContainer(this);
+			container.Layout = new JLayout(container);
+
+			JLabel label = new JLabel(this);
+			label.setTextString("Tower");
+			container.addElement(label);
 
 			return container;
 		}
@@ -172,6 +179,33 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitResouceContainer()
 		{
 			JContainer container = new JContainer(this);
+			JBorderLayout layout = new JBorderLayout(container);
+			layout.LeftSize = 0.2f;
+			container.Layout = layout;
+
+			JLabel info = new JLabel(this);
+			info.setTextString("Cost :20 Gold");
+			info.Text.CharacterSize = 14;
+			container.addElement(info, JBorderLayout.CENTER);
+
+			JButton buildButton = new JButton(this);
+			buildButton.setTextString("Build \nMine");
+			buildButton.Text.CharacterSize = 14;
+			buildButton.OnExecute += BuildMine;
+			container.addElement(buildButton, JBorderLayout.LEFT);
+
+			return container;
+		}
+
+		private JContainer InitNexusContainer()
+		{
+			JContainer container = new JContainer(this);
+			container.Layout = new JLayout(container);
+
+			JLabel label = new JLabel(this);
+			label.setTextString("Nexus\nIf it gets Hit by an enemy you lose Health");
+			label.Text.CharacterSize = 14;
+			container.addElement(label);
 
 			return container;
 		}
@@ -190,22 +224,25 @@ namespace SFML_TowerDefense.Source.GUI
 
 			LaserTower = new JCheckbox(this);
 			LaserTower.setTextString("Laser");
-			LaserTower.Select();
+			LaserTower.Text.CharacterSize = 14;
 			LaserTower.OnPressed += UpdateStats;
 			leftContainer.addElement(LaserTower);
 
 			PlasmaTower = new JCheckbox(this);
 			PlasmaTower.setTextString("Plasma");
+			PlasmaTower.Text.CharacterSize = 14;
 			PlasmaTower.OnPressed += UpdateStats;
 			leftContainer.addElement(PlasmaTower);
 
 			RailgunTower = new JCheckbox(this);
 			RailgunTower.setTextString("Railgun");
+			RailgunTower.Text.CharacterSize = 14;
 			RailgunTower.OnPressed += UpdateStats;
 			leftContainer.addElement(RailgunTower);
 
 			JButton build = new JButton(this);
 			build.setTextString("Build");
+			build.Text.CharacterSize = 14;
 			build.OnExecute += BuildTower;
 			leftContainer.addElement(build);
 
@@ -215,7 +252,7 @@ namespace SFML_TowerDefense.Source.GUI
 			towerGroup.AddBox(RailgunTower);
 
 			stats = new JLabel(this);
-			stats.setTextString("TowerStats");
+			stats.setTextString("None");
 			stats.Text.CharacterSize = 16;
 			container.addElement(stats, JBorderLayout.CENTER);
 
@@ -246,10 +283,36 @@ namespace SFML_TowerDefense.Source.GUI
 
 		private void ChangeSelectedField(TDTile tile)
 		{
-			Console.WriteLine("ChangeSelectedField");
+			JContainer end = null;
+
 			foreach (TDFieldActor actor in tile.FieldActors)
 			{
-				Console.WriteLine(actor.GetType());
+				if (actor.ActorName == "TDMine")
+				{
+					end = MineContainer;
+					break;
+				}
+				else if(actor.ActorName == "TDResource")
+				{
+					end = ResouceContainer;					
+				}
+				else if (actor.ActorName == "TDTower")
+				{
+					end = TowerContainer;
+					return;
+				}
+				else if (actor.ActorName == "TDNexus")
+				{
+					end = NexusContainer;
+				}
+			}
+			if (end == null)
+			{
+				RootContainer.addElement(BuildingFieldContainer, JBorderLayout.BOTTOM);
+			}
+			else
+			{
+				RootContainer.addElement(end, JBorderLayout.BOTTOM);
 			}
 		}
 
@@ -310,17 +373,22 @@ namespace SFML_TowerDefense.Source.GUI
 
 		private void BuildLaserTower()
 		{
-
+			Console.WriteLine("BuildLaserTower");
 		}
 
 		private void BuildPlasmaTower()
 		{
-
+			Console.WriteLine("BuildPlasmaTower");
 		}
 
 		private void BuildRailgunTower()
 		{
+			Console.WriteLine("BuildRailgunTower");
+		}
 
+		private void BuildMine()
+		{
+			Console.WriteLine("BuildMine");
 		}
 
 		public void UpdateStats()
@@ -334,7 +402,7 @@ namespace SFML_TowerDefense.Source.GUI
 									"Damage : 420inS\n" +
 									"Range : -88\n" +
 									"Element : Weed\n");
-				BuildLaserTower();
+				//BuildLaserTower();
 			}
 			else if (PlasmaTower.IsSelected)
 			{
@@ -343,7 +411,7 @@ namespace SFML_TowerDefense.Source.GUI
 									"Damage : 420inS\n" +
 									"Range : -88\n" +
 									"Element : Weed\n");
-				BuildPlasmaTower();
+				//BuildPlasmaTower();
 			}
 			else if (RailgunTower.IsSelected)
 			{
@@ -352,7 +420,7 @@ namespace SFML_TowerDefense.Source.GUI
 									"Damage : 420inS\n" +
 									"Range : -88\n" +
 									"Element : Weed\n");
-				BuildRailgunTower();
+				//BuildRailgunTower();
 			}
 			else
 			{
