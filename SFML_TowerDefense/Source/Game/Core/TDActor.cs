@@ -1,4 +1,5 @@
-﻿using SFML_Engine.Engine.Game;
+﻿using System;
+using SFML_Engine.Engine.Game;
 
 namespace SFML_TowerDefense.Source.Game.Core
 {
@@ -14,17 +15,18 @@ namespace SFML_TowerDefense.Source.Game.Core
 
 		public virtual void ApplyDamage(int damage)
 		{
+			Console.WriteLine("APPLYING " + damage + " DAMAGE TO: " + GenerateFullName());
 
 		}
 
 		public virtual void ApplyDamage(TDActor instigator, int damage)
 		{
-
+			Console.WriteLine("ACTOR: " + instigator.GenerateFullName() + " APPLYING " + damage + " DAMAGE TO: " + GenerateFullName());
 		}
 
 		public virtual void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
 		{
-			
+			Console.WriteLine("ACTOR: " + instigator.GenerateFullName() + " APPLYING " + damage + " " + damageType + " DAMAGE TO: " + GenerateFullName());
 		}
 	}
 }

@@ -54,11 +54,6 @@ namespace SFML_TowerDefense.Source.Game.Player
 				actor.AddComponent(spriteGun);
 				actor.Position = CurrentlyHoveredTile.WorldPosition;
 				CurrentlyHoveredTile.FieldActors.Add(actor);
-
-				var testActor = LevelRef.SpawnActor<TDUnit>();
-				testActor.Position = new TVector2f(100,100);
-				testActor.CurrentWaypoint = new TDWaypoint(LevelRef);
-				testActor.CurrentWaypoint.Position = CurrentlyHoveredTile.WorldPosition;
 			}
 		}
 

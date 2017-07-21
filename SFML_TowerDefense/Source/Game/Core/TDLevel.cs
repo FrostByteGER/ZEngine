@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Game;
@@ -8,6 +11,7 @@ using SFML_TowerDefense.Source.Game.AI;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Player;
 using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_TowerDefense.Source.Game.Units;
 using SFML_TowerDefense.Source.GUI;
 
 namespace SFML_TowerDefense.Source.Game.Core
@@ -113,7 +117,26 @@ namespace SFML_TowerDefense.Source.Game.Core
 				var objectType = mapObject.type.ToObject<string>();
 				if (objectType == "TDSpawner")
 				{
-
+					var spawner = new TDSpawner(this);
+					spawner.TilePosition = tileCoords;
+					var rawWaves = mapObject.properties.waves.ToObject<IEnumerable<dynamic>>();
+					foreach (var rawWave in rawWaves)
+					{
+						var wave = new TDWave(this);
+						wave.SpawnSpeed = rawWave.spawnspeed.ToObject<float>();
+						wave.Amount = rawWave.spawnamount.ToObject<uint>();
+						var rawTypes = rawWave.unittypes.ToObject<IEnumerable<dynamic>>();
+						var typeList = new List<Type>();
+						foreach (var rawType in rawTypes)
+						{
+							var typeName = rawType.type.ToObject<string>();
+							var type = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(myType => myType.Name == typeName && myType.IsSubclassOf(typeof(TDUnit)));
+							if (type != null) typeList.Add(type);
+						}
+						wave.UnitTypes = typeList;
+						spawner.Waves.Add(wave);
+					}
+					RegisterActor(spawner);
 				}
 				else if (objectType == "TDNexus")
 				{
@@ -126,16 +149,17 @@ namespace SFML_TowerDefense.Source.Game.Core
 				}
 				else if (objectType == "TDOrefield")
 				{
-					var resourceField = new TDResource(this);
-					resourceField.TilePosition = tileCoords;
-					resourceField.ResourceAmount = mapObject.properties.Value.ToObject<uint>();
+					var resourceField = new TDResource(this)
+					{
+						TilePosition = tileCoords,
+						ResourceAmount = mapObject.properties.Value.ToObject<uint>()
+					};
 					RegisterActor(resourceField);
 					GetTileByTileCoords(tileCoords).FieldActors.Add(resourceField);
 				}
 				else if (objectType == "TDMine")
 				{
-					var mine = new TDMine(this);
-					mine.TilePosition = tileCoords;
+					var mine = new TDMine(this) {TilePosition = tileCoords};
 					RegisterActor(mine);
 					GetTileByTileCoords(tileCoords).FieldActors.Add(mine);
 				}
@@ -147,10 +171,11 @@ namespace SFML_TowerDefense.Source.Game.Core
 					TDWaypoint previousWaypoint = null;
 					foreach (var waypoint in waypoints)
 					{
+						xOrigin = mapObject.x.ToObject<int>() - Map.ActorBounds.X;
+						yOrigin = mapObject.y.ToObject<int>() - Map.ActorBounds.Y;
 						var xLocal = waypoint.x.ToObject<int>();
 						var yLocal = waypoint.y.ToObject<int>();
-						var wp = new TDWaypoint(this);
-						wp.Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal);
+						var wp = new TDWaypoint(this) {Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal)};
 						if (previousWaypoint != null) previousWaypoint.NextWaypoint = wp;
 						waypointObjects.Add(wp);
 						RegisterActor(wp);

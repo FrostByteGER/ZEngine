@@ -9,12 +9,14 @@ namespace SFML_TowerDefense.Source.Game.AI
 	public class TDWave : TDActor
 	{
 		public float SpawnSpeed { get; set; } = 1;
-		public int Amount { get; set; } = 1;
-		public IEnumerable<Type> UnitTypes { get; set; }
+		public uint Amount { get; set; } = 1;
+		public uint AmountLeft { get; set; } = 1;
+		public List<Type> UnitTypes { get; set; }
 
 		public TDWave(Level level) : base(level)
 		{
 			
 		}
+		
 	}
 }

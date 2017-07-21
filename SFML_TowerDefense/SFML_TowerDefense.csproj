@@ -39,6 +39,9 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Game\AI\TDBerserker.cs" />
+    <Compile Include="Source\Game\AI\TDCrab.cs" />
+    <Compile Include="Source\Game\AI\TDGrunt.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDLaserTower.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />

@@ -26,21 +26,26 @@ namespace SFML_TowerDefense.Source.Game.Units
 				new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2"))));
 		}
 
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+		}
+
 		public override void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
 		{
-			Console.WriteLine("ACTOR: " + instigator.GenerateFullName() + " APPLYING "+ damage + " " + damageType + " TO: " + GenerateFullName());
+			
 			if (UnitState == TDUnitState.Dead) return;
 			HP -= damage;
 			if (HP <= 0)
 			{
 				HP = 0;
 				UnitState = TDUnitState.Dead;
+				LevelReference.DestroyActor(this, this);
 			}
 		}
 
 		public void Explode()
 		{
-			Console.WriteLine("ACTOR: " + GenerateFullName() + " MAKES BOOM!");
 			var target = LevelReference.FindActorsInLevel<TDNexus>().FirstOrDefault(nexus => nexus.NexusID == CurrentWaypoint.TargetNexus);
 			target?.ApplyDamage(this, (int) Damage);
 			LevelReference.DestroyActor(this, this);
@@ -53,7 +58,7 @@ namespace SFML_TowerDefense.Source.Game.Units
 			{
 				if ((Position - CurrentWaypoint.Position).LengthSquared > WaypointThreshold * WaypointThreshold)
 				{
-					Position = EngineMath.VInterpTo(Position, CurrentWaypoint.Position, deltaTime, 1.0f);
+					Position = EngineMath.VInterpToConstant(Position, CurrentWaypoint.Position, deltaTime, 100.0f);
 				}
 				else
 				{

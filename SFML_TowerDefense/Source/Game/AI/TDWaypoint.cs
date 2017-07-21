@@ -1,4 +1,6 @@
-﻿using SFML_Engine.Engine.Game;
+﻿using SFML.Graphics;
+using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Graphics;
 using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.Game.AI
@@ -11,6 +13,9 @@ namespace SFML_TowerDefense.Source.Game.AI
 		public TDWaypoint(Level level) : base(level)
 		{
 			SetRootComponent(new ActorComponent());
+			//var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));
+			//SetRootComponent(mineSprite);
+			//Origin = mineSprite.Origin;
 		}
 	}
 }
