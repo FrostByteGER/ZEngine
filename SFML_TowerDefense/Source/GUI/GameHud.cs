@@ -12,6 +12,8 @@ using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.Game;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -375,6 +377,13 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildLaserTower()
 		{
 			Console.WriteLine("BuildLaserTower");
+			var actor = LevelRef.SpawnActor<TDLaserTower>();
+			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
+			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+
+			actor.SetRootComponent(sprite);
+			actor.AddComponent(gun);
+			actor.Position = new Vector2f(0,0);
 		}
 
 		private void BuildPlasmaTower()
