@@ -7,6 +7,7 @@ using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
 
 namespace SFML_TowerDefense.Source.GUI
@@ -377,9 +378,13 @@ namespace SFML_TowerDefense.Source.GUI
 			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
 			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
 
+
 			actor.SetRootComponent(sprite);
 			actor.AddComponent(gun);
 			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, false,
+				actor.TDLevelRef.TileCoordsToWorldCoords(actor.TilePosition), 0, new TVector2f(1.0f), 0.0f, 100.0f, VelcroPhysics.Dynamics.BodyType.Static);
+			attackArea.Visible = true;
 		}
 
 		private void BuildPlasmaTower()

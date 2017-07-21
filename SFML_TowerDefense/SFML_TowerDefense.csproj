@@ -108,6 +108,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameInfo.settings</DependentUpon>
     </Compile>
+    <Reference Include="VelcroPhysics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SFML_Engine\Lib\VelcroPhysics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

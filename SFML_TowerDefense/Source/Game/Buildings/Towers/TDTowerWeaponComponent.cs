@@ -3,6 +3,8 @@ using SFML_Engine.Engine.Physics;
 using SFML_TowerDefense.Source.Game.Units;
 using System;
 using SFML.Graphics;
+using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Core;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
@@ -84,5 +86,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		protected TDTowerWeaponComponent(Sprite sprite) : base(sprite)
 		{
 		}
+		
+		
 	}
 }

@@ -13,6 +13,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		{
 			TowerBase = new TDTowerBaseComponent(new Sprite(new Texture("")));
 			SetRootComponent(TowerBase);
+			
 		}
 	}
 }
