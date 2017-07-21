@@ -213,7 +213,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitBuildingFieldContainer()
 		{
 			JContainer container = new JContainer(this);
-			container.BackGroundColor = Color.Transparent;
+			container.setBackgroundColor(Color.Transparent);
 
 			JBorderLayout layout = new JBorderLayout(container);
 			layout.LeftSize = 0.2f;
@@ -252,8 +252,9 @@ namespace SFML_TowerDefense.Source.GUI
 			towerGroup.AddBox(RailgunTower);
 
 			stats = new JLabel(this);
-			stats.setTextString("None");
+			//stats.setTextString("None");
 			stats.Text.CharacterSize = 16;
+			stats.setBackgroundColor(Color.Transparent);
 			container.addElement(stats, JBorderLayout.CENTER);
 
 			return container;
@@ -397,6 +398,8 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("UpdateStats");
 			if (LaserTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -406,6 +409,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else if (PlasmaTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL More\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -415,6 +420,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else if (RailgunTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL More More\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -424,7 +431,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else
 			{
-				stats.setTextString("None");
+				stats.setBackgroundColor(Color.Transparent);
+				stats.IsVisable = false;
 			}
 		}
 

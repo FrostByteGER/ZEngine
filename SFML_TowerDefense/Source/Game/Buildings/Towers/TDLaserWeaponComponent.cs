@@ -1,11 +1,19 @@
 ﻿using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.Units;
 using System;
+using SFML.Graphics;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
 	public class TDLaserWeaponComponent : TDTowerWeaponComponent
 	{
+		private Sprite sprite;
+
+		public TDLaserWeaponComponent(Sprite sprite)
+		{
+			this.sprite = sprite;
+		}
+
 		protected override void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
 		{
 			base.OnEnemyLeavesRange(enemyOutOfRange);
