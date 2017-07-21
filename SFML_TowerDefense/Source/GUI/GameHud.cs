@@ -5,6 +5,8 @@ using SFML_Engine.Engine.IO;
 using SFML.System;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.Game;
 
 namespace SFML_TowerDefense.Source.GUI
 {
@@ -206,7 +208,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private JContainer InitBuildingFieldContainer()
 		{
 			JContainer container = new JContainer(this);
-			container.BackGroundColor = Color.Transparent;
+			container.setBackgroundColor(Color.Transparent);
 
 			JBorderLayout layout = new JBorderLayout(container);
 			layout.LeftSize = 0.2f;
@@ -245,8 +247,9 @@ namespace SFML_TowerDefense.Source.GUI
 			towerGroup.AddBox(RailgunTower);
 
 			stats = new JLabel(this);
-			stats.setTextString("None");
+			//stats.setTextString("None");
 			stats.Text.CharacterSize = 16;
+			stats.setBackgroundColor(Color.Transparent);
 			container.addElement(stats, JBorderLayout.CENTER);
 
 			return container;
@@ -367,6 +370,13 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildLaserTower()
 		{
 			Console.WriteLine("BuildLaserTower");
+			var actor = LevelRef.SpawnActor<TDLaserTower>();
+			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
+			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+
+			actor.SetRootComponent(sprite);
+			actor.AddComponent(gun);
+			actor.Position = new Vector2f(0,0);
 		}
 
 		private void BuildPlasmaTower()
@@ -390,6 +400,8 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("UpdateStats");
 			if (LaserTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -399,6 +411,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else if (PlasmaTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL More\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -408,6 +422,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else if (RailgunTower.IsSelected)
 			{
+				stats.setBackgroundColor(Color.Black);
+				stats.IsVisable = true;
 				stats.setTextString("Cost : LOL More More\n" +
 									"Weapon-Type : Beam\n" +
 									"Damage : 420inS\n" +
@@ -417,7 +433,8 @@ namespace SFML_TowerDefense.Source.GUI
 			}
 			else
 			{
-				stats.setTextString("None");
+				stats.setBackgroundColor(Color.Transparent);
+				stats.IsVisable = false;
 			}
 		}
 
