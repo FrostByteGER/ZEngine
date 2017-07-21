@@ -97,7 +97,7 @@ namespace SFML_TowerDefense.Source.GUI
 				EngineReference.GlobalMusicVolume = (uint)(muskiSlider.SliderValue * 100f);
 			};
 
-			JCheckbox muskiCheckbox = new JCheckbox(GUI);
+			JCheckbox muskiCheckbox = CreateYesOnBox();
 			muskiCheckbox.OnExecute += delegate ()
 			{
 				if (muskiCheckbox.IsSelected)
@@ -118,9 +118,10 @@ namespace SFML_TowerDefense.Source.GUI
 				EngineReference.GlobalMusicVolume = (uint)(soundSlider.SliderValue * 100f);
 			};
 
-			JCheckbox soundCheckbox = new JCheckbox(GUI);
+			JCheckbox soundCheckbox = CreateYesOnBox();
 			soundCheckbox.OnExecute += delegate ()
 			{
+
 				if (soundCheckbox.IsSelected)
 				{
 					EngineReference.GlobalSoundVolume = 0;
@@ -200,7 +201,7 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
-		private JContainer CreateOptionSlider(String name,  JSlider slider, JCheckbox checkbox)
+		private JContainer CreateOptionSlider(String name,  JSlider slider, JCheckbox checkBox)
 		{
 			JContainer container = new JContainer(GUI);
 
@@ -219,7 +220,7 @@ namespace SFML_TowerDefense.Source.GUI
 			nameLabel.setTextString(name);
 			nameOnOffContainer.addElement(nameLabel, JBorderLayout.CENTER);
 
-			JCheckbox checkBox = CreateYesOnBox();
+			//JCheckbox checkBox = CreateYesOnBox();
 			nameOnOffContainer.addElement(checkBox, JBorderLayout.RIGHT);
 
 			JContainer sliderValueContainer = new JContainer(GUI);
