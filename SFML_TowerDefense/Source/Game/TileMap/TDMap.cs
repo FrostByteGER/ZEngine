@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.AI;
-using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
 
 namespace SFML_TowerDefense.Source.Game.TileMap

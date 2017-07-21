@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SFML_TowerDefense.Source.Game.Utility
+﻿namespace SFML_TowerDefense.Source.Game.Utility
 {
 	/// <summary>
 	/// This class was written for one of my old Projects, After Dead which was supervised by Philipp Kolhoff. 

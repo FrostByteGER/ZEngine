@@ -3,8 +3,6 @@ using SFML.System;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.JUI;
 using System;
-using System.IO;
-using SFML_TowerDefense.Source.Game;
 using SFML_TowerDefense.Source.Game.TileMap;
 
 namespace SFML_TowerDefense.Source.GUI

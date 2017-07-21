@@ -1,15 +1,8 @@
 ﻿using SFML_Engine.Engine.JUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML_Engine.Engine.IO;
-using SFML_TowerDefense.Source.Game;
 using SFML.System;
-using SFML_TowerDefense.Source.Game.Buildings;
-using SFML_TowerDefense.Source.Game.Buildings.Towers;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 

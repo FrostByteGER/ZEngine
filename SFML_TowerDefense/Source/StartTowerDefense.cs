@@ -1,6 +1,5 @@
 ﻿using System;
 using SFML_Engine.Engine.Core;
-using SFML_TowerDefense.Source.Game;
 using SFML_TowerDefense.Source.GUI;
 
 namespace SFML_TowerDefense.Source
