@@ -17,55 +17,6 @@
          "objects":[
                 {
                  "height":32,
-                 "id":11,
-                 "name":"Spawner02",
-                 "rotation":0,
-                 "type":"TDSpawner",
-				 "properties":
-					{
-				    "waves":[
-                        {
-                         "spawnspeed":1,
-                         "spawnamount":3,
-						 "unittypes":[
-							{
-							 "type":"TDGrunt"
-							}, 
-							{
-							 "type":"TDBerserker"
-							}, 
-							{
-							 "type":"TDCrab"
-							}],
-                        }, 
-                        {
-                         "spawnspeed":2,
-                         "spawnamount":3,
-						 "unittypes":[
-							{
-							 "type":"TDGrunt"
-							}, 
-							{
-							 "type":"TDBerserker"
-							}, 
-							{
-							 "type":"TDCrab"
-							}],
-                        }],
-                    
-                     "Cooldown":15
-                    },
-                 "propertytypes":
-                    {
-                     "Cooldown":"float"
-                    },
-                 "visible":true,
-                 "width":32,
-                 "x":416,
-                 "y":416
-                }, 
-                {
-                 "height":32,
                  "id":12,
                  "name":"Spawner01",
                  "properties":

@@ -88,7 +88,7 @@ namespace SFML_TowerDefense {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SFX")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sounds")]
         public string SoundFolder {
             get {
                 return ((string)(this["SoundFolder"]));

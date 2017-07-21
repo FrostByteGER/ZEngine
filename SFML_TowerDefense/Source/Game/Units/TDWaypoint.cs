@@ -1,7 +1,7 @@
 ﻿using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.Game.AI
+namespace SFML_TowerDefense.Source.Game.Units
 {
 	public class TDWaypoint : TDFieldActor
 	{

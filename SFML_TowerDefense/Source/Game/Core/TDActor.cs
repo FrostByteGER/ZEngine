@@ -7,10 +7,12 @@ namespace SFML_TowerDefense.Source.Game.Core
 	{
 
 		public TDLevel TDLevelRef { get; private set; } = null;
+		public TDGameMode TDGameModeRef { get; private set; }
 
 		public TDActor(Level level) : base(level)
 		{
 			TDLevelRef = level as TDLevel;
+			TDGameModeRef = TDLevelRef.GameMode as TDGameMode;
 		}
 
 		public virtual void ApplyDamage(int damage)

@@ -24,7 +24,7 @@
       <Value Profile="(Default)">Textures</Value>
     </Setting>
     <Setting Name="SoundFolder" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">SFX</Value>
+      <Value Profile="(Default)">Sounds</Value>
     </Setting>
     <Setting Name="ConfigFolder" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Configs</Value>

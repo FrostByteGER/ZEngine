@@ -39,9 +39,9 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Source\Game\AI\TDBerserker.cs" />
-    <Compile Include="Source\Game\AI\TDCrab.cs" />
-    <Compile Include="Source\Game\AI\TDGrunt.cs" />
+    <Compile Include="Source\Game\Units\TDBerserker.cs" />
+    <Compile Include="Source\Game\Units\TDCrab.cs" />
+    <Compile Include="Source\Game\Units\TDGrunt.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDLaserTower.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
@@ -68,12 +68,12 @@
     <Compile Include="Source\Game\Buildings\TDMine.cs" />
     <Compile Include="Source\Game\Player\TDPlayerController.cs" />
     <Compile Include="Source\Game\TileMap\TDResource.cs" />
-    <Compile Include="Source\Game\AI\TDSpawner.cs" />
+    <Compile Include="Source\Game\Units\TDSpawner.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTower.cs" />
     <Compile Include="Source\Game\Units\TDUnit.cs" />
     <Compile Include="Source\Game\Units\TDUnitInfo.cs" />
-    <Compile Include="Source\Game\AI\TDWave.cs" />
-    <Compile Include="Source\Game\AI\TDWaypoint.cs" />
+    <Compile Include="Source\Game\Units\TDWave.cs" />
+    <Compile Include="Source\Game\Units\TDWaypoint.cs" />
     <Compile Include="Source\Game\Core\TDWeaponComponent.cs" />
     <Compile Include="Source\GUI\GUILevelTest.cs" />
     <Compile Include="Source\Game\TileMap\TDMap.cs" />

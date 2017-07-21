@@ -11,6 +11,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 		public uint NexusID { get; set; } = 0;
 		public TDNexusState NexusState { get; set; } = TDNexusState.Alive;
 		public TDNexus(Level level) : base(level)
+
 		{
 			var nexusSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("Nexus")));
 			SetRootComponent(nexusSprite);
@@ -19,16 +20,19 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 
 		public override void ApplyDamage(TDActor instigator, int damage)
 		{
+			if (NexusState == TDNexusState.Dead) return;
 			base.ApplyDamage(instigator, damage);
 			if (damage >= Health)
 			{
 				Health = 0;
 				NexusState = TDNexusState.Dead;
+				if(TDGameModeRef.NexusLost.Status != SFML.Audio.SoundStatus.Playing) TDGameModeRef.NexusLost.Play();
 				CanTick = false;
 			}
 			else
 			{
 				Health -= (uint)damage;
+				if (TDGameModeRef.NexusUnderAttack.Status != SFML.Audio.SoundStatus.Playing) TDGameModeRef.NexusUnderAttack.Play();
 			}
 			
 		}

@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_TowerDefense.Source.Game.Units;
 
-namespace SFML_TowerDefense.Source.Game.AI
+namespace SFML_TowerDefense.Source.Game.Units
 {
 	public class TDSpawner : TDFieldActor
 	{
@@ -14,8 +13,8 @@ namespace SFML_TowerDefense.Source.Game.AI
 		public int WaveIndex { get; private set; } = 0;
 		public int ActiveWaveIndex { get; private set; } = 0;
 		public TDWaypoint SpawnPoint { get; set; }
-		public bool WaveActive { get; private set; } = true;
-		public bool SpawnerActive { get; private set; } = true;
+		public bool WaveActive { get; set; } = false;
+		public bool SpawnerActive { get; set; } = true;
 		public float Cooldown { get; set; } = 0;
 		public float WaveCooldown { get; set; } = 0;
 
@@ -41,24 +40,9 @@ namespace SFML_TowerDefense.Source.Game.AI
 			{
 				if (Cooldown <= 0)
 				{
-					if (ActiveWaveIndex == ActiveWave.Amount)
-					{
-						WaveActive = false;
-						if (WaveIndex == Waves.Count - 1)
-						{
-							SpawnerActive = false;
-						}
-						else
-						{
-							SpawnNextWave();
-						}
-					}
-					else
-					{
-						SpawnUnit();
-						--ActiveWave.AmountLeft;
-						Cooldown = ActiveWave.SpawnSpeed;
-					}
+					SpawnUnit();
+					--ActiveWave.AmountLeft;
+					Cooldown = ActiveWave.SpawnSpeed;
 
 				}
 				else
@@ -84,6 +68,7 @@ namespace SFML_TowerDefense.Source.Game.AI
 		{
 			var spawnedUnit = LevelReference.SpawnActor(ActiveWave.UnitTypes[ActiveWaveIndex]) as TDUnit;
 			++ActiveWaveIndex;
+			if (ActiveWaveIndex >= ActiveWave.Amount) WaveActive = false;
 			if (spawnedUnit == null) return;
 			spawnedUnit.CurrentWaypoint = SpawnPoint;
 			spawnedUnit.Position = SpawnPoint.Position;

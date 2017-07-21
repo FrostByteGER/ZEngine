@@ -101,6 +101,7 @@ namespace SFML_TowerDefense.Source.Game.Player
 		public override void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
 		{
 			base.OnMouseButtonPressed(sender, mouseButtonEventArgs);
+			if (Hud.IsHovered) return;
 			switch (mouseButtonEventArgs.Button)
 			{
 				case Mouse.Button.Left:
