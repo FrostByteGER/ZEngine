@@ -123,11 +123,11 @@ namespace SFML_TowerDefense.Source.GUI
 			{
 				if (soundCheckbox.IsSelected)
 				{
-					EngineReference.GlobalMusicVolume = 0;
+					EngineReference.GlobalSoundVolume = 0;
 				}
 				else
 				{
-					EngineReference.GlobalMusicVolume = (uint)(soundSlider.SliderValue * 100f);
+					EngineReference.GlobalSoundVolume = (uint)(soundSlider.SliderValue * 100f);
 				}
 			};
 
