@@ -1,5 +1,6 @@
 ﻿using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.Units;
+using System;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -19,6 +20,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		protected override void OnFire()
 		{
 			CurrentTarget.ApplyDamage(ParentTower, (int) WeaponDamage, DamageType);
+			RotateLocal((float)(Math.Atan2(0.5, 0.5) * 180 / Math.PI));
 		}
 
 		protected override void EndFire()
