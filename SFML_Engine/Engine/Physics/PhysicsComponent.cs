@@ -317,7 +317,7 @@ namespace SFML_Engine.Engine.Physics
 					Level.CollisionCircle.Rotation = LocalRotation;
 					Level.CollisionCircle.Scale = LocalScale;
 					Level.CollisionCircle.Origin = Origin;
-					Level.CollisionCircle.Radius = fixture.Shape.Radius;
+					Level.CollisionCircle.Radius = ComponentBounds.X / 2.0f;
 					target.Draw(Level.CollisionCircle, states);
 				}
 			}
