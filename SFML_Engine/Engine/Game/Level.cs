@@ -207,7 +207,12 @@ namespace SFML_Engine.Engine.Game
 			Dispose();
 	    }
 
-	    public T SpawnActor<T>() where T : Actor
+	    /// <summary>
+		/// Spawns the Actor instantly. Only allowed after LevelTick has finished, otherwise causes crash due to Collection Modification!
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+	    internal T SpawnActorInternal<T>() where T : Actor
 	    {
 			var actor = Spawner.SpawnObject<T>(this);
 		    RegisterActor(actor);
@@ -215,15 +220,50 @@ namespace SFML_Engine.Engine.Game
 			return actor;
 	    }
 
-		public Actor SpawnActor(Type actorType)
+		/// <summary>
+		/// Spawns the Actor instantly. Only allowed after LevelTick has finished, otherwise causes crash due to Collection Modification!
+		/// </summary>
+		/// <param name="actorType"></param>
+		/// <returns></returns>
+		internal Actor SpawnActorInternal(Type actorType)
 		{
 			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
 			var actor = Spawner.SpawnObject(actorType, this) as Actor;
 			RegisterActor(actor);
-			actor.OnGameStart();
+			actor?.OnGameStart();
 			return actor;
 		}
 
+	    /// <summary>
+		/// Constructs the actor instantly but spawns it at the end of the current Tick. Actor will tick next LevelTick.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public T SpawnActor<T>() where T : Actor
+		{
+			var actor = Spawner.SpawnObject<T>(this);
+			Core.Engine.Instance.RegisterEvent(new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this)));
+			return actor;
+		}
+
+		/// <summary>
+		/// Constructs the actor instantly but spawns it at the end of the current Tick. Actor will tick next LevelTick.
+		/// </summary>
+		/// <param name="actorType"></param>
+		/// <returns></returns>
+		public Actor SpawnActor(Type actorType)
+		{
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
+			var actor = Spawner.SpawnObject(actorType, this) as Actor;
+			Core.Engine.Instance.RegisterEvent(new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this)));
+			return actor;
+		}
+
+		/// <summary>
+		/// Constructs and spawns the actor at the end of the current Tick. Actor will tick next LevelTick.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="instigator"></param>
 		public void SpawnActorDeferred<T>(Actor instigator) where T : Actor
 		{
 			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this)));
@@ -234,12 +274,21 @@ namespace SFML_Engine.Engine.Game
 			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this)));
 		}
 
+		/// <summary>
+		/// Constructs and spawns the actor at the end of the current Tick. Actor will tick next LevelTick.
+		/// </summary>
+		/// <param name="instigator"></param>
+		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Actor instigator, Type actorType)
 		{
 			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;
 			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this)));
 		}
 
+		/// <summary>
+		/// Constructs and spawns the actor at the end of the current Tick. Actor will tick next LevelTick.
+		/// </summary>
+		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Type actorType)
 		{
 			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;

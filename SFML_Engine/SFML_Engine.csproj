@@ -126,6 +126,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Events\RegisterActorEvent.cs" />
+    <Compile Include="Engine\Events\RegisterActorParams.cs" />
     <Compile Include="Engine\Events\RemovePlayerEvent.cs" />
     <Compile Include="Engine\Events\RemovePlayerParams.cs" />
     <Compile Include="Engine\Events\SpawnPlayerEvent.cs" />
