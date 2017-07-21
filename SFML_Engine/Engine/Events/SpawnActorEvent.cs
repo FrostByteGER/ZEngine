@@ -9,7 +9,6 @@
 		public override void ExecuteEvent()
 		{
 			var actor = Parameters.LevelRef.SpawnActor(Parameters.SpawnableActorType);
-			actor.OnGameStart();
 		}
 	}
 }

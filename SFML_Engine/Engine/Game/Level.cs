@@ -211,6 +211,7 @@ namespace SFML_Engine.Engine.Game
 	    {
 			var actor = Spawner.SpawnObject<T>(this);
 		    RegisterActor(actor);
+		    actor.OnGameStart();
 			return actor;
 	    }
 
@@ -219,6 +220,7 @@ namespace SFML_Engine.Engine.Game
 			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
 			var actor = Spawner.SpawnObject(actorType, this) as Actor;
 			RegisterActor(actor);
+			actor.OnGameStart();
 			return actor;
 		}
 
