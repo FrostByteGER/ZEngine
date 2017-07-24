@@ -387,6 +387,11 @@ namespace SFML_TowerDefense.Source.GUI
 			actor.CollisionCallbacksEnabled = true;
 			
 			attackArea.Visible = true;
+
+			attackArea.CollisionBody.OnCollision += gun.OnOverlapBegin;
+			attackArea.CollisionBody.OnSeparation += gun.OnOverlapEnd;
+
+			gun.ParentTower = actor;
 		}
 
 		private void BuildPlasmaTower()

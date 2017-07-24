@@ -6,7 +6,8 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Core;
-using SFML_Engine.Engine.Utility;
+using VelcroPhysics.Dynamics;
+using VelcroPhysics.Collision.ContactSystem;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -15,7 +16,38 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		public TDTower ParentTower { get; set; }
 		public TDUnit CurrentTarget { get; private set; }
 		public List<TDUnit> EnemiesInRange { get; private set; } = new List<TDUnit>();
+
 		private OverlapComponent AttackArea { get; set; }
+
+		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
+		{
+			if(other.Body.UserData != null && other.Body.UserData is ActorComponent)
+			{
+
+				ActorComponent acomp = (ActorComponent)other.Body.UserData;
+
+				if (acomp.ParentActor is TDUnit )
+				{
+					OnEnemyEntersRange((TDUnit)acomp.ParentActor);
+					RotateWaponTo((TDUnit)acomp.ParentActor);
+				}
+			}
+		}
+
+		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
+		{
+			if (other.Body.UserData != null && other.Body.UserData is ActorComponent)
+			{
+				ActorComponent acomp = (ActorComponent)other.Body.UserData;
+
+				if (acomp.ParentActor is TDUnit)
+				{
+					OnEnemyLeavesRange((TDUnit)acomp.ParentActor);
+					RotateWaponTo((TDUnit)acomp.ParentActor);
+				}
+			}
+			
+		}
 
 		protected virtual void OnEnemyEntersRange(TDUnit enemyInRange)
 		{
@@ -23,6 +55,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 			if (CurrentTarget != null) return;
 			CurrentTarget = enemyInRange;
 		}
+
 		protected virtual void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
 		{
 			EnemiesInRange.Remove(enemyOutOfRange);
@@ -45,14 +78,10 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		protected virtual void StartFire()
 		{
 			WeaponState = TDWeaponState.Firing;
-			
-			
 
 		}
 
 		protected abstract void OnFire();
-		
-		
 
 		protected virtual void EndFire()
 		{
@@ -82,16 +111,28 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 					ParentTower.TowerState = TDTowerState.ReadyToFire;
 				}
 			}
+
+			if (CurrentTarget != null)
+			{
+				RotateWaponTo(CurrentTarget);
+			}
 		}
 
 		public void RotateWaponTo(TDUnit target)
 		{
+
 			//Need Testing
+
+			// TVector2f selfPoint = new TVector2f(WorldPosition.X / (Math.Abs(WorldPosition.X) + Math.Abs(WorldPosition.Y)), WorldPosition.Y / (Math.Abs(WorldPosition.X) + Math.Abs(WorldPosition.Y)));
+
+			// TVector2f otherPoint = new TVector2f(target.Body.Position.X / (Math.Abs(target.Body.Position.X) + Math.Abs(target.Body.Position.Y)), target.Body.Position.Y / (Math.Abs(target.Body.Position.X) + Math.Abs(target.Body.Position.Y))); ;
+
 			TVector2f dic = WorldPosition - target.Position;
 
-			dic = new TVector2f(dic.X / (dic.X + dic.Y), dic.Y / (dic.X + dic.Y));
+			dic = new TVector2f(dic.X / (Math.Abs(dic.X) + Math.Abs(dic.Y)), dic.Y / (Math.Abs(dic.X) + Math.Abs(dic.Y)));
 
-			RotateLocal((float)(Math.Atan2(dic.X, dic.Y) * 180 / Math.PI));
+			//RotateLocal((float)(Math.Atan2(dic.X, dic.Y) * 180 / Math.PI));
+			SetLocalRotation((float)(Math.Atan2(dic.X, -dic.Y) * 180 / Math.PI));
 
 		}
 
