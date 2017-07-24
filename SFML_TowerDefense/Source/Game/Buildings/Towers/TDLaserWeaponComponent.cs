@@ -8,6 +8,11 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 	public class TDLaserWeaponComponent : TDTowerWeaponComponent
 	{
 
+		public TDLaserWeaponComponent(Sprite sprite) : base(sprite)
+		{
+			WeaponDamage = 25;
+		}
+
 		protected override void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
 		{
 			base.OnEnemyLeavesRange(enemyOutOfRange);
@@ -21,11 +26,8 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 
 		protected override void OnFire()
 		{
-			//CurrentTarget.ApplyDamage(ParentTower, (int) WeaponDamage, DamageType);
-
-			// Need Testing
-			//RotateLocal((float)(Math.Atan2(0.5, 0.5) * 180 / Math.PI));
-
+			Console.WriteLine("OnFire");
+			CurrentTarget.ApplyDamage((TDActor)this.ParentActor, WeaponDamage, DamageType);
 		}
 
 		protected override void EndFire()
@@ -36,10 +38,6 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
-		}
-
-		public TDLaserWeaponComponent(Sprite sprite) : base(sprite)
-		{
 		}
 	}
 }

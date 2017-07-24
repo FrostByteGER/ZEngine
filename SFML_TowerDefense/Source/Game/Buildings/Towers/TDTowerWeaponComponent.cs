@@ -96,6 +96,8 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 			if (WeaponState == TDWeaponState.Firing)
 			{
 				OnFire();
+				CurrentRechargeTime = RechargeTime;
+				WeaponState = TDWeaponState.Charging;
 			}
 			else if (CurrentTarget != null && WeaponState == TDWeaponState.ReadyToFire)
 			{
