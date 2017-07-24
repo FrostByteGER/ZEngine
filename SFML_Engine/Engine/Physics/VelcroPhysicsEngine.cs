@@ -82,6 +82,7 @@ namespace SFML_Engine.Engine.Physics
 			{
 				var component = body.UserData as PhysicsComponent;
 				if (component == null) continue;
+				//TODO: Setting the Local Position is very bad... it produces weird results when a PhysicsComponent is NOT the RootComponent of an actor!
 				component.SetLocalPosition(ToGameUnits(body.Position));
 				component.SetLocalRotation(EngineMath.RadiansToDegrees(ToGameUnits(body.Rotation)));
 				var actor = component.ParentActor;

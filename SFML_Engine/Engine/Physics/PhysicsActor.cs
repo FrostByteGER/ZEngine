@@ -108,7 +108,7 @@ namespace SFML_Engine.Engine.Physics
 			set => PhysComp.Mass = value;
 		}
 
-		public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, TVector2f physBounds, bool overlap, Level level) : base(level)
+		public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, TVector2f physBounds, bool overlap, bool collisionCallbacksEnabled, bool visible, Level level) : base(level)
 		{
 			if (overlap)
 			{
@@ -140,6 +140,8 @@ namespace SFML_Engine.Engine.Physics
 						break;
 				}
 			}
+			CollisionCallbacksEnabled = collisionCallbacksEnabled;
+			PhysComp.Visible = visible;
 		}
 	}
 }
