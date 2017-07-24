@@ -101,10 +101,10 @@ namespace SFML_TowerDefense.Source.Game.Core
 				uint tilesPerColumn = 0;
 				tilesPerRow = texture.Size.X / (uint)tilewidth;
 				tilesPerColumn = texture.Size.Y / (uint)tileheight;
-				xIndex = (uint) (l / tilesPerRow);
-				yIndex = (uint) l % tilesPerRow;
+				xIndex = (uint) ((l-1) % tilesPerRow);
+				yIndex = (uint) (l-1) / tilesPerRow;
 
-				var rect = new IntRect((l - 1) * tilewidth, 0, tilewidth, tileheight);
+				var rect = new IntRect((int) (xIndex * tilewidth), (int) (yIndex * tileheight), tilewidth, tileheight);
 				var tile = new TDTile(new Sprite(texture, rect));
 				tile.LocalPosition = new TVector2f(k * tilewidth - Map.ActorBounds.X + tilewidth / 2.0f, (j / mapWidth) * tileheight - Map.ActorBounds.Y + tileheight / 2.0f);
 				Map.AddComponent(tile);
