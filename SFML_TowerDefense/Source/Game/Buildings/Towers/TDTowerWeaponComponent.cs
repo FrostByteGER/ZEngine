@@ -95,13 +95,29 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 			base.Tick(deltaTime);
 			if (WeaponState == TDWeaponState.Firing)
 			{
+				if (CurrentTarget != null)
+				{
+					RotateWaponTo(CurrentTarget);
+				}
+
 				OnFire();
 				CurrentRechargeTime = RechargeTime;
 				WeaponState = TDWeaponState.Charging;
+
+
 			}
-			else if (CurrentTarget != null && WeaponState == TDWeaponState.ReadyToFire)
+			else if (WeaponState == TDWeaponState.ReadyToFire)
 			{
-				StartFire();
+				if (CurrentTarget != null)
+				{
+					StartFire();
+				}
+				else
+				{
+					EndFire();
+				}
+
+				
 			}
 			else if (WeaponState == TDWeaponState.Charging)
 			{
@@ -112,11 +128,6 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 					WeaponState = TDWeaponState.ReadyToFire;
 					ParentTower.TowerState = TDTowerState.ReadyToFire;
 				}
-			}
-
-			if (CurrentTarget != null)
-			{
-				RotateWaponTo(CurrentTarget);
 			}
 		}
 

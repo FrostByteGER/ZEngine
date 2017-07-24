@@ -6,6 +6,7 @@ using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
+using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
@@ -16,6 +17,24 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 
 		public TDLaserTower(Level level) : base(level)
 		{
+			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+			OverlapComponent attackArea = LevelReference.PhysicsEngine.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
+			SpriteComponent sprite = new SpriteComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerBase")));
+
+			this.AddComponent(sprite);
+			this.AddComponent(gun);
+			this.CollisionCallbacksEnabled = true;
+
+			attackArea.CollisionBody.OnCollision += gun.OnOverlapBegin;
+			attackArea.CollisionBody.OnSeparation += gun.OnOverlapEnd;
+
+			gun.ParentTower = this;
+			gun.Laser = new SpriteComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerBullet3")));
+		}
+
+		protected override void InitializeActor()
+		{
+			base.InitializeActor();
 		}
 
 		protected override void CreateTower()

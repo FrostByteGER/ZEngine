@@ -137,6 +137,7 @@ namespace SFML_Engine.Engine.Game
 		public Actor(Level level)
 		{
 			ActorName = GetType().Name;
+			LevelReference = level;
 		}
 
 		protected internal virtual void InitializeActor()
@@ -200,10 +201,23 @@ namespace SFML_Engine.Engine.Game
 
 		public virtual void Tick(float deltaTime)
 		{
-			foreach (var component in Components)
+			//foreach (var component in Components)
+			//{
+			//	component.Tick(deltaTime);
+			//}
+
+			for (int i = 0 ; i < Components.Count ; i++)
 			{
-				component.Tick(deltaTime);
+				if (Components.Count >= i)
+				{
+					Components[i].Tick(deltaTime);
+				}
+				else
+				{
+					break;
+				}
 			}
+
 			//Console.WriteLine(Position);
 		}
 
@@ -328,6 +342,11 @@ namespace SFML_Engine.Engine.Game
 
 		public bool AddComponent(ActorComponent component)
 		{
+			if (component == null || component.ComponentName == null)
+			{
+				Console.WriteLine("Break");
+			}
+
 			Console.WriteLine("Trying to add "+ component.ComponentName + " to " + this);
 			if (Components.Contains(component)) return false;
 			Components.Add(component);

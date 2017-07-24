@@ -375,13 +375,17 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildLaserTower()
 		{
 			Console.WriteLine("BuildLaserTower");
-			var actor = LevelRef.SpawnActor<TDLaserTower>();
+			TDLaserTower actor = LevelRef.SpawnActor<TDLaserTower>();
+
+			/*
 			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
 			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
 			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
-
+			*/
 
 			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+
+			/*
 			actor.AddComponent(sprite);
 			actor.AddComponent(gun);
 			actor.CollisionCallbacksEnabled = true;
@@ -392,6 +396,7 @@ namespace SFML_TowerDefense.Source.GUI
 			attackArea.CollisionBody.OnSeparation += gun.OnOverlapEnd;
 
 			gun.ParentTower = actor;
+			*/
 		}
 
 		private void BuildPlasmaTower()
