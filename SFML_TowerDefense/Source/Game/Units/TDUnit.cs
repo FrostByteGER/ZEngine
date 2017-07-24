@@ -3,9 +3,12 @@ using System.Linq;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
+using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
+using VelcroPhysics.Collision.ContactSystem;
+using VelcroPhysics.Dynamics;
 
 namespace SFML_TowerDefense.Source.Game.Units
 {
@@ -20,11 +23,22 @@ namespace SFML_TowerDefense.Source.Game.Units
 		public TDDamageType ElementResistances { get; set; } = TDDamageType.None;
 		public float WaypointThreshold { get; set; } = 2.0f;
 		public TDUnitState UnitState { get; set; } = TDUnitState.Walking;
+		
+		public PhysicsComponent PhysComp { get; set; }
 
 		public TDUnit(Level level) : base(level)
 		{
-			SetRootComponent(
-				new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2"))));
+			var spriteComp = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2")));
+			PhysComp = level.PhysicsEngine.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, spriteComp.ComponentBounds.X, BodyType.Dynamic);
+
+			// HOLY SHIT... I SPENT FUCKING 4 HOURS TRACING THIS SHIT. IT FUCKING CAUSED WEIRD COLLISION/OVERLAP BEHAVIOUR AND DROVE ME TO INSANITY. ALL I HAD TO FIX WAS TO ENSURE THAT THIS MOTHERFUCKER DOESN'T EVER SLEEP. YOU SON OF A BITCH STAY AWAKE TILL U DIE. -Kevin
+			PhysComp.CollisionBody.SleepingAllowed = false;
+
+			PhysComp.CollisionCallbacksEnabled = true;
+
+			AddComponent(spriteComp);
+
+			PhysComp.Visible = true;
 		}
 
 		public override void OnGameStart()
@@ -64,6 +78,7 @@ namespace SFML_TowerDefense.Source.Game.Units
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			
 			if (CurrentWaypoint != null)
 			{
 				if ((Position - CurrentWaypoint.Position).LengthSquared > WaypointThreshold * WaypointThreshold)

@@ -153,4 +153,7 @@ if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>taskkill /IM ServiceHub.DataWarehouseHost.exe /F</PreBuildEvent>
+  </PropertyGroup>
 </Project>

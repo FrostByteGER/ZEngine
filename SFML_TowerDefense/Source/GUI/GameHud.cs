@@ -7,6 +7,7 @@ using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
 
@@ -375,16 +376,16 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			Console.WriteLine("BuildLaserTower");
 			var actor = LevelRef.SpawnActor<TDLaserTower>();
-			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
 			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
+			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
 
 
-			actor.SetRootComponent(sprite);
 			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
-			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, false,
-				new TVector2f(), 0, new TVector2f(1.0f), 0.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
+			actor.AddComponent(sprite);
 			actor.AddComponent(gun);
-
+			actor.CollisionCallbacksEnabled = true;
+			
 			attackArea.Visible = true;
 		}
 

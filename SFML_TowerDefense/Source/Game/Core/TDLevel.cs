@@ -21,6 +21,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 
 		public TDLevel()
 		{
+			PhysicsEngine.Gravity = new TVector2f();
 		}
 
 		protected override void InitLevel()
@@ -37,7 +38,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 			Map.TileSprites = new List<Sprite>();
 
 			// Map Data
-			dynamic mapData = JSONManager.LoadObject<dynamic>("Assets/Game/Levels/" + "test" + ".json");
+			dynamic mapData = JSONManager.LoadObject<dynamic>("Assets/Game/Levels/" + "CollisionLevel" + ".json");
 
 			// Tilesheet Array
 			var tilesheets = mapData.tilesets;
@@ -57,7 +58,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 			// Sheet Texture Name
 			string sheetImage = sheetData.image.ToObject<string>();
 			// Sheet Texture
-			Texture texture = EngineReference.AssetManager.LoadTexture("Level01Sheet");
+			Texture texture = EngineReference.AssetManager.LoadTexture("MainTileset");
 			// Count of all Tiles in the Sheet Texture
 			int tileCount = sheetData.tilecount.ToObject<int>();
 			// Width of a Tile in the Texture
@@ -94,7 +95,17 @@ namespace SFML_TowerDefense.Source.Game.Core
 			int k = 0;
 			foreach (var l in layerData)
 			{
-				var tile = new TDTile(new Sprite(texture, new IntRect((l - 1) * tilewidth, 0, tilewidth, tileheight)));
+				uint xIndex = 0;
+				uint yIndex = 0;
+				uint tilesPerRow = 0;
+				uint tilesPerColumn = 0;
+				tilesPerRow = texture.Size.X / (uint)tilewidth;
+				tilesPerColumn = texture.Size.Y / (uint)tileheight;
+				xIndex = (uint) (l / tilesPerRow);
+				yIndex = (uint) l % tilesPerRow;
+
+				var rect = new IntRect((l - 1) * tilewidth, 0, tilewidth, tileheight);
+				var tile = new TDTile(new Sprite(texture, rect));
 				tile.LocalPosition = new TVector2f(k * tilewidth - Map.ActorBounds.X + tilewidth / 2.0f, (j / mapWidth) * tileheight - Map.ActorBounds.Y + tileheight / 2.0f);
 				Map.AddComponent(tile);
 				Map.Tiles.Add(tile);
@@ -172,13 +183,15 @@ namespace SFML_TowerDefense.Source.Game.Core
 					{
 						xOrigin = mapObject.x.ToObject<int>() - Map.ActorBounds.X;
 						yOrigin = mapObject.y.ToObject<int>() - Map.ActorBounds.Y;
+						tileCoords = WorldCoordsToTileCoords(xOrigin, yOrigin);
 						var xLocal = waypoint.x.ToObject<int>();
 						var yLocal = waypoint.y.ToObject<int>();
 						var wp = new TDWaypoint(this) {Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal)};
 						if (previousWaypoint != null) previousWaypoint.NextWaypoint = wp;
 						waypointObjects.Add(wp);
 						RegisterActor(wp);
-						GetTileByTileCoords(tileCoords).FieldActors.Add(wp);
+						var tile = GetTileByTileCoords(tileCoords);
+						tile.FieldActors.Add(wp);
 						previousWaypoint = wp;
 					}
 					waypointObjects[waypointObjects.Count - 1].TargetNexus = mapObject.properties.TargetNexus.ToObject<uint>();
