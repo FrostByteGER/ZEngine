@@ -43,7 +43,13 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 
 			Laser.LocalRotation = LocalRotation;
 			Laser.Origin = new TVector2f(16,0);
-			Laser.LocalScale = new TVector2f(1,4);
+			
+
+			TVector2f dicVec = new TVector2f(WorldPosition.X - CurrentTarget.Position.X, WorldPosition.Y - CurrentTarget.Position.Y);
+
+			double dicFloat = dicVec.X * dicVec.X + dicVec.Y * dicVec.Y;
+
+			Laser.LocalScale = new TVector2f(1, (float)Math.Sqrt(dicFloat) / 32f);
 
 			Laser.Visible = true;
 		}
