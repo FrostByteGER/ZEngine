@@ -15,10 +15,8 @@ namespace SFML_Engine.Engine.JUI
 		protected void setElementSizeAndPosition(int eindex, Vector2f p, Vector2f s)
 		{
 
-			Container.Elements[eindex].ReSize(p + Container.Margin.GetSizeWithDistanceTopLeft(Container.Size), s - (Container.Margin.GetSizeWithDistanceTopLeft(Container.Size) + Container.Margin.GetSizeWithDistanceBottemRight(Container.Size)));
+			Container.Elements[eindex].ReSize(p + Container.Margin.GetSizeWithDistanceTopLeft(s), s - (Container.Margin.GetSizeWithDistanceTopLeft(s) + Container.Margin.GetSizeWithDistanceBottemRight(s)));
 
-			//Container.Elements[eindex].Position = ;
-			//Container.Elements[eindex].Size = ;
 		}
 
 		public virtual void ReSize()

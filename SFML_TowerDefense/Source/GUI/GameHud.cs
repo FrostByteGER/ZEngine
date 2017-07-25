@@ -44,6 +44,9 @@ namespace SFML_TowerDefense.Source.GUI
 
 		public JContainer MenuDropDownContainer;
 
+		public JContainer LostContainer;
+		public JContainer WinContainer;
+
 		//Tower
 		public JCheckbox LaserTower;
 		public JCheckbox PlasmaTower;
@@ -71,6 +74,9 @@ namespace SFML_TowerDefense.Source.GUI
 
 			MenuDropDownContainer = InitMenuDropDownContainer();
 
+			LostContainer = InitLostContainer();
+			WinContainer = InitWinContainer();
+
 			RootContainer = new JContainer(this);
 			RootContainer.setBackgroundColor(Color.Transparent);
 
@@ -81,6 +87,7 @@ namespace SFML_TowerDefense.Source.GUI
 			RootContainer.Layout = layout;
 			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
 			RootContainer.addElement(BuildingFieldContainer, JBorderLayout.BOTTOM);
+			RootContainer.addElement(LostContainer, JBorderLayout.CENTER);
 		}
 
 		private JContainer InitInfoContainer()
@@ -282,6 +289,120 @@ namespace SFML_TowerDefense.Source.GUI
 			return container;
 		}
 
+		private JContainer InitLostContainer()
+		{
+			JContainer rap = new JContainer(this);
+			rap.setBackgroundColor(Color.Transparent);
+			rap.Layout = new JLayout(rap);
+			JDistanceContainer dis = new JDistanceContainer();
+			dis.SetHorizontal(0.2f);
+			dis.SetVertikal(0.35f);
+			rap.Margin = dis;
+
+			JContainer end = new JContainer(this);
+			end.setBackgroundColor(Color.Transparent);
+			rap.addElement(end);
+
+			JBorderLayout layout = new JBorderLayout(end);
+			layout.TopSize = 0.2f;
+			end.Layout = layout;
+
+			JLabel lable = new JLabel(this);
+			lable.Text.CharacterSize = 16;
+			lable.setTextString("Defeated!");
+			end.addElement(lable, JBorderLayout.TOP);
+
+			JContainer info = new JContainer(this);
+			end.addElement(info, JBorderLayout.CENTER);
+
+			JGridLayout infoLayout = new JGridLayout(info);
+			infoLayout.Rows = 2;
+			infoLayout.Columns = 2;
+			info.Layout = infoLayout;
+
+			JLabel score = new JLabel(this);
+			score.Text.CharacterSize = 12;
+			// GameModeHud.PlayerScore
+			score.setTextString("Score : 000" );
+			info.addElement(score);
+
+			JButton retry = new JButton(this);
+			retry.Text.CharacterSize = 12;
+			retry.setTextString("Retry");
+			retry.OnExecute += Retry;
+			info.addElement(retry);
+
+			JLabel highscore = new JLabel(this);
+			highscore.Text.CharacterSize = 12;
+			highscore.setTextString("Highscore : need Highscore");
+			info.addElement(highscore);
+
+			JButton exit = new JButton(this);
+			exit.Text.CharacterSize = 12;
+			exit.setTextString("Exit to Menu");
+			exit.OnExecute += ExitGame;
+			info.addElement(exit);
+
+			return rap;
+		}
+
+		private JContainer InitWinContainer()
+		{
+			JContainer rap = new JContainer(this);
+			rap.setBackgroundColor(Color.Transparent);
+			rap.Layout = new JLayout(rap);
+			JDistanceContainer dis = new JDistanceContainer();
+			dis.SetHorizontal(0.2f);
+			dis.SetVertikal(0.35f);
+			rap.Margin = dis;
+
+			JContainer end = new JContainer(this);
+			end.setBackgroundColor(Color.Transparent);
+			rap.addElement(end);
+
+			JBorderLayout layout = new JBorderLayout(end);
+			layout.TopSize = 0.2f;
+			end.Layout = layout;
+
+			JLabel lable = new JLabel(this);
+			lable.Text.CharacterSize = 16;
+			lable.setTextString("Won!");
+			end.addElement(lable, JBorderLayout.TOP);
+
+			JContainer info = new JContainer(this);
+			end.addElement(info, JBorderLayout.CENTER);
+
+			JGridLayout infoLayout = new JGridLayout(info);
+			infoLayout.Rows = 2;
+			infoLayout.Columns = 2;
+			info.Layout = infoLayout;
+
+			JLabel score = new JLabel(this);
+			score.Text.CharacterSize = 12;
+			// GameModeHud.PlayerScore
+			score.setTextString("Score : 000");
+			info.addElement(score);
+
+			JButton next = new JButton(this);
+			next.Text.CharacterSize = 12;
+			next.setTextString("Next Mission");
+			next.OnExecute += NextLevel;
+			info.addElement(next);
+
+			JLabel highscore = new JLabel(this);
+			highscore.Text.CharacterSize = 12;
+			highscore.setTextString("Highscore : need Highscore");
+			info.addElement(highscore);
+
+			JButton exit = new JButton(this);
+			exit.Text.CharacterSize = 12;
+			exit.setTextString("Exit to Menu");
+			exit.OnExecute += ExitGame;
+			info.addElement(exit);
+
+			return rap;
+		}
+
 		private void ChangeSelectedField(TDTile tile)
 		{
 			JContainer end = null;
@@ -339,7 +460,7 @@ namespace SFML_TowerDefense.Source.GUI
 
 		private void ExitGame()
 		{
-			Console.WriteLine(LevelRef);
+			Console.WriteLine("ExitGame");
 		}
 
 		private void OpenMenu()
@@ -350,6 +471,16 @@ namespace SFML_TowerDefense.Source.GUI
 		private void CloseMenu()
 		{
 			RootContainer.addElement(null, JBorderLayout.RIGHT);
+		}
+
+		private void Retry()
+		{
+			Console.WriteLine("Retry");
+		}
+
+		private void NextLevel()
+		{
+			Console.WriteLine("NextLevel");
 		}
 
 		private void BuildTower()
@@ -377,26 +508,7 @@ namespace SFML_TowerDefense.Source.GUI
 			Console.WriteLine("BuildLaserTower");
 			TDLaserTower actor = LevelRef.SpawnActor<TDLaserTower>();
 
-			/*
-			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
-			var attackArea = LevelRef.PhysicsEngine.ConstructCircleOverlapComponent(actor, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
-			var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
-			*/
-
 			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
-
-			/*
-			actor.AddComponent(sprite);
-			actor.AddComponent(gun);
-			actor.CollisionCallbacksEnabled = true;
-			
-			attackArea.Visible = true;
-
-			attackArea.CollisionBody.OnCollision += gun.OnOverlapBegin;
-			attackArea.CollisionBody.OnSeparation += gun.OnOverlapEnd;
-
-			gun.ParentTower = actor;
-			*/
 		}
 
 		private void BuildPlasmaTower()
