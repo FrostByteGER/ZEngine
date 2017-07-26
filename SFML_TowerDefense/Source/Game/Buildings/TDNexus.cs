@@ -18,7 +18,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			Origin = nexusSprite.Origin;
 		}
 
-		public override void ApplyDamage(TDActor instigator, int damage)
+		public override void ApplyDamage(TDActor instigator, float damage)
 		{
 			if (NexusState == TDNexusState.Dead) return;
 			base.ApplyDamage(instigator, damage);

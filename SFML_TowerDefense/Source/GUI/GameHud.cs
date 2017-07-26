@@ -87,7 +87,7 @@ namespace SFML_TowerDefense.Source.GUI
 			RootContainer.Layout = layout;
 			RootContainer.addElement(InfoContainer, JBorderLayout.TOP);
 			RootContainer.addElement(BuildingFieldContainer, JBorderLayout.BOTTOM);
-			RootContainer.addElement(LostContainer, JBorderLayout.CENTER);
+			//RootContainer.addElement(LostContainer, JBorderLayout.CENTER);
 		}
 
 		private JContainer InitInfoContainer()
@@ -506,9 +506,8 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildLaserTower()
 		{
 			Console.WriteLine("BuildLaserTower");
-			TDLaserTower actor = LevelRef.SpawnActor<TDLaserTower>();
-
-			actor.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+			var laserTower = LevelRef.SpawnActor<TDLaserTower>();
+			laserTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
 		}
 
 		private void BuildPlasmaTower()
@@ -519,6 +518,8 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildRailgunTower()
 		{
 			Console.WriteLine("BuildRailgunTower");
+			var railgunTower = LevelRef.SpawnActor<TDRailgunTower>();
+			railgunTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
 		}
 
 		private void BuildMine()

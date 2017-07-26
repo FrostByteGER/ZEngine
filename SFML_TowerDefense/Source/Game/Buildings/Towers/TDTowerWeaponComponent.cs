@@ -21,32 +21,24 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 
 		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
-			if(other.Body.UserData != null && other.Body.UserData is ActorComponent)
+			ActorComponent acomp = other.Body.UserData as ActorComponent;
+
+			if (acomp?.ParentActor is TDUnit )
 			{
-
-				ActorComponent acomp = (ActorComponent)other.Body.UserData;
-
-				if (acomp.ParentActor is TDUnit )
-				{
-					OnEnemyEntersRange((TDUnit)acomp.ParentActor);
-					RotateWaponTo((TDUnit)acomp.ParentActor);
-				}
+				OnEnemyEntersRange((TDUnit)acomp.ParentActor);
+				RotateWaponTo((TDUnit)acomp.ParentActor);
 			}
 		}
 
 		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
 		{
-			if (other.Body.UserData != null && other.Body.UserData is ActorComponent)
-			{
-				ActorComponent acomp = (ActorComponent)other.Body.UserData;
+			ActorComponent acomp = other.Body.UserData as ActorComponent;
 
-				if (acomp.ParentActor is TDUnit)
-				{
-					OnEnemyLeavesRange((TDUnit)acomp.ParentActor);
-					RotateWaponTo((TDUnit)acomp.ParentActor);
-				}
+			if (acomp?.ParentActor is TDUnit)
+			{
+				OnEnemyLeavesRange((TDUnit)acomp.ParentActor);
+				RotateWaponTo((TDUnit)acomp.ParentActor);
 			}
-			
 		}
 
 		protected virtual void OnEnemyEntersRange(TDUnit enemyInRange)
@@ -59,11 +51,10 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		protected virtual void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
 		{
 			EnemiesInRange.Remove(enemyOutOfRange);
-			//TODO: Sort Remaining Enemies in Range by Distance and pick the furthest one as next target.
 
-			float rang = float.MaxValue; // range ^ 2 
+			var rang = float.MaxValue; // range ^ 2 
 
-			foreach (TDUnit enemy in EnemiesInRange)
+			foreach (var enemy in EnemiesInRange)
 			{
 				if ( Math.Pow(enemy.Position.X - ParentTower.Position.X,2) + Math.Pow(enemy.Position.Y - ParentTower.Position.Y, 2) < rang)
 				{
@@ -101,8 +92,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 				}
 
 				OnFire();
-				CurrentRechargeTime = RechargeTime;
-				WeaponState = TDWeaponState.Charging;
+
 
 
 			}

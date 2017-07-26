@@ -15,18 +15,18 @@ namespace SFML_TowerDefense.Source.Game.Core
 			TDGameModeRef = TDLevelRef.GameMode as TDGameMode;
 		}
 
-		public virtual void ApplyDamage(int damage)
+		public virtual void ApplyDamage(float damage)
 		{
 			Console.WriteLine("APPLYING " + damage + " DAMAGE TO: " + GenerateFullName());
 
 		}
 
-		public virtual void ApplyDamage(TDActor instigator, int damage)
+		public virtual void ApplyDamage(TDActor instigator, float damage)
 		{
 			Console.WriteLine("ACTOR: " + instigator.GenerateFullName() + " APPLYING " + damage + " DAMAGE TO: " + GenerateFullName());
 		}
 
-		public virtual void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
+		public virtual void ApplyDamage(TDActor instigator, float damage, TDDamageType damageType)
 		{
 			Console.WriteLine("ACTOR: " + instigator.GenerateFullName() + " APPLYING " + damage + " " + damageType + " DAMAGE TO: " + GenerateFullName());
 		}

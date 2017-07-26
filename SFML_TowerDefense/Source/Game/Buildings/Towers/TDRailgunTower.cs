@@ -1,21 +1,16 @@
-using System;
-using System.Linq;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
-using VelcroPhysics.Collision.ContactSystem;
-using VelcroPhysics.Dynamics;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 {
-	public class TDLaserTower : TDTower
+	public class TDRailgunTower : TDTower
 	{
-
-		public TDLaserTower(Level level) : base(level)
+		public TDRailgunTower(Level level) : base(level)
 		{
-			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
+			TDLaserWeaponComponent gun = new TDLaserWeaponComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerGunT2")));
 			OverlapComponent attackArea = LevelReference.PhysicsEngine.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);
 			SpriteComponent sprite = new SpriteComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerBase")));
 

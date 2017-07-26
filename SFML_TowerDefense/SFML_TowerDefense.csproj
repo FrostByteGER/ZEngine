@@ -39,6 +39,7 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Game\Buildings\Towers\TDRailgunTower.cs" />
     <Compile Include="Source\Game\Units\TDBerserker.cs" />
     <Compile Include="Source\Game\Units\TDCrab.cs" />
     <Compile Include="Source\Game\Units\TDGrunt.cs" />

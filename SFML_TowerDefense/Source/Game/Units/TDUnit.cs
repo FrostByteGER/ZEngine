@@ -15,10 +15,10 @@ namespace SFML_TowerDefense.Source.Game.Units
 	public class TDUnit : TDActor, ICloneable
 	{
 
-		public int HP { get; set; } = 100;
+		public float HP { get; set; } = 100.0f;
 		public float MovmentSpeed { get; set; } = 1;
 		public TDWaypoint CurrentWaypoint { get; set; }
-		public uint Damage { get; set; } = 30;
+		public uint Damage { get; set; } = 5;
 
 		public TDDamageType ElementResistances { get; set; } = TDDamageType.None;
 		public float WaypointThreshold { get; set; } = 2.0f;
@@ -46,16 +46,16 @@ namespace SFML_TowerDefense.Source.Game.Units
 			base.OnGameStart();
 		}
 
-		public override void ApplyDamage(TDActor instigator, int damage, TDDamageType damageType)
+		public override void ApplyDamage(TDActor instigator, float damage, TDDamageType damageType)
 		{
 			
 			if (UnitState == TDUnitState.Dead) return;
 			var resistanceMultiplier = 1.0f;
 			if (ElementResistances != TDDamageType.None && (ElementResistances & damageType) == damageType) resistanceMultiplier = 0.5f;
-			HP -= (int)(damage * resistanceMultiplier);
-			if (HP <= 0)
+			HP -= damage * resistanceMultiplier;
+			if (HP <= 0.0f)
 			{
-				HP = 0;
+				HP = 0.0f;
 				UnitState = TDUnitState.Dead;
 				OnDeath();
 				LevelReference.DestroyActor(this, this);

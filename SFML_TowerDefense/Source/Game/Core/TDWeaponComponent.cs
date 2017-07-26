@@ -8,7 +8,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 	public class TDWeaponComponent : SpriteComponent
 	{
 		public TDWeaponType WeaponType { get; set; } = TDWeaponType.Hitscan;
-		public int WeaponDamage { get; set; } = 10;
+		public float WeaponDamage { get; set; } = 10.0f;
 		public float FireRate { get; set; } = 1;
 		public virtual uint WeaponRange { get; set; } = 100;
 		public float RechargeTime { get; set; } = 0.5f;

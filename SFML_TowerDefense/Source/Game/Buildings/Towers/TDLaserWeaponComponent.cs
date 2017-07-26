@@ -10,12 +10,18 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 	public class TDLaserWeaponComponent : TDTowerWeaponComponent
 	{
 
-		public SpriteComponent Laser;
+		public SpriteComponent LaserSprite;
+
+		public float FiringTime { get; set; }
+		public float CurrentFiringTime { get; set; }
+		public float DeltaTime { get; set; } = 0.0f;
 
 		public TDLaserWeaponComponent(Sprite sprite) : base(sprite)
 		{
-			WeaponDamage = 2;
-			RechargeTime = 0.01f;
+			WeaponDamage = .5f;
+			RechargeTime = .5f;
+			FiringTime = .5f;
+			CurrentFiringTime = FiringTime;
 		}
 
 		protected override void OnEnemyLeavesRange(TDUnit enemyOutOfRange)
@@ -27,42 +33,44 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		protected override void StartFire()
 		{
 			base.StartFire();
-			ParentActor.AddComponent(Laser);
+			ParentActor.AddComponent(LaserSprite);
 		}
 
-		protected override void OnInitializeActorComponent()
-		{
-			base.OnInitializeActorComponent();
-
-		}
 
 		protected override void OnFire()
 		{
-			Console.WriteLine("OnFire");
-			CurrentTarget.ApplyDamage((TDActor)this.ParentActor, WeaponDamage, DamageType);
+			CurrentTarget.ApplyDamage((TDActor)ParentActor, WeaponDamage, DamageType);
 
-			Laser.LocalRotation = LocalRotation;
-			Laser.Origin = new TVector2f(16,0);
+			LaserSprite.LocalRotation = LocalRotation;
+			LaserSprite.Origin = new TVector2f(16,0);
 			
 
-			TVector2f dicVec = new TVector2f(WorldPosition.X - CurrentTarget.Position.X, WorldPosition.Y - CurrentTarget.Position.Y);
+			var dicVec = new TVector2f(WorldPosition.X - CurrentTarget.Position.X, WorldPosition.Y - CurrentTarget.Position.Y);
 
 			double dicFloat = dicVec.X * dicVec.X + dicVec.Y * dicVec.Y;
 
-			Laser.LocalScale = new TVector2f(1, (float)Math.Sqrt(dicFloat) / 32f);
+			LaserSprite.LocalScale = new TVector2f(1, (float)Math.Sqrt(dicFloat) / 32f);
 
-			Laser.Visible = true;
+			LaserSprite.Visible = true;
+
+			CurrentFiringTime -= DeltaTime;
+			if (CurrentFiringTime <= 0.0f)
+			{
+				CurrentFiringTime = FiringTime;
+				EndFire();
+			}
 		}
 
 		protected override void EndFire()
 		{
 			base.EndFire();
-			ParentActor.RemoveComponent(Laser);
+			ParentActor.RemoveComponent(LaserSprite);
 		}
 
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			DeltaTime = deltaTime;
 		}
 	}
 }
