@@ -188,7 +188,6 @@ namespace SFML_Engine.Engine.IO
 					MouseXButton2Pressed = true;
 					break;
 				case Mouse.Button.ButtonCount:
-					throw new NotImplementedException();
 					break;
 			}
 		    MouseButtonPressed(sender, mouseButtonEventArgs);
@@ -216,7 +215,6 @@ namespace SFML_Engine.Engine.IO
 					MouseXButton2Pressed = false;
 					break;
 				case Mouse.Button.ButtonCount:
-					throw new NotImplementedException();
 					break;
 			}
 			MouseButtonReleased(sender, mouseButtonEventArgs);
