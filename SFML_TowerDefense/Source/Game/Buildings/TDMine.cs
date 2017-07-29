@@ -5,6 +5,7 @@ using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_TowerDefense.Source.Game.Player;
 using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_TowerDefense.Source.GUI;
 
 namespace SFML_TowerDefense.Source.Game.Buildings
 {
@@ -20,12 +21,15 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 
 		public TDPlayerController Owner { get; set; }
 		public TDMineState MineState { get; set; } = TDMineState.Mining;
+		
+		public Text PopupText { get; set; }
 
 		public TDMine(Level level) : base(level)
 		{
 			var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));
 			SetRootComponent(mineSprite);
 			Origin = mineSprite.Origin;
+			PopupText = new Text("0", LevelReference.EngineReference.AssetManager.LoadFont("MainGameFont"), 13);
 		}
 
 		public void MineResource()
@@ -34,6 +38,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			if (ResourceField.ResourceAmount > 0)
 			{
 				Owner.Gold += ResourceField.Mine(MineAmount);
+				AddComponent(new TDPopupTextComponent(PopupText));
 			}
 			else
 			{

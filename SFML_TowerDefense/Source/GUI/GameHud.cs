@@ -1,8 +1,10 @@
 ﻿using SFML_Engine.Engine.JUI;
 using System;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML.System;
+using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
@@ -51,7 +53,8 @@ namespace SFML_TowerDefense.Source.GUI
 		public JLabel stats;
 
 		//public TDGameInfo GameInfoHud;
-		public TDGameMode GameModeHud;
+		public TDGameMode GameModeRef;
+		
 
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
 		{
@@ -437,8 +440,8 @@ namespace SFML_TowerDefense.Source.GUI
 		//TODO
 		private void UpdateFieldContainer()
 		{
-			if (SelectedField == GameModeHud.Player.CurrentlySelectedTile) return;
-			SelectedField = GameModeHud.Player.CurrentlySelectedTile;
+			if (SelectedField == GameModeRef.Player.CurrentlySelectedTile) return;
+			SelectedField = GameModeRef.Player.CurrentlySelectedTile;
 
 		}
 
@@ -446,11 +449,11 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 
 			// GameInfoHud
-			wave.setTextString("WAVE :"+ GameModeHud.CurrentWave+" of " + GameModeHud.WaveCount);
-			enemieRemaining.setTextString("Enemie :"+GameModeHud.EnemiesLeftInCurrentWave);
-			health.setTextString("Health :"+GameModeHud.PlayerHealth);
-			gold.setTextString("Gold :" + GameModeHud.PlayerGold);
-			score.setTextString("Score :" +GameModeHud.PlayerScore);
+			wave.setTextString("WAVE :"+ GameModeRef.CurrentWave+" of " + GameModeRef.WaveCount);
+			enemieRemaining.setTextString("Enemie :"+GameModeRef.EnemiesLeftInCurrentWave);
+			health.setTextString("Health :"+GameModeRef.PlayerHealth);
+			gold.setTextString("Gold :" + GameModeRef.PlayerGold);
+			score.setTextString("Score :" +GameModeRef.PlayerScore);
 
 		}
 
@@ -505,26 +508,31 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			Console.WriteLine("BuildLaserTower");
 			var laserTower = LevelRef.SpawnActor<TDLaserTower>();
-			laserTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+			laserTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
+			if(GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
 
 		private void BuildPlasmaTower()
 		{
 			Console.WriteLine("BuildPlasmaTower");
 			var laserTower = LevelRef.SpawnActor<TDPlasmaTower>();
-			laserTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+			laserTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
+			if (GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
 
 		private void BuildRailgunTower()
 		{
 			Console.WriteLine("BuildRailgunTower");
 			var railgunTower = LevelRef.SpawnActor<TDRailgunTower>();
-			railgunTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
+			railgunTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
+			if (GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
 
 		private void BuildMine()
 		{
 			Console.WriteLine("BuildMine");
+			var mine = LevelRef.SpawnActor<TDMine>();
+			mine.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
 		}
 
 		public void UpdateStats()
@@ -575,7 +583,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			base.Tick(deltaTime);
 			if (LevelRef.GameMode == null) return;
-			if (GameModeHud == null) GameModeHud = (TDGameMode)LevelRef.GameMode;
+			if (GameModeRef == null) GameModeRef = (TDGameMode)LevelRef.GameMode;
 
 			UpdateFieldContainer();
 			UpdateInfoContainer();

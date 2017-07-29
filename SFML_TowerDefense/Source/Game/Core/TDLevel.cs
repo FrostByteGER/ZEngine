@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML_Engine.Engine.Game;
@@ -18,6 +19,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 	public class TDLevel : Level
 	{
 		public TDMap Map { get; protected set; } = null;
+		public Music GameMusic { get; set; }
 
 		public TDLevel()
 		{
@@ -208,6 +210,23 @@ namespace SFML_TowerDefense.Source.Game.Core
 			Hud.RootContainer.setSize(new Vector2f(700, 700));
 
 			pc.Hud = Hud;
+
+			var trackNumber = EngineMath.EngineRandom.Next(1, 14);
+			GameMusic = EngineReference.AssetManager.LoadMusic("IngameTheme" + trackNumber.ToString("D2"));
+			GameMusic.Volume = EngineReference.GlobalMusicVolume;
+			GameMusic.Loop = true;
+		}
+
+		public override void OnGameStart()
+		{
+			base.OnGameStart();
+			GameMusic?.Play();
+		}
+
+		public override void OnGameEnd()
+		{
+			base.OnGameEnd();
+			GameMusic?.Stop();
 		}
 
 		public TVector2i WorldCoordsToTileCoords(float worldX, float worldY)
