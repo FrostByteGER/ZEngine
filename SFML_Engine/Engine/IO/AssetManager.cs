@@ -163,20 +163,28 @@ namespace SFML_Engine.Engine.IO
 
 		public Music LoadMusic(string assetName)
 		{
-			string soundFolder = null;
-			_gamePackages.TryGetValue(SoundFolderName, out soundFolder);
-			if (soundFolder == null) return null;
-			Dictionary<string, string> soundAssets = null;
-			_gameAssets.TryGetValue(soundFolder, out soundAssets);
-			if (soundAssets == null) return null;
-			string soundName = null;
-			soundAssets.TryGetValue(assetName, out soundName);
-			return string.IsNullOrEmpty(soundName) ? null : AudioManager.LoadMusic(GameAssetsPath + soundFolder + "/" + soundName);
+			string musicFolder = null;
+			_gamePackages.TryGetValue(SoundFolderName, out musicFolder);
+			if (musicFolder == null) return null;
+			Dictionary<string, string> musicAssets = null;
+			_gameAssets.TryGetValue(musicFolder, out musicAssets);
+			if (musicAssets == null) return null;
+			string musicName = null;
+			musicAssets.TryGetValue(assetName, out musicName);
+			return string.IsNullOrEmpty(musicName) ? null : AudioManager.LoadMusic(GameAssetsPath + musicFolder + "/" + musicName);
 		}
 
 		public Font LoadFont(string assetName)
 		{
-			return null;
+			string fontFolder = null;
+			_gamePackages.TryGetValue(FontFolderName, out fontFolder);
+			if (fontFolder == null) return null;
+			Dictionary<string, string> fontAssets = null;
+			_gameAssets.TryGetValue(fontFolder, out fontAssets);
+			if (fontAssets == null) return null;
+			string fontName = null;
+			fontAssets.TryGetValue(assetName, out fontName);
+			return string.IsNullOrEmpty(fontName) ? null : new Font(GameAssetsPath + fontFolder + "/" + fontName);
 		}
 
 		public Shader LoadShader(string assetName)
