@@ -257,22 +257,12 @@ namespace SFML_Engine.Engine.Core
         }
 
 		/// <summary>
-		/// Loads the given level and destroys the previous one if there was one.
-		/// </summary>
-		/// <param name="level"></param>
-		/// <returns></returns>
-		public bool LoadLevel(Level level)
-		{
-			return LoadLevel(level, true);
-		}
-
-		/// <summary>
 		/// Loads the given level and either destroys the previous one or pauses and unloads it.
 		/// </summary>
 		/// <param name="level"></param>
 		/// <param name="destroyPrevious"></param>
 		/// <returns></returns>
-		public bool LoadLevel(Level level, bool destroyPrevious)
+		public bool LoadLevel(Level level, bool destroyPrevious = true)
 		{
 			if (level == null || level == ActiveLevel) return false;
 
@@ -315,12 +305,7 @@ namespace SFML_Engine.Engine.Core
 			return true;
 		}
 
-	    public bool LoadLevel(uint levelID)
-	    {
-		    return LoadLevel(levelID, true);
-	    }
-
-	    public bool LoadLevel(uint levelID, bool destroyPrevious)
+	    public bool LoadLevel(uint levelID, bool destroyPrevious = true)
 	    {
 		    var index = LevelStack.FindIndex(l => l.LevelID == levelID);
 		    if (index == -1) return false;
@@ -338,26 +323,14 @@ namespace SFML_Engine.Engine.Core
 			return LoadLevel(level, destroyPrevious);
 	    }
 
-	    public bool LoadPreviousLevel()
-	    {
-		    var level = LevelStack[LevelStack.Count - 1];
-		    LevelStack.RemoveAt(LevelStack.Count - 1);
-			return LoadLevel(level, true);
-	    }
-
-		public bool LoadPreviousLevel(bool destroyPrevious)
+		public bool LoadPreviousLevel(bool destroyPrevious = true)
 		{
 			var level = LevelStack[LevelStack.Count - 1];
 			LevelStack.RemoveAt(LevelStack.Count - 1);
 			return LoadLevel(level, destroyPrevious);
 		}
 
-		public bool LoadLevel(string levelName)
-		{
-			return LoadLevel(levelName, true);
-		}
-
-		public bool LoadLevel(string levelName, bool destroyPrevious)
+		public bool LoadLevel(string levelName, bool destroyPrevious = true)
 		{
 			if (string.IsNullOrWhiteSpace(levelName)) return false;
 

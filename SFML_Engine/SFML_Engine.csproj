@@ -153,6 +153,7 @@
     <Compile Include="Engine\Game\TimerManager.cs" />
     <Compile Include="Engine\Graphics\AnimationComponent.cs" />
     <Compile Include="Engine\Graphics\AnimationSprite.cs" />
+    <Compile Include="Engine\Graphics\BarComponent.cs" />
     <Compile Include="Engine\Graphics\InstancedRenderComponent.cs" />
     <Compile Include="Engine\Graphics\InstancedSpriteComponent.cs" />
     <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />

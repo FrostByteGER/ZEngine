@@ -109,7 +109,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="rectHalfExtents">Size of the Collision Components Collision Rectangle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType)
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -121,6 +121,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, ToPhysicsUnits(comp.WorldPosition), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -143,7 +144,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels)
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -155,6 +156,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new TVector2f(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -177,7 +179,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="rectHalfExtents">Size of the Collision Components Collision Rectangle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType)
+		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -189,6 +191,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, ToPhysicsUnits(comp.WorldPosition), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -211,7 +214,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels)
+		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -223,6 +226,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateRectangle(PhysicsWorld, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new TVector2f(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -245,7 +249,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="circleRadius">Radius of the Collision Components Collision Circle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType)
+		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -257,6 +261,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateCircle(PhysicsWorld, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -279,7 +284,7 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels)
+		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -291,6 +296,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateCircle(PhysicsWorld, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -312,8 +318,9 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="mass">Mass in kg. of the Collision Component Collision Body.</param>
 		/// <param name="circleRadius">Radius of the Collision Components Collision Circle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
+		/// <param name="forceStayAwake">Wether this OverlapComponent can sleep(receive no Collision Detection and Gravity influence) if no forces act upon it or not. Fakse will force the object to stay awake at all times no matter what.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType)
+		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -325,6 +332,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateCircle(PhysicsWorld, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
@@ -346,8 +354,9 @@ namespace SFML_Engine.Engine.Physics
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
+		/// <param name="forceStayAwake">Wether this OverlapComponent can sleep(receive no Collision Detection and Gravity influence) if no forces act upon it or not. Fakse will force the object to stay awake at all times no matter what.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels)
+		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -359,6 +368,7 @@ namespace SFML_Engine.Engine.Physics
 				parent.AddComponent(comp);
 			}
 			comp.CollisionBody = BodyFactory.CreateCircle(PhysicsWorld, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);

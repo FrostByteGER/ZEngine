@@ -86,7 +86,7 @@ namespace SFML_Engine.Engine.IO
 			return SaveSound(soundName, sound.SoundBuffer);
 		}
 
-		public static Music LoadMusic(string musicName)
+		public Music LoadMusic(string musicName)
 		{
 			return new Music(musicName);
 		}

@@ -161,6 +161,19 @@ namespace SFML_Engine.Engine.IO
 			return string.IsNullOrEmpty(soundName) ? null : AudioManager.LoadSoundBuffer(GameAssetsPath + soundFolder + "/" + soundName);
 		}
 
+		public Music LoadMusic(string assetName)
+		{
+			string soundFolder = null;
+			_gamePackages.TryGetValue(SoundFolderName, out soundFolder);
+			if (soundFolder == null) return null;
+			Dictionary<string, string> soundAssets = null;
+			_gameAssets.TryGetValue(soundFolder, out soundAssets);
+			if (soundAssets == null) return null;
+			string soundName = null;
+			soundAssets.TryGetValue(assetName, out soundName);
+			return string.IsNullOrEmpty(soundName) ? null : AudioManager.LoadMusic(GameAssetsPath + soundFolder + "/" + soundName);
+		}
+
 		public Font LoadFont(string assetName)
 		{
 			return null;
