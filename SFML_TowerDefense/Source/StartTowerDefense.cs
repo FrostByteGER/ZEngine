@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using SFML_Engine.Engine.Core;
 using SFML_TowerDefense.Source.GUI;
 
@@ -15,7 +14,7 @@ namespace SFML_TowerDefense.Source
 			engine.GameInfo = new TDGameInfo();
 			engine.InitEngine();
 
-			engine.LoadLevel(new GUILevelTest());
+			engine.LoadLevel(new MenuLevel());
 
 			engine.StartEngine();
 			Console.ReadLine();

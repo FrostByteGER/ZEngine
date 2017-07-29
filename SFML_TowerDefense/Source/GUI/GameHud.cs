@@ -5,10 +5,6 @@ using SFML_Engine.Engine.IO;
 using SFML.System;
 using SFML_TowerDefense.Source.Game.Core;
 using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Physics;
-using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings.Towers;
 
 namespace SFML_TowerDefense.Source.GUI
@@ -460,7 +456,9 @@ namespace SFML_TowerDefense.Source.GUI
 
 		private void ExitGame()
 		{
-			Console.WriteLine("ExitGame");
+			Console.WriteLine("Exit Gamelevel");
+			LevelRef.EngineReference.LoadLevel(new MenuLevel());
+			IsActive = false;
 		}
 
 		private void OpenMenu()
@@ -513,6 +511,8 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildPlasmaTower()
 		{
 			Console.WriteLine("BuildPlasmaTower");
+			var laserTower = LevelRef.SpawnActor<TDPlasmaTower>();
+			laserTower.TilePosition = GameModeHud.Player.CurrentlySelectedTileCoords;
 		}
 
 		private void BuildRailgunTower()

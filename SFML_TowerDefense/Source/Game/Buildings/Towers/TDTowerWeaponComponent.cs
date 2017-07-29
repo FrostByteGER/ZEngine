@@ -2,6 +2,7 @@
 using SFML_Engine.Engine.Physics;
 using SFML_TowerDefense.Source.Game.Units;
 using System;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
@@ -16,8 +17,11 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		public TDTower ParentTower { get; set; }
 		public TDUnit CurrentTarget { get; private set; }
 		public List<TDUnit> EnemiesInRange { get; private set; } = new List<TDUnit>();
+		public Sound FireSound { get; set; }
 
-		private OverlapComponent AttackArea { get; set; }
+		protected TDTowerWeaponComponent(Sprite sprite) : base(sprite)
+		{
+		}
 
 		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
 		{
@@ -58,6 +62,7 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 			{
 				if ( Math.Pow(enemy.Position.X - ParentTower.Position.X,2) + Math.Pow(enemy.Position.Y - ParentTower.Position.Y, 2) < rang)
 				{
+					OnCurrentTargetSwitched(CurrentTarget, enemy);
 					CurrentTarget = enemy;
 				}
 			}
@@ -66,10 +71,15 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 			CurrentTarget = null;
 		}
 
+		public virtual void OnCurrentTargetSwitched(TDUnit oldTarget, TDUnit newTarget)
+		{
+			
+		}
+
 		protected virtual void StartFire()
 		{
 			WeaponState = TDWeaponState.Firing;
-
+			FireSound?.Play();
 		}
 
 		protected abstract void OnFire();
@@ -84,17 +94,14 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 		public override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
+			if (CurrentTarget != null)
+			{
+				RotateWaponTo(CurrentTarget);
+			}
+			
 			if (WeaponState == TDWeaponState.Firing)
 			{
-				if (CurrentTarget != null)
-				{
-					RotateWaponTo(CurrentTarget);
-				}
-
 				OnFire();
-
-
-
 			}
 			else if (WeaponState == TDWeaponState.ReadyToFire)
 			{
@@ -139,10 +146,10 @@ namespace SFML_TowerDefense.Source.Game.Buildings.Towers
 
 		}
 
-		protected TDTowerWeaponComponent(Sprite sprite) : base(sprite)
+		public override void OnActorComponentDestroy()
 		{
+			base.OnActorComponentDestroy();
+			FireSound.Stop();
 		}
-		
-		
 	}
 }

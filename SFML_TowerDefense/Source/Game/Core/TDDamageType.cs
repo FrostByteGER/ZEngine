@@ -12,6 +12,7 @@ namespace SFML_TowerDefense.Source.Game.Core
 		Fire = 8,
 		Ice = 16,
 		Shock = 32,
-		Explosive = 64
+		Explosive = 64,
+		Kinetic = 128
 	}
 }

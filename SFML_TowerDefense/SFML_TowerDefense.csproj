@@ -39,7 +39,14 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Game\Buildings\Towers\TDChargedLaserWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDPlasmaProjectile.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDProjectile.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDPlasmaTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDPlasmaWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDRailgunProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDRailgunTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\TDRailgunWeaponComponent.cs" />
     <Compile Include="Source\Game\Units\TDBerserker.cs" />
     <Compile Include="Source\Game\Units\TDCrab.cs" />
     <Compile Include="Source\Game\Units\TDGrunt.cs" />
@@ -76,7 +83,7 @@
     <Compile Include="Source\Game\Units\TDWave.cs" />
     <Compile Include="Source\Game\Units\TDWaypoint.cs" />
     <Compile Include="Source\Game\Core\TDWeaponComponent.cs" />
-    <Compile Include="Source\GUI\GUILevelTest.cs" />
+    <Compile Include="Source\GUI\MenuLevel.cs" />
     <Compile Include="Source\Game\TileMap\TDMap.cs" />
     <Compile Include="Source\Game\TileMap\TDTile.cs" />
     <Compile Include="Source\TDGameInfo.cs" />

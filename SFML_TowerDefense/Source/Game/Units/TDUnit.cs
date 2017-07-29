@@ -7,7 +7,6 @@ using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
-using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_TowerDefense.Source.Game.Units
@@ -15,7 +14,7 @@ namespace SFML_TowerDefense.Source.Game.Units
 	public class TDUnit : TDActor, ICloneable
 	{
 
-		public float HP { get; set; } = 100.0f;
+		public float HP { get; set; } = 1000.0f;
 		public float MovmentSpeed { get; set; } = 1;
 		public TDWaypoint CurrentWaypoint { get; set; }
 		public uint Damage { get; set; } = 5;
@@ -48,8 +47,8 @@ namespace SFML_TowerDefense.Source.Game.Units
 
 		public override void ApplyDamage(TDActor instigator, float damage, TDDamageType damageType)
 		{
-			
 			if (UnitState == TDUnitState.Dead) return;
+			Console.WriteLine("APPLYING DAMAGE FROM" + instigator.GenerateFullName());
 			var resistanceMultiplier = 1.0f;
 			if (ElementResistances != TDDamageType.None && (ElementResistances & damageType) == damageType) resistanceMultiplier = 0.5f;
 			HP -= damage * resistanceMultiplier;

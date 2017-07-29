@@ -43,7 +43,7 @@ namespace SFML_TowerDefense {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-prealpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-beta")]
         public string GameVersionSuffix {
             get {
                 return ((string)(this["GameVersionSuffix"]));
@@ -61,7 +61,7 @@ namespace SFML_TowerDefense {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
         public uint GameMinorVersion {
             get {
                 return ((uint)(this["GameMinorVersion"]));

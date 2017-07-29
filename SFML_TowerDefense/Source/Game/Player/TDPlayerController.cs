@@ -41,39 +41,42 @@ namespace SFML_TowerDefense.Source.Game.Player
 		public uint Score { get; set; } = 0;
 
 		public float ZoomSpeed { get; set; } = 0.1f;
+		public float ZoomLevelMin { get; set; } = 0.1f;
+		public float ZoomLevel { get; set; } = 1f;
+		public float ZoomLevelMax { get; set; } = 2.5f;
+
+		public float CameraPanSpeed { get; set; } = 250.0f;
+		public float CameraPanSpeedFastMultiplier = 2.0f;
+		public float CameraPanSpeedPreciseMultiplier = .5f;
 
 		public override void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
 		{
 			if (Input.IsKeyPressed(Keyboard.Key.F))
 			{
-				var actor = LevelRef.SpawnActor<TDFieldActor>();
-				var sprite = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerBase")));
-				var spriteGun = new SpriteComponent(new Sprite(LevelRef.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
-				actor.SetRootComponent(sprite);
-				actor.AddComponent(spriteGun);
-				actor.Position = CurrentlyHoveredTile.WorldPosition;
-				CurrentlyHoveredTile.FieldActors.Add(actor);
+
 			}
 		}
 
 		public override void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
 		{
-
+			var scrollSpeed = CameraPanSpeed;
+			if (Input.IsKeyDown(Keyboard.Key.LShift) && !Input.IsKeyDown(Keyboard.Key.LControl)) scrollSpeed *= CameraPanSpeedFastMultiplier;
+			if (!Input.IsKeyDown(Keyboard.Key.LShift) && Input.IsKeyDown(Keyboard.Key.LControl)) scrollSpeed *= CameraPanSpeedPreciseMultiplier;
 			if (Input.IsKeyDown(Keyboard.Key.W))
 			{
-				PlayerCamera.Move(new TVector2f(0, -100 * DeltaTime));
+				PlayerCamera.Move(new TVector2f(0, -scrollSpeed * DeltaTime));
 			}
 			if (Input.IsKeyDown(Keyboard.Key.S))
 			{
-				PlayerCamera.Move(new TVector2f(0, 100 * DeltaTime));
+				PlayerCamera.Move(new TVector2f(0, scrollSpeed * DeltaTime));
 			}
 			if (Input.IsKeyDown(Keyboard.Key.A))
 			{
-				PlayerCamera.Move(new TVector2f(-100 * DeltaTime, 0));
+				PlayerCamera.Move(new TVector2f(-scrollSpeed * DeltaTime, 0));
 			}
 			if (Input.IsKeyDown(Keyboard.Key.D))
 			{
-				PlayerCamera.Move(new TVector2f(100 * DeltaTime, 0));
+				PlayerCamera.Move(new TVector2f(scrollSpeed * DeltaTime, 0));
 			}
 
 		}
@@ -93,6 +96,9 @@ namespace SFML_TowerDefense.Source.Game.Player
 
 		public override void OnMouseScrolled(object sender, MouseWheelScrollEventArgs mouseWheelScrollEventArgs)
 		{
+			ZoomLevel += -mouseWheelScrollEventArgs.Delta * ZoomSpeed;
+			ZoomLevel = ZoomLevel.Clamp(ZoomLevelMin, ZoomLevelMax);
+			if (ZoomLevel <= ZoomLevelMin || ZoomLevel >= ZoomLevelMax) return;
 			var zoomLevel = 1 + -mouseWheelScrollEventArgs.Delta * ZoomSpeed;
 			PlayerCamera.Zoom(zoomLevel);
 
