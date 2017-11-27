@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_TowerDefense", "SFML_TowerDefense\SFML_TowerDefense.csproj", "{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Packager", "SFML_Packager\SFML_Packager.csproj", "{5E3BD030-4485-43A0-ADA0-2128E5138997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_AssetForge", "SFML_AssetForge\SFML_AssetForge.csproj", "{5E3BD030-4485-43A0-ADA0-2128E5138997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
