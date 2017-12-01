@@ -48,5 +48,25 @@ namespace SFML_AssetForge
         {
 
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Popup().ShowDialog(this);
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private class PopupForm2 : Form
+        {
+            
+        }
     }
 }

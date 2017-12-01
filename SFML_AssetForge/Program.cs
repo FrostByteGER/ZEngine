@@ -1,10 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace SFML_AssetForge
 {
     internal class Program
 	{
-		public static void Main(string[] args)
+	    [STAThread]
+        public static void Main(string[] args)
 		{
             Application.Run(new MainWindow());
 		}
