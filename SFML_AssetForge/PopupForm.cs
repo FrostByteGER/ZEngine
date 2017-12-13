@@ -26,5 +26,16 @@ namespace SFML_AssetForge
         {
             Close();
         }
+
+        public static DialogResult ShowPopup(IWin32Window owner, string title, string content)
+        {
+            var popUp = new Popup
+            {
+                Text = title,
+                textLbl = {Text = content},
+                OkButton = {DialogResult = DialogResult.OK}
+            };
+            return popUp.ShowDialog(owner);
+        }
     }
 }

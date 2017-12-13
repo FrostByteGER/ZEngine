@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.textLbl = new System.Windows.Forms.Label();
             this.OkButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -38,7 +38,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textLbl, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.OkButton, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -49,17 +49,17 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 171);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
+            // textLbl
             // 
-            this.label1.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label1, 2);
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(278, 136);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "This is a dummy Popup";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.textLbl.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.textLbl, 2);
+            this.textLbl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textLbl.Location = new System.Drawing.Point(3, 0);
+            this.textLbl.Name = "textLbl";
+            this.textLbl.Size = new System.Drawing.Size(278, 136);
+            this.textLbl.TabIndex = 0;
+            this.textLbl.Text = "This is a dummy Popup";
+            this.textLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // OkButton
             // 
@@ -91,7 +91,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label textLbl;
         private System.Windows.Forms.Button OkButton;
     }
 }
