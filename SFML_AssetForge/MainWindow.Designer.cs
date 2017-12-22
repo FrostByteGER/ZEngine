@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using FileBrowser;
 
 namespace SFML_AssetForge
 {
