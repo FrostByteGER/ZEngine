@@ -21,12 +21,6 @@ namespace SFML_Engine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalPosition
-		{
-			get => RenderText.Position;
-			set => base.LocalPosition = value;
-		}
-
 		public override float LocalRotation
 		{
 			get => RenderText.Rotation;

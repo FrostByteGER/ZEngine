@@ -15,21 +15,19 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 		public float MineTime { get; set; } = 0;
 		public float MineSpeed { get; set; } = 5;
 
-		public uint MineAmount { get; set; } = 99;
+		public uint MineAmount { get; set; } = 5;
 
 		public TDResource ResourceField { get; set; }
 
 		public TDPlayerController Owner { get; set; }
 		public TDMineState MineState { get; set; } = TDMineState.Mining;
 		
-		public Text PopupText { get; set; }
 
 		public TDMine(Level level) : base(level)
 		{
 			var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));
 			SetRootComponent(mineSprite);
 			Origin = mineSprite.Origin;
-			PopupText = new Text("0", LevelReference.EngineReference.AssetManager.LoadFont("MainGameFont"), 13);
 		}
 
 		public void MineResource()
@@ -37,8 +35,12 @@ namespace SFML_TowerDefense.Source.Game.Buildings
 			if (ResourceField == null || Owner == null) return;
 			if (ResourceField.ResourceAmount > 0)
 			{
-				Owner.Gold += ResourceField.Mine(MineAmount);
-				AddComponent(new TDPopupTextComponent(PopupText));
+				var minedAmount = ResourceField.Mine(MineAmount);
+				Owner.Gold += minedAmount;
+				var popupText = new Text(minedAmount.ToString(), TDGameModeRef.GameFont, 16);
+				var textComp = new TDPopupTextComponent(popupText);
+				AddComponent(textComp);
+				textComp.TargetPosition = textComp.LocalPosition - textComp.TargetPosition;
 			}
 			else
 			{

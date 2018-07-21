@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SFML.Audio;
+using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_TowerDefense.Source.Game.Player;
 using SFML_TowerDefense.Source.Game.Units;
@@ -44,6 +45,8 @@ namespace SFML_TowerDefense.Source.Game.Core
 		public Sound InsufficientFunds { get; private set; }
 		public Sound MissionAccomplished { get; private set; }
 		public Sound MissionFailed { get; private set; }
+		
+		public Font GameFont { get; set; }
 		
 
 		public override void Tick(float deltaTime)
@@ -116,6 +119,8 @@ namespace SFML_TowerDefense.Source.Game.Core
 			MissionFailed.Volume = LevelReference.EngineReference.GlobalSoundVolume;
 
 			Spawners = LevelReference.FindActorsInLevel<TDSpawner>().ToList();
+
+			GameFont = LevelReference.EngineReference.AssetManager.LoadFont("MainGameFont");
 		}
 
 		public override void OnGamePause()

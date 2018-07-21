@@ -7,6 +7,7 @@ using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 using SFML_TowerDefense.Source.Game.Buildings;
 using SFML_TowerDefense.Source.Game.Core;
+using SFML_TowerDefense.Source.GUI;
 using VelcroPhysics.Dynamics;
 
 namespace SFML_TowerDefense.Source.Game.Units
@@ -51,7 +52,12 @@ namespace SFML_TowerDefense.Source.Game.Units
 			Console.WriteLine("APPLYING DAMAGE FROM" + instigator.GenerateFullName());
 			var resistanceMultiplier = 1.0f;
 			if (ElementResistances != TDDamageType.None && (ElementResistances & damageType) == damageType) resistanceMultiplier = 0.5f;
-			HP -= damage * resistanceMultiplier;
+			var applyingDamage = damage * resistanceMultiplier;
+			HP -= applyingDamage;
+			var popupText = new Text(applyingDamage.ToString(), TDGameModeRef.GameFont, 16);
+			var textComp = new TDPopupTextComponent(popupText);
+			AddComponent(textComp);
+			textComp.TargetPosition = textComp.LocalPosition - textComp.TargetPosition;
 			if (HP <= 0.0f)
 			{
 				HP = 0.0f;
