@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.Core;
-using SFML_TowerDefense.Source.Game.Units;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.Game.Units;
 using VelcroPhysics.Collision.ContactSystem;
 using VelcroPhysics.Dynamics;
 
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public class TDPlasmaProjectile : TDProjectile
 	{

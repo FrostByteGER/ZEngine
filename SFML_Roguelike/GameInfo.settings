@@ -1,9 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SFML_TowerDefense" GeneratedClassName="GameInfo">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SFML_Roguelike" GeneratedClassName="GameInfo">
   <Profiles />
   <Settings>
     <Setting Name="GameName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Tower Defense</Value>
+      <Value Profile="(Default)">Roguelike</Value>
     </Setting>
     <Setting Name="GameVersionPrefix" Type="System.String" Scope="Application">
       <Value Profile="(Default)">v</Value>

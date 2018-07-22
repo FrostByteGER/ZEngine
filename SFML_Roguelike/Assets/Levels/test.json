@@ -27,13 +27,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }, 
                         {
@@ -41,13 +41,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }],
                     
@@ -58,7 +58,7 @@
                      "Cooldown":"float"
                     },
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":32,
                  "x":352,
@@ -77,7 +77,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":32,
                  "x":384,
@@ -113,7 +113,7 @@
                      "TargetNexus":"int"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":368,
@@ -134,7 +134,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":32,
                  "x":448,
@@ -155,7 +155,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":32,
                  "x":224,
@@ -176,7 +176,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":32,
                  "x":224,
@@ -195,7 +195,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":32,
                  "x":544,
@@ -206,7 +206,7 @@
                  "id":28,
                  "name":"OreMiner",
                  "rotation":0,
-                 "type":"TDMine",
+                 "type":"RMine",
                  "visible":true,
                  "width":32,
                  "x":544,

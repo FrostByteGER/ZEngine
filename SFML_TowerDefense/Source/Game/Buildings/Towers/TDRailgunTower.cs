@@ -4,7 +4,7 @@ using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public class TDRailgunTower : TDTower
 	{

@@ -1,7 +1,7 @@
 ﻿using SFML_Engine.Engine.JUI;
-using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.GUI
+namespace SFML_Roguelike.Source.GUI
 {
 	public class TileElement : JCheckbox
 	{

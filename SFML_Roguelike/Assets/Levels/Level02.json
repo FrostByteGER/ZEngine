@@ -28,7 +28,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":192,
@@ -47,7 +47,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":384,
@@ -66,7 +66,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":576,
@@ -85,7 +85,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":960,
@@ -104,7 +104,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":1152,
@@ -123,7 +123,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":1344,
@@ -142,7 +142,7 @@
                      "NexusID":"string"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":64,
                  "x":1280,
@@ -153,7 +153,7 @@
                  "id":11,
                  "name":"Spawner",
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":64,
                  "x":256,
@@ -205,7 +205,7 @@
                      "TargetNexus":"string"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":288,

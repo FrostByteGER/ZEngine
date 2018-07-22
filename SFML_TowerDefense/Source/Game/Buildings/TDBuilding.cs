@@ -1,7 +1,7 @@
 using SFML_Engine.Engine.Game;
-using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.Game.Buildings
+namespace SFML_Roguelike.Source.Game.Buildings
 {
 	public class TDBuilding : TDFieldActor
 	{

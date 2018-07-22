@@ -20,7 +20,7 @@
                  "id":1,
                  "name":"Spawner",
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":64,
                  "x":320,
@@ -41,7 +41,7 @@
                      "NexusID":"string"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":64,
                  "x":832,
@@ -60,7 +60,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOreField",
+                 "type":"ROreField",
                  "visible":true,
                  "width":64,
                  "x":128,
@@ -79,7 +79,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOreField",
+                 "type":"ROreField",
                  "visible":true,
                  "width":64,
                  "x":1024,
@@ -98,7 +98,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOreField",
+                 "type":"ROreField",
                  "visible":true,
                  "width":64,
                  "x":1024,
@@ -117,7 +117,7 @@
                      "Value":"string"
                     },
                  "rotation":0,
-                 "type":"TDOreField",
+                 "type":"ROreField",
                  "visible":true,
                  "width":64,
                  "x":128,
@@ -153,7 +153,7 @@
                      "TargetNexus":"string"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":352,

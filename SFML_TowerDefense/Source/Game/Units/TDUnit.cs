@@ -5,12 +5,12 @@ using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Physics;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.Buildings;
-using SFML_TowerDefense.Source.Game.Core;
-using SFML_TowerDefense.Source.GUI;
+using SFML_Roguelike.Source.Game.Buildings;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.GUI;
 using VelcroPhysics.Dynamics;
 
-namespace SFML_TowerDefense.Source.Game.Units
+namespace SFML_Roguelike.Source.Game.Units
 {
 	public class TDUnit : TDActor, ICloneable
 	{

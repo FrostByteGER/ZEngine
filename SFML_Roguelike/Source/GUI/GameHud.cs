@@ -4,17 +4,17 @@ using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML.System;
-using SFML_TowerDefense.Source.Game.Buildings;
-using SFML_TowerDefense.Source.Game.Core;
-using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_TowerDefense.Source.Game.Buildings.Towers;
+using SFML_Roguelike.Source.Game.Buildings;
+using SFML_Roguelike.Source.Game.Buildings.Towers;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.GUI
+namespace SFML_Roguelike.Source.GUI
 {
 	public class GameHud : JGUI
 	{
-		public TDTile _SelectedField;
-		public TDTile SelectedField {
+		public RTile _SelectedField;
+		public RTile SelectedField {
 			get => _SelectedField;
 			set
 			{
@@ -53,7 +53,7 @@ namespace SFML_TowerDefense.Source.GUI
 		public JLabel stats;
 
 		//public TDGameInfo GameInfoHud;
-		public TDGameMode GameModeRef;
+		public RGameMode GameModeRef;
 		
 
 		public GameHud(Font font, RenderWindow renderwindow, InputManager inputManager) : base(font, renderwindow, inputManager)
@@ -402,11 +402,11 @@ namespace SFML_TowerDefense.Source.GUI
 			return rap;
 		}
 
-		private void ChangeSelectedField(TDTile tile)
+		private void ChangeSelectedField(RTile tile)
 		{
 			JContainer end = null;
 
-			foreach (TDFieldActor actor in tile.FieldActors)
+			foreach (RFieldActor actor in tile.FieldActors)
 			{
 				if (actor.ActorName == "TDMine")
 				{
@@ -507,7 +507,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildLaserTower()
 		{
 			Console.WriteLine("BuildLaserTower");
-			var laserTower = LevelRef.SpawnActor<TDLaserTower>();
+			var laserTower = LevelRef.SpawnActor<RLaserTower>();
 			laserTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
 			if(GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
@@ -515,7 +515,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildPlasmaTower()
 		{
 			Console.WriteLine("BuildPlasmaTower");
-			var laserTower = LevelRef.SpawnActor<TDPlasmaTower>();
+			var laserTower = LevelRef.SpawnActor<RPlasmaTower>();
 			laserTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
 			if (GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
@@ -523,7 +523,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildRailgunTower()
 		{
 			Console.WriteLine("BuildRailgunTower");
-			var railgunTower = LevelRef.SpawnActor<TDRailgunTower>();
+			var railgunTower = LevelRef.SpawnActor<RRailgunTower>();
 			railgunTower.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
 			if (GameModeRef.ConstructionComplete.Status != SoundStatus.Playing) GameModeRef.ConstructionComplete.Play();
 		}
@@ -531,7 +531,7 @@ namespace SFML_TowerDefense.Source.GUI
 		private void BuildMine()
 		{
 			Console.WriteLine("BuildMine");
-			var mine = LevelRef.SpawnActor<TDMine>();
+			var mine = LevelRef.SpawnActor<RMine>();
 			mine.TilePosition = GameModeRef.Player.CurrentlySelectedTileCoords;
 		}
 
@@ -583,7 +583,7 @@ namespace SFML_TowerDefense.Source.GUI
 		{
 			base.Tick(deltaTime);
 			if (LevelRef.GameMode == null) return;
-			if (GameModeRef == null) GameModeRef = (TDGameMode)LevelRef.GameMode;
+			if (GameModeRef == null) GameModeRef = (RGameMode)LevelRef.GameMode;
 
 			UpdateFieldContainer();
 			UpdateInfoContainer();

@@ -1,7 +1,7 @@
 ﻿using SFML_Engine.Engine.Game;
-using SFML_TowerDefense.Source.Game.Player;
+using SFML_Roguelike.Source.Game.Player;
 
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public abstract class TDTower : TDBuilding
 	{

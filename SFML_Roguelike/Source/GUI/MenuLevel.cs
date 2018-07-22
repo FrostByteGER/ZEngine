@@ -5,9 +5,9 @@ using SFML_Engine.Engine.JUI;
 using System;
 using SFML.Audio;
 using SFML_Engine.Engine.IO;
-using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.GUI
+namespace SFML_Roguelike.Source.GUI
 {
 	public class MenuLevel : Level 
 	{
@@ -294,7 +294,7 @@ namespace SFML_TowerDefense.Source.GUI
 		public void OnStartButton()
 		{
 			//GUI.RootContainer = StartContainer;
-			EngineReference.LoadLevel(new TDMapTestLevel());
+			EngineReference.LoadLevel(new RMapTestLevel());
 			GUI.IsActive = false;
 		}
 

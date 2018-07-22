@@ -27,13 +27,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }, 
                         {
@@ -41,13 +41,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }],
                     
@@ -58,7 +58,7 @@
                      "Cooldown":"float"
                     },
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":64,
                  "x":320,
@@ -76,13 +76,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }, 
                         {
@@ -90,13 +90,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }],
                     
@@ -107,7 +107,7 @@
                      "Cooldown":"float"
                     },
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":64,
                  "x":1344,
@@ -125,13 +125,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }, 
                         {
@@ -139,13 +139,13 @@
                          "spawnamount":3,
 						 "unittypes":[
 							{
-							 "type":"TDGrunt"
+							 "type":"RGrunt"
 							}, 
 							{
-							 "type":"TDBerserker"
+							 "type":"RBerserker"
 							}, 
 							{
-							 "type":"TDCrab"
+							 "type":"RCrab"
 							}],
                         }],
                     
@@ -156,7 +156,7 @@
                      "Cooldown":"float"
                     },
                  "rotation":0,
-                 "type":"TDSpawner",
+                 "type":"RSpawner",
                  "visible":true,
                  "width":64,
                  "x":128,
@@ -177,7 +177,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":64,
                  "x":320,
@@ -198,7 +198,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":64,
                  "x":1344,
@@ -219,7 +219,7 @@
                      "NexusID":"int"
                     },
                  "rotation":0,
-                 "type":"TDNexus",
+                 "type":"RNexus",
                  "visible":true,
                  "width":64,
                  "x":1536,
@@ -247,7 +247,7 @@
                      "TargetNexus":"int"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":352,
@@ -275,7 +275,7 @@
                      "TargetNexus":"int"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":1376,
@@ -303,7 +303,7 @@
                      "TargetNexus":"int"
                     },
                  "rotation":0,
-                 "type":"TDPath",
+                 "type":"RPath",
                  "visible":true,
                  "width":0,
                  "x":160,
@@ -322,7 +322,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":1536,
@@ -341,7 +341,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":1536,
@@ -360,7 +360,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":128,
@@ -379,7 +379,7 @@
                      "Value":"int"
                     },
                  "rotation":0,
-                 "type":"TDOrefield",
+                 "type":"ROrefield",
                  "visible":true,
                  "width":64,
                  "x":128,

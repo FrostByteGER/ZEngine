@@ -1,4 +1,4 @@
-﻿namespace SFML_TowerDefense.Source.Game.Units
+﻿namespace SFML_Roguelike.Source.Game.Units
 {
 	public class TDUnitInfo
 	{

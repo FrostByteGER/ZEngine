@@ -39,55 +39,55 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Source\Game\Buildings\Towers\TDChargedLaserWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RChargedLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDPlasmaProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDProjectile.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDPlasmaTower.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDPlasmaWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RPlasmaTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RPlasmaWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDRailgunProjectile.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDRailgunTower.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDRailgunWeaponComponent.cs" />
-    <Compile Include="Source\Game\Units\TDBerserker.cs" />
-    <Compile Include="Source\Game\Units\TDCrab.cs" />
-    <Compile Include="Source\Game\Units\TDGrunt.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDLaserTower.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDLaserWeaponComponent.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RRailgunTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RRailgunWeaponComponent.cs" />
+    <Compile Include="Source\Game\Units\RBerserker.cs" />
+    <Compile Include="Source\Game\Units\RCrab.cs" />
+    <Compile Include="Source\Game\Units\RGrunt.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RLaserTower.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerState.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDWeaponType.cs" />
-    <Compile Include="Source\Game\Buildings\TDNexus.cs" />
-    <Compile Include="Source\Game\Core\TDDamageType.cs" />
-    <Compile Include="Source\Game\Core\TDGameMode.cs" />
-    <Compile Include="Source\Game\Core\TDProjectile.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDTowerWeaponComponent.cs" />
-    <Compile Include="Source\Game\Core\TDWeaponState.cs" />
-    <Compile Include="Source\Game\Units\TDUnitState.cs" />
+    <Compile Include="Source\Game\Buildings\RNexus.cs" />
+    <Compile Include="Source\Game\Core\RDamageType.cs" />
+    <Compile Include="Source\Game\Core\RGameMode.cs" />
+    <Compile Include="Source\Game\Core\RProjectile.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RTowerWeaponComponent.cs" />
+    <Compile Include="Source\Game\Core\RWeaponState.cs" />
+    <Compile Include="Source\Game\Units\RUnitState.cs" />
     <Compile Include="Source\Game\Utility\Statistics.cs" />
     <Compile Include="Source\Game\Utility\StatisticsValue.cs" />
     <Compile Include="Source\GUI\GameHud.cs" />
-    <Compile Include="Source\GUI\TDPopupTextComponent.cs" />
+    <Compile Include="Source\GUI\RPopupTextComponent.cs" />
     <Compile Include="Source\GUI\TileElement.cs" />
-    <Compile Include="Source\Game\Core\TDActor.cs" />
-    <Compile Include="Source\Game\Core\TDActorComponent.cs" />
-    <Compile Include="Source\Game\Buildings\TDBuilding.cs" />
-    <Compile Include="Source\Game\TileMap\TDFieldActor.cs" />
-    <Compile Include="Source\Game\Core\TDLevel.cs" />
-    <Compile Include="Source\Game\TileMap\TDMapJsonWrapper.cs" />
-    <Compile Include="Source\Game\TileMap\TDMapTestLevel.cs" />
-    <Compile Include="Source\Game\Buildings\TDMine.cs" />
-    <Compile Include="Source\Game\Player\TDPlayerController.cs" />
-    <Compile Include="Source\Game\TileMap\TDResource.cs" />
-    <Compile Include="Source\Game\Units\TDSpawner.cs" />
-    <Compile Include="Source\Game\Buildings\Towers\TDTower.cs" />
-    <Compile Include="Source\Game\Units\TDUnit.cs" />
-    <Compile Include="Source\Game\Units\TDUnitInfo.cs" />
-    <Compile Include="Source\Game\Units\TDWave.cs" />
-    <Compile Include="Source\Game\Units\TDWaypoint.cs" />
-    <Compile Include="Source\Game\Core\TDWeaponComponent.cs" />
+    <Compile Include="Source\Game\Core\RActor.cs" />
+    <Compile Include="Source\Game\Core\RActorComponent.cs" />
+    <Compile Include="Source\Game\Buildings\RBuilding.cs" />
+    <Compile Include="Source\Game\TileMap\RFieldActor.cs" />
+    <Compile Include="Source\Game\Core\RLevel.cs" />
+    <Compile Include="Source\Game\TileMap\RMapJsonWrapper.cs" />
+    <Compile Include="Source\Game\TileMap\RMapTestLevel.cs" />
+    <Compile Include="Source\Game\Buildings\RMine.cs" />
+    <Compile Include="Source\Game\Player\RPlayerController.cs" />
+    <Compile Include="Source\Game\TileMap\RResource.cs" />
+    <Compile Include="Source\Game\Units\RSpawner.cs" />
+    <Compile Include="Source\Game\Buildings\Towers\RTower.cs" />
+    <Compile Include="Source\Game\Units\RUnit.cs" />
+    <Compile Include="Source\Game\Units\RUnitInfo.cs" />
+    <Compile Include="Source\Game\Units\RWave.cs" />
+    <Compile Include="Source\Game\Units\RWaypoint.cs" />
+    <Compile Include="Source\Game\Core\RWeaponComponent.cs" />
     <Compile Include="Source\GUI\MenuLevel.cs" />
-    <Compile Include="Source\Game\TileMap\TDMap.cs" />
-    <Compile Include="Source\Game\TileMap\TDTile.cs" />
-    <Compile Include="Source\TDGameInfo.cs" />
+    <Compile Include="Source\Game\TileMap\RMap.cs" />
+    <Compile Include="Source\Game\TileMap\RTile.cs" />
+    <Compile Include="Source\RGameInfo.cs" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -132,7 +132,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\StartTowerDefense.cs" />
+    <Compile Include="Source\StartRoguelike.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

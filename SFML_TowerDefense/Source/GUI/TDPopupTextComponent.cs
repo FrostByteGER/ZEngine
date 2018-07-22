@@ -3,7 +3,7 @@ using SFML.Graphics;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
 
-namespace SFML_TowerDefense.Source.GUI
+namespace SFML_Roguelike.Source.GUI
 {
 	public class TDPopupTextComponent : TextComponent
 	{

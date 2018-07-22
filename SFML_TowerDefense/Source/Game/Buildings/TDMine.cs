@@ -3,11 +3,11 @@ using System.Linq;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
-using SFML_TowerDefense.Source.Game.Player;
-using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_TowerDefense.Source.GUI;
+using SFML_Roguelike.Source.Game.Player;
+using SFML_Roguelike.Source.Game.TileMap;
+using SFML_Roguelike.Source.GUI;
 
-namespace SFML_TowerDefense.Source.Game.Buildings
+namespace SFML_Roguelike.Source.Game.Buildings
 {
 	public class TDMine : TDBuilding
 	{

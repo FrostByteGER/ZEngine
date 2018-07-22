@@ -1,8 +1,8 @@
 ﻿using SFML.Graphics;
 using SFML_Engine.Engine.Graphics;
-using SFML_TowerDefense.Source.Game.Buildings.Towers;
+using SFML_Roguelike.Source.Game.Buildings.Towers;
 
-namespace SFML_TowerDefense.Source.Game.Core
+namespace SFML_Roguelike.Source.Game.Core
 {
 	public class TDWeaponComponent : SpriteComponent
 	{

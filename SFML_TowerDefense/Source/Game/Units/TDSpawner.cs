@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using SFML_Engine.Engine.Game;
-using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.Game.Units
+namespace SFML_Roguelike.Source.Game.Units
 {
 	public class TDSpawner : TDFieldActor
 	{

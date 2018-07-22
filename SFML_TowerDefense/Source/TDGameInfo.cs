@@ -1,4 +1,4 @@
-﻿namespace SFML_TowerDefense.Source
+﻿namespace SFML_Roguelike.Source
 {
 	public class TDGameInfo : SFML_Engine.Engine.Game.GameInfo
 	{

@@ -1,8 +1,8 @@
 ﻿using System;
 using SFML_Engine.Engine.Core;
-using SFML_TowerDefense.Source.GUI;
+using SFML_Roguelike.Source.GUI;
 
-namespace SFML_TowerDefense.Source
+namespace SFML_Roguelike.Source
 {
 	internal sealed class StartTowerDefense
 	{

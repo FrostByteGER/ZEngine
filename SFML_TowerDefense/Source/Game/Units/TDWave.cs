@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFML_Engine.Engine.Game;
-using SFML_TowerDefense.Source.Game.Core;
+using SFML_Roguelike.Source.Game.Core;
 
-namespace SFML_TowerDefense.Source.Game.Units
+namespace SFML_Roguelike.Source.Game.Units
 {
 	public class TDWave : TDActor
 	{

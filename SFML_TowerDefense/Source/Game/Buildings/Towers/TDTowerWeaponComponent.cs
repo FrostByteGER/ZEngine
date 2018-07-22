@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using SFML_Engine.Engine.Physics;
-using SFML_TowerDefense.Source.Game.Units;
 using System;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.Core;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.Game.Units;
 using VelcroPhysics.Dynamics;
 using VelcroPhysics.Collision.ContactSystem;
 
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public abstract class TDTowerWeaponComponent : TDWeaponComponent
 	{

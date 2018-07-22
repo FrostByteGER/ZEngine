@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
-using SFML_TowerDefense.Source.Game.Core;
+using SFML_Roguelike.Source.Game.Core;
 
-namespace SFML_TowerDefense.Source.Game.TileMap
+namespace SFML_Roguelike.Source.Game.TileMap
 {
 	public class TDMapTestLevel : TDLevel
 	{

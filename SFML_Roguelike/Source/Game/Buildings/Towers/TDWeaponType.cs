@@ -1,4 +1,4 @@
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public enum TDWeaponType
 	{

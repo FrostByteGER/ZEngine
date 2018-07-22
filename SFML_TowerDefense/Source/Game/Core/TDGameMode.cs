@@ -3,10 +3,10 @@ using System.Linq;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
-using SFML_TowerDefense.Source.Game.Player;
-using SFML_TowerDefense.Source.Game.Units;
+using SFML_Roguelike.Source.Game.Player;
+using SFML_Roguelike.Source.Game.Units;
 
-namespace SFML_TowerDefense.Source.Game.Core
+namespace SFML_Roguelike.Source.Game.Core
 {
 	public class TDGameMode : GameMode
 	{

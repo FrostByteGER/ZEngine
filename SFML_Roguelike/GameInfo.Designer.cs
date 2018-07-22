@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFML_TowerDefense {
+namespace SFML_Roguelike {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace SFML_TowerDefense {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tower Defense")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Roguelike")]
         public string GameName {
             get {
                 return ((string)(this["GameName"]));

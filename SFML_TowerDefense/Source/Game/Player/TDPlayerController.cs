@@ -6,11 +6,11 @@ using SFML.Window;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.Graphics;
 using SFML_Engine.Engine.Utility;
-using SFML_TowerDefense.Source.Game.Buildings;
-using SFML_TowerDefense.Source.Game.Core;
-using SFML_TowerDefense.Source.Game.TileMap;
+using SFML_Roguelike.Source.Game.Buildings;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.Game.Player
+namespace SFML_Roguelike.Source.Game.Player
 {
 	public class TDPlayerController : PlayerController
 	{

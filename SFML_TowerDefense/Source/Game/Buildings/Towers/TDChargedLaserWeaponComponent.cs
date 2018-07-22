@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
-using SFML_TowerDefense.Source.Game.Units;
+using SFML_Roguelike.Source.Game.Units;
 
-namespace SFML_TowerDefense.Source.Game.Buildings.Towers
+namespace SFML_Roguelike.Source.Game.Buildings.Towers
 {
 	public class TDChargedLaserWeaponComponent : TDLaserWeaponComponent
 	{

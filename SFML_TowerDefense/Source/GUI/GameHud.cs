@@ -4,12 +4,12 @@ using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.IO;
 using SFML.System;
-using SFML_TowerDefense.Source.Game.Buildings;
-using SFML_TowerDefense.Source.Game.Core;
-using SFML_TowerDefense.Source.Game.TileMap;
-using SFML_TowerDefense.Source.Game.Buildings.Towers;
+using SFML_Roguelike.Source.Game.Buildings;
+using SFML_Roguelike.Source.Game.Buildings.Towers;
+using SFML_Roguelike.Source.Game.Core;
+using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_TowerDefense.Source.GUI
+namespace SFML_Roguelike.Source.GUI
 {
 	public class GameHud : JGUI
 	{
