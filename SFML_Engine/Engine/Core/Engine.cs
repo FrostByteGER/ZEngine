@@ -7,6 +7,7 @@ using SFML_Engine.Engine.Events;
 using SFML_Engine.Engine.Game;
 using SFML_Engine.Engine.IO;
 using SFML_Engine.Engine.Physics;
+using SFML_Engine.Engine.Services;
 using SFML_Engine.Engine.Utility;
 
 namespace SFML_Engine.Engine.Core
@@ -15,18 +16,13 @@ namespace SFML_Engine.Engine.Core
 	public class Engine
     {
 
-		private static Engine _instance;
-		public static Engine Instance => _instance ?? (_instance = new Engine());
-
-		private RenderWindow _engineWindow;
-        public RenderWindow EngineWindow
-        {
-            get => _engineWindow;
-	        private set => _engineWindow = value;
-        }
+		public static Engine Instance { get; } = new Engine();
+        
+        private RenderWindow _engineWindow;
+        public RenderWindow EngineWindow => _engineWindow;
 
 
-		// Frame and Physics
+        // Frame and Physics
 		public EngineClock EngineCoreClock;
 	    public float FrameDelta { get; set; } = 0.0f;
 		public float Timestep { get; set; } = 1.0f / 100.0f;
@@ -36,6 +32,7 @@ namespace SFML_Engine.Engine.Core
 
 
 		// Core Engine
+        public Bootstrap Bootstrapper { get; set; }
 	    public GameInstance GameInstance { get; set; } = new GameInstance();
 		public GameInfo GameInfo { get; set; } = new GameInfo();
 	    public Level ActiveLevel { get; internal set; }
@@ -55,17 +52,17 @@ namespace SFML_Engine.Engine.Core
 
 
 		// Engine OpenGL Settings
-		public uint DepthBufferSize { get; internal set; }     = 24;
-	    public uint StencilBufferSize { get; internal set; }   = 8;
-	    public uint AntiAliasingLevel { get; internal set; }   = 8;
-	    public uint MajorOpenGLVersion { get; internal set; }  = 4;
-	    public uint MinorOpenGLVersion { get; internal set; }  = 5;
-	    private ContextSettings.Attribute OpenGLContextType    = ContextSettings.Attribute.Default;
-	    public bool SRGBCompatible { get; internal set; }      = false;
+		public uint DepthBufferSize { get; internal set; }        = 24;
+	    public uint StencilBufferSize { get; internal set; }      = 8;
+	    public uint AntiAliasingLevel { get; internal set; }      = 8;
+	    public uint MajorOpenGLVersion { get; internal set; }     = 4;
+	    public uint MinorOpenGLVersion { get; internal set; }     = 5;
+        public bool SRGBCompatible { get; internal set; }         = false;
+        private const ContextSettings.Attribute OpenGLContextType = ContextSettings.Attribute.Default;
 
 
-		// Engine Settings
-	    public uint EngineWindowHeight { get; set; }        = 800;
+        // Engine Settings
+        public uint EngineWindowHeight { get; set; }        = 800;
 	    public uint EngineWindowWidth { get; set; }         = 600;
 		public bool VSyncEnabled { get; set; }              = false;
 		public uint FPSLimit { get; set; }                  = 120;
@@ -115,9 +112,11 @@ namespace SFML_Engine.Engine.Core
 			_engineWindow.SetFramerateLimit(FPSLimit);
 			_engineWindow.SetKeyRepeatEnabled(false);
 
+            Bootstrapper.Setup();
+
 			EngineCoreClock = new EngineClock();
             GUIPhysicsEngine = new PhysicsEngine();
-	        AssetManager = new AssetManager();
+	        AssetManager = (AssetManager)ServiceLocator.GetService<IAssetManager>();
 			AssetManager.TextureFolderName = GameInfo.GameTextureFolderName;
 			AssetManager.SoundFolderName = GameInfo.GameSoundFolderName;
 			AssetManager.ConfigFolderName = GameInfo.GameConfigFolderName;

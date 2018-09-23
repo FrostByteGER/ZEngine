@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFML_Roguelike {
+namespace SFML_TowerDefense {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
     public sealed partial class GameInfo : global::System.Configuration.ApplicationSettingsBase {
         
         private static GameInfo defaultInstance = ((GameInfo)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new GameInfo())));

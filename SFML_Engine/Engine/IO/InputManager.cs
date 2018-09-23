@@ -8,39 +8,39 @@ namespace SFML_Engine.Engine.IO
     public class InputManager : ITickable
     {
 
-		public bool MouseLeftPressed { get; set; }
-		public bool MouseRightPressed { get; set; }
-		public bool MouseMiddlePressed { get; set; }
-		public bool MouseXButton1Pressed { get; set; }
-		public bool MouseXButton2Pressed { get; set; }
-		public bool MouseWheelVerticalMoved { get; set; }
-		public bool MouseWheelHorizontalMoved { get; set; }
+		internal bool MouseLeftPressed { get; set; }
+        internal bool MouseRightPressed { get; set; }
+        internal bool MouseMiddlePressed { get; set; }
+        internal bool MouseXButton1Pressed { get; set; }
+        internal bool MouseXButton2Pressed { get; set; }
+        internal bool MouseWheelVerticalMoved { get; set; }
+        internal bool MouseWheelHorizontalMoved { get; set; }
 
-		public bool TouchPressed { get; set; }
+        internal bool TouchPressed { get; set; }
 
-		public EventHandler<MouseButtonEventArgs> MouseButtonPressed = delegate { };
-		public EventHandler<MouseButtonEventArgs> MouseButtonReleased = delegate { };
-	    public EventHandler<MouseMoveEventArgs> MouseMoved = delegate { };
-	    public EventHandler<MouseWheelScrollEventArgs> MouseScrolled = delegate { };
+		private EventHandler<MouseButtonEventArgs> MouseButtonPressed = delegate { };
+        private EventHandler<MouseButtonEventArgs> MouseButtonReleased = delegate { };
+        private EventHandler<MouseMoveEventArgs> MouseMoved = delegate { };
+        private EventHandler<MouseWheelScrollEventArgs> MouseScrolled = delegate { };
 
-	    public EventHandler<KeyEventArgs> KeyPressed = delegate { };
-		public EventHandler<KeyEventArgs> KeyDown = delegate { };
-		public EventHandler<KeyEventArgs> KeyReleased = delegate { };
+        private EventHandler<KeyEventArgs> KeyPressed = delegate { };
+        private EventHandler<KeyEventArgs> KeyDown = delegate { };
+        private EventHandler<KeyEventArgs> KeyReleased = delegate { };
 
-		public EventHandler<JoystickConnectEventArgs> JoystickConnected = delegate { };
-		public EventHandler<JoystickConnectEventArgs> JoystickDisconnected = delegate { };
-		public EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = delegate { };
-	    public EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = delegate { };
-		public EventHandler<JoystickMoveEventArgs> JoystickMoved = delegate { };
+        private EventHandler<JoystickConnectEventArgs> JoystickConnected = delegate { };
+        private EventHandler<JoystickConnectEventArgs> JoystickDisconnected = delegate { };
+        private EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = delegate { };
+        private EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = delegate { };
+        private EventHandler<JoystickMoveEventArgs> JoystickMoved = delegate { };
 
-	    public EventHandler<TouchEventArgs> TouchBegan = delegate { };
-	    public EventHandler<TouchEventArgs> TouchEnded = delegate { };
-	    public EventHandler<TouchEventArgs> TouchMoved = delegate { };
+        private EventHandler<TouchEventArgs> TouchBegan = delegate { };
+        private EventHandler<TouchEventArgs> TouchEnded = delegate { };
+        private EventHandler<TouchEventArgs> TouchMoved = delegate { };
 
 	    public bool CanTick { get; set; } = true;
 
-	    public uint RegisteredKeyInputs { get; private set; } = 0;
-	    public uint RegisteredMouseInputs { get; private set; } = 0;
+        internal uint RegisteredKeyInputs { get; private set; } = 0;
+        internal uint RegisteredMouseInputs { get; private set; } = 0;
 
 		public virtual void Tick(float deltaTime)
 		{
@@ -49,7 +49,7 @@ namespace SFML_Engine.Engine.IO
 			if (RegisteredMouseInputs > 0) MouseButtonPressed(this, null);
 		}
 
-		public void RegisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+        internal void RegisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
 			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
 		{
 			MouseButtonPressed += onMouseButtonPressed;
@@ -58,7 +58,7 @@ namespace SFML_Engine.Engine.IO
 			MouseScrolled += onMouseScrolled;
 		}
 
-		public void UnregisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+        internal void UnregisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
 			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
 		{
 			MouseButtonPressed -= onMouseButtonPressed;
@@ -67,21 +67,21 @@ namespace SFML_Engine.Engine.IO
 			MouseScrolled -= onMouseScrolled;
 		}
 
-		public void RegisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
+        internal void RegisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
 		{
 			KeyPressed += onKeyPressed;
 			KeyDown += onKeyDown;
 			KeyReleased += onKeyReleased;
 		}
 
-		public void UnregisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
+        internal void UnregisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
 		{
 			KeyPressed -= onKeyPressed;
 			KeyDown -= onKeyDown;
 			KeyReleased -= onKeyReleased;
 		}
 
-		public void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
+        internal void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
 			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
 			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
 	    {
@@ -92,7 +92,7 @@ namespace SFML_Engine.Engine.IO
 			JoystickMoved += onJoystickMoved;
 		}
 
-		public void UnregisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
+        internal void UnregisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
 			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
 			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
 		{
@@ -103,21 +103,21 @@ namespace SFML_Engine.Engine.IO
 			JoystickMoved -= onJoystickMoved;
 		}
 
-		public void RegisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
+        internal void RegisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
 		{
 			TouchBegan += onTouchBegan;
 			TouchEnded += onTouchEnded;
 			TouchMoved += onTouchMoved;
 		}
 
-		public void UnregisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
+        internal void UnregisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
 		{
 			TouchBegan -= onTouchBegan;
 			TouchEnded -= onTouchEnded;
 			TouchMoved -= onTouchMoved;
 		}
 
-		public void RegisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+        internal void RegisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
 			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled
 			, EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased
 			, EventHandler<JoystickConnectEventArgs> onJoystickConnected, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected
@@ -131,7 +131,7 @@ namespace SFML_Engine.Engine.IO
 			RegisterTouchInput(onTouchBegan, onTouchEnded, onTouchMoved);
 	    }
 
-	    public void UnregisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
+        internal void UnregisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
 			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled
 			, EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased
 			, EventHandler<JoystickConnectEventArgs> onJoystickConnected, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected

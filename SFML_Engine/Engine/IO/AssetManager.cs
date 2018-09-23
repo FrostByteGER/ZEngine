@@ -4,10 +4,11 @@ using System.Linq;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML_Engine.Engine.Game;
+using SFML_Engine.Engine.Services;
 
 namespace SFML_Engine.Engine.IO
 {
-	public class AssetManager
+	public class AssetManager : IAssetManager, IService
 	{
 
 		// Names
@@ -47,7 +48,7 @@ namespace SFML_Engine.Engine.IO
 		public ReadOnlyDictionary<string, string> GamePackages => new ReadOnlyDictionary<string, string>(_gamePackages);
 
 		// Managers
-		public JSONManager JSONManager { get; set; }
+		public JSONManager JSONManager { get; }
 		public TexturePoolManager TextureManager { get; }
 		public SoundPoolManager AudioManager { get; }
 
@@ -124,66 +125,51 @@ namespace SFML_Engine.Engine.IO
 
 		public Texture LoadTexture(string assetName)
 		{
-			string textureFolder = null;
-			_gamePackages.TryGetValue(TextureFolderName, out textureFolder);
+		    _gamePackages.TryGetValue(TextureFolderName, out var textureFolder);
 			if (textureFolder == null) return null;
-			Dictionary<string, string> textureAssets = null;
-			_gameAssets.TryGetValue(textureFolder, out textureAssets);
+		    _gameAssets.TryGetValue(textureFolder, out var textureAssets);
 			if (textureAssets == null) return null;
-			string textureName = null;
-			textureAssets.TryGetValue(assetName, out textureName);
+		    textureAssets.TryGetValue(assetName, out var textureName);
 			return string.IsNullOrEmpty(textureName) ? null : TextureManager.LoadTexture(GameAssetsPath + textureFolder + "/" + textureName);
 		}
 
 		public Sound LoadSound(string assetName)
 		{
-			string soundFolder = null;
-			_gamePackages.TryGetValue(SoundFolderName, out soundFolder);
+		    _gamePackages.TryGetValue(SoundFolderName, out var soundFolder);
 			if (soundFolder == null) return null;
-			Dictionary<string, string> soundAssets = null;
-			_gameAssets.TryGetValue(soundFolder, out soundAssets);
+		    _gameAssets.TryGetValue(soundFolder, out var soundAssets);
 			if (soundAssets == null) return null;
-			string soundName = null;
-			soundAssets.TryGetValue(assetName, out soundName);
+		    soundAssets.TryGetValue(assetName, out var soundName);
 			return string.IsNullOrEmpty(soundName) ? null : AudioManager.LoadSound(GameAssetsPath + soundFolder + "/" + soundName);
 		}
 
 		public SoundBuffer LoadSoundBuffer(string assetName)
 		{
-			string soundFolder = null;
-			_gamePackages.TryGetValue(SoundFolderName, out soundFolder);
+		    _gamePackages.TryGetValue(SoundFolderName, out var soundFolder);
 			if (soundFolder == null) return null;
-			Dictionary<string, string> soundAssets = null;
-			_gameAssets.TryGetValue(soundFolder, out soundAssets);
+		    _gameAssets.TryGetValue(soundFolder, out var soundAssets);
 			if (soundAssets == null) return null;
-			string soundName = null;
-			soundAssets.TryGetValue(assetName, out soundName);
+		    soundAssets.TryGetValue(assetName, out var soundName);
 			return string.IsNullOrEmpty(soundName) ? null : AudioManager.LoadSoundBuffer(GameAssetsPath + soundFolder + "/" + soundName);
 		}
 
 		public Music LoadMusic(string assetName)
 		{
-			string musicFolder = null;
-			_gamePackages.TryGetValue(SoundFolderName, out musicFolder);
+		    _gamePackages.TryGetValue(SoundFolderName, out var musicFolder);
 			if (musicFolder == null) return null;
-			Dictionary<string, string> musicAssets = null;
-			_gameAssets.TryGetValue(musicFolder, out musicAssets);
+		    _gameAssets.TryGetValue(musicFolder, out var musicAssets);
 			if (musicAssets == null) return null;
-			string musicName = null;
-			musicAssets.TryGetValue(assetName, out musicName);
+		    musicAssets.TryGetValue(assetName, out var musicName);
 			return string.IsNullOrEmpty(musicName) ? null : AudioManager.LoadMusic(GameAssetsPath + musicFolder + "/" + musicName);
 		}
 
 		public Font LoadFont(string assetName)
 		{
-			string fontFolder = null;
-			_gamePackages.TryGetValue(FontFolderName, out fontFolder);
+		    _gamePackages.TryGetValue(FontFolderName, out var fontFolder);
 			if (fontFolder == null) return null;
-			Dictionary<string, string> fontAssets = null;
-			_gameAssets.TryGetValue(fontFolder, out fontAssets);
+		    _gameAssets.TryGetValue(fontFolder, out var fontAssets);
 			if (fontAssets == null) return null;
-			string fontName = null;
-			fontAssets.TryGetValue(assetName, out fontName);
+		    fontAssets.TryGetValue(assetName, out var fontName);
 			return string.IsNullOrEmpty(fontName) ? null : new Font(GameAssetsPath + fontFolder + "/" + fontName);
 		}
 
@@ -194,14 +180,11 @@ namespace SFML_Engine.Engine.IO
 
 		public Config LoadConfig(string assetName)
 		{
-			string configFolder = null;
-			_gamePackages.TryGetValue(ConfigFolderName, out configFolder);
+		    _gamePackages.TryGetValue(ConfigFolderName, out var configFolder);
 			if (configFolder == null) return null;
-			Dictionary<string, string> configAssets = null;
-			_gameAssets.TryGetValue(configFolder, out configAssets);
+		    _gameAssets.TryGetValue(configFolder, out var configAssets);
 			if (configAssets == null) return null;
-			string configName = null;
-			configAssets.TryGetValue(assetName, out configName);
+		    configAssets.TryGetValue(assetName, out var configName);
 			return string.IsNullOrEmpty(configName) ? null : ConfigManager.LoadConfig(GameAssetsPath + configFolder + "/" + configName);
 		}
 

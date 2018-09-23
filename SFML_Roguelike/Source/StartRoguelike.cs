@@ -1,5 +1,6 @@
 ﻿using System;
 using SFML_Engine.Engine.Core;
+using SFML_Roguelike.Source.Game.Core;
 using SFML_Roguelike.Source.GUI;
 
 namespace SFML_Roguelike.Source
@@ -11,6 +12,7 @@ namespace SFML_Roguelike.Source
 			var engine = Engine.Instance;
 			engine.EngineWindowWidth = 800;
 			engine.EngineWindowHeight = 800;
+            engine.Bootstrapper = new RBootstrap();
 			engine.GameInfo = new RGameInfo();
 			engine.InitEngine();
 

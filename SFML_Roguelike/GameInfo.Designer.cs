@@ -12,7 +12,7 @@ namespace SFML_Roguelike {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
     public sealed partial class GameInfo : global::System.Configuration.ApplicationSettingsBase {
         
         private static GameInfo defaultInstance = ((GameInfo)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new GameInfo())));
@@ -25,7 +25,7 @@ namespace SFML_Roguelike {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Roguelike")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Exofinity")]
         public string GameName {
             get {
                 return ((string)(this["GameName"]));
@@ -43,7 +43,7 @@ namespace SFML_Roguelike {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-beta")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-internal")]
         public string GameVersionSuffix {
             get {
                 return ((string)(this["GameVersionSuffix"]));
@@ -61,7 +61,7 @@ namespace SFML_Roguelike {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public uint GameMinorVersion {
             get {
                 return ((uint)(this["GameMinorVersion"]));

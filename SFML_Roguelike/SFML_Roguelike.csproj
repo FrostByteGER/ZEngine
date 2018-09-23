@@ -8,11 +8,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>SFML_Roguelike</RootNamespace>
     <AssemblyName>SFML_Roguelike</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +25,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -34,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
@@ -47,6 +50,8 @@
     <Compile Include="Source\Game\Buildings\Towers\TDRailgunProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RRailgunTower.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RRailgunWeaponComponent.cs" />
+    <Compile Include="Source\Game\Core\RBootstrap.cs" />
+    <Compile Include="Source\Game\Player\EXPlayerController.cs" />
     <Compile Include="Source\Game\Units\RBerserker.cs" />
     <Compile Include="Source\Game\Units\RCrab.cs" />
     <Compile Include="Source\Game\Units\RGrunt.cs" />
@@ -56,41 +61,40 @@
     <Compile Include="Source\Game\Buildings\Towers\TDTowerState.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDWeaponType.cs" />
     <Compile Include="Source\Game\Buildings\RNexus.cs" />
-    <Compile Include="Source\Game\Core\RDamageType.cs" />
-    <Compile Include="Source\Game\Core\RGameMode.cs" />
-    <Compile Include="Source\Game\Core\RProjectile.cs" />
+    <Compile Include="Source\Game\Core\OLD\RDamageType.cs" />
+    <Compile Include="Source\Game\Core\OLD\RGameMode.cs" />
+    <Compile Include="Source\Game\Core\OLD\RProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RTowerWeaponComponent.cs" />
-    <Compile Include="Source\Game\Core\RWeaponState.cs" />
+    <Compile Include="Source\Game\Core\OLD\RWeaponState.cs" />
     <Compile Include="Source\Game\Units\RUnitState.cs" />
     <Compile Include="Source\Game\Utility\Statistics.cs" />
     <Compile Include="Source\Game\Utility\StatisticsValue.cs" />
     <Compile Include="Source\GUI\GameHud.cs" />
     <Compile Include="Source\GUI\RPopupTextComponent.cs" />
     <Compile Include="Source\GUI\TileElement.cs" />
-    <Compile Include="Source\Game\Core\RActor.cs" />
-    <Compile Include="Source\Game\Core\RActorComponent.cs" />
+    <Compile Include="Source\Game\Core\OLD\RActor.cs" />
+    <Compile Include="Source\Game\Core\OLD\RActorComponent.cs" />
     <Compile Include="Source\Game\Buildings\RBuilding.cs" />
-    <Compile Include="Source\Game\TileMap\RFieldActor.cs" />
-    <Compile Include="Source\Game\Core\RLevel.cs" />
-    <Compile Include="Source\Game\TileMap\RMapJsonWrapper.cs" />
-    <Compile Include="Source\Game\TileMap\RMapTestLevel.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RFieldActor.cs" />
+    <Compile Include="Source\Game\Core\OLD\RLevel.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RMapJsonWrapper.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RMapTestLevel.cs" />
     <Compile Include="Source\Game\Buildings\RMine.cs" />
-    <Compile Include="Source\Game\Player\RPlayerController.cs" />
-    <Compile Include="Source\Game\TileMap\RResource.cs" />
+    <Compile Include="Source\Game\Player\OLD\RPlayerController.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RResource.cs" />
     <Compile Include="Source\Game\Units\RSpawner.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RTower.cs" />
     <Compile Include="Source\Game\Units\RUnit.cs" />
     <Compile Include="Source\Game\Units\RUnitInfo.cs" />
     <Compile Include="Source\Game\Units\RWave.cs" />
     <Compile Include="Source\Game\Units\RWaypoint.cs" />
-    <Compile Include="Source\Game\Core\RWeaponComponent.cs" />
+    <Compile Include="Source\Game\Core\OLD\RWeaponComponent.cs" />
     <Compile Include="Source\GUI\MenuLevel.cs" />
-    <Compile Include="Source\Game\TileMap\RMap.cs" />
-    <Compile Include="Source\Game\TileMap\RTile.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RMap.cs" />
+    <Compile Include="Source\Game\TileMap\OLD\RTile.cs" />
     <Compile Include="Source\RGameInfo.cs" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>

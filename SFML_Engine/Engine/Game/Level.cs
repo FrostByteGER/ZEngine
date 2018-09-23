@@ -61,7 +61,7 @@ namespace SFML_Engine.Engine.Game
 		/// </summary>
 	    public uint Layers { get; set; } = 2;
 
-	    public ActorSpawner Spawner { get; set; } = new ActorSpawner();
+	    public ActorSpawner Spawner { get; } = new ActorSpawner();
 
 
 		public Level()
@@ -81,7 +81,7 @@ namespace SFML_Engine.Engine.Game
 			{
 				if (!pc.CanTick) continue;
 				pc.Tick(deltaTime);
-				if (pc.Hud != null) pc.Hud.Tick(deltaTime);
+			    pc.Hud?.Tick(deltaTime);
 			}
 			foreach (var actor in _actors)
             {
@@ -498,8 +498,7 @@ namespace SFML_Engine.Engine.Game
 	    {
 		    if (ReferenceEquals(null, obj)) return false;
 		    if (ReferenceEquals(this, obj)) return true;
-		    if (obj.GetType() != this.GetType()) return false;
-		    return Equals((Level) obj);
+		    return obj.GetType() == this.GetType() && Equals((Level) obj);
 	    }
 
 	    public override int GetHashCode()
