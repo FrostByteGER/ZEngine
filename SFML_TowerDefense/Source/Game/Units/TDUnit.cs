@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Linq;
+using Exofinity.Source.Game.Buildings;
+using Exofinity.Source.Game.Core;
+using Exofinity.Source.GUI;
 using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Physics;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Buildings;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.GUI;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Graphics;
+using ZEngine.Engine.Physics;
+using ZEngine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 
-namespace SFML_Roguelike.Source.Game.Units
+namespace Exofinity.Source.Game.Units
 {
 	public class TDUnit : TDActor, ICloneable
 	{
@@ -29,7 +29,7 @@ namespace SFML_Roguelike.Source.Game.Units
 		public TDUnit(Level level) : base(level)
 		{
 			var spriteComp = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2")));
-			PhysComp = level.PhysicsEngine.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, spriteComp.ComponentBounds.X, BodyType.Dynamic);
+			PhysComp = level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, spriteComp.ComponentBounds.X, BodyType.Dynamic);
 
 			// HOLY SHIT... I SPENT FUCKING 4 HOURS TRACING THIS SHIT. IT FUCKING CAUSED WEIRD COLLISION/OVERLAP BEHAVIOUR AND DROVE ME TO INSANITY. ALL I HAD TO FIX WAS TO ENSURE THAT THIS MOTHERFUCKER DOESN'T EVER SLEEP. YOU SON OF A BITCH STAY AWAKE TILL U DIE. -Kevin
 			PhysComp.CollisionBody.SleepingAllowed = false;

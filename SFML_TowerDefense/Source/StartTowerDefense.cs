@@ -1,8 +1,8 @@
 ﻿using System;
-using SFML_Engine.Engine.Core;
-using SFML_Roguelike.Source.GUI;
+using Exofinity.Source.GUI;
+using ZEngine.Engine.Core;
 
-namespace SFML_Roguelike.Source
+namespace Exofinity.Source
 {
 	internal sealed class StartTowerDefense
 	{

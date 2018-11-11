@@ -1,6 +1,6 @@
-﻿using SFML_Engine.Engine.Game;
+﻿using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Units
+namespace Exofinity.Source.Game.Units
 {
 	public class TDBerserker : TDUnit
 	{

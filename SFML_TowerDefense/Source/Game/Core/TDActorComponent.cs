@@ -1,6 +1,6 @@
-﻿using SFML_Engine.Engine.Game;
+﻿using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Core
+namespace Exofinity.Source.Game.Core
 {
 	public class TDActorComponent : ActorComponent
 	{

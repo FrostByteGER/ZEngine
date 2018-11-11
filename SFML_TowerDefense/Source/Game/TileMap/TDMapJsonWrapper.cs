@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFML_Roguelike.Source.Game.TileMap
+namespace Exofinity.Source.Game.TileMap
 {
 	public struct LayerJsonWrapper
 	{

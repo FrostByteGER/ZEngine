@@ -1,9 +1,8 @@
-﻿using System;
-using SFML.Graphics;
-using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Utility;
+﻿using SFML.Graphics;
+using ZEngine.Engine.Graphics;
+using ZEngine.Engine.Utility;
 
-namespace SFML_Roguelike.Source.GUI
+namespace Exofinity.Source.GUI
 {
 	public class TDPopupTextComponent : TextComponent
 	{

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Exofinity.Source.Game.Player;
+using Exofinity.Source.Game.Units;
 using SFML.Audio;
 using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Roguelike.Source.Game.Player;
-using SFML_Roguelike.Source.Game.Units;
+using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Core
+namespace Exofinity.Source.Game.Core
 {
 	public class TDGameMode : GameMode
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFML_Roguelike.Source.Game.Core
+namespace Exofinity.Source.Game.Core
 {
 	[Flags]
 	public enum TDDamageType

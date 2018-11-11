@@ -1,7 +1,7 @@
-﻿using SFML_Engine.Engine.JUI;
-using SFML_Roguelike.Source.Game.TileMap;
+﻿using Exofinity.Source.Game.TileMap;
+using ZEngine.Engine.JUI;
 
-namespace SFML_Roguelike.Source.GUI
+namespace Exofinity.Source.GUI
 {
 	public class TileElement : JCheckbox
 	{

@@ -1,4 +1,4 @@
-﻿namespace SFML_Roguelike.Source.Game.Units
+﻿namespace Exofinity.Source.Game.Units
 {
 	public enum TDUnitState
 	{

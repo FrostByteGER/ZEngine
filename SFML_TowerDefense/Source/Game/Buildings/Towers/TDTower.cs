@@ -1,7 +1,7 @@
-﻿using SFML_Engine.Engine.Game;
-using SFML_Roguelike.Source.Game.Player;
+﻿using Exofinity.Source.Game.Player;
+using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Buildings.Towers
+namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public abstract class TDTower : TDBuilding
 	{

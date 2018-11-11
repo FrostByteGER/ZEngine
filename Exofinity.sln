@@ -3,46 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Engine", "SFML_Engine\SFML_Engine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZEngine", "ZEngine\ZEngine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_TowerDefense", "SFML_TowerDefense\SFML_TowerDefense.csproj", "{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_AssetForge", "SFML_AssetForge\SFML_AssetForge.csproj", "{5E3BD030-4485-43A0-ADA0-2128E5138997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetForge", "AssetForge\AssetForge.csproj", "{5E3BD030-4485-43A0-ADA0-2128E5138997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_Roguelike", "SFML_Roguelike\SFML_Roguelike.csproj", "{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exofinity", "Exofinity\Exofinity.csproj", "{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
-		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.ActiveCfg = Debug|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.Build.0 = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.ActiveCfg = Release|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.Build.0 = Release|x64
-		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|x64.ActiveCfg = Debug|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|x64.Build.0 = Debug|x64
-		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|Any CPU.ActiveCfg = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.ActiveCfg = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.Build.0 = Release|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.ActiveCfg = Debug|x64
 		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.Build.0 = Debug|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|Any CPU.ActiveCfg = Release|x64
 		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.ActiveCfg = Release|x64
 		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.Build.0 = Release|x64
-		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|x64.ActiveCfg = Debug|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|x64.Build.0 = Debug|x64
-		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Release|Any CPU.ActiveCfg = Release|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Release|x64.ActiveCfg = Release|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection

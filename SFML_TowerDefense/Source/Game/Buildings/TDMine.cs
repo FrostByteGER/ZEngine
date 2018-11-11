@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
+using Exofinity.Source.Game.Player;
+using Exofinity.Source.Game.TileMap;
+using Exofinity.Source.GUI;
 using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Graphics;
-using SFML_Roguelike.Source.Game.Player;
-using SFML_Roguelike.Source.Game.TileMap;
-using SFML_Roguelike.Source.GUI;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Graphics;
 
-namespace SFML_Roguelike.Source.Game.Buildings
+namespace Exofinity.Source.Game.Buildings
 {
 	public class TDMine : TDBuilding
 	{

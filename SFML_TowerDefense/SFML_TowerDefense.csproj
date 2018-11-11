@@ -119,7 +119,7 @@
     </Compile>
     <Reference Include="VelcroPhysics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SFML_Engine\Lib\VelcroPhysics.dll</HintPath>
+      <HintPath>..\ZEngine\Lib\VelcroPhysics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -139,19 +139,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFML_Engine\SFML_Engine.csproj">
+    <ProjectReference Include="..\ZEngine\ZEngine.csproj">
       <Project>{ef9a6890-9b4b-4610-9d7d-9734784b9b7e}</Project>
-      <Name>SFML_Engine</Name>
+      <Name>ZEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy "$(SolutionDir)SFML_Engine\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
+    <PostBuildEvent>robocopy "$(SolutionDir)ZEngine\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
 rmdir "Assets" /s /q
 mkdir "Assets\Engine"
 mkdir "Assets\$(ProjectName)"
-robocopy "$(SolutionDir)SFML_Engine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /E
+robocopy "$(SolutionDir)ZEngine\Assets" "Assets\Engine" /COPY:DAT /DCOPY:T /E
 robocopy "$(ProjectDir)Assets" "Assets\Game" /COPY:DAT /DCOPY:T /E
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>

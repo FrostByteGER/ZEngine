@@ -1,8 +1,8 @@
 ﻿using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Graphics;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Graphics;
 
-namespace SFML_Roguelike.Source.Game.TileMap
+namespace Exofinity.Source.Game.TileMap
 {
 	public class TDResource : TDFieldActor
 	{

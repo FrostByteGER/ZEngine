@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Exofinity.Source.Game.Buildings;
+using Exofinity.Source.Game.Core;
+using Exofinity.Source.Game.TileMap;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Buildings;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.Game.TileMap;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Utility;
 
-namespace SFML_Roguelike.Source.Game.Player
+namespace Exofinity.Source.Game.Player
 {
 	public class TDPlayerController : PlayerController
 	{

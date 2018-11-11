@@ -1,8 +1,8 @@
-﻿using SFML.Graphics;
-using SFML_Engine.Engine.Graphics;
-using SFML_Roguelike.Source.Game.Buildings.Towers;
+﻿using Exofinity.Source.Game.Buildings.Towers;
+using SFML.Graphics;
+using ZEngine.Engine.Graphics;
 
-namespace SFML_Roguelike.Source.Game.Core
+namespace Exofinity.Source.Game.Core
 {
 	public class TDWeaponComponent : SpriteComponent
 	{

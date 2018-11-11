@@ -1,12 +1,8 @@
-﻿using System;
-using SFML.Audio;
+﻿using Exofinity.Source.Game.Core;
+using Exofinity.Source.Game.Units;
 using SFML.Graphics;
-using SFML_Engine.Engine.Graphics;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.Game.Units;
 
-namespace SFML_Roguelike.Source.Game.Buildings.Towers
+namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public class TDPlasmaWeaponComponent : TDTowerWeaponComponent
 	{

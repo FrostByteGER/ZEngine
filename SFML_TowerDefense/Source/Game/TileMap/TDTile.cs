@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using SFML.Graphics;
-using SFML_Engine.Engine.Graphics;
+using ZEngine.Engine.Graphics;
 
-namespace SFML_Roguelike.Source.Game.TileMap
+namespace Exofinity.Source.Game.TileMap
 {
 	public class TDTile : SpriteComponent
 	{

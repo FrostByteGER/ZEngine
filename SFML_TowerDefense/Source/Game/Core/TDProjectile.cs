@@ -1,4 +1,4 @@
-﻿namespace SFML_Roguelike.Source.Game.Core
+﻿namespace Exofinity.Source.Game.Core
 {
 	public class TDProjectile
 	{

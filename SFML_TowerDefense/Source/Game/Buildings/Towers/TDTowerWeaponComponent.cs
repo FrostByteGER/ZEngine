@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using SFML_Engine.Engine.Physics;
 using System;
+using Exofinity.Source.Game.Core;
+using Exofinity.Source.Game.Units;
 using SFML.Audio;
 using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.Game.Units;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Utility;
 using VelcroPhysics.Dynamics;
 using VelcroPhysics.Collision.ContactSystem;
 
-namespace SFML_Roguelike.Source.Game.Buildings.Towers
+namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public abstract class TDTowerWeaponComponent : TDWeaponComponent
 	{

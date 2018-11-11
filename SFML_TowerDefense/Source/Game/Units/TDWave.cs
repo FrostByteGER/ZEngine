@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SFML_Engine.Engine.Game;
-using SFML_Roguelike.Source.Game.Core;
+using Exofinity.Source.Game.Core;
+using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Units
+namespace Exofinity.Source.Game.Units
 {
 	public class TDWave : TDActor
 	{

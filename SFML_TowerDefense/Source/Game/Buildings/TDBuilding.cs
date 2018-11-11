@@ -1,7 +1,7 @@
-using SFML_Engine.Engine.Game;
-using SFML_Roguelike.Source.Game.TileMap;
+using Exofinity.Source.Game.TileMap;
+using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Buildings
+namespace Exofinity.Source.Game.Buildings
 {
 	public class TDBuilding : TDFieldActor
 	{

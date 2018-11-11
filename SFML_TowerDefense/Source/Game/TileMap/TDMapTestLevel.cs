@@ -1,7 +1,7 @@
-﻿using SFML.Graphics;
-using SFML_Roguelike.Source.Game.Core;
+﻿using Exofinity.Source.Game.Core;
+using SFML.Graphics;
 
-namespace SFML_Roguelike.Source.Game.TileMap
+namespace Exofinity.Source.Game.TileMap
 {
 	public class TDMapTestLevel : TDLevel
 	{

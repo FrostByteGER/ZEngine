@@ -1,15 +1,15 @@
-﻿using SFML_Engine.Engine.JUI;
+﻿using ZEngine.Engine.JUI;
 using System;
+using Exofinity.Source.Game.Buildings;
+using Exofinity.Source.Game.Buildings.Towers;
+using Exofinity.Source.Game.Core;
+using Exofinity.Source.Game.TileMap;
 using SFML.Audio;
 using SFML.Graphics;
-using SFML_Engine.Engine.IO;
+using ZEngine.Engine.IO;
 using SFML.System;
-using SFML_Roguelike.Source.Game.Buildings;
-using SFML_Roguelike.Source.Game.Buildings.Towers;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_Roguelike.Source.GUI
+namespace Exofinity.Source.GUI
 {
 	public class GameHud : JGUI
 	{

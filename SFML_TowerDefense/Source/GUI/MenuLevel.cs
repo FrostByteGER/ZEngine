@@ -1,13 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.JUI;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.JUI;
 using System;
+using Exofinity.Source.Game.TileMap;
 using SFML.Audio;
-using SFML_Engine.Engine.IO;
-using SFML_Roguelike.Source.Game.TileMap;
 
-namespace SFML_Roguelike.Source.GUI
+namespace Exofinity.Source.GUI
 {
 	public class MenuLevel : Level 
 	{

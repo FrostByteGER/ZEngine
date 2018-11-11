@@ -1,7 +1,7 @@
-﻿using SFML_Engine.Engine.Game;
-using SFML_Roguelike.Source.Game.TileMap;
+﻿using Exofinity.Source.Game.TileMap;
+using ZEngine.Engine.Game;
 
-namespace SFML_Roguelike.Source.Game.Units
+namespace Exofinity.Source.Game.Units
 {
 	public class TDWaypoint : TDFieldActor
 	{

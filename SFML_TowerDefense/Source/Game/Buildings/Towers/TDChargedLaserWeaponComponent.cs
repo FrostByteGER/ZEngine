@@ -1,7 +1,7 @@
-﻿using SFML.Graphics;
-using SFML_Roguelike.Source.Game.Units;
+﻿using Exofinity.Source.Game.Units;
+using SFML.Graphics;
 
-namespace SFML_Roguelike.Source.Game.Buildings.Towers
+namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public class TDChargedLaserWeaponComponent : TDLaserWeaponComponent
 	{

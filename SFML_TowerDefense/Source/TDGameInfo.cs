@@ -1,6 +1,8 @@
-﻿namespace SFML_Roguelike.Source
+﻿using SFML_TowerDefense;
+
+namespace Exofinity.Source
 {
-	public class TDGameInfo : SFML_Engine.Engine.Game.GameInfo
+	public class TDGameInfo : ZEngine.Engine.Game.GameInfo
 	{
 		public override string GameName { get; protected set; }              = GameInfo.Default.GameName;
 		public override string GameVersionPrefix { get; protected set; }     = GameInfo.Default.GameVersionPrefix;

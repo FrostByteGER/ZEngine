@@ -1,13 +1,10 @@
 ﻿using System;
-using SFML.Graphics;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Core;
-using SFML_Roguelike.Source.Game.Units;
-using VelcroPhysics.Collision.ContactSystem;
-using VelcroPhysics.Dynamics;
+using Exofinity.Source.Game.Core;
+using Exofinity.Source.Game.Units;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.Utility;
 
-namespace SFML_Roguelike.Source.Game.Buildings.Towers
+namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public abstract class TDProjectile : TDActor
 	{

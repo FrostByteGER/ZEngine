@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ZEngine</RootNamespace>
+    <AssemblyName>ZEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ZEngine.Engine.Start</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Schema, Version=3.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.10\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-graphics-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-system-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-system-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-window-2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VelcroPhysics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\VelcroPhysics.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\IO\IAssetManager.cs" />
+    <Compile Include="Engine\Localization\ILocalizationManager.cs" />
+    <Compile Include="Engine\Localization\LocalizationDatabase.cs" />
+    <Compile Include="Engine\Localization\LocalizationManager.cs" />
+    <Compile Include="Engine\Messaging\IMessage.cs" />
+    <Compile Include="Engine\Physics\IPhysicsWorld.cs" />
+    <Compile Include="Engine\Services\Bootstrap.cs" />
+    <Compile Include="Engine\Services\IService.cs" />
+    <Compile Include="Engine\Services\ServiceLocator.cs" />
+    <Compile Include="Engine\Events\RegisterActorEvent.cs" />
+    <Compile Include="Engine\Events\RegisterActorParams.cs" />
+    <Compile Include="Engine\Events\RemovePlayerEvent.cs" />
+    <Compile Include="Engine\Events\RemovePlayerParams.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerEvent.cs" />
+    <Compile Include="Engine\Events\SpawnPlayerParams.cs" />
+    <Compile Include="Engine\Game\Actor.cs" />
+    <Compile Include="Engine\Game\ActorComponent.cs" />
+    <Compile Include="Engine\Core\EngineInfo.cs" />
+    <Compile Include="Engine\Events\EngineEventParams.cs" />
+    <Compile Include="Engine\Events\UnpauseActorEvent.cs" />
+    <Compile Include="Engine\Events\PauseActorEvent.cs" />
+    <Compile Include="Engine\Events\UnpauseActorParams.cs" />
+    <Compile Include="Engine\Events\PauseActorParams.cs" />
+    <Compile Include="Engine\Events\SpawnActorEvent.cs" />
+    <Compile Include="Engine\Events\SpawnActorParams.cs" />
+    <Compile Include="Engine\Events\SwitchLevelEvent.cs" />
+    <Compile Include="Engine\Game\GameLevelState.cs" />
+    <Compile Include="Engine\Events\SwitchLevelParams.cs" />
+    <Compile Include="Engine\Game\GameInfo.cs" />
+    <Compile Include="Engine\Game\GameInstance.cs" />
+    <Compile Include="Engine\Game\IDestroyable.cs" />
+    <Compile Include="Engine\Game\LevelInfo.cs" />
+    <Compile Include="Engine\Game\Timer.cs" />
+    <Compile Include="Engine\Game\TimerManager.cs" />
+    <Compile Include="Engine\Graphics\AnimationComponent.cs" />
+    <Compile Include="Engine\Graphics\AnimationSprite.cs" />
+    <Compile Include="Engine\Graphics\BarComponent.cs" />
+    <Compile Include="Engine\Graphics\InstancedRenderComponent.cs" />
+    <Compile Include="Engine\Graphics\InstancedSpriteComponent.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystem.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystems\ParticleSystemComponent.cs" />
+    <Compile Include="Engine\Graphics\RenderComponent.cs" />
+    <Compile Include="Engine\Graphics\Material.cs" />
+    <Compile Include="Engine\Graphics\SpriteActor.cs" />
+    <Compile Include="Engine\Graphics\SpriteSheet.cs" />
+    <Compile Include="Engine\Graphics\TextActor.cs" />
+    <Compile Include="Engine\Graphics\TextComponent.cs" />
+    <Compile Include="Engine\IO\Config.cs" />
+    <Compile Include="Engine\IO\JSONManager.cs" />
+    <Compile Include="Engine\IO\AssetManager.cs" />
+    <Compile Include="Engine\IO\ConfigManager.cs" />
+    <Compile Include="Engine\IO\GenericIOManager.cs" />
+    <Compile Include="Engine\IO\SoundPoolManager.cs" />
+    <Compile Include="Engine\IO\TexturePoolManager.cs" />
+    <Compile Include="Engine\JUI\JBorderLayout.cs" />
+    <Compile Include="Engine\JUI\JChooser.cs" />
+    <Compile Include="Engine\JUI\JDistanceContainer.cs" />
+    <Compile Include="Engine\JUI\JGridLayout.cs" />
+    <Compile Include="Engine\JUI\JGUI.cs" />
+    <Compile Include="Engine\IO\IControllable.cs" />
+    <Compile Include="Engine\Messaging\IMessageBus.cs" />
+    <Compile Include="Engine\Messaging\MessageBus.cs" />
+    <Compile Include="Engine\Physics\CollisionComponent.cs" />
+    <Compile Include="Engine\Physics\OverlapComponent.cs" />
+    <Compile Include="Engine\JUI\JButton.cs" />
+    <Compile Include="Engine\JUI\JCheckboxGroup.cs" />
+    <Compile Include="Engine\JUI\JCheckbox.cs" />
+    <Compile Include="Engine\JUI\JContainer.cs" />
+    <Compile Include="Engine\JUI\JElement.cs" />
+    <Compile Include="Engine\JUI\JLabel.cs" />
+    <Compile Include="Engine\JUI\JLayout.cs" />
+    <Compile Include="Engine\JUI\JSlider.cs" />
+    <Compile Include="Engine\JUI\MouseOverLap.cs" />
+    <Compile Include="Engine\Events\EngineEvent.cs" />
+    <Compile Include="Engine\Game\GameMode.cs" />
+    <Compile Include="Engine\Game\IGameInterface.cs" />
+    <Compile Include="Engine\Physics\ICollidable.cs" />
+    <Compile Include="Engine\Game\ITransformable.cs" />
+    <Compile Include="Engine\IO\InputManager.cs" />
+    <Compile Include="Engine\Physics\IPhysicsProperties.cs" />
+    <Compile Include="Engine\Game\ITickable.cs" />
+    <Compile Include="Engine\Game\Level.cs" />
+    <Compile Include="Engine\Physics\PhysicsActor.cs" />
+    <Compile Include="Engine\Physics\PhysicsComponent.cs" />
+    <Compile Include="Engine\Game\PlayerController.cs" />
+    <Compile Include="Engine\Events\RemoveActorEvent.cs" />
+    <Compile Include="Engine\Events\RemoveActorParams.cs" />
+    <Compile Include="Engine\Graphics\SpriteComponent.cs" />
+    <Compile Include="Engine\Physics\PhysicsType.cs" />
+    <Compile Include="Engine\Physics\PhysicsWorld.cs" />
+    <Compile Include="Engine\UI\TextActor.cs" />
+    <Compile Include="Engine\Utility\EngineClock.cs" />
+    <Compile Include="Engine\Utility\EngineMath.cs" />
+    <Compile Include="Engine\Core\Engine.cs" />
+    <Compile Include="Engine\Start.cs" />
+    <Compile Include="Engine\Utility\ActorSpawner.cs" />
+    <Compile Include="Engine\Utility\TTransformable.cs" />
+    <Compile Include="Engine\Utility\TVector2.cs" />
+    <Compile Include="Engine\Utility\TVector2f.cs" />
+    <Compile Include="Engine\Utility\TVector2i.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EngineInfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>EngineInfo.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Assets\Config.cfg" />
+    <None Include="Assets\Packages.cfg" />
+    <None Include="EngineInfo.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>EngineInfo.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\OpenAL32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Levels\" />
+    <Folder Include="Engine\Audio\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>robocopy "$(SolutionDir)$(ProjectName)\Lib" "$(TargetDir)\" /COPY:DAT /DCOPY:T /E
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets" Condition="Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
+  </Target>
+</Project>

@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Exofinity.Source.Game.Buildings;
+using Exofinity.Source.Game.Player;
+using Exofinity.Source.Game.TileMap;
+using Exofinity.Source.Game.Units;
+using Exofinity.Source.GUI;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
-using SFML_Engine.Engine.Game;
-using SFML_Engine.Engine.IO;
-using SFML_Engine.Engine.Utility;
-using SFML_Roguelike.Source.Game.Buildings;
-using SFML_Roguelike.Source.Game.Player;
-using SFML_Roguelike.Source.Game.TileMap;
-using SFML_Roguelike.Source.Game.Units;
-using SFML_Roguelike.Source.GUI;
+using ZEngine.Engine.Game;
+using ZEngine.Engine.IO;
+using ZEngine.Engine.Utility;
 
-namespace SFML_Roguelike.Source.Game.Core
+namespace Exofinity.Source.Game.Core
 {
 	public class TDLevel : Level
 	{
@@ -23,7 +23,7 @@ namespace SFML_Roguelike.Source.Game.Core
 
 		public TDLevel()
 		{
-			PhysicsEngine.Gravity = new TVector2f();
+			PhysicsWorld.Gravity = new TVector2f();
 		}
 
 		protected override void InitLevel()
