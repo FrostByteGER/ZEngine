@@ -1,28 +1,28 @@
 ﻿namespace ZEngine.Engine.Game
 {
-	public class GameInstance : ITickable, IGameInterface
+	public class GameInstance : ITickable
 	{
 
 		public bool CanTick { get; set; } = true;
 
-		public virtual void Tick(float deltaTime)
+		protected internal virtual void Tick(float deltaTime)
 		{
 
 		}
 
-		public virtual void OnGameStart()
+        protected internal virtual void OnGameStart()
 		{
 		}
 
-		public virtual void OnGamePause()
+        protected internal virtual void OnGamePause()
 		{
 		}
 
-		public virtual void OnGameResume()
+        protected internal virtual void OnGameResume()
 		{
 		}
 
-		public virtual void OnGameEnd()
+        protected internal virtual void OnGameEnd()
 		{
 		}
 	}

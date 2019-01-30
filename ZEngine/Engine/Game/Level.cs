@@ -12,7 +12,7 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
-	public class Level : IGameInterface, IDestroyable
+	public class Level : IDestroyable
     {
 
 	    public uint LevelID { get; internal set; } = 0;
@@ -130,7 +130,7 @@ namespace ZEngine.Engine.Game
 		    OnGameStart();
 	    }
 
-		public virtual void OnGameStart()
+        protected internal virtual void OnGameStart()
 	    {
 			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
@@ -145,7 +145,7 @@ namespace ZEngine.Engine.Game
 		    }
 	    }
 
-	    public virtual void OnGamePause()
+        protected internal virtual void OnGamePause()
 	    {
 		    LevelTicking = false;
 		    LevelPaused = true;
@@ -162,7 +162,7 @@ namespace ZEngine.Engine.Game
 			}
 		}
 
-	    public virtual void OnGameResume()
+        protected internal virtual void OnGameResume()
 	    {
 		    LevelPaused = false;
 		    LevelTicking = true;
@@ -179,7 +179,7 @@ namespace ZEngine.Engine.Game
 			}
 		}
 
-	    public virtual void OnGameEnd()
+        protected internal virtual void OnGameEnd()
 	    {
 			GameMode.OnGameEnd();
 			LevelTicking = false;

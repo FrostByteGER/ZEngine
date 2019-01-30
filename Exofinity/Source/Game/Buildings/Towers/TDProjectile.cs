@@ -13,12 +13,12 @@ namespace Exofinity.Source.Game.Buildings.Towers
 		public RUnit Target { get; set; }
 		public float MovementSpeed { get; set; } = 300.0f;
 		public float TargetThreshold { get; set; } = 2.0f;
-		protected TDProjectile(Level level) : base(level)
+		protected TDProjectile()
 		{
 
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			if (Target == null || Target.UnitState == RUnitState.Dead || Target.MarkedForRemoval)

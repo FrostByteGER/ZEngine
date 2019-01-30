@@ -9,9 +9,8 @@ namespace Exofinity.Source.Game.Core
 		public RLevel RLevelRef { get; private set; } = null;
 		public RGameMode RGameModeRef { get; private set; }
 
-		public RActor(Level level) : base(level)
+		public RActor()
 		{
-			RLevelRef = level as RLevel;
 			RGameModeRef = RLevelRef.GameMode as RGameMode;
 		}
 

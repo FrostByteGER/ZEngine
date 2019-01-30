@@ -12,9 +12,8 @@ namespace ZEngine.Engine.IO
         ReadOnlyDictionary<string, string> EnginePackages { get; }
         ReadOnlyDictionary<string, Dictionary<string, string>> GameAssets { get; }
         ReadOnlyDictionary<string, string> GamePackages { get; }
-        JSONManager JSONManager { get; }
-        TexturePoolManager TextureManager { get; }
-        SoundPoolManager AudioManager { get; }
+
+        IAssetRegistry Registry { get; }
 
         T LoadAsset<T>(string assetName);
         Texture LoadTexture(string assetName);

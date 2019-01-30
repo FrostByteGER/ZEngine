@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace SFML_AssetForge
+namespace AssetForge
 {
     partial class MainWindow
     {
@@ -30,13 +30,7 @@ namespace SFML_AssetForge
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenuList = new System.Windows.Forms.ToolStripMenuItem();
             this.loadPackagesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,92 +40,18 @@ namespace SFML_AssetForge
             this.editMenuList = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuList = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
-            this.mainSplitContainer.Panel1.SuspendLayout();
-            this.mainSplitContainer.Panel2.SuspendLayout();
-            this.mainSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.toolbarPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.btnBuild = new System.Windows.Forms.Button();
+            this.btnHotReload = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
+            this.toolbarPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.3087F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.6913F));
-            this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(266, 435);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // treeView1
-            // 
-            this.treeView1.AllowDrop = true;
-            this.treeView1.BackColor = System.Drawing.SystemColors.Window;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.PathSeparator = "/";
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(260, 211);
-            this.treeView1.TabIndex = 0;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(32, 32);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(3, 220);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 212);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // mainSplitContainer
-            // 
-            this.mainSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainSplitContainer.Location = new System.Drawing.Point(0, 24);
-            this.mainSplitContainer.Name = "mainSplitContainer";
-            // 
-            // mainSplitContainer.Panel1
-            // 
-            this.mainSplitContainer.Panel1.Controls.Add(this.tableLayoutPanel1);
-            // 
-            // mainSplitContainer.Panel2
-            // 
-            this.mainSplitContainer.Panel2.Controls.Add(this.pictureBox1);
-            this.mainSplitContainer.Size = new System.Drawing.Size(810, 439);
-            this.mainSplitContainer.SplitterDistance = 270;
-            this.mainSplitContainer.SplitterWidth = 6;
-            this.mainSplitContainer.TabIndex = 2;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(530, 435);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // menu
             // 
+            this.menu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenuList,
             this.editMenuList,
@@ -149,6 +69,7 @@ namespace SFML_AssetForge
             this.createPackagesMenuItem,
             this.createResourcesMenuItem,
             this.quitToolMenuItem});
+            this.fileMenuList.ForeColor = System.Drawing.Color.White;
             this.fileMenuList.Name = "fileMenuList";
             this.fileMenuList.Size = new System.Drawing.Size(37, 20);
             this.fileMenuList.Text = "File";
@@ -158,7 +79,6 @@ namespace SFML_AssetForge
             this.loadPackagesMenuItem.Name = "loadPackagesMenuItem";
             this.loadPackagesMenuItem.Size = new System.Drawing.Size(185, 22);
             this.loadPackagesMenuItem.Text = "Load Packages File";
-            this.loadPackagesMenuItem.Click += new System.EventHandler(this.LoadPackages_OnClick);
             // 
             // createPackagesMenuItem
             // 
@@ -184,6 +104,7 @@ namespace SFML_AssetForge
             // 
             // editMenuList
             // 
+            this.editMenuList.ForeColor = System.Drawing.Color.White;
             this.editMenuList.Name = "editMenuList";
             this.editMenuList.Size = new System.Drawing.Size(39, 20);
             this.editMenuList.Text = "Edit";
@@ -192,6 +113,7 @@ namespace SFML_AssetForge
             // 
             this.helpMenuList.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
+            this.helpMenuList.ForeColor = System.Drawing.Color.White;
             this.helpMenuList.Name = "helpMenuList";
             this.helpMenuList.Size = new System.Drawing.Size(44, 20);
             this.helpMenuList.Text = "Help";
@@ -203,37 +125,88 @@ namespace SFML_AssetForge
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // dockPanel
+            // 
+            this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dockPanel.Location = new System.Drawing.Point(0, 70);
+            this.dockPanel.Name = "dockPanel";
+            this.dockPanel.Size = new System.Drawing.Size(810, 393);
+            this.dockPanel.TabIndex = 4;
+            // 
+            // toolbarPanel
+            // 
+            this.toolbarPanel.AutoSize = true;
+            this.toolbarPanel.ColumnCount = 5;
+            this.toolbarPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.toolbarPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.toolbarPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.toolbarPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.toolbarPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.toolbarPanel.Controls.Add(this.btnBuild, 1, 0);
+            this.toolbarPanel.Controls.Add(this.btnHotReload, 2, 0);
+            this.toolbarPanel.Controls.Add(this.btnPlay, 3, 0);
+            this.toolbarPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolbarPanel.Location = new System.Drawing.Point(0, 24);
+            this.toolbarPanel.Name = "toolbarPanel";
+            this.toolbarPanel.RowCount = 1;
+            this.toolbarPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.toolbarPanel.Size = new System.Drawing.Size(810, 46);
+            this.toolbarPanel.TabIndex = 9;
+            // 
+            // btnBuild
+            // 
+            this.btnBuild.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnBuild.Image = global::AssetForge.Properties.Resources.BuildIcon32;
+            this.btnBuild.Location = new System.Drawing.Point(339, 3);
+            this.btnBuild.Name = "btnBuild";
+            this.btnBuild.Size = new System.Drawing.Size(40, 40);
+            this.btnBuild.TabIndex = 1;
+            this.btnBuild.UseVisualStyleBackColor = true;
+            // 
+            // btnHotReload
+            // 
+            this.btnHotReload.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnHotReload.Image = global::AssetForge.Properties.Resources.HotReloadIcon32;
+            this.btnHotReload.Location = new System.Drawing.Point(385, 3);
+            this.btnHotReload.Name = "btnHotReload";
+            this.btnHotReload.Size = new System.Drawing.Size(40, 40);
+            this.btnHotReload.TabIndex = 2;
+            this.btnHotReload.UseVisualStyleBackColor = true;
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnPlay.Image = global::AssetForge.Properties.Resources.PlayIcon32;
+            this.btnPlay.Location = new System.Drawing.Point(431, 3);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(40, 40);
+            this.btnPlay.TabIndex = 3;
+            this.btnPlay.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(810, 463);
-            this.Controls.Add(this.mainSplitContainer);
+            this.Controls.Add(this.dockPanel);
+            this.Controls.Add(this.toolbarPanel);
             this.Controls.Add(this.menu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menu;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AssetForge";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.mainSplitContainer.Panel1.ResumeLayout(false);
-            this.mainSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
-            this.mainSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
+            this.toolbarPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem fileMenuList;
         private System.Windows.Forms.ToolStripMenuItem quitToolMenuItem;
@@ -243,7 +216,10 @@ namespace SFML_AssetForge
         private System.Windows.Forms.ToolStripMenuItem createPackagesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadPackagesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createResourcesMenuItem;
-        private ImageList imageList1;
-        private PictureBox pictureBox1;
+        private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
+        private TableLayoutPanel toolbarPanel;
+        private Button btnHotReload;
+        private Button btnPlay;
+        private Button btnBuild;
     }
 }

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SFML_AssetForge
+namespace AssetForge
 {
     public partial class Popup : Form
     {
         public Popup()
         {
             InitializeComponent();
-        }
-
-        private void PopupForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void OkButton_Click(object sender, EventArgs e)
@@ -28,6 +23,7 @@ namespace SFML_AssetForge
                 textLbl = {Text = content},
                 OkButton = {DialogResult = DialogResult.OK}
             };
+
             return popUp.ShowDialog(owner);
         }
     }

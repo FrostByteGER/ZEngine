@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SFML_AssetForge
+namespace AssetForge
 {
     internal class Program
 	{

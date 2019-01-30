@@ -27,6 +27,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -49,9 +51,37 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AssetForge.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Full'">
+    <GenerateResourceMSBuildArchitecture>CurrentArchitecture</GenerateResourceMSBuildArchitecture>
+    <GenerateResourceMSBuildRuntime>CurrentRuntime</GenerateResourceMSBuildRuntime>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ZENgine.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-graphics-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-system-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-system-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-window-2.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -60,8 +90,26 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.ThemeVS2015.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutPopup.Designer.cs">
+      <DependentUpon>AboutPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelView.Designer.cs">
+      <DependentUpon>LevelView.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,9 +124,25 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SFMLRenderControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\ContentBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ContentBrowser.Designer.cs">
+      <DependentUpon>ContentBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DefaultIcons.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -93,12 +157,73 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutPopup.resx">
+      <DependentUpon>AboutPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelView.resx">
+      <DependentUpon>LevelView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopupForm.resx">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ContentBrowser.resx">
+      <DependentUpon>ContentBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZEngine\ZEngine.csproj">
+      <Project>{ef9a6890-9b4b-4610-9d7d-9734784b9b7e}</Project>
+      <Name>ZEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HotReloadIcon32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HotReloadIcon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BuildIcon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BuildIcon32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayIcon32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayIcon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AudioAssetIcon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AudioAssetIcon32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZENgine_Logo_1024.png" />
+    <None Include="Resources\ZENgine_Logo_512.png" />
+    <None Include="Resources\ZENgine_Logo_256.png" />
+    <None Include="Resources\ZENgine_Logo_128.png" />
+    <None Include="Resources\ZENgine_Logo_64.png" />
+    <None Include="Resources\ZENgine_Logo_32.png" />
+    <Content Include="ZENgine.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets" Condition="Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

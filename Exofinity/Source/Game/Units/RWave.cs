@@ -12,7 +12,7 @@ namespace Exofinity.Source.Game.Units
 		public uint AmountLeft { get; set; } = 1;
 		public List<Type> UnitTypes { get; set; }
 
-		public RWave(Level level) : base(level)
+		public RWave()
 		{
 			
 		}

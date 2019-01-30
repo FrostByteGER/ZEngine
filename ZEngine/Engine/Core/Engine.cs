@@ -110,6 +110,7 @@ namespace ZEngine.Engine.Core
 			_engineWindow.SetFramerateLimit(FPSLimit);
 			_engineWindow.SetKeyRepeatEnabled(false);
 
+            // Bootstrap before everything else so we have the log and all other services initialized!
             Bootstrapper.Setup();
 
 			EngineCoreClock = new EngineClock();
@@ -226,6 +227,9 @@ namespace ZEngine.Engine.Core
 						engineEvent.ExecuteEvent();
 					}
 				}
+
+                // Flush the log to the console
+                Debug.FlushQueue();
             }
 	        ActiveLevel.OnGameEnd();
 			ShutdownEngine();
@@ -264,8 +268,7 @@ namespace ZEngine.Engine.Core
 			{
 				ActiveLevel?.OnGameEnd();
 				ActiveLevel?.ShutdownLevel();
-				AssetManager.TextureManager.ClearPool();
-				AssetManager.AudioManager.ClearPool();
+				AssetManager.ClearPools();
 			}
 			else
 			{

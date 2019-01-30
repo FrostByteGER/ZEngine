@@ -47,9 +47,9 @@ namespace Exofinity.Source.Game.Core
 		public Sound MissionFailed { get; private set; }
 		
 		public Font GameFont { get; set; }
-		
 
-		public override void Tick(float deltaTime)
+
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			switch (GameState)
@@ -93,7 +93,7 @@ namespace Exofinity.Source.Game.Core
 			}
 		}
 
-		public override void OnGameStart()
+		protected override void OnGameStart()
 		{
 			base.OnGameStart();
 			Player = LevelReference.FindPlayer<RPlayerController>(0);
@@ -123,17 +123,17 @@ namespace Exofinity.Source.Game.Core
 			GameFont = LevelReference.EngineReference.AssetManager.LoadFont("MainGameFont");
 		}
 
-		public override void OnGamePause()
+        protected override void OnGamePause()
 		{
 			base.OnGamePause();
 		}
 
-		public override void OnGameResume()
+        protected override void OnGameResume()
 		{
 			base.OnGameResume();
 		}
 
-		public override void OnGameEnd()
+        protected override void OnGameEnd()
 		{
 			base.OnGameEnd();
 		}

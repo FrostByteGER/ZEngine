@@ -18,13 +18,13 @@ namespace Exofinity.Source.Game.Units
 		public float Cooldown { get; set; } = 0;
 		public float WaveCooldown { get; set; } = 0;
 
-		public RSpawner(Level level) : base(level)
+		public RSpawner()
 		{
 			Waves = new List<RWave>();
 			SetRootComponent(new ActorComponent());
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 			ActiveWave = Waves[WaveIndex];
@@ -32,7 +32,7 @@ namespace Exofinity.Source.Game.Units
 			if (SpawnPoint == null) WaveActive = false;
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			

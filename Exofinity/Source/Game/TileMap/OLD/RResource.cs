@@ -14,11 +14,11 @@ namespace Exofinity.Source.Game.TileMap
 		/// </summary>
 		public bool Depleted => ResourceAmount == 0;
 
-		public RResource(Level level) : base(level)
+		public RResource()
 		{
-			var resourceSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreField")));
-			SetRootComponent(resourceSprite);
-			Origin = resourceSprite.Origin;
+			//var resourceSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreField")));
+			//SetRootComponent(resourceSprite);
+			//Origin = resourceSprite.Origin;
 		}
 
 		public uint Mine(uint amount)

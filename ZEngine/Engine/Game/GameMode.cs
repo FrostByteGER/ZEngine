@@ -2,33 +2,33 @@
 
 namespace ZEngine.Engine.Game
 {
-    public class GameMode : ITickable, IGameInterface
+    public class GameMode : ITickable
     {
 
 		public Level LevelReference { get; set; }
-        public virtual void Tick(float deltaTime)
+        protected internal virtual void Tick(float deltaTime)
         {
 	        //Console.WriteLine("GameMode Tick");
         }
 
 	    public bool CanTick { get; set; } = true;
 
-	    public virtual void OnGameStart()
+	    protected internal virtual void OnGameStart()
 	    {
 			Console.WriteLine("Game Started!");
 		}
 
-	    public virtual void OnGamePause()
+        protected internal virtual void OnGamePause()
 	    {
 		    CanTick = false;
 	    }
 
-	    public virtual void OnGameResume()
+        protected internal virtual void OnGameResume()
 	    {
 		    CanTick = true;
 	    }
 
-	    public virtual void OnGameEnd()
+        protected internal virtual void OnGameEnd()
 	    {
 			Console.WriteLine("Game Ended!");
 		}

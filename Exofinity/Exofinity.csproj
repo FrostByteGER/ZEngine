@@ -50,11 +50,15 @@
     <Compile Include="Source\Game\Buildings\Towers\TDRailgunProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RRailgunTower.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RRailgunWeaponComponent.cs" />
+    <Compile Include="Source\Game\Core\BaseConfiguration.cs" />
+    <Compile Include="Source\Game\Core\IConfiguration.cs" />
     <Compile Include="Source\Game\Core\RBootstrap.cs" />
     <Compile Include="Source\Game\Player\EXPlayerController.cs" />
-    <Compile Include="Source\Game\Units\RBerserker.cs" />
-    <Compile Include="Source\Game\Units\RCrab.cs" />
-    <Compile Include="Source\Game\Units\RGrunt.cs" />
+    <Compile Include="Source\Game\TileMap\ImportExport\IImporterExporter.cs" />
+    <Compile Include="Source\Game\TileMap\ImportExport\TiledImporterExporter.cs" />
+    <Compile Include="Source\Game\TileMap\Room.cs" />
+    <Compile Include="Source\Game\TileMap\RoomTile.cs" />
+    <Compile Include="Source\Game\TileMap\ImportExport\TiledData.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RLaserTower.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDTowerBaseComponent.cs" />
@@ -93,8 +97,8 @@
     <Compile Include="Source\Game\TileMap\OLD\RMap.cs" />
     <Compile Include="Source\Game\TileMap\OLD\RTile.cs" />
     <Compile Include="Source\RGameInfo.cs" />
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-audio-2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-audio-2.dll</HintPath>
@@ -110,6 +114,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -165,9 +173,11 @@ if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

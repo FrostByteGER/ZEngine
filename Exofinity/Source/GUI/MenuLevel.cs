@@ -339,7 +339,7 @@ namespace Exofinity.Source.GUI
 			renderWindow.Draw(GUI);
 		}
 
-		public override void OnGameEnd()
+        protected override void OnGameEnd()
 		{
 			base.OnGameEnd();
 			MenuMusic.Stop();

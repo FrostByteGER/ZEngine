@@ -80,7 +80,7 @@ namespace Exofinity.Source.Game.Player
 
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 			LevelRef = LevelReference as RLevel;
@@ -132,7 +132,7 @@ namespace Exofinity.Source.Game.Player
 			}
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			DeltaTime = deltaTime;

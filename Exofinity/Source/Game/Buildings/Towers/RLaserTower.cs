@@ -9,7 +9,7 @@ namespace Exofinity.Source.Game.Buildings.Towers
 	public class RLaserTower : RTower
 	{
 
-		public RLaserTower(Level level) : base(level)
+		public RLaserTower()
 		{
 			var gun = new RLaserWeaponComponent(new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("TowerGunT3")));
 			OverlapComponent attackArea = LevelReference.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, gun.WeaponRange, VelcroPhysics.Dynamics.BodyType.Static);

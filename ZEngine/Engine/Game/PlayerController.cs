@@ -10,7 +10,7 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
-    public class PlayerController : Transformable, ITickable, IGameInterface, IControllable
+    public class PlayerController : Transformable, ITickable, IControllable
     {
 
 	    public string Name { get; set; } = "PlayerController";
@@ -158,7 +158,7 @@ namespace ZEngine.Engine.Game
 			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
 		}
 
-		public virtual void Tick(float deltaTime)
+        protected internal virtual void Tick(float deltaTime)
         {
             if (PlayerPawn != null)
             {
@@ -166,39 +166,39 @@ namespace ZEngine.Engine.Game
             }
         }
 
-	    public virtual void OnGameStart()
+        protected internal virtual void OnGameStart()
 	    {
 
 	    }
 
-	    public virtual void OnGamePause()
+        protected internal virtual void OnGamePause()
 	    {
 		    CanTick = false;
 		    if (DisableInputWhenPaused) IsActive = false;
 	    }
 
-	    public virtual void OnGameResume()
+        protected internal virtual void OnGameResume()
 	    {
 		    CanTick = true;
 		    if (DisableInputWhenPaused) IsActive = true;
 		}
 
-	    public virtual void OnGameEnd()
+        protected internal virtual void OnGameEnd()
 	    {
 		    IsActive = false;
 	    }
 
-	    public void SetCameraSize(float x, float y)
+        protected internal void SetCameraSize(float x, float y)
 	    {
 		    PlayerCamera.Size = new Vector2f(x, y);
 	    }
 
-		public void SetCameraSize(float size)
+        protected internal void SetCameraSize(float size)
 		{
 			PlayerCamera.Size = new Vector2f(size, size);
 		}
 
-		public void SetCameraSize(TVector2f size)
+        protected internal void SetCameraSize(TVector2f size)
 		{
 			PlayerCamera.Size = size;
 		}

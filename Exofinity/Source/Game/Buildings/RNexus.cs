@@ -10,12 +10,12 @@ namespace Exofinity.Source.Game.Buildings
 
 		public uint NexusID { get; set; } = 0;
 		public TDNexusState NexusState { get; set; } = TDNexusState.Alive;
-		public RNexus(Level level) : base(level)
+		public RNexus()
 
 		{
-			var nexusSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("Nexus")));
-			SetRootComponent(nexusSprite);
-			Origin = nexusSprite.Origin;
+			//var nexusSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("Nexus")));
+			//SetRootComponent(nexusSprite);
+			//Origin = nexusSprite.Origin;
 		}
 
 		public override void ApplyDamage(RActor instigator, float damage)
@@ -38,7 +38,7 @@ namespace Exofinity.Source.Game.Buildings
 		}
 
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 		}

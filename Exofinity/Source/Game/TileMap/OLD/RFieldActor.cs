@@ -22,11 +22,11 @@ namespace Exofinity.Source.Game.TileMap
 			}
 		}
 
-		public RFieldActor(Level level) : base(level)
+		public RFieldActor()
 		{
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 		}

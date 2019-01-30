@@ -5,7 +5,14 @@ using ZEngine.Engine.Game;
 
 namespace ZEngine.Engine.IO
 {
-    public class InputManager : ITickable
+    public interface IInputManager
+    {
+        bool CanTick { get; set; }
+        bool IsKeyPressed(Keyboard.Key key);
+        bool IsKeyDown(Keyboard.Key key);
+    }
+
+    public class InputManager : ITickable, IInputManager
     {
 
 		internal bool MouseLeftPressed { get; set; }

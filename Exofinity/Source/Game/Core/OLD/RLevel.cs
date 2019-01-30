@@ -33,7 +33,7 @@ namespace Exofinity.Source.Game.Core
 			var pc = new RPlayerController();
 			RegisterPlayer(pc);
 
-			Map = new RMap("",this);
+			Map = new RMap(null);
 
 			/////////////////////////
 			Map.Tiles = new List<RTile>();
@@ -67,8 +67,8 @@ namespace Exofinity.Source.Game.Core
 			int tilewidth = sheetData.tilewidth.ToObject<int>();
 			// Height of a Tile in the Texture
 			int tileheight = sheetData.tileheight.ToObject<int>();
-			Map.TileSizeX = tilewidth;
-			Map.TileSizeY = tileheight;
+			//Map.TileSizeX = tilewidth;
+			//Map.TileSizeY = tileheight;
 
 			// Map Layer Array
 			dynamic layers = mapData.layers;
@@ -86,8 +86,8 @@ namespace Exofinity.Source.Game.Core
 			// Map Height in Tiles
 			int mapHeight = mapData.height.ToObject<int>();
 
-			Map.SizeX = mapWidth;
-			Map.SizeY = mapHeight;
+			//Map.SizeX = mapWidth;
+			//Map.SizeY = mapHeight;
 
 			Map.ActorBounds = new TVector2f(Map.GameSizeX / 2.0f, Map.GameSizeY / 2.0f);
 			Map.Origin = Map.ActorBounds;
@@ -129,12 +129,12 @@ namespace Exofinity.Source.Game.Core
 				var objectType = mapObject.type.ToObject<string>();
 				if (objectType == "TDSpawner")
 				{
-					var spawner = new RSpawner(this);
+					var spawner = new RSpawner();
 					spawner.TilePosition = tileCoords;
 					var rawWaves = mapObject.properties.waves.ToObject<IEnumerable<dynamic>>();
 					foreach (var rawWave in rawWaves)
 					{
-						var wave = new RWave(this);
+						var wave = new RWave();
 						wave.SpawnSpeed = rawWave.spawnspeed.ToObject<float>();
 						wave.Amount = rawWave.spawnamount.ToObject<uint>();
 						var rawTypes = rawWave.unittypes.ToObject<IEnumerable<dynamic>>();
@@ -152,7 +152,7 @@ namespace Exofinity.Source.Game.Core
 				}
 				else if (objectType == "TDNexus")
 				{
-					var nexus = new RNexus(this);
+					var nexus = new RNexus();
 					nexus.TilePosition = tileCoords;
 					nexus.Health = mapObject.properties.Health.ToObject<uint>();
 					nexus.NexusID = mapObject.properties.NexusID.ToObject<uint>();
@@ -161,7 +161,7 @@ namespace Exofinity.Source.Game.Core
 				}
 				else if (objectType == "TDOrefield")
 				{
-					var resourceField = new RResource(this)
+					var resourceField = new RResource()
 					{
 						TilePosition = tileCoords,
 						ResourceAmount = mapObject.properties.Value.ToObject<uint>()
@@ -171,7 +171,7 @@ namespace Exofinity.Source.Game.Core
 				}
 				else if (objectType == "TDMine")
 				{
-					var mine = new RMine(this) {TilePosition = tileCoords};
+					var mine = new RMine() {TilePosition = tileCoords};
 					RegisterActor(mine);
 					GetTileByTileCoords(tileCoords).FieldActors.Add(mine);
 				}
@@ -188,7 +188,7 @@ namespace Exofinity.Source.Game.Core
 						tileCoords = WorldCoordsToTileCoords(xOrigin, yOrigin);
 						var xLocal = waypoint.x.ToObject<int>();
 						var yLocal = waypoint.y.ToObject<int>();
-						var wp = new RWaypoint(this) {Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal)};
+						var wp = new RWaypoint() {Position = new TVector2f(xOrigin + xLocal, yOrigin + yLocal)};
 						if (previousWaypoint != null) previousWaypoint.NextWaypoint = wp;
 						waypointObjects.Add(wp);
 						RegisterActor(wp);
@@ -217,13 +217,13 @@ namespace Exofinity.Source.Game.Core
 			GameMusic.Loop = true;
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 			GameMusic?.Play();
 		}
 
-		public override void OnGameEnd()
+        protected override void OnGameEnd()
 		{
 			base.OnGameEnd();
 			GameMusic?.Stop();

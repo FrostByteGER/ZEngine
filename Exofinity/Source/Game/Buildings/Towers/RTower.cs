@@ -8,7 +8,7 @@ namespace Exofinity.Source.Game.Buildings.Towers
 
 		public TDTowerState TowerState { get; set; } = TDTowerState.Idle;
 		public TDTowerBaseComponent TowerBase { get; set; }
-		protected RTower(Level level) : base(level)
+		protected RTower()
 		{
 			
 		}

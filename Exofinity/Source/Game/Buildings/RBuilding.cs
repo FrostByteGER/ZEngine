@@ -13,7 +13,7 @@ namespace Exofinity.Source.Game.Buildings
 		public uint Health { get; set; } = 1;
 
 
-		public RBuilding(Level level) : base(level)
+		public RBuilding()
 		{
 		}
 	}

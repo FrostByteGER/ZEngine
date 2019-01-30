@@ -23,11 +23,11 @@ namespace Exofinity.Source.Game.Buildings
 		public TDMineState MineState { get; set; } = TDMineState.Mining;
 		
 
-		public RMine(Level level) : base(level)
+		public RMine()
 		{
-			var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));
-			SetRootComponent(mineSprite);
-			Origin = mineSprite.Origin;
+			//var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));
+			//SetRootComponent(mineSprite);
+			//Origin = mineSprite.Origin;
 		}
 
 		public void MineResource()
@@ -49,7 +49,7 @@ namespace Exofinity.Source.Game.Buildings
 			}
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 			Owner = LevelReference.FindPlayer<RPlayerController>(0);
@@ -57,7 +57,7 @@ namespace Exofinity.Source.Game.Buildings
 			if (ResourceField == null) Console.WriteLine(GenerateFullName() + " at " + TilePosition + " has no valid Resource Field!");
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			if (MineTime <= 0)

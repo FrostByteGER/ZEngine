@@ -11,7 +11,7 @@ namespace ZEngine.Engine.Graphics
 
 		public SpriteComponent SpriteComp { get; private set; }
 
-		public SpriteActor(Sprite sprite, Level level) : base(PhysicsType.Rectangle, BodyType.Dynamic, 1.0f, new TVector2f(sprite.GetGlobalBounds().Width / 2.0f, sprite.GetGlobalBounds().Height / 2.0f), false, false, false, level)
+		public SpriteActor(Sprite sprite) : base(PhysicsType.Rectangle, BodyType.Dynamic, 1.0f, new TVector2f(sprite.GetGlobalBounds().Width / 2.0f, sprite.GetGlobalBounds().Height / 2.0f), false, false, false)
 		{
 			SpriteComp = new SpriteComponent(sprite);
 			AddComponent(SpriteComp);

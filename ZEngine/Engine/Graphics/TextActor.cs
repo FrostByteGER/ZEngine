@@ -7,7 +7,7 @@ namespace ZEngine.Engine.Graphics
 	{
 
 		public TextComponent TextComp { get; set; }
-		public TextActor(string toDisplay, Font textFont, Level level) : base(level)
+		public TextActor(string toDisplay, Font textFont)
 		{
 			TextComp = new TextComponent(toDisplay, textFont);
 			SetRootComponent(TextComp);

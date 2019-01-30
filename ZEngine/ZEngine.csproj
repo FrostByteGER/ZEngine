@@ -92,12 +92,12 @@
     <PlatformTarget>x86</PlatformTarget>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ZENgine.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Schema, Version=3.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.10\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
@@ -115,7 +115,11 @@
       <HintPath>..\packages\Graphnode.SFML.Net.2.4\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -129,7 +133,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\IO\AssetRegistry.cs" />
     <Compile Include="Engine\IO\IAssetManager.cs" />
+    <Compile Include="Engine\IO\IAssetRegistry.cs" />
     <Compile Include="Engine\Localization\ILocalizationManager.cs" />
     <Compile Include="Engine\Localization\LocalizationDatabase.cs" />
     <Compile Include="Engine\Localization\LocalizationManager.cs" />
@@ -204,7 +210,6 @@
     <Compile Include="Engine\JUI\MouseOverLap.cs" />
     <Compile Include="Engine\Events\EngineEvent.cs" />
     <Compile Include="Engine\Game\GameMode.cs" />
-    <Compile Include="Engine\Game\IGameInterface.cs" />
     <Compile Include="Engine\Physics\ICollidable.cs" />
     <Compile Include="Engine\Game\ITransformable.cs" />
     <Compile Include="Engine\IO\InputManager.cs" />
@@ -220,6 +225,7 @@
     <Compile Include="Engine\Physics\PhysicsType.cs" />
     <Compile Include="Engine\Physics\PhysicsWorld.cs" />
     <Compile Include="Engine\UI\TextActor.cs" />
+    <Compile Include="Engine\Utility\Debug.cs" />
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Core\Engine.cs" />
@@ -260,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\OpenAL32.dll" />
+    <Content Include="ZENgine.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Levels\" />
@@ -276,5 +283,7 @@ if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PostBuildEvent>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.4\build\Graphnode.SFML.Net.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

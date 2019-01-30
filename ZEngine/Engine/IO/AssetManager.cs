@@ -9,7 +9,9 @@ using ZEngine.Engine.Services;
 namespace ZEngine.Engine.IO
 {
 	public class AssetManager : IAssetManager, IService
-	{
+    {
+
+        public IAssetRegistry Registry { get; }
 
 		// Names
 		public static string EngineFolderName { get; protected internal set; } = "Engine";
@@ -48,12 +50,13 @@ namespace ZEngine.Engine.IO
 		public ReadOnlyDictionary<string, string> GamePackages => new ReadOnlyDictionary<string, string>(_gamePackages);
 
 		// Managers
-		public JSONManager JSONManager { get; }
-		public TexturePoolManager TextureManager { get; }
-		public SoundPoolManager AudioManager { get; }
+		private JSONManager JSONManager { get; }
+		private TexturePoolManager TextureManager { get; }
+		private SoundPoolManager AudioManager { get; }
 
 		public AssetManager()
 		{
+            Registry = new AssetRegistry();
 			JSONManager = new JSONManager();
 			TextureManager = new TexturePoolManager();
 			AudioManager = new SoundPoolManager();
@@ -75,7 +78,15 @@ namespace ZEngine.Engine.IO
 				var assetPackage = ConfigManager.LoadConfigAsDictAbsolute(assetPackagePath, false);
 				_gameAssets.Add(package.Value, assetPackage);
 			}
+
+            Registry.EstablishAssetRegistryConnection();
 		}
+
+        public void ClearPools()
+        {
+            TextureManager.ClearPool();
+            AudioManager.ClearPool();
+        }
 
 		/// <summary>
 		/// NOTE: This is pure abuse of Generics and is used only as a convenience for Casting. I may delete this in the future and use LoadXXX methods instead.
@@ -85,42 +96,42 @@ namespace ZEngine.Engine.IO
 		/// <param name="assetName"></param>
 		public virtual T LoadAsset<T>(string assetName)
 		{
-			Dictionary<string, string> assets = null;
-			string name = null;
+			Dictionary<string, string> assets;
+			string name;
 
 			var assetType = typeof(T);
 			if (assetType == typeof(Texture))
 			{
 				_gameAssets.TryGetValue("Textures", out assets);
-				if (assets == null) return default(T);
+				if (assets == null) return default;
 				assets.TryGetValue(assetName, out name);
-				return name == null ? default(T) : (T)(object)TextureManager.LoadTexture(GameAssetsPath + "Textures/" + name);
+				return name == null ? default : (T)(object)TextureManager.LoadTexture(GameAssetsPath + "Textures/" + name);
 			}
 			if (assetType == typeof(Sound))
 			{
 				_gameAssets.TryGetValue("SFX", out assets);
-				if (assets == null) return default(T);
+				if (assets == null) return default;
 				assets.TryGetValue(assetName, out name);
-				return name == null ? default(T) : (T)(object)AudioManager.LoadSound(name);
+				return name == null ? default : (T)(object)AudioManager.LoadSound(name);
 			}
 			if (assetType == typeof(SoundBuffer))
 			{
 				_gameAssets.TryGetValue("SFX", out assets);
-				if (assets == null) return default(T);
+			    if (assets == null) return default;
 				assets.TryGetValue(assetName, out name);
-				return name == null ? default(T) : (T)(object)AudioManager.LoadSoundBuffer(name);
+				return name == null ? default : (T)(object)AudioManager.LoadSoundBuffer(name);
 			}
 			if (assetType == typeof(Font))
 			{
 				//TODO: Add Font Management
-				return default(T);
+				return default;
 			}
 			if (assetType == typeof(Shader))
 			{
 				//TODO: Add Shader Management
-				return default(T);
+				return default;
 			}
-			return default(T);
+			return default;
 		}
 
 		public Texture LoadTexture(string assetName)

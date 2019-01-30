@@ -9,7 +9,7 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
-	public class Actor : ITickable, IGameInterface, IDestroyable, ICollidable
+	public class Actor : ITickable, IDestroyable, ICollidable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
@@ -128,10 +128,9 @@ namespace ZEngine.Engine.Game
 			set => RootComponent.ComponentTransform = value;
 		}
 
-		public Actor(Level level)
+		public Actor()
 		{
 			ActorName = GetType().Name;
-			LevelReference = level;
 		}
 
 		protected internal virtual void InitializeActor()
@@ -193,7 +192,7 @@ namespace ZEngine.Engine.Game
 			RootComponent.SetLocalScale(scale);
 		}
 
-		public virtual void Tick(float deltaTime)
+        protected internal virtual void Tick(float deltaTime)
 		{
 			for (int i = 0 ; i < Components.Count ; i++)
 			{
@@ -228,11 +227,11 @@ namespace ZEngine.Engine.Game
 
 		}
 
-		public virtual void OnGameStart()
+        protected internal virtual void OnGameStart()
 		{
 		}
 
-		public virtual void OnGamePause()
+        protected internal virtual void OnGamePause()
 		{
 			foreach (var component in Components)
 			{
@@ -241,7 +240,7 @@ namespace ZEngine.Engine.Game
 			CanTick = false;
 		}
 
-		public virtual void OnGameResume()
+        protected internal virtual void OnGameResume()
 		{
 			foreach (var component in Components)
 			{
@@ -250,7 +249,7 @@ namespace ZEngine.Engine.Game
 			CanTick = true;
 		}
 
-		public virtual void OnGameEnd()
+        protected internal virtual void OnGameEnd()
 		{
 			
 		}

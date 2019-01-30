@@ -8,7 +8,7 @@ namespace Exofinity.Source.Game.Units
 		public RWaypoint NextWaypoint { get; set; }
 		public uint TargetNexus { get; set; } = 0;
 
-		public RWaypoint(Level level) : base(level)
+		public RWaypoint()
 		{
 			SetRootComponent(new ActorComponent());
 			//var mineSprite = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("OreRefinery")));

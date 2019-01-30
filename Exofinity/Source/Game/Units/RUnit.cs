@@ -26,22 +26,22 @@ namespace Exofinity.Source.Game.Units
 		
 		public PhysicsComponent PhysComp { get; set; }
 
-		public RUnit(Level level) : base(level)
+		public RUnit()
 		{
-			var spriteComp = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2")));
-			PhysComp = level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, spriteComp.ComponentBounds.X, BodyType.Dynamic);
+			//var spriteComp = new SpriteComponent(new Sprite(level.EngineReference.AssetManager.LoadTexture("TowerBase2")));
+			//PhysComp = level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0, new TVector2f(1.0f), 1.0f, spriteComp.ComponentBounds.X, BodyType.Dynamic);
 
 			// HOLY SHIT... I SPENT FUCKING 4 HOURS TRACING THIS SHIT. IT FUCKING CAUSED WEIRD COLLISION/OVERLAP BEHAVIOUR AND DROVE ME TO INSANITY. ALL I HAD TO FIX WAS TO ENSURE THAT THIS MOTHERFUCKER DOESN'T EVER SLEEP. YOU SON OF A BITCH STAY AWAKE TILL U DIE. -Kevin
 			PhysComp.CollisionBody.SleepingAllowed = false;
 
 			PhysComp.CollisionCallbacksEnabled = true;
 
-			AddComponent(spriteComp);
+			//AddComponent(spriteComp);
 
 			PhysComp.Visible = true;
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 		}
@@ -80,7 +80,7 @@ namespace Exofinity.Source.Game.Units
 			--RGameModeRef.EnemiesLeftInCurrentWave;
 		}
 
-		public override void Tick(float deltaTime)
+        protected override void Tick(float deltaTime)
 		{
 			base.Tick(deltaTime);
 			

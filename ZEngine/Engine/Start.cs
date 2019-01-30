@@ -15,8 +15,8 @@ namespace ZEngine.Engine
             engine.GameInfo = new GameInfo();
             engine.InitEngine();
             var level = new Level();
-            var actor = new Actor(level);
-			var actor2 = new Actor(level);
+            var actor = new Actor();
+			var actor2 = new Actor();
 			var pc = new PlayerController();
 			var pc2 = new PlayerController();
 			level.RegisterActor(actor);

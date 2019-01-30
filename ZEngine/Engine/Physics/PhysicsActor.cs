@@ -154,20 +154,21 @@ namespace ZEngine.Engine.Physics
             set => CanOverlap = value;
         }
 
-        public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, TVector2f physBounds, bool overlap, bool collisionCallbacksEnabled, bool visible, Level level) : base(level)
+        public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, TVector2f physBounds, bool overlap, bool collisionCallbacksEnabled, bool visible)
 		{
+            //TODO: FIX!!! Either defer to the actual level doing the work? Actor factory?
 			if (overlap)
 			{
 				switch (type)
 				{
 					case PhysicsType.Rectangle:
-						level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 					case PhysicsType.Circle:
-						level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
+						//level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
 						break;
 					default:
-						level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 				}
 			}
@@ -176,13 +177,13 @@ namespace ZEngine.Engine.Physics
 				switch (type)
 				{
 					case PhysicsType.Rectangle:
-						level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 					case PhysicsType.Circle:
-						level.PhysicsWorld.ConstructCircleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
+						//level.PhysicsWorld.ConstructCircleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
 						break;
 					default:
-						level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 				}
 			}

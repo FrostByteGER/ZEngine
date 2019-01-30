@@ -28,12 +28,12 @@ namespace Exofinity.Source.Game.TileMap
 			base.OnLevelLoad();
 		}
 
-		public override void OnGameStart()
+        protected override void OnGameStart()
 		{
 			base.OnGameStart();
 		}
 
-		public override void OnGameEnd()
+        protected override void OnGameEnd()
 		{
 			base.OnGameEnd();
 		}

@@ -10,11 +10,11 @@ namespace Exofinity.Source.Game.Buildings.Towers
 {
 	public class TDPlasmaProjectile : TDProjectile
 	{
-		public TDPlasmaProjectile(Level level) : base(level)
+		public TDPlasmaProjectile()
 		{
 			var projectileSprite = new Sprite(LevelReference.EngineReference.AssetManager.LoadTexture("PlasmaProjectile"));
-			var comp = level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f), 1.0f, projectileSprite.Scale, BodyType.Dynamic);
-			comp.CollisionCallbacksEnabled = true;
+			//var comp = level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f), 1.0f, projectileSprite.Scale, BodyType.Dynamic);
+			//comp.CollisionCallbacksEnabled = true;
 			Projectile = new RWeaponComponent(projectileSprite);
 			MovementSpeed = 300.0f;
 			AddComponent(Projectile);
