@@ -133,6 +133,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\ECS\Component.cs" />
+    <Compile Include="Engine\ECS\Entity.cs" />
+    <Compile Include="Engine\ECS\System.cs" />
     <Compile Include="Engine\IO\AssetRegistry.cs" />
     <Compile Include="Engine\IO\IAssetManager.cs" />
     <Compile Include="Engine\IO\IAssetRegistry.cs" />
