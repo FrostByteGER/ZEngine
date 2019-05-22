@@ -133,9 +133,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\ECS\Component.cs" />
-    <Compile Include="Engine\ECS\Entity.cs" />
-    <Compile Include="Engine\ECS\System.cs" />
+    <Compile Include="Engine\ECS\ECSComponent.cs" />
+    <Compile Include="Engine\ECS\ECSEntity.cs" />
+    <Compile Include="Engine\ECS\ECSSystem.cs" />
+    <Compile Include="Engine\ECS\ECSSystemGroup.cs" />
+    <Compile Include="Engine\ECS\EGID.cs" />
     <Compile Include="Engine\IO\AssetRegistry.cs" />
     <Compile Include="Engine\IO\IAssetManager.cs" />
     <Compile Include="Engine\IO\IAssetRegistry.cs" />

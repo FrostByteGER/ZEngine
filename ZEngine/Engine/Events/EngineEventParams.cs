@@ -10,5 +10,5 @@ namespace ZEngine.Engine.Events
 		{
 			Instigator = instigator ?? throw new ArgumentNullException(nameof(instigator));
 		}
-	}
+    }
 }
