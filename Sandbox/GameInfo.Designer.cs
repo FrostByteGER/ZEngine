@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Exofinity {
+namespace Sandbox {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace Exofinity {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Exofinity")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sandbox")]
         public string GameName {
             get {
                 return ((string)(this["GameName"]));

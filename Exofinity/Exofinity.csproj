@@ -42,6 +42,7 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameInfo.cs" />
     <Compile Include="Source\Game\Buildings\Towers\RChargedLaserWeaponComponent.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDPlasmaProjectile.cs" />
     <Compile Include="Source\Game\Buildings\Towers\TDProjectile.cs" />

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>ZEngine</RootNamespace>
     <AssemblyName>ZEngine</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
@@ -79,7 +79,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ZEngine.Engine.Start</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -234,7 +235,6 @@
     <Compile Include="Engine\Utility\EngineClock.cs" />
     <Compile Include="Engine\Utility\EngineMath.cs" />
     <Compile Include="Engine\Core\Engine.cs" />
-    <Compile Include="Engine\Start.cs" />
     <Compile Include="Engine\Utility\ActorSpawner.cs" />
     <Compile Include="Engine\Utility\TTransformable.cs" />
     <Compile Include="Engine\Utility\TVector2.cs" />
