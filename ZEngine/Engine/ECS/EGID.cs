@@ -34,10 +34,11 @@ namespace ZEngine.Engine.ECS
             _gid = MakeGlobalId(entityId, groupId);
         }
 
+        /*
         internal EGID(int entityId, int groupId) : this()
         {
             _gid = MakeGlobalId(entityId, groupId);
-        }
+        }*/
 
         private static long MakeGlobalId(int entityId, int groupId)
         {

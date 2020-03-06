@@ -9,9 +9,11 @@ namespace Exofinity.Source.Game.Core
 		public RLevel RLevelRef { get; private set; } = null;
 		public RGameMode RGameModeRef { get; private set; }
 
-		public RActor()
+        protected override void InitializeActor()
 		{
-			RGameModeRef = RLevelRef.GameMode as RGameMode;
+			base.InitializeActor();
+            RLevelRef = LevelReference as RLevel;
+            RGameModeRef = RLevelRef.GameMode as RGameMode;
 		}
 
 		public virtual void ApplyDamage(float damage)

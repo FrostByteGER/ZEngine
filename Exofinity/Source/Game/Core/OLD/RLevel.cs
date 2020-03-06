@@ -33,7 +33,7 @@ namespace Exofinity.Source.Game.Core
 			var pc = new RPlayerController();
 			RegisterPlayer(pc);
 
-			Map = new RMap(null);
+			Map = new RMap(new RMapConfiguration(""));
 
 			/////////////////////////
 			Map.Tiles = new List<RTile>();
