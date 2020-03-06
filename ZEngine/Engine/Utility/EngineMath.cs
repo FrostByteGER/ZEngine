@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using SFML.Graphics;
-using SFML.System;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZEngine.Engine.Utility

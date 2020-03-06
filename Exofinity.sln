@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZEngine", "ZEngine\ZEngine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZEngine", "ZEngine\ZEngine.csproj", "{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML_TowerDefense", "SFML_TowerDefense\SFML_TowerDefense.csproj", "{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetForge", "AssetForge\As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exofinity", "Exofinity\Exofinity.csproj", "{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{5C0DB96D-6412-42CE-A2B1-83C3813E12BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{5C0DB96D-6412-42CE-A2B1-83C3813E12BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,12 +21,10 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.ActiveCfg = Debug|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Debug|x64.Build.0 = Debug|x64
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|Any CPU.ActiveCfg = Release|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.ActiveCfg = Release|x64
 		{EF9A6890-9B4B-4610-9D7D-9734784B9B7E}.Release|x64.Build.0 = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Debug|Any CPU.ActiveCfg = Debug|x64
@@ -35,12 +33,14 @@ Global
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|Any CPU.ActiveCfg = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.ActiveCfg = Release|x64
 		{DC00B564-5D36-4649-B5B9-BEE0B4EF83E8}.Release|x64.Build.0 = Release|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.ActiveCfg = Debug|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.Build.0 = Debug|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|Any CPU.ActiveCfg = Release|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.ActiveCfg = Release|x64
-		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.Build.0 = Release|x64
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Debug|x64.Build.0 = Debug|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.ActiveCfg = Release|Any CPU
+		{5E3BD030-4485-43A0-ADA0-2128E5138997}.Release|x64.Build.0 = Release|Any CPU
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|x64.ActiveCfg = Debug|x64
 		{626AC5FB-2501-4C23-9695-ABD79A1A3EF7}.Debug|x64.Build.0 = Debug|x64
