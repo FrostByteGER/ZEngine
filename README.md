@@ -16,6 +16,6 @@ AssetForge is the WIP editor built around ZEngine. Currently it doesn't do much
  - [Silk.NET](https://github.com/Ultz/Silk.NET "Silk.NET")
  - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json "Newtonsoft.Json")
  - [Newtonsoft.Json.Bson](https://github.com/JamesNK/Newtonsoft.Json.Bson "Newtonsoft.Json.Bson")
- - [Newtonsoft.Json.Schema](https://github.com/JamesNK/Newtonsoft.Json.Schema "Newtonsoft.Json.Schema")
+ - [NJsonSchema for .NET](https://github.com/RicoSuter/NJsonSchema "NJsonSchema")
  - [SQLite](https://www.nuget.org/packages/System.Data.SQLite.Core "System.Data.SQLite.Core")
  - [Aether2D](https://github.com/tainicom/Aether.Physics2D "Aether.Physics2D")
