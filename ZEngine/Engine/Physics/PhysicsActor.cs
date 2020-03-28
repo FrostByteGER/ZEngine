@@ -20,7 +20,7 @@ namespace ZEngine.Engine.Physics
 			set => PhysComp.Movable = value;
 		}
 
-		public TVector2f Velocity
+		public Vector2 Velocity
 		{
 			get => PhysComp.Velocity;
 			set => PhysComp.Velocity = value;
@@ -29,7 +29,7 @@ namespace ZEngine.Engine.Physics
 		/// <summary>
 		/// Maximum Velocity of this Physics Actor. This limit is valid in both + direction as well as - direction.
 		/// </summary>
-		public TVector2f MaxVelocity
+		public Vector2 MaxVelocity
 		{
 			get => PhysComp.MaxVelocity;
 			set => PhysComp.MaxVelocity = value;
@@ -37,7 +37,7 @@ namespace ZEngine.Engine.Physics
 
 		/// <summary>
 		/// </summary>
-		public TVector2f Acceleration
+		public Vector2 Acceleration
 		{
 			get => PhysComp.Acceleration;
 			set => PhysComp.Acceleration = value;
@@ -46,7 +46,7 @@ namespace ZEngine.Engine.Physics
 		/// <summary>
 		/// Maximum Acceleration of this Physics Actor. This limit is valid in both + direction as well as - direction.
 		/// </summary>
-		public TVector2f MaxAcceleration
+		public Vector2 MaxAcceleration
 		{
 			get => PhysComp.MaxAcceleration;
 			set => PhysComp.MaxAcceleration = value;
@@ -154,7 +154,7 @@ namespace ZEngine.Engine.Physics
             set => CanOverlap = value;
         }
 
-        public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, TVector2f physBounds, bool overlap, bool collisionCallbacksEnabled, bool visible)
+        public PhysicsActor(PhysicsType type, BodyType bodyType, float mass, Vector2 physBounds, bool overlap, bool collisionCallbacksEnabled, bool visible)
 		{
             //TODO: FIX!!! Either defer to the actual level doing the work? Actor factory?
 			if (overlap)
@@ -162,13 +162,13 @@ namespace ZEngine.Engine.Physics
 				switch (type)
 				{
 					case PhysicsType.Rectangle:
-						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 					case PhysicsType.Circle:
-						//level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
+						//level.PhysicsWorld.ConstructCircleOverlapComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds.X, bodyType);
 						break;
 					default:
-						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleOverlapComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 				}
 			}
@@ -177,13 +177,13 @@ namespace ZEngine.Engine.Physics
 				switch (type)
 				{
 					case PhysicsType.Rectangle:
-						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 					case PhysicsType.Circle:
-						//level.PhysicsWorld.ConstructCircleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds.X, bodyType);
+						//level.PhysicsWorld.ConstructCircleCollisionComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds.X, bodyType);
 						break;
 					default:
-						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new TVector2f(), 0.0f, new TVector2f(1.0f, 1.0f), mass, physBounds, bodyType);
+						//level.PhysicsWorld.ConstructRectangleCollisionComponent(this, true, new Vector2(), 0.0f, new Vector2(1.0f, 1.0f), mass, physBounds, bodyType);
 						break;
 				}
 			}

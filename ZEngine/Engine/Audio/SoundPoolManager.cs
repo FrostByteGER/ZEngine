@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using SFML.Audio;
+using ZEngine.Engine.IO;
 using ZEngine.Engine.Utility;
 
-namespace ZEngine.Engine.IO
+namespace ZEngine.Engine.Audio
 {
 	public class SoundPoolManager
 	{
@@ -34,7 +34,7 @@ namespace ZEngine.Engine.IO
 		{
 			foreach (var item in _soundBufferPool)
 			{
-				item.Value.Dispose();
+				//item.Value.Dispose();
 			}
 			_soundBufferPool.Clear();
 		}
@@ -68,7 +68,7 @@ namespace ZEngine.Engine.IO
 			_soundBufferPool.Add(soundName, sb);
 			return new Sound(sb);
 		}
-
+		/*
 		public bool SaveSound(string soundName)
 		{
 			SoundBuffer sb;
@@ -85,7 +85,7 @@ namespace ZEngine.Engine.IO
 		{
 			return SaveSound(soundName, sound.SoundBuffer);
 		}
-
+		*/
 		public Music LoadMusic(string musicName)
 		{
 			return new Music(musicName);

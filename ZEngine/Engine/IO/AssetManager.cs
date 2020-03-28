@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using SFML.Audio;
-using SFML.Graphics;
+using ZEngine.Engine.Audio;
 using ZEngine.Engine.Game;
-using ZEngine.Engine.Services;
+using ZEngine.Engine.Rendering;
 
 namespace ZEngine.Engine.IO
 {
-	public class AssetManager : IAssetManager, IService
+	public class AssetManager : IAssetManager
     {
 
         public IAssetRegistry Registry { get; }
@@ -61,6 +60,16 @@ namespace ZEngine.Engine.IO
 			TextureManager = new TexturePoolManager();
 			AudioManager = new SoundPoolManager();
 		}
+
+        public void Initialize()
+        {
+            
+        }
+
+        public void Deinitialize()
+        {
+            
+        }
 
 		public void InitPackages()
 		{
@@ -219,5 +228,5 @@ namespace ZEngine.Engine.IO
 		{
 			JSONManager.SaveObject(levelPath, level);
 		}
-	}
+    }
 }

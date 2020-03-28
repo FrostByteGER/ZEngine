@@ -1,31 +1,30 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using System.Numerics;
 
 namespace ZEngine.Engine.Utility
 {
 	public static class EngineMath
-	{
-
+    {
+        public static float Epsilon { get; } = 0.00001f;
 		public static Random EngineRandom { get; set; } = new Random();
 
 
-		public static TVector2f VInterpTo(TVector2f currentPosition, TVector2f targetPosition, float deltaTime, float interpSpeed)
+		public static Vector2 VInterpTo(Vector2 currentPosition, Vector2 targetPosition, float deltaTime, float interpSpeed)
 		{
 			if (interpSpeed <= 0.0f) return targetPosition;
 
 			var distance = targetPosition - currentPosition;
 			
-			if (distance.LengthSquared < TVector2f.Epsilon) return targetPosition;
+			if (distance.LengthSquared() < Epsilon) return targetPosition;
 			
 			var deltaMove = distance * Clamp(deltaTime * interpSpeed, 0.0f, 1.0f);
 			return currentPosition + deltaMove;
 		}
 
-		public static TVector2f VInterpToConstant(TVector2f currentPosition, TVector2f targetPosition, float deltaTime, float interpSpeed)
+		public static Vector2 VInterpToConstant(Vector2 currentPosition, Vector2 targetPosition, float deltaTime, float interpSpeed)
 		{
 			var delta = targetPosition - currentPosition;
-			var deltaM = delta.Length;
+			var deltaM = delta.Length();
 			var maxStep = interpSpeed * deltaTime;
 
 			if (deltaM > maxStep)
@@ -78,7 +77,7 @@ namespace ZEngine.Engine.Utility
 		}
 
 		/// <summary>
-		/// Converts the given rotation vector from degrees to radians as a BulletSharp float vector3.
+		/// Converts the given rotation vector from degrees to radians.
 		/// </summary>
 		/// <param name="degAngles"></param>
 		/// <returns></returns>
@@ -89,31 +88,7 @@ namespace ZEngine.Engine.Utility
 			return new Vector2(x, y);
 		}
 
-		/// <summary>
-		/// Converts the given rotation vector from degrees to radians as a SFML float vector2.
-		/// </summary>
-		/// <param name="degAngles"></param>
-		/// <returns></returns>
-		public static Vector2f DegreesToRadians(Vector2f degAngles)
-		{
-			float x = (float)Math.PI * degAngles.X / 180.0f;
-			float y = (float)Math.PI * degAngles.Y / 180.0f;
-			return new Vector2f(x, y);
-		}
-
-		/// <summary>
-		/// Converts the given rotation vector from degrees to radians as a float TVector2.
-		/// </summary>
-		/// <param name="degAngles"></param>
-		/// <returns></returns>
-		public static TVector2f DegreesToRadians(TVector2f degAngles)
-		{
-			float x = (float)Math.PI * degAngles.X / 180.0f;
-			float y = (float)Math.PI * degAngles.Y / 180.0f;
-			return new TVector2f(x, y);
-		}
-
-		/// <summary>
+        /// <summary>
 		/// Converts the given rotation angle from radians to degrees.
 		/// </summary>
 		/// <param name="radAngle"></param>
@@ -124,7 +99,7 @@ namespace ZEngine.Engine.Utility
 		}
 
 		/// <summary>
-		/// Converts the given rotation vector from radians to degrees as a BulletSharp float vector3.
+		/// Converts the given rotation vector from radians to degrees.
 		/// </summary>
 		/// <param name="radAngles"></param>
 		/// <returns></returns>
@@ -135,112 +110,41 @@ namespace ZEngine.Engine.Utility
 			return new Vector2(x, y);
 		}
 
-		/// <summary>
-		/// Converts the given rotation vector from radians to degrees as a SFML float vector2.
-		/// </summary>
-		/// <param name="radAngles"></param>
-		/// <returns></returns>
-		public static Vector2f RadiansToDegrees(Vector2f radAngles)
-		{
-			float x = (float) (radAngles.X * (180.0 / Math.PI));
-			float y = (float) (radAngles.Y * (180.0 / Math.PI));
-			return new Vector2f(x, y);
-		}
-
-		/// <summary>
-		/// Converts the given rotation vector from radians to degrees as a float TVector2.
-		/// </summary>
-		/// <param name="radAngles"></param>
-		/// <returns></returns>
-		public static TVector2f RadiansToDegrees(TVector2f radAngles)
-		{
-			float x = (float)(radAngles.X * (180.0 / Math.PI));
-			float y = (float)(radAngles.Y * (180.0 / Math.PI));
-			return new TVector2f(x, y);
-		}
-
-		/// <summary>
-		/// Converts the given X, Y and Z rotation axis from radians to degrees as a BulletSharp float vector3.
-		/// </summary>
-		/// <param name="radX"></param>
-		/// <param name="radY"></param>
-		/// <param name="radZ"></param>
-		/// <returns></returns>
-		public static Vector2 RadiansToDegreesBt(float radX, float radY)
-		{
-			float x = (float) (radX * (180.0 / Math.PI));
-			float y = (float) (radY * (180.0 / Math.PI));
-			return new Vector2(x, y);
-		}
-
-		/// <summary>
-		/// Converts the given X and Y rotation axis from radians to degrees as a SFML float vector2.
+        /// <summary>
+		/// Converts the given X and Y rotation axis from radians to degrees as a float Vector2.
 		/// </summary>
 		/// <param name="radX"></param>
 		/// <param name="radY"></param>
 		/// <returns></returns>
-		public static Vector2f RadiansToDegreesSf(float radX, float radY)
-		{
-			float x = (float) (radX * (180.0 / Math.PI));
-			float y = (float) (radY * (180.0 / Math.PI));
-			return new Vector2f(x, y);
-		}
-
-		/// <summary>
-		/// Converts the given X and Y rotation axis from radians to degrees as a float TVector2.
-		/// </summary>
-		/// <param name="radX"></param>
-		/// <param name="radY"></param>
-		/// <returns></returns>
-		public static TVector2f RadiansToDegrees(float radX, float radY)
+		public static Vector2 RadiansToDegrees(float radX, float radY)
 		{
 			float x = (float)(radX * (180.0 / Math.PI));
 			float y = (float)(radY * (180.0 / Math.PI));
-			return new TVector2f(x, y);
+			return new Vector2(x, y);
 		}
 
-		/// <summary>
-		/// Converts a BulletSharp float vector to SFML float vector2.
-		/// </summary>
-		/// <param name="source">The vector to convert</param>
-		/// <returns></returns>
-		public static Vector2f Vec3ToVec2f(Vector2 source)
-		{
-			return new Vector2f(source.X, source.Y);
-		}
-
-		/// <summary>
-		/// Converts a SFML float vector to BulletSharp float Vector2.
-		/// </summary>
-		/// <param name="source">The vector to convert</param>
-		/// <returns></returns>
-		public static Vector2 Vec2fToVec2(Vector2f source)
-		{
-			return new Vector2(source.X, source.Y);
-		}
-
-		
+		/*
 		/// <summary>
 		/// TODO: Implement!
-		/// Generates a transform matrix from a SFML Vector2f position, scale and a angle in degrees.
+		/// Generates a transform matrix from a SFML Vector2 position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Matrix TransformFromPosRotScaleVc(Vector2f position, float angle, Vector2f scale)
+		public static Matrix TransformFromPosRotScaleVc(Vector2 position, float angle, Vector2 scale)
 		{
 			throw new NotImplementedException();
 		}
 
 		/// <summary>
-		/// Generates a SFML transform matrix from a SFML Vector2f position, scale and a angle in degrees.
+		/// Generates a SFML transform matrix from a SFML Vector2 position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Transform TransformFromPosRotScale(Vector2f position, float angle, Vector2f scale)
+		public static Transform TransformFromPosRotScale(Vector2 position, float angle, Vector2 scale)
 		{
 			var t = new Transform();
 			t.Translate(position);
@@ -250,13 +154,13 @@ namespace ZEngine.Engine.Utility
 		}
 
 		/// <summary>
-		/// Generates a SFML transform matrix from a TVector2f position, scale and a angle in degrees.
+		/// Generates a SFML transform matrix from a Vector2 position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Transform TransformFromPosRotScale(TVector2f position, float angle, TVector2f scale)
+		public static Transform TransformFromPosRotScale(Vector2 position, float angle, Vector2 scale)
 		{
 			var t = new Transform();
 			t.Translate(position);
@@ -266,13 +170,13 @@ namespace ZEngine.Engine.Utility
 		}
 
 		/// <summary>
-		/// Generates a SFML transformable from a SFML Vector2f position, scale and a angle in degrees.
+		/// Generates a SFML transformable from a SFML Vector2 position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Transformable TransformableFromPosRotScale(Vector2f position, float angle, Vector2f scale)
+		public static Transformable TransformableFromPosRotScale(Vector2 position, float angle, Vector2 scale)
 		{
 			var t = new Transformable
 			{
@@ -284,13 +188,13 @@ namespace ZEngine.Engine.Utility
 		}
 
 		/// <summary>
-		/// Generates a SFML transformable from a TVector2f position, scale and a angle in degrees.
+		/// Generates a SFML transformable from a Vector2 position, scale and a angle in degrees.
 		/// </summary>
 		/// <param name="position"></param>
 		/// <param name="angle"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static Transformable TransformableFromPosRotScale(TVector2f position, float angle, TVector2f scale)
+		public static Transformable TransformableFromPosRotScale(Vector2 position, float angle, Vector2 scale)
 		{
 			var t = new Transformable
 			{
@@ -300,5 +204,7 @@ namespace ZEngine.Engine.Utility
 			};
 			return t;
 		}
+		*/
 	}
 }
+ 

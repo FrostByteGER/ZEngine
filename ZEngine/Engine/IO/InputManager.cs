@@ -1,323 +1,283 @@
 ﻿using System;
-using SFML.Graphics;
-using SFML.Window;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Silk.NET.Input;
+using Silk.NET.Input.Common;
 using ZEngine.Engine.Game;
+using ZEngine.Engine.Messaging;
+using ZEngine.Engine.Services;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.IO
 {
-    public interface IInputManager
+    public interface IInputManager : IEngineService
     {
-        bool CanTick { get; set; }
-        bool IsKeyPressed(Keyboard.Key key);
-        bool IsKeyDown(Keyboard.Key key);
+        void RegisterInputReceiver(IInputReceiver receiver);
+        void UnregisterInputReceiver(IInputReceiver receiver);
     }
 
     public class InputManager : ITickable, IInputManager
     {
+        private IInputContext InputContext { get; set; }
 
-		internal bool MouseLeftPressed { get; set; }
-        internal bool MouseRightPressed { get; set; }
-        internal bool MouseMiddlePressed { get; set; }
-        internal bool MouseXButton1Pressed { get; set; }
-        internal bool MouseXButton2Pressed { get; set; }
-        internal bool MouseWheelVerticalMoved { get; set; }
-        internal bool MouseWheelHorizontalMoved { get; set; }
+        private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
 
-        internal bool TouchPressed { get; set; }
+        private readonly OrderedDictionary<IInputDevice, IInputReceiver> _devices = new OrderedDictionary<IInputDevice, IInputReceiver>();
+        private readonly IMessageBus _bus;
 
-		private EventHandler<MouseButtonEventArgs> MouseButtonPressed = delegate { };
-        private EventHandler<MouseButtonEventArgs> MouseButtonReleased = delegate { };
-        private EventHandler<MouseMoveEventArgs> MouseMoved = delegate { };
-        private EventHandler<MouseWheelScrollEventArgs> MouseScrolled = delegate { };
+        public bool CanTick { get; set; } = true;
 
-        private EventHandler<KeyEventArgs> KeyPressed = delegate { };
-        private EventHandler<KeyEventArgs> KeyDown = delegate { };
-        private EventHandler<KeyEventArgs> KeyReleased = delegate { };
+        public InputManager(IMessageBus bus)
+        {
+            _bus = bus;
+            _bus.Subscribe<EngineWindowLoadedMessage>(OnWindowLoaded);
+        }
 
-        private EventHandler<JoystickConnectEventArgs> JoystickConnected = delegate { };
-        private EventHandler<JoystickConnectEventArgs> JoystickDisconnected = delegate { };
-        private EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = delegate { };
-        private EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = delegate { };
-        private EventHandler<JoystickMoveEventArgs> JoystickMoved = delegate { };
+        private void OnWindowLoaded(IMessage msg)
+        {
+            InputContext = ((Core.Engine) msg.Sender).Window.CreateInput();
+            InputContext.ConnectionChanged += OnInputDeviceConnectionChanged;
 
-        private EventHandler<TouchEventArgs> TouchBegan = delegate { };
-        private EventHandler<TouchEventArgs> TouchEnded = delegate { };
-        private EventHandler<TouchEventArgs> TouchMoved = delegate { };
+            foreach (var mouse in InputContext.Mice)
+                _devices.Add(mouse, null);
 
-	    public bool CanTick { get; set; } = true;
+            foreach (var keyboard in InputContext.Keyboards)
+                _devices.Add(keyboard, null);
 
-        internal uint RegisteredKeyInputs { get; private set; } = 0;
-        internal uint RegisteredMouseInputs { get; private set; } = 0;
+            foreach (var gamepad in InputContext.Gamepads)
+                _devices.Add(gamepad, null);
 
-		public virtual void Tick(float deltaTime)
-		{
-			if(RegisteredKeyInputs > 0) KeyDown(this, null);
+            foreach (var joystick in InputContext.Joysticks)
+                _devices.Add(joystick, null);
 
-			if (RegisteredMouseInputs > 0) MouseButtonPressed(this, null);
-		}
+            //TODO: Implement other device support when Silk.NET adds support for them(Currently the list is always 0)
+            //InputContext.OtherDevices
+        }
 
-        internal void RegisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
-			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
-		{
-			MouseButtonPressed += onMouseButtonPressed;
-			MouseButtonReleased += onMouseButtonReleased;
-			MouseMoved += onMouseMoved;
-			MouseScrolled += onMouseScrolled;
-		}
+        public void Initialize()
+        {
 
-        internal void UnregisterMouseInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
-			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled)
-		{
-			MouseButtonPressed -= onMouseButtonPressed;
-			MouseButtonReleased -= onMouseButtonReleased;
-			MouseMoved -= onMouseMoved;
-			MouseScrolled -= onMouseScrolled;
-		}
+        }
 
-        internal void RegisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
-		{
-			KeyPressed += onKeyPressed;
-			KeyDown += onKeyDown;
-			KeyReleased += onKeyReleased;
-		}
+        public void Deinitialize()
+        {
+            InputContext.ConnectionChanged -= OnInputDeviceConnectionChanged;
 
-        internal void UnregisterKeyInput(EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased)
-		{
-			KeyPressed -= onKeyPressed;
-			KeyDown -= onKeyDown;
-			KeyReleased -= onKeyReleased;
-		}
+            foreach (var mouse in InputContext.Mice)
+                _devices.Remove(mouse);
 
-        internal void RegisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
-			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
-			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
-	    {
-			JoystickConnected += onJoystickConnected;
-			JoystickDisconnected += onJoystickDisconnected;
-			JoystickButtonPressed += onJoystickButtonPressed;
-			JoystickButtonReleased += onJoystickButtonReleased;
-			JoystickMoved += onJoystickMoved;
-		}
+            foreach (var keyboard in InputContext.Keyboards)
+                _devices.Remove(keyboard);
 
-        internal void UnregisterJoystickInput(EventHandler<JoystickConnectEventArgs> onJoystickConnected
-			, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected, EventHandler<JoystickButtonEventArgs> onJoystickButtonPressed
-			, EventHandler<JoystickButtonEventArgs> onJoystickButtonReleased, EventHandler<JoystickMoveEventArgs> onJoystickMoved)
-		{
-			JoystickConnected -= onJoystickConnected;
-			JoystickDisconnected -= onJoystickDisconnected;
-			JoystickButtonPressed -= onJoystickButtonPressed;
-			JoystickButtonReleased -= onJoystickButtonReleased;
-			JoystickMoved -= onJoystickMoved;
-		}
+            foreach (var gamepad in InputContext.Gamepads)
+                _devices.Remove(gamepad);
 
-        internal void RegisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
-		{
-			TouchBegan += onTouchBegan;
-			TouchEnded += onTouchEnded;
-			TouchMoved += onTouchMoved;
-		}
+            foreach (var joystick in InputContext.Joysticks)
+                _devices.Remove(joystick);
 
-        internal void UnregisterTouchInput(EventHandler<TouchEventArgs> onTouchBegan, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
-		{
-			TouchBegan -= onTouchBegan;
-			TouchEnded -= onTouchEnded;
-			TouchMoved -= onTouchMoved;
-		}
+            //TODO: Implement other device support when Silk.NET adds support for them(Currently the list is always 0)
+            //InputContext.OtherDevices
+        }
 
-        internal void RegisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
-			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled
-			, EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased
-			, EventHandler<JoystickConnectEventArgs> onJoystickConnected, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected
-			, EventHandler<JoystickButtonEventArgs> onJoysticButtonPressed, EventHandler<JoystickButtonEventArgs> onJoysticButtonReleased
-			, EventHandler<JoystickMoveEventArgs> onJoysticButtonMoved, EventHandler<TouchEventArgs> onTouchBegan
-			, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
-	    {
-			RegisterMouseInput(onMouseButtonPressed, onMouseButtonReleased, onMouseMoved, onMouseScrolled);
-		    RegisterKeyInput(onKeyPressed, onKeyDown, onKeyReleased);
-			RegisterJoystickInput(onJoystickConnected, onJoystickDisconnected, onJoysticButtonPressed, onJoysticButtonReleased, onJoysticButtonMoved);
-			RegisterTouchInput(onTouchBegan, onTouchEnded, onTouchMoved);
-	    }
+        private void OnInputDeviceConnectionChanged(IInputDevice device, bool status)
+        {
+            if (!_devices.TryGetValue(device, out var receiver))
+            {
+                //TODO: Log, this should not happen because all devices get added at the start!
+                return;
+            }
 
-        internal void UnregisterInput(EventHandler<MouseButtonEventArgs> onMouseButtonPressed, EventHandler<MouseButtonEventArgs> onMouseButtonReleased
-			, EventHandler<MouseMoveEventArgs> onMouseMoved, EventHandler<MouseWheelScrollEventArgs> onMouseScrolled
-			, EventHandler<KeyEventArgs> onKeyPressed, EventHandler<KeyEventArgs> onKeyDown, EventHandler<KeyEventArgs> onKeyReleased
-			, EventHandler<JoystickConnectEventArgs> onJoystickConnected, EventHandler<JoystickConnectEventArgs> onJoystickDisconnected
-			, EventHandler<JoystickButtonEventArgs> onJoysticButtonPressed, EventHandler<JoystickButtonEventArgs> onJoysticButtonReleased
-			, EventHandler<JoystickMoveEventArgs> onJoysticButtonMoved, EventHandler<TouchEventArgs> onTouchBegan
-			, EventHandler<TouchEventArgs> onTouchEnded, EventHandler<TouchEventArgs> onTouchMoved)
-		{
-			UnregisterMouseInput(onMouseButtonPressed, onMouseButtonReleased, onMouseMoved, onMouseScrolled);
-			UnregisterKeyInput(onKeyPressed, onKeyDown, onKeyReleased);
-			UnregisterJoystickInput(onJoystickConnected, onJoystickDisconnected, onJoysticButtonPressed, onJoysticButtonReleased, onJoysticButtonMoved);
-			UnregisterTouchInput(onTouchBegan, onTouchEnded, onTouchMoved);
-		}
+            // Simply do nothing
+            if (receiver == null)
+                return;
 
-		internal void RegisterEngineInput(ref RenderWindow engineWindow)
-		{
-			engineWindow.MouseButtonPressed += OnMouseButtonPressed;
-			engineWindow.MouseButtonReleased += OnMouseButtonReleased;
-			engineWindow.MouseMoved += OnMouseMoved;
-			engineWindow.MouseWheelScrolled += OnMouseScrolled;
+            switch (device)
+            {
+                case IMouse _:
+                    if(status)
+                        receiver.OnMouseConnected();
+                    else
+                        receiver.OnMouseDisconnected();
+                    break;
+                case IKeyboard _:
+                    if (status)
+                        receiver.OnKeyboardConnected();
+                    else
+                        receiver.OnKeyboardDisconnected();
+                    break;
+                case IGamepad _:
+                    if (status)
+                        receiver.OnGamepadConnected();
+                    else
+                        receiver.OnGamepadDisconnected();
+                    break;
+                case IJoystick _:
+                    if (status)
+                        receiver.OnJoystickConnected();
+                    else
+                        receiver.OnJoystickDisconnected();
+                    break;
+                default:
+                    //TODO: LOG
+                    break;
+            }
+        }
 
-			engineWindow.KeyPressed += OnKeyPressed;
-			engineWindow.KeyPressed += OnKeyDown;
-			engineWindow.KeyReleased += OnKeyReleased;
+        public void RegisterInputReceiver(IInputReceiver receiver)
+        {
+            if (!_receivers.Add(receiver))
+                throw new Exception("InputReceiver already registered for input!");
 
-			engineWindow.JoystickConnected += OnJoystickConnected;
-			engineWindow.JoystickDisconnected += OnJoystickDisconnected;
-			engineWindow.JoystickButtonPressed += OnJoystickButtonPressed;
-			engineWindow.JoystickButtonReleased += OnJoystickButtonReleased;
-			engineWindow.JoystickMoved += OnJoystickMoved;
+        }
 
-			engineWindow.TouchBegan += OnTouchBegan;
-			engineWindow.TouchEnded += OnTouchEnded;
-			engineWindow.TouchMoved += OnTouchMoved;
-		}
+        public void UnregisterInputReceiver(IInputReceiver receiver)
+        {
+            if(!_receivers.Remove(receiver))
+                throw new Exception("InputReceiver to remove is not registered for input!");
+        }
 
-	    private void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-	    {
-		    //++RegisteredMouseInputs;
-			switch (mouseButtonEventArgs.Button)
-			{
-				case Mouse.Button.Left:
-					MouseLeftPressed = true;
-					break;
-				case Mouse.Button.Right:
-					MouseRightPressed = true;
-					break;
-				case Mouse.Button.Middle:
-					MouseMiddlePressed = true;
-					break;
-				case Mouse.Button.XButton1:
-					MouseXButton1Pressed = true;
-					break;
-				case Mouse.Button.XButton2:
-					MouseXButton2Pressed = true;
-					break;
-				case Mouse.Button.ButtonCount:
-					break;
-			}
-		    MouseButtonPressed(sender, mouseButtonEventArgs);
-			//Console.WriteLine("Input Event: Mouse Button Pressed: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
-		}
+        public bool RegisterForInputDevice<T>(IInputReceiver receiver) where T : IInputDevice
+        {
+            var device = GetAvailableDevice<T>();
+            if (device == null)
+                return false;
 
-		private void OnMouseButtonReleased(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			//--RegisteredMouseInputs;
-			switch (mouseButtonEventArgs.Button)
-			{
-				case Mouse.Button.Left:
-					MouseLeftPressed = false;
-					break;
-				case Mouse.Button.Right:
-					MouseRightPressed = false;
-					break;
-				case Mouse.Button.Middle:
-					MouseMiddlePressed = false;
-					break;
-				case Mouse.Button.XButton1:
-					MouseXButton1Pressed = false;
-					break;
-				case Mouse.Button.XButton2:
-					MouseXButton2Pressed = false;
-					break;
-				case Mouse.Button.ButtonCount:
-					break;
-			}
-			MouseButtonReleased(sender, mouseButtonEventArgs);
-			//Console.WriteLine("Input Event: Mouse Button Released: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
-		}
+            _devices[device] = receiver;
+            switch (device)
+            {
+                case IMouse mouse:
+                    mouse.MouseDown += receiver.OnMouseButtonPressed;
+                    mouse.MouseUp += receiver.OnMouseButtonReleased;
+                    mouse.Click += receiver.OnMouseButtonClicked;
+                    mouse.DoubleClick += receiver.OnMouseButtonDoubleClicked;
+                    mouse.MouseMove += receiver.OnMouseMoved;
+                    break;
+                case IKeyboard keyboard:
+                    // Wrap the delegates as we dont want the scancode to be passed down
+                    keyboard.KeyDown += receiver.OnKeyDown;
+                    keyboard.KeyUp += receiver.OnKeyReleased;
+                    break;
+                case IGamepad gamepad:
+                    gamepad.ButtonDown += receiver.OnGamepadButtonPressed;
+                    gamepad.ButtonUp += receiver.OnGamepadButtonReleased;
+                    gamepad.ThumbstickMoved += receiver.OnGamepadThumbstickMoved;
+                    gamepad.TriggerMoved += receiver.OnGamepadTriggerMoved;
+                    break;
+                case IJoystick joystick:
+                    joystick.ButtonDown += receiver.OnJoystickButtonPressed;
+                    joystick.ButtonUp += receiver.OnJoystickButtonReleased;
+                    joystick.AxisMoved += receiver.OnJoystickMoved;
+                    joystick.HatMoved += receiver.OnJoystickHatMoved;
+                    break;
+                default:
+                    //TODO: LOG
+                    return false;
+            }
 
-		private void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
-		{
-			MouseMoved(sender, mouseMoveEventArgs);
-			//Console.WriteLine("Input Event: Mouse Moved to X: " + mouseMoveEventArgs.X + " Y: " +  mouseMoveEventArgs.Y);
-		}
+            return true;
+        }
 
-		private void OnMouseScrolled(object sender, MouseWheelScrollEventArgs mouseWheelScrollEventArgs)
-		{
-			MouseScrolled(sender, mouseWheelScrollEventArgs);
-			//Console.WriteLine("Input Event: Mouse Scrolled Wheel: " + mouseWheelScrollEventArgs.Wheel + " at X: " + mouseWheelScrollEventArgs.X + " Y: " + mouseWheelScrollEventArgs.Y + " by Scroll Amount: " + mouseWheelScrollEventArgs.Delta);
-		}
+        public bool UnregisterFromInputDevice<T>(IInputReceiver receiver) where T : IInputDevice
+        {
+            var device = GetDeviceForInputReceiver<T>(receiver);
+            if (device == null)
+                return false;
 
-		private void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
-		{
-			KeyPressed(sender, keyEventArgs);
-			//Console.WriteLine("Input Event: Keyboard Key Pressed: " + keyEventArgs.Code);
-		}
+            try
+            {
+                UnregisterInput(receiver, device);
+            }
+            catch (ArgumentException ae)
+            {
+                //TODO: LOG!
+                return false;
+            }
 
-		public bool IsKeyPressed(Keyboard.Key key)
-		{
-			return Keyboard.IsKeyPressed(key);
-		}
+            return true;
+        }
 
-		private void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
-		{
-			++RegisteredKeyInputs;
-			KeyDown(sender, keyEventArgs);
-			//Console.WriteLine("Input Event: Keyboard Key Down: " + keyEventArgs.Code);
-		}
+        private void UnregisterInput(IControllable receiver, IInputDevice device)
+        {
+            switch (device)
+            {
+                case IMouse mouse:
+                    mouse.MouseDown -= receiver.OnMouseButtonPressed;
+                    mouse.MouseUp -= receiver.OnMouseButtonReleased;
+                    mouse.Click -= receiver.OnMouseButtonClicked;
+                    mouse.DoubleClick -= receiver.OnMouseButtonDoubleClicked;
+                    mouse.MouseMove -= receiver.OnMouseMoved;
+                    break;
+                case IKeyboard keyboard:
+                    // Wrap the delegates as we dont want the scancode to be passed down
+                    keyboard.KeyDown -= receiver.OnKeyDown;
+                    keyboard.KeyUp -= receiver.OnKeyReleased;
+                    break;
+                case IGamepad gamepad:
+                    gamepad.ButtonDown -= receiver.OnGamepadButtonPressed;
+                    gamepad.ButtonUp -= receiver.OnGamepadButtonReleased;
+                    gamepad.ThumbstickMoved -= receiver.OnGamepadThumbstickMoved;
+                    gamepad.TriggerMoved -= receiver.OnGamepadTriggerMoved;
+                    break;
+                case IJoystick joystick:
+                    joystick.ButtonDown -= receiver.OnJoystickButtonPressed;
+                    joystick.ButtonUp -= receiver.OnJoystickButtonReleased;
+                    joystick.AxisMoved -= receiver.OnJoystickMoved;
+                    joystick.HatMoved -= receiver.OnJoystickHatMoved;
+                    break;
+                default:
+                    throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");
+            }
 
-		public bool IsKeyDown(Keyboard.Key key)
-	    {
-		    return Keyboard.IsKeyPressed(key);
-	    }
+            _devices[device] = null;
 
-		private void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
-		{
-			--RegisteredKeyInputs;
-			KeyReleased(sender, keyEventArgs);
-			//Console.WriteLine("Input Event: Keyboard Key Released: " + keyEventArgs.Code);
-		}
+            UnregisterFromAllInputDevices(null);
+        }
 
-		private void OnJoystickConnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
-		{
-			JoystickConnected(sender, joystickConnectEventArgs);
-			//Console.WriteLine("Input Event: Joystick Connected: ID: " + joystickConnectEventArgs.JoystickId);
-		}
+        public bool UnregisterFromAllInputDevices([NotNull]IInputReceiver receiver)
+        {
+            var devices = GetAllDevicesForInputReceiver(receiver);
+            var inputDevices = devices as IInputDevice[] ?? devices.ToArray();
 
-		private void OnJoystickDisconnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
-		{
-			JoystickDisconnected(sender, joystickConnectEventArgs);
-			//Console.WriteLine("Input Event: Joystick Disconnected: ID: " + joystickConnectEventArgs.JoystickId);
-		}
+            if (!inputDevices.Any())
+            {
+                //TODO: Log Warning
+                return false;
+            }
 
-		private void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
-		{
-			JoystickButtonPressed(sender, joystickButtonEventArgs);
-			//Console.WriteLine("Input Event: Joystick Button Pressed: ID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
-		}
+            // ArgumentException can't happen here as we remove only known devices
+            foreach (var device in inputDevices)
+                UnregisterInput(receiver, device);
 
-		private void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
-		{
-			JoystickButtonReleased(sender, joystickButtonEventArgs);
-			//Console.WriteLine("Input Event: Joystick Button Released: ID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
-		}
+            return true;
+        }
 
-		private void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
-		{
-			JoystickMoved(sender, joystickMoveEventArgs);
-			//Console.WriteLine("Input Event: Joystick Moved: ID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
-		}
+        /// <summary>
+        /// Returns the first available, connected device.
+        /// </summary>
+        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
+        /// <returns>The InputDevice or null if none available</returns>
+        private T GetAvailableDevice<T>() where T : IInputDevice
+        {
+            return (T)_devices.FirstOrDefault(e => e.Key is T && e.Key.IsConnected && e.Value == null).Key;
+        }
 
-		private void OnTouchBegan(object sender, TouchEventArgs touchEventArgs)
-	    {
-		    TouchPressed = true;
-		    TouchBegan(sender, touchEventArgs);
-			//Console.WriteLine("Input Event: Touch Pressed: Finger: " + touchEventArgs.Finger + " at X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
+        /// <summary>
+        /// Returns the first available, connected device.
+        /// </summary>
+        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
+        /// <returns>The InputDevice or null if none available</returns>
+        private T GetDeviceForInputReceiver<T>(IBaseControllable receiver) where T : IInputDevice
+        {
+            return (T)_devices.FirstOrDefault(e => e.Key is T && e.Value == receiver).Key;
+        }
 
-		private void OnTouchEnded(object sender, TouchEventArgs touchEventArgs)
-		{
-			TouchPressed = false;
-			TouchEnded(sender, touchEventArgs);
-			//Console.WriteLine("Input Event: Touch Released: Finger: " + touchEventArgs.Finger + " at X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
+        private IEnumerable<IInputDevice> GetAllDevicesForInputReceiver(IBaseControllable receiver)
+        {
+            return _devices.Where(e => e.Value == receiver).Select(f => f.Key);
+        }
 
-		private void OnTouchMoved(object sender, TouchEventArgs touchEventArgs)
-		{
-			TouchMoved(sender, touchEventArgs);
-			//Console.WriteLine("Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
-	}
+
+
+    }
 }

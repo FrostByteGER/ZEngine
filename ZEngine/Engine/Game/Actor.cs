@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using VelcroPhysics.Collision.ContactSystem;
-using VelcroPhysics.Dynamics;
-using ZEngine.Engine.Physics;
-using ZEngine.Engine.Utility;
+using tainicom.Aether.Physics2D.Dynamics;
+using tainicom.Aether.Physics2D.Dynamics.Contacts;
+using Vector2 = System.Numerics.Vector2;
 
 namespace ZEngine.Engine.Game
 {
-	public class Actor : ITickable, IDestroyable, ICollidable
+	public class Actor : ITickable, IDestroyable
 	{
 
 		public uint ActorID { get; internal set; } = 0;
@@ -20,7 +19,7 @@ namespace ZEngine.Engine.Game
 		public string ActorName { get; set; }
 
 		[JsonIgnore]
-		public virtual TVector2f ActorBounds
+		public virtual Vector2 ActorBounds
 		{
 			get => RootComponent.ComponentBounds;
 			set => RootComponent.ComponentBounds = value;
@@ -35,6 +34,7 @@ namespace ZEngine.Engine.Game
 		public virtual bool Visible { get; set; } = true;
 		public bool CanTick { get; set; } = true;
 		private bool _collisionCallbacksEnabled = true;
+		/*
 		[JsonIgnore]
 		public bool CollisionCallbacksEnabled
 		{
@@ -92,9 +92,9 @@ namespace ZEngine.Engine.Game
 			}
 			set => CanOverlap = value;
 		}
-
+		*/
 		[JsonIgnore]
-		public virtual TVector2f Position
+		public virtual Vector2 Position
 		{
 			get => RootComponent.LocalPosition;
 			set => RootComponent.LocalPosition = value;
@@ -108,21 +108,21 @@ namespace ZEngine.Engine.Game
 		}
 
 		[JsonIgnore]
-		public virtual TVector2f Scale
+		public virtual Vector2 Scale
 		{
 			get => RootComponent.LocalScale;
 			set => RootComponent.LocalScale = value;
 		}
 
 		[JsonIgnore]
-		public virtual TVector2f Origin
+		public virtual Vector2 Origin
 		{
 			get => RootComponent.Origin;
 			set => RootComponent.Origin = value;
 		}
 
 		[JsonIgnore]
-		public virtual TTransformable ActorTransform
+		public virtual Transform ActorTransform
 		{
 			get => RootComponent.ComponentTransform;
 			set => RootComponent.ComponentTransform = value;
@@ -148,15 +148,15 @@ namespace ZEngine.Engine.Game
 
 		public virtual void Move(float x, float y)
 		{
-			RootComponent.MoveLocal(new TVector2f(x, y));
+			RootComponent.MoveLocal(new Vector2(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			RootComponent.SetLocalPosition(new TVector2f(x, y));
+			RootComponent.SetLocalPosition(new Vector2(x, y));
 		}
 
-		public virtual void Move(TVector2f position)
+		public virtual void Move(Vector2 position)
 		{
 			RootComponent.MoveLocal(position);
 		}
@@ -174,20 +174,20 @@ namespace ZEngine.Engine.Game
 
 		public void ScaleActor(float x, float y)
 		{
-			RootComponent.ScaleLocal(new TVector2f(x, y));
+			RootComponent.ScaleLocal(new Vector2(x, y));
 		}
 
-		public void ScaleActor(TVector2f scale)
+		public void ScaleActor(Vector2 scale)
 		{
 			RootComponent.ScaleLocal(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			RootComponent.SetLocalScale(new TVector2f(x, y));
+			RootComponent.SetLocalScale(new Vector2(x, y));
 		}
 
-		public void ScaleAbsolute(TVector2f scale)
+		public void ScaleAbsolute(Vector2 scale)
 		{
 			RootComponent.SetLocalScale(scale);
 		}

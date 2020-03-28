@@ -111,7 +111,7 @@ namespace ZEngine.Engine.Physics
 			set => CollisionBody.BodyType = value ? BodyType.Dynamic : BodyType.Static;
 		}
 
-		public TVector2f Velocity
+		public Vector2 Velocity
 		{
 			get => PhysicsWorld.ToGameUnits(CollisionBody.LinearVelocity);
 			set
@@ -124,11 +124,11 @@ namespace ZEngine.Engine.Physics
 			}
 		}
 
-		private TVector2f _maxVelocity = new TVector2f(100.0f, 100.0f);
+		private Vector2 _maxVelocity = new Vector2(100.0f, 100.0f);
 		/// <summary>
 		/// Maximum Velocity of this Physics Actor. This limit is valid in both + direction as well as - direction.
 		/// </summary>
-		public TVector2f MaxVelocity
+		public Vector2 MaxVelocity
 		{
 			get => _maxVelocity;
 			set
@@ -139,10 +139,10 @@ namespace ZEngine.Engine.Physics
 			}
 		}
 
-		private TVector2f _acceleration = new TVector2f();
+		private Vector2 _acceleration = new Vector2();
 		/// <summary>
 		/// </summary>
-		public TVector2f Acceleration
+		public Vector2 Acceleration
 		{
 			get => _acceleration;
 			set
@@ -155,11 +155,11 @@ namespace ZEngine.Engine.Physics
 			}
 		}
 
-		private TVector2f _maxAcceleration = new TVector2f(100.0f, 100.0f);
+		private Vector2 _maxAcceleration = new Vector2(100.0f, 100.0f);
 		/// <summary>
 		/// Maximum Acceleration of this Physics Actor. This limit is valid in both + direction as well as - direction.
 		/// </summary>
-		public TVector2f MaxAcceleration
+		public Vector2 MaxAcceleration
 		{
 			get => _maxAcceleration;
 			set
@@ -252,7 +252,7 @@ namespace ZEngine.Engine.Physics
 			set => CollisionBody.Mass = value;
 		}
 
-		public override TVector2f LocalPosition
+		public override Vector2 LocalPosition
 		{
 			get => base.LocalPosition;
 			set

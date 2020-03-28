@@ -20,7 +20,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalPosition
+		public override Vector2 LocalPosition
 		{
 			get => _bar.Position;
 			set => base.LocalPosition = value;
@@ -36,7 +36,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalScale
+		public override Vector2 LocalScale
 		{
 			get => _bar.Scale;
 			set
@@ -46,7 +46,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f Origin
+		public override Vector2 Origin
 		{
 			get => _bar.Origin;
 			set
@@ -62,7 +62,7 @@ namespace ZEngine.Engine.Graphics
 			Bar.FillColor = barColor;
 		}
 
-		public BarComponent(TVector2f size, Color barColor)
+		public BarComponent(Vector2 size, Color barColor)
 		{
 			Bar = new RectangleShape(size);
 			Bar.FillColor = barColor;

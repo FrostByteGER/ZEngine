@@ -1,100 +1,56 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	<UseWindowsForms>true</UseWindowsForms>
+	<Platforms>x64</Platforms>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="AboutPopup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutPopup.Designer.cs">
-      <DependentUpon>AboutPopup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LevelView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LevelView.Designer.cs">
-      <DependentUpon>LevelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PopupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PopupForm.Designer.cs">
-      <DependentUpon>PopupForm.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SFMLRenderControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\ContentBrowser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\ContentBrowser.Designer.cs">
-      <DependentUpon>ContentBrowser.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="AboutPopup.resx">
-      <DependentUpon>AboutPopup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LevelView.resx">
-      <DependentUpon>LevelView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PopupForm.resx">
-      <DependentUpon>PopupForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\ContentBrowser.resx">
-      <DependentUpon>ContentBrowser.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\HotReloadIcon32.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\HotReloadIcon64.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\BuildIcon64.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\BuildIcon32.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\PlayIcon32.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\PlayIcon64.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\AudioAssetIcon64.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\AudioAssetIcon32.png" />
   </ItemGroup>
+  
   <ItemGroup>
     <None Include="Resources\ZENgine_Logo_1024.png" />
     <None Include="Resources\ZENgine_Logo_512.png" />
@@ -103,6 +59,11 @@
     <None Include="Resources\ZENgine_Logo_64.png" />
     <None Include="Resources\ZENgine_Logo_32.png" />
     <Content Include="ZENgine.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="DockPanelSuite.ThemeVS2015" Version="3.1.0-beta3" />
+    <PackageReference Include="WeifenLuo.WinFormsUI.Docking" Version="2.1.0" />
   </ItemGroup>
   
 </Project>

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using ZEngine.Engine.Services;
 
 namespace ZEngine.Engine.Localization
 {
-    public class LocalizationManager : ILocalizationManager, IService
+    public class LocalizationManager : ILocalizationManager
     {
         private LocalizationDatabase _db;
 
@@ -31,6 +30,16 @@ namespace ZEngine.Engine.Localization
         {
             throw new System.NotImplementedException();
         }
+
+        public void Initialize()
+        {
+            
+        }
+
+        public void Deinitialize()
+        {
+            
+        }
     }
 
     /// <summary>
@@ -41,8 +50,9 @@ namespace ZEngine.Engine.Localization
     /// </summary>
     public class Loca
     {
+        /*
         private static ILocalizationManager _localization;
-        private static ILocalizationManager Localization => _localization ?? (_localization = ServiceLocator.GetService<ILocalizationManager>());
+        private static ILocalizationManager Localization => _localization ?? (_localization = GlobalServiceLocator.GetService<ILocalizationManager>());
 
         public static string Get(string key)
         {
@@ -53,5 +63,6 @@ namespace ZEngine.Engine.Localization
         {
             return Localization.GetMany(keys);
         }
+        */
     }
 }

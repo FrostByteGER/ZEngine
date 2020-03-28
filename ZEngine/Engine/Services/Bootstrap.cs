@@ -1,19 +1,36 @@
-﻿using System.Diagnostics;
+﻿using ZEngine.Engine.Events;
 using ZEngine.Engine.IO;
 using ZEngine.Engine.Localization;
 using ZEngine.Engine.Messaging;
-using Debug = ZEngine.Engine.Utility.Debug;
+using ZEngine.Engine.Services.Locator;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Services
 {
     public class Bootstrap
     {
-        protected internal virtual void Setup()
+        internal void SetupInternal(EngineServiceLocator locator)
         {
             Debug.PrintToConsole = true;
-            ServiceLocator.RegisterService<IAssetManager>(new AssetManager());
-            ServiceLocator.RegisterService<ILocalizationManager>(new LocalizationManager());
-            ServiceLocator.RegisterService<IMessageBus>(new MessageBus());
+            locator.RegisterService<IAssetManager>(new AssetManager());
+            locator.RegisterService<ILocalizationManager>(new LocalizationManager());
+            locator.RegisterService<IMessageBus>(new MessageBus());
+            var engineMessageBus = new EngineMessageBus();
+            locator.RegisterService<IMessageBus>(engineMessageBus, EngineMessageBus.ServiceId);
+            locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
+            locator.RegisterService<IInputManager>(new InputManager(engineMessageBus));
+            Setup(locator);
+            InitializeServices(locator);
+        }
+
+        protected virtual void Setup(EngineServiceLocator locator)
+        {
+
+        }
+
+        private void InitializeServices(EngineServiceLocator locator)
+        {
+            locator.InitializeServices();
         }
     }
 }

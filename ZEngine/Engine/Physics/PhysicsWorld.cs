@@ -13,9 +13,9 @@ namespace ZEngine.Engine.Physics
 
 		public bool CanTick { get; set; } = true;
 
-		private TVector2f _gravity = ToPhysicsUnits(new TVector2f(0.0f, 9.81f));
+		private Vector2 _gravity = ToPhysicsUnits(new Vector2(0.0f, 9.81f));
 
-		public TVector2f Gravity
+		public Vector2 Gravity
 		{
 			get => World != null ? ToGameUnits(World.Gravity) : ToGameUnits(_gravity);
 			set
@@ -51,22 +51,22 @@ namespace ZEngine.Engine.Physics
 		}
 
 
-		public PhysicsWorld() : this(new TVector2f(0.0f, 9.81f))
+		public PhysicsWorld() : this(new Vector2(0.0f, 9.81f))
 		{
 		}
 
-		public PhysicsWorld(float x, float y) : this(new TVector2f(x, y))
+		public PhysicsWorld(float x, float y) : this(new Vector2(x, y))
 		{
 		}
 
-		public PhysicsWorld(TVector2f gravity)
+		public PhysicsWorld(Vector2 gravity)
 		{
 			GameToPhysicsUnitsRatio = GameToPhysicsUnitsRatio;
 			Gravity = gravity;
 			World = new World(Gravity);
 		}
 
-		public PhysicsWorld(TVector2f gravity, float gameToPhysicsUnitsRatio)
+		public PhysicsWorld(Vector2 gravity, float gameToPhysicsUnitsRatio)
 		{
 			GameToPhysicsUnitsRatio = gameToPhysicsUnitsRatio;
 			Gravity = gravity;
@@ -105,7 +105,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="rectHalfExtents">Size of the Collision Components Collision Rectangle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, bool forceStayAwake = false)
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, Vector2 rectHalfExtents, BodyType bodyType, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -140,7 +140,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
+		public CollisionComponent ConstructRectangleCollisionComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, Vector2 rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -151,7 +151,7 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateRectangle(World, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new TVector2f(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateRectangle(World, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new Vector2(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
@@ -175,7 +175,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="rectHalfExtents">Size of the Collision Components Collision Rectangle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, bool forceStayAwake = true)
+		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, Vector2 rectHalfExtents, BodyType bodyType, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -210,7 +210,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, TVector2f rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
+		public OverlapComponent ConstructRectangleOverlapComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, Vector2 rectHalfExtents, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -221,7 +221,7 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateRectangle(World, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new TVector2f(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateRectangle(World, ToPhysicsUnits(rectHalfExtents.X * 2.0f), ToPhysicsUnits(rectHalfExtents.Y * 2.0f), mass, new Vector2(), ToPhysicsUnits(EngineMath.DegreesToRadians(angle)), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
 			comp.ComponentBounds = rectHalfExtents;
 			comp.SetLocalPosition(position);
@@ -245,7 +245,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="circleRadius">Radius of the Collision Components Collision Circle.</param>
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = false)
+		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -256,13 +256,13 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new Vector2(), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
-			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
+			comp.ComponentBounds = new Vector2(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
 			comp.SetLocalScale(scale);
-			comp.Origin = new TVector2f(circleRadius);
+			comp.Origin = new Vector2(circleRadius);
 			return comp;
 		}
 
@@ -280,7 +280,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="collisionType">Collision Type of the Collision Component.</param>
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <returns></returns>
-		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
+		public CollisionComponent ConstructCircleCollisionComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = false)
 		{
 			var comp = new CollisionComponent();
 			if (asRootComponent)
@@ -291,13 +291,13 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new Vector2(), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
-			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
+			comp.ComponentBounds = new Vector2(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
 			comp.SetLocalScale(scale);
-			comp.Origin = new TVector2f(circleRadius);
+			comp.Origin = new Vector2(circleRadius);
 			comp.CollisionType = collisionType;
 			comp.CollisionResponseChannels = collisionResponseChannels;
 			return comp;
@@ -316,7 +316,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="bodyType">Type of the Collision Component Collision Body.</param>
 		/// <param name="forceStayAwake">Wether this OverlapComponent can sleep(receive no Collision Detection and Gravity influence) if no forces act upon it or not. Fakse will force the object to stay awake at all times no matter what.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = true)
+		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, float circleRadius, BodyType bodyType, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -327,13 +327,13 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new Vector2(), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
-			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
+			comp.ComponentBounds = new Vector2(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
 			comp.SetLocalScale(scale);
-			comp.Origin = new TVector2f(circleRadius);
+			comp.Origin = new Vector2(circleRadius);
 			return comp;
 		}
 
@@ -352,7 +352,7 @@ namespace ZEngine.Engine.Physics
 		/// <param name="collisionResponseChannels">To which Collision Types this Collision Component reacts to.</param>
 		/// <param name="forceStayAwake">Wether this OverlapComponent can sleep(receive no Collision Detection and Gravity influence) if no forces act upon it or not. Fakse will force the object to stay awake at all times no matter what.</param>
 		/// <returns></returns>
-		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, TVector2f position, float angle, TVector2f scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
+		public OverlapComponent ConstructCircleOverlapComponent(Actor parent, bool asRootComponent, Vector2 position, float angle, Vector2 scale, float mass, float circleRadius, BodyType bodyType, Category collisionType, Category collisionResponseChannels, bool forceStayAwake = true)
 		{
 			var comp = new OverlapComponent();
 			if (asRootComponent)
@@ -363,13 +363,13 @@ namespace ZEngine.Engine.Physics
 			{
 				parent.AddComponent(comp);
 			}
-			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new TVector2f(), bodyType, comp);
+			comp.CollisionBody = BodyFactory.CreateCircle(World, ToPhysicsUnits(circleRadius), mass, new Vector2(), bodyType, comp);
 			comp.CollisionBody.SleepingAllowed = !forceStayAwake;
-			comp.ComponentBounds = new TVector2f(circleRadius * 2.0f);
+			comp.ComponentBounds = new Vector2(circleRadius * 2.0f);
 			comp.SetLocalPosition(position);
 			comp.SetLocalRotation(angle);
 			comp.SetLocalScale(scale);
-			comp.Origin = new TVector2f(circleRadius);
+			comp.Origin = new Vector2(circleRadius);
 			comp.CollisionType = collisionType;
 			comp.CollisionResponseChannels = collisionResponseChannels;
 			return comp;
@@ -385,16 +385,16 @@ namespace ZEngine.Engine.Physics
 			World.Clear();
 		}
 
-		public static TVector2f ToGameUnits(TVector2f physicsUnits)
+		public static Vector2 ToGameUnits(Vector2 physicsUnits)
 		{
 			physicsUnits.X = ConvertUnits.ToDisplayUnits(physicsUnits.X);
 			physicsUnits.Y = ConvertUnits.ToDisplayUnits(physicsUnits.Y);
 			return physicsUnits;
 		}
 
-		public static TVector2f ToGameUnits(float physicsUnitX, float physicsUnitY)
+		public static Vector2 ToGameUnits(float physicsUnitX, float physicsUnitY)
 		{
-			return new TVector2f
+			return new Vector2
 			{
 				X = ConvertUnits.ToDisplayUnits(physicsUnitX),
 				Y = ConvertUnits.ToDisplayUnits(physicsUnitY)
@@ -406,16 +406,16 @@ namespace ZEngine.Engine.Physics
 			return ConvertUnits.ToDisplayUnits(physicsUnit);
 		}
 
-		public static TVector2f ToPhysicsUnits(TVector2f gameUnits)
+		public static Vector2 ToPhysicsUnits(Vector2 gameUnits)
 		{
 			gameUnits.X = ConvertUnits.ToSimUnits(gameUnits.X);
 			gameUnits.Y = ConvertUnits.ToSimUnits(gameUnits.Y);
 			return gameUnits;
 		}
 
-		public static TVector2f ToPhysicsUnits(float gameUnitX, float gameUnitY)
+		public static Vector2 ToPhysicsUnits(float gameUnitX, float gameUnitY)
 		{
-			return new TVector2f
+			return new Vector2
 			{
 				X = ConvertUnits.ToSimUnits(gameUnitX),
 				Y = ConvertUnits.ToSimUnits(gameUnitY)

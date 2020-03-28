@@ -1,27 +1,24 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Newtonsoft.Json;
-using SFML.Graphics;
-using SFML.System;
-using SFML.Window;
-using ZEngine.Engine.Graphics;
+using Silk.NET.Input.Common;
 using ZEngine.Engine.IO;
-using ZEngine.Engine.JUI;
-using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
-    public class PlayerController : Transformable, ITickable, IControllable
+    public class PlayerController : Transform, ITickable, IControllable
     {
 
 	    public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
-        public View PlayerCamera { get; set; } = new View(new TVector2f(), new TVector2f(400.0f));
+        public View PlayerCamera { get; set; }
 
 		public Level LevelReference { get; set; } = null;
 
-        public SpriteActor PlayerPawn { get; set; }
+        public Actor PlayerPawn { get; set; }
 
-		public JGUI Hud { get; set; }
+		//public JGUI Hud { get; set; }
 
 	    [JsonIgnore]
 		public InputManager Input { get; set; }
@@ -41,11 +38,11 @@ namespace ZEngine.Engine.Game
 				
 				if (!value && LevelReference != null && LevelReference.LevelLoaded)
 				{
-					UnregisterInput();
+					//UnregisterInput();
 				}
 				else if (!_isActive && LevelReference != null && LevelReference.LevelLoaded)
 				{
-					RegisterInput();
+					//RegisterInput();
 				}
 
 				_isActive = value;
@@ -56,107 +53,10 @@ namespace ZEngine.Engine.Game
         {
         }
 
-        public PlayerController(SpriteActor playerPawn)
+        public PlayerController(Actor playerPawn)
         {
             PlayerPawn = playerPawn;
         }
-
-        public virtual void RegisterInput()
-        {
-	        Input = LevelReference.EngineReference.InputManager;
-			Input.RegisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled, 
-				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
-				OnTouchBegan, OnTouchEnded, OnTouchMoved);
-			if (Hud != null)
-			{
-				Hud.InputManager = Input;
-				Hud.LevelRef = LevelReference;
-
-			};
-		}
-
-		public virtual void UnregisterInput()
-		{
-			Input = LevelReference.EngineReference.InputManager;
-			Input.UnregisterInput(OnMouseButtonPressed, OnMouseButtonReleased, OnMouseMoved, OnMouseScrolled,
-				OnKeyPressed, OnKeyDown, OnKeyReleased, OnJoystickConnected, OnJoystickDisconnected, OnJoystickButtonPressed, OnJoystickButtonReleased, OnJoystickMoved,
-				OnTouchBegan, OnTouchEnded, OnTouchMoved);
-		}
-
-		public virtual void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Button Pressed: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
-		}
-
-	    public virtual void OnMouseButtonReleased(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Button Released: " + mouseButtonEventArgs.Button + " at X: " + mouseButtonEventArgs.X + " Y: " + mouseButtonEventArgs.Y);
-		}
-
-	    public virtual void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Moved to X: " + mouseMoveEventArgs.X + " Y: " + mouseMoveEventArgs.Y);
-		}
-
-	    public virtual void OnMouseScrolled(object sender, MouseWheelScrollEventArgs mouseWheelScrollEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Mouse Scrolled Wheel: " + mouseWheelScrollEventArgs.Wheel + " at X: " + mouseWheelScrollEventArgs.X + " Y: " + mouseWheelScrollEventArgs.Y + " by Scroll Amount: " + mouseWheelScrollEventArgs.Delta);
-		}
-
-	    public virtual void OnKeyPressed(object sender, KeyEventArgs keyEventArgs)
-        {
-           //Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Keyboard Key Pressed: " + keyEventArgs.Code);
-		}
-
-		public virtual void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Keyboard Key Pressed: " + keyEventArgs.Code);
-		}
-
-		public virtual void OnKeyReleased(object sender, KeyEventArgs keyEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Keyboard Key Released: " + keyEventArgs.Code);
-		}
-
-	    public virtual void OnJoystickConnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Connected: JoystickID: " + joystickConnectEventArgs.JoystickId);
-		}
-
-	    public virtual void OnJoystickDisconnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Disconnected: JoystickID: " + joystickConnectEventArgs.JoystickId);
-		}
-
-	    public virtual void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
-		{
-			Console.WriteLine("PlayerController: " + Name + "-" + PlayerPawn.ActorID + " Input Event: Joystick Button Pressed: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
-		}
-
-	    public virtual void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Joystick Button Released: JoystickID: " + joystickButtonEventArgs.JoystickId + " Button: " + joystickButtonEventArgs.Button);
-		}
-
-	    public virtual void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs)
-		{
-			Console.WriteLine("PlayerController: " + Name + "-" + PlayerPawn.ActorID + " Input Event: Joystick Moved: JoystickID: " + joystickMoveEventArgs.JoystickId + " Axis: " + joystickMoveEventArgs.Axis + " to Position: " + joystickMoveEventArgs.Position);
-		}
-
-	    public virtual void OnTouchBegan(object sender, TouchEventArgs touchEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Pressed: Finger: " + touchEventArgs.Finger + " at X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
-
-	    public virtual void OnTouchEnded(object sender, TouchEventArgs touchEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Released: Finger: " + touchEventArgs.Finger + " at X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
-
-	    public virtual void OnTouchMoved(object sender, TouchEventArgs touchEventArgs)
-		{
-			//Console.WriteLine("PlayerController: " + Name + "-" + ActorID + " Input Event: Touch Moved: Finger: " + touchEventArgs.Finger + " to X: " + touchEventArgs.X + " Y: " + touchEventArgs.Y);
-		}
 
         protected internal virtual void Tick(float deltaTime)
         {
@@ -190,17 +90,157 @@ namespace ZEngine.Engine.Game
 
         protected internal void SetCameraSize(float x, float y)
 	    {
-		    PlayerCamera.Size = new Vector2f(x, y);
+		    //PlayerCamera.Size = new Vector2(x, y);
 	    }
 
         protected internal void SetCameraSize(float size)
 		{
-			PlayerCamera.Size = new Vector2f(size, size);
+			//PlayerCamera.Size = new Vector2(size, size);
 		}
 
-        protected internal void SetCameraSize(TVector2f size)
+        protected internal void SetCameraSize(Vector2 size)
 		{
-			PlayerCamera.Size = size;
+			//PlayerCamera.Size = size;
 		}
-	}
+
+		public void OnMouseButtonPressed(object sender, MouseButton button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnMouseButtonReleased(object sender, MouseButton button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnMouseButtonClicked(object sender, MouseButton button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnMouseButtonDoubleClicked(object sender, MouseButton button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnMouseMoved(object sender, PointF coords)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnMouseScrolled(object sender, ScrollWheel scrollArgs)
+		{
+			throw new NotImplementedException();
+		}
+
+        public void OnMouseConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMouseDisconnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyDown(object sender, Key key)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnKeyReleased(object sender, Key key)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGamepadButtonPressed(object sender, Button button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGamepadButtonReleased(object sender, Button button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGamepadThumbstickMoved(object sender, Thumbstick stick)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnGamepadTriggerMoved(object sender, Trigger trigger)
+		{
+			throw new NotImplementedException();
+		}
+
+        public void OnGamepadConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGamepadDisconnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnJoystickButtonPressed(object sender, Button button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnJoystickButtonReleased(object sender, Button button)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnJoystickMoved(object sender, Axis axisArgs)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnJoystickHatMoved(object sender, Hat hatArgs)
+		{
+			throw new NotImplementedException();
+		}
+
+        public void OnJoystickConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnJoystickDisconnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDeviceDisconnected()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnDeviceConnected()
+		{
+			throw new NotImplementedException();
+		}
+
+        public void OnKeyDown(object sender, Key key, int code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyReleased(object sender, Key key, int code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyboardConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnKeyboardDisconnected()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

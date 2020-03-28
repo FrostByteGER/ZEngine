@@ -20,26 +20,26 @@ namespace ZEngine.Engine.IO
         {
             if (_registryConnection != null)
             {
-                Debug.LogWarning("Connection to Asset Database already established!", DebugCategories.Engine);
+                Debug.LogWarning("Connection to Asset Database already established!", DebugLogCategories.Engine);
                 return;
             }
 
             var dbMissing = File.Exists(DatabaseName + DatabaseFileExtension);
 
             if(dbMissing)
-                Debug.LogWarning("Asset Registry Database does not exist!", DebugCategories.Engine);
+                Debug.LogWarning("Asset Registry Database does not exist!", DebugLogCategories.Engine);
 
             _registryConnection = new SQLiteConnection($"Data Source = {DatabaseName + DatabaseFileExtension}; Version = 3; FailIfMissing = {dbMissing}");
             _registryConnection.Open();
 
             if (dbMissing)
             {
-                //TODO: PRefill with table data!
-                Debug.Log("Sucessfully created and connected to Asset Registry Database", DebugCategories.Engine);
+                //TODO: Prefill with table data!
+                Debug.Log("Sucessfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
             }
             else
             {
-                Debug.Log("Sucessfully connected to Asset Registry Database", DebugCategories.Engine);
+                Debug.Log("Sucessfully connected to Asset Registry Database", DebugLogCategories.Engine);
             }
                 
         }

@@ -12,7 +12,7 @@ namespace ZEngine.Engine.JUI
 			Container.Layout = this;
 		}
 
-		protected void setElementSizeAndPosition(int eindex, Vector2f p, Vector2f s)
+		protected void setElementSizeAndPosition(int eindex, Vector2 p, Vector2 s)
 		{
 
 			Container.Elements[eindex].ReSize(p + Container.Margin.GetSizeWithDistanceTopLeft(s), s - (Container.Margin.GetSizeWithDistanceTopLeft(s) + Container.Margin.GetSizeWithDistanceBottemRight(s)));
@@ -21,15 +21,15 @@ namespace ZEngine.Engine.JUI
 
 		public virtual void ReSize()
 		{
-			Vector2f size = new Vector2f(Container.Box.Size.X, Container.Box.Size.Y/ Container.Elements.Count);
+			Vector2 size = new Vector2(Container.Box.Size.X, Container.Box.Size.Y/ Container.Elements.Count);
 
 			for (int i = 0; i < Container.Elements.Count; i++)
 			{
 				if (Container.Elements[i] != null)
 				{
-					//Container.Elements[i].ReSize(Container.Box.Position + new Vector2f(0, size.Y * i), size);
+					//Container.Elements[i].ReSize(Container.Box.Position + new Vector2(0, size.Y * i), size);
 
-					setElementSizeAndPosition(i, Container.Box.Position + new Vector2f(0, size.Y * i), size);
+					setElementSizeAndPosition(i, Container.Box.Position + new Vector2(0, size.Y * i), size);
 				}
 			}
 		}

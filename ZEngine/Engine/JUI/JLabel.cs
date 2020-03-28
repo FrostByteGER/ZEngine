@@ -20,13 +20,13 @@ namespace ZEngine.Engine.JUI
 			Text.FillColor = gui.DefaultTextColor;
 		}
 
-		public override void setPosition(Vector2f Position)
+		public override void setPosition(Vector2 Position)
 		{
 			base.setPosition(Position);
 			Text.Position = Position;
 		}
 
-		public override void setSize(Vector2f Size)
+		public override void setSize(Vector2 Size)
 		{
 			base.setSize(Size);
 		}
@@ -37,7 +37,7 @@ namespace ZEngine.Engine.JUI
 			ReSize();
 		}
 
-		public override void ReSize(Vector2f position, Vector2f size)
+		public override void ReSize(Vector2 position, Vector2 size)
 		{
 			base.ReSize(position, size);
 			FloatRect textSize = Text.GetLocalBounds();
@@ -54,14 +54,14 @@ namespace ZEngine.Engine.JUI
 			}
 			*/
 			/*
-			Text.Scale = new Vector2f((size.X / textSize.Width),(size.Y / textSize.Height));
+			Text.Scale = new Vector2((size.X / textSize.Width),(size.Y / textSize.Height));
 
 			textSize = Text.GetLocalBounds();
 			*/
 
-			Text.Position = new Vector2f(position.X + size.X / 2f - textSize.Width / 2f, position.Y + size.Y / 2f - textSize.Height / 2f);
+			Text.Position = new Vector2(position.X + size.X / 2f - textSize.Width / 2f, position.Y + size.Y / 2f - textSize.Height / 2f);
 
-			Text.Origin = new Vector2f(Text.GetLocalBounds().Left, Text.GetLocalBounds().Top);
+			Text.Origin = new Vector2(Text.GetLocalBounds().Left, Text.GetLocalBounds().Top);
 		}
 
 		public override void Draw(RenderTarget target, RenderStates states)

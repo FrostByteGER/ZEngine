@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using Newtonsoft.Json;
-using SFML.Graphics;
-using SFML.System;
 using ZEngine.Engine.Events;
-using ZEngine.Engine.Graphics;
-using ZEngine.Engine.Physics;
+using ZEngine.Engine.Events.Messages;
+using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
@@ -22,14 +21,16 @@ namespace ZEngine.Engine.Game
 	    [JsonProperty()]
 		private List<Actor> _actors = new List<Actor>();
 
-	    [JsonIgnore]
+        private IMessageBus _bus;
+
+        [JsonIgnore]
 	    internal ReadOnlyCollection<Actor> Actors => new ReadOnlyCollection<Actor>(_actors);
 
 	    /// <summary>
 	    /// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
 	    /// </summary>
-	    public TVector2f LevelBounds { get; set; } = new TVector2f(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
-
+	    public Vector2 LevelBounds { get; set; } = new Vector2(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
+		/*
 		/// <summary>
 		/// Dummy Object for efficient Collision Debug Drawing.
 		/// </summary>
@@ -37,15 +38,17 @@ namespace ZEngine.Engine.Game
 		/// <summary>
 		/// Dummy Object for efficient Collision Debug Drawing.
 		/// </summary>
-		public static RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2f(10.0f,10.0f));
-
+		public static RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2(10.0f,10.0f));
+		*/
 	    [JsonIgnore]
 		public Core.Engine EngineReference { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
 
+		/*
 	    [JsonIgnore]
 		public PhysicsWorld PhysicsWorld { get; private set; } = new PhysicsWorld();
+		*/
 
 	    public bool LevelLoaded { get; set; } = false;
 		internal bool LevelTicking { get; set; } = false;
@@ -71,7 +74,8 @@ namespace ZEngine.Engine.Game
 	    protected internal virtual void InitLevel()
 	    {
 		    Console.WriteLine("Initiating Level " + LevelID);
-	    }
+            _bus = EngineReference.GetService<IMessageBus>(EngineMessageBus.ServiceId);
+        }
 
 
         protected internal virtual void LevelTick(float deltaTime)
@@ -81,7 +85,7 @@ namespace ZEngine.Engine.Game
 			{
 				if (!pc.CanTick) continue;
 				pc.Tick(deltaTime);
-			    pc.Hud?.Tick(deltaTime);
+			    //pc.Hud?.Tick(deltaTime);
 			}
 			foreach (var actor in _actors)
             {
@@ -92,11 +96,11 @@ namespace ZEngine.Engine.Game
 	        if (TimerManager.CanTick) TimerManager.Tick(deltaTime);
         }
 
-        protected internal virtual void LevelDraw(ref RenderWindow renderWindow)
+        protected internal virtual void LevelDraw()
         {
 			foreach (var pc in Players)
 	        {
-				
+				/*
 				renderWindow.SetView(pc.PlayerCamera);
 				// TODO: Evaluate Performance!
 				var drawableActors = _actors.FindAll(a => a.Visible).OrderByDescending(a => a.LayerID);
@@ -110,7 +114,9 @@ namespace ZEngine.Engine.Game
 						renderWindow.Draw(comp);
 					}
 				}
-				if (pc.Hud != null) renderWindow.Draw(pc.Hud);
+				if (pc.Hud != null)
+				renderWindow.Draw(pc.Hud);
+				*/
 			}
 		}
 
@@ -149,7 +155,7 @@ namespace ZEngine.Engine.Game
 	    {
 		    LevelTicking = false;
 		    LevelPaused = true;
-		    PhysicsWorld.CanTick = false;
+		    //PhysicsWorld.CanTick = false;
 			GameMode.OnGamePause();
 			foreach (var pc in Players)
 			{
@@ -166,7 +172,7 @@ namespace ZEngine.Engine.Game
 	    {
 		    LevelPaused = false;
 		    LevelTicking = true;
-		    PhysicsWorld.CanTick = true;
+		    //PhysicsWorld.CanTick = true;
 			GameMode.OnGameResume();
 			foreach (var pc in Players)
 			{
@@ -203,7 +209,7 @@ namespace ZEngine.Engine.Game
 
 		    UnregisterActors();
 			UnregisterPlayers();
-			PhysicsWorld.ShutdownPhysicsEngine();
+			//PhysicsWorld.ShutdownPhysicsEngine();
 			Dispose();
 	    }
 
@@ -242,7 +248,7 @@ namespace ZEngine.Engine.Game
 		public T SpawnActor<T>() where T : Actor
 		{
 			var actor = Spawner.SpawnObject<T>(this);
-			Core.Engine.Instance.RegisterEvent(new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this)));
+			_bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
 			return actor;
 		}
 
@@ -255,7 +261,7 @@ namespace ZEngine.Engine.Game
 		{
 			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
 			var actor = Spawner.SpawnObject(actorType, this) as Actor;
-			Core.Engine.Instance.RegisterEvent(new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this)));
+            _bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
 			return actor;
 		}
 
@@ -266,12 +272,12 @@ namespace ZEngine.Engine.Game
 		/// <param name="instigator"></param>
 		public void SpawnActorDeferred<T>(Actor instigator) where T : Actor
 		{
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this)));
+            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this))));
 		}
 
 		public void SpawnActorDeferred<T>() where T : Actor
 		{
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this)));
+            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this))));
 		}
 
 		/// <summary>
@@ -281,8 +287,9 @@ namespace ZEngine.Engine.Game
 		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Actor instigator, Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this)));
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+                return;
+            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this))));
 		}
 
 		/// <summary>
@@ -291,13 +298,15 @@ namespace ZEngine.Engine.Game
 		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return;
-			Core.Engine.Instance.RegisterEvent(new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this)));
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+                return;
+            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this))));
 		}
 
 		public void RegisterActor(Actor actor)
 		{
-			if (ContainsActorInLevel(actor)) return;
+			if (ContainsActorInLevel(actor)) 
+                return;
 			actor.ActorID = ActorIDCounter;
 			++ActorIDCounter;
 			actor.LevelID = LevelID;
@@ -315,11 +324,13 @@ namespace ZEngine.Engine.Game
 				actor.OnActorDestroy();
 				foreach (var comp in actor.Components)
 				{
+					/*
 					var physComp = comp as PhysicsComponent;
 					if (physComp != null)
 					{
 						PhysicsWorld.UnregisterPhysicsComponent(physComp);
 					}
+					*/
 				}
 			}
 		    _actors.Clear();
@@ -332,11 +343,13 @@ namespace ZEngine.Engine.Game
 			var removal = _actors.Remove(actor);
 			foreach (var comp in actor.Components)
 			{
+				/*
 				var physComp = comp as PhysicsComponent;
 				if (physComp != null)
 				{
 					PhysicsWorld.UnregisterPhysicsComponent(physComp);
 				}
+				*/
 			}
 			return removal;
 		}
@@ -409,12 +422,12 @@ namespace ZEngine.Engine.Game
 
 		public void DestroyActor(Actor instigator, Actor actor)
 	    {
-			Core.Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actor)));
+            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actor))));
 		}
 
 		public void DestroyActor(Actor actor)
 		{
-			Core.Engine.Instance.RegisterEvent(new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor)));
+            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor))));
 		}
 
 		/// <summary>
@@ -496,7 +509,7 @@ namespace ZEngine.Engine.Game
 
 	    public override bool Equals(object obj)
 	    {
-		    if (ReferenceEquals(null, obj)) return false;
+		    if (obj is null) return false;
 		    if (ReferenceEquals(this, obj)) return true;
 		    return obj.GetType() == this.GetType() && Equals((Level) obj);
 	    }

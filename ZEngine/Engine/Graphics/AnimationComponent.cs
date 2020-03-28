@@ -16,12 +16,12 @@ namespace ZEngine.Engine.Graphics
 			set
 			{
 				_activeAnimSprite = value;
-				Origin = new TVector2f(ActiveAnimSprite.FrameWidth / 2.0f, ActiveAnimSprite.FrameHeight / 2.0f); // TODO: DOES NOT RESPECT SCALING
+				Origin = new Vector2(ActiveAnimSprite.FrameWidth / 2.0f, ActiveAnimSprite.FrameHeight / 2.0f); // TODO: DOES NOT RESPECT SCALING
 				ComponentBounds = Origin;
 			}
 		}
 
-		public override TVector2f LocalPosition
+		public override Vector2 LocalPosition
 		{
 			get => ActiveAnimSprite.Position;
 			set => base.LocalPosition = value;
@@ -37,7 +37,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalScale
+		public override Vector2 LocalScale
 		{
 			get => ActiveAnimSprite.Scale;
 			set
@@ -47,7 +47,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f Origin
+		public override Vector2 Origin
 		{
 			get => ActiveAnimSprite.Origin;
 			set

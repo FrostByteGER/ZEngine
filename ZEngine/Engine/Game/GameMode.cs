@@ -1,4 +1,5 @@
 ﻿using System;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
@@ -15,7 +16,7 @@ namespace ZEngine.Engine.Game
 
 	    protected internal virtual void OnGameStart()
 	    {
-			Console.WriteLine("Game Started!");
+			Debug.Log("Game Started!");
 		}
 
         protected internal virtual void OnGamePause()

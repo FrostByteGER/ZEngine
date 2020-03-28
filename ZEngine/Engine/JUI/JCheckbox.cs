@@ -92,7 +92,7 @@ namespace ZEngine.Engine.JUI
 			Execute();
 		}
 
-		public override void ReSize(Vector2f position, Vector2f size)
+		public override void ReSize(Vector2 position, Vector2 size)
 		{
 			base.ReSize(position, size);
 		}

@@ -7,9 +7,9 @@ namespace ZEngine.Engine.Graphics.ParticleSystems
 
 	public class Particle
 	{
-		public TVector2f Position { get; set; }
+		public Vector2 Position { get; set; }
 		public float Rotation { get; set; }
-		public TVector2f Scale { get; set; }
+		public Vector2 Scale { get; set; }
 		public float CurrentLifeTime { get; set; }
 		public Color ParticleColor { get; set; }
 
@@ -17,9 +17,9 @@ namespace ZEngine.Engine.Graphics.ParticleSystems
 
 	public class ParticleSystem : ITickable
 	{
-		public TVector2f Position { get; set; } = new TVector2f();
+		public Vector2 Position { get; set; } = new Vector2();
 		public float Rotation { get; set; } = 0.0f;
-		public TVector2f Scale { get; set; } = new TVector2f(1.0f, 1.0f);
+		public Vector2 Scale { get; set; } = new Vector2(1.0f, 1.0f);
 
 		public float MaxLifeTime { get; set; } = 1.0f;
 

@@ -9,14 +9,14 @@ namespace ZEngine.Engine.JUI
 		public float Left { get; set; } = 0.0f;
 		public float Right { get; set; } = 0.0f;
 
-		public Vector2f GetSizeWithDistanceTopLeft(Vector2f size)
+		public Vector2 GetSizeWithDistanceTopLeft(Vector2 size)
 		{
-			return new Vector2f(size.X * Left, size.Y * Top);
+			return new Vector2(size.X * Left, size.Y * Top);
 		}
 
-		public Vector2f GetSizeWithDistanceBottemRight(Vector2f size)
+		public Vector2 GetSizeWithDistanceBottemRight(Vector2 size)
 		{
-			return new Vector2f(size.X * Right, size.Y * Bottem);
+			return new Vector2(size.X * Right, size.Y * Bottem);
 		}
 
 		public void setAll(float value)

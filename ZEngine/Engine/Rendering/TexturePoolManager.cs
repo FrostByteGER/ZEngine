@@ -1,10 +1,10 @@
-﻿using SFML.Graphics;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Collections.ObjectModel;
+using ZEngine.Engine.IO;
 using ZEngine.Engine.Utility;
 
-namespace ZEngine.Engine.IO
+namespace ZEngine.Engine.Rendering
 {
 	public class TexturePoolManager
 	{
@@ -30,7 +30,7 @@ namespace ZEngine.Engine.IO
 		{
 			foreach (var item in _texturePool)
 			{
-				item.Value.Dispose();
+				//item.Value.Dispose();
 			}
 			_texturePool.Clear();
 		}
@@ -49,23 +49,8 @@ namespace ZEngine.Engine.IO
 			_texturePool.Add(textureName, t);
 			return t;
 		}
-
-		public Texture LoadTexture(string textureName, IntRect textureArea)
-		{
-			Texture t;
-			if (_texturePool.TryGetValue(textureName, out t)) return t;
-			if (_texturePool.Count > PoolSize) PoolSize += PoolSizeAutoIncrementSize;
-			if (PoolSize > PoolSizeHardLimit)
-			{
-				PoolSize = PoolSize.Clamp<uint>(0, PoolSizeHardLimit);
-				throw new OverflowException("Pool-Size: " + PoolSize + " exceeded Hard Limit: " + PoolSizeHardLimit);
-			}
-			t = new Texture(textureName);
-			_texturePool.Add(textureName, t);
-			return t;
-		}
-
-		public bool SaveTexture(string textureName)
+		/*
+        public bool SaveTexture(string textureName)
 		{
 			Texture t;
 			_texturePool.TryGetValue(textureName, out t);
@@ -81,5 +66,6 @@ namespace ZEngine.Engine.IO
 		{
 			return renderTexture.Texture.CopyToImage().SaveToFile(textureName);
 		}
+		*/
 	}
 }

@@ -14,12 +14,12 @@ namespace ZEngine.Engine.Graphics
 			set
 			{
 				_sprite = value;
-				Origin = new TVector2f(Sprite.GetGlobalBounds().Width / 2.0f, Sprite.GetGlobalBounds().Height / 2.0f);
+				Origin = new Vector2(Sprite.GetGlobalBounds().Width / 2.0f, Sprite.GetGlobalBounds().Height / 2.0f);
 				ComponentBounds = Origin;
 			}
 		}
 
-		public override TVector2f LocalPosition
+		public override Vector2 LocalPosition
 		{
 			get => Sprite.Position;
 			set => base.LocalPosition = value;
@@ -35,7 +35,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalScale
+		public override Vector2 LocalScale
 		{
 			get => Sprite.Scale;
 			set
@@ -45,7 +45,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f Origin
+		public override Vector2 Origin
 		{
 			get => Sprite.Origin;
 			set

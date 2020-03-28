@@ -1,5 +1,5 @@
 ﻿using System;
-using ZEngine.Engine.Utility;
+using System.Numerics;
 
 namespace ZEngine.Engine.Game
 {
@@ -10,13 +10,13 @@ namespace ZEngine.Engine.Game
 		public Actor ParentActor { get; internal set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
-		public TTransformable ComponentTransform { get; set; } = new TTransformable();
+		public Transform ComponentTransform { get; set; } = new Transform();
 
-		public TTransformable WorldTransform => IsRootComponent ? ComponentTransform : ParentActor.ActorTransform + ComponentTransform;
+		public Transform WorldTransform { get; } //=> IsRootComponent ? ComponentTransform : ParentActor.ActorTransform + ComponentTransform;
 
 		public bool CanTick { get; set; } = true;
 
-		public virtual TVector2f LocalPosition
+		public virtual Vector2 LocalPosition
 		{
 			get => ComponentTransform.Position;
 			set => ComponentTransform.Position = value;
@@ -28,25 +28,25 @@ namespace ZEngine.Engine.Game
 			set => ComponentTransform.Rotation = value;
 		}
 
-		public virtual TVector2f LocalScale
+		public virtual Vector2 LocalScale
 		{
 			get => ComponentTransform.Scale;
 			set => ComponentTransform.Scale = value;
 		}
 
-		public virtual TVector2f Origin
+		public virtual Vector2 Origin
 		{
 			get => ComponentTransform.Origin;
 			set => ComponentTransform.Origin = value;
 		}
 
-		public virtual TVector2f ComponentBounds { get; set; }
+		public virtual Vector2 ComponentBounds { get; set; }
 
-		public TVector2f WorldPosition
+		public Vector2 WorldPosition
 		{
-			get => IsRootComponent ? (TVector2f)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
-			set => LocalPosition = ComponentTransform.InverseTransform * value;
-		}
+			get => IsRootComponent ? (Vector2)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
+            set => LocalPosition = new Vector2(); //ComponentTransform.InverseTransform * value;
+        }
 
 		public virtual bool Movable { get; set; }
 
@@ -93,40 +93,40 @@ namespace ZEngine.Engine.Game
 
 		public virtual void MoveLocal(float x, float y)
 		{
-			LocalPosition += new TVector2f(x, y);
+			LocalPosition += new Vector2(x, y);
 		}
 
-		public void MoveWorld(TVector2f position)
+		public void MoveWorld(Vector2 position)
 		{
 			throw new NotImplementedException();
 		}
 
 		public void SetLocalPosition(float x, float y)
 		{
-			LocalPosition = new TVector2f(x, y);
+			LocalPosition = new Vector2(x, y);
 		}
 
-		public virtual void MoveLocal(TVector2f position)
+		public virtual void MoveLocal(Vector2 position)
 		{
 			LocalPosition += position;
 		}
 
 		public void MoveWorld(float x, float y)
 		{
-			WorldPosition += new TVector2f(x, y);
+			WorldPosition += new Vector2(x, y);
 		}
 
-		public void SetLocalPosition(TVector2f position)
+		public void SetLocalPosition(Vector2 position)
 		{
 			LocalPosition = position;
 		}
 
 		public void SetWorldPosition(float x, float y)
 		{
-			WorldPosition = new TVector2f(x, y);
+			WorldPosition = new Vector2(x, y);
 		}
 
-		public void SetWorldPosition(TVector2f position)
+		public void SetWorldPosition(Vector2 position)
 		{
 			WorldPosition = position;
 		}
@@ -153,10 +153,10 @@ namespace ZEngine.Engine.Game
 
 		public void ScaleLocal(float x, float y)
 		{
-			LocalScale += new TVector2f(x, y);
+			LocalScale += new Vector2(x, y);
 		}
 
-		public void ScaleLocal(TVector2f scale)
+		public void ScaleLocal(Vector2 scale)
 		{
 			LocalScale += scale;
 		}
@@ -166,17 +166,17 @@ namespace ZEngine.Engine.Game
 			throw new NotImplementedException();
 		}
 
-		public void ScaleWorld(TVector2f scale)
+		public void ScaleWorld(Vector2 scale)
 		{
 			throw new NotImplementedException();
 		}
 
 		public void SetLocalScale(float x, float y)
 		{
-			LocalScale = new TVector2f(x, y);
+			LocalScale = new Vector2(x, y);
 		}
 
-		public void SetLocalScale(TVector2f scale)
+		public void SetLocalScale(Vector2 scale)
 		{
 			LocalScale = scale;
 		}
@@ -186,7 +186,7 @@ namespace ZEngine.Engine.Game
 			throw new NotImplementedException();
 		}
 
-		public void SetWorldScale(TVector2f scale)
+		public void SetWorldScale(Vector2 scale)
 		{
 			throw new NotImplementedException();
 		}
@@ -204,7 +204,7 @@ namespace ZEngine.Engine.Game
 
 		public virtual void Destroy(bool disposing)
 		{
-			ComponentTransform.Dispose();
+			//ComponentTransform.Dispose();
 		}
 
 		public override string ToString()
@@ -219,7 +219,7 @@ namespace ZEngine.Engine.Game
 
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj)) return false;
+			if (obj is null) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
 			return Equals((ActorComponent) obj);

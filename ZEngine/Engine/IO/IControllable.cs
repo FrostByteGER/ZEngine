@@ -1,41 +1,77 @@
-﻿using SFML.Window;
+﻿using System.Drawing;
+using Silk.NET.Input.Common;
 
 namespace ZEngine.Engine.IO
 {
-	public interface IControllable
-	{
-		void RegisterInput();
+    public interface IBaseControllable
+    {
 
-		void UnregisterInput();
+    }
 
-		void OnMouseButtonPressed(object sender, MouseButtonEventArgs mouseButtonEventArgs);
+    public interface IKeyboardControllable : IBaseControllable
+    {
+        //TODO: wait for Silk.NET implementation
+        //void OnKeyPressed(object sender, Key key);
 
-		void OnMouseButtonReleased(object sender, MouseButtonEventArgs mouseButtonEventArgs);
+        void OnKeyDown(object sender, Key key, int code);
 
-		void OnMouseMoved(object sender, MouseMoveEventArgs mouseMoveEventArgs);
+        void OnKeyReleased(object sender, Key key, int code);
 
-		void OnMouseScrolled(object sender, MouseWheelScrollEventArgs mouseWheelScrollEventArgs);
+        void OnKeyboardConnected();
 
-		void OnKeyPressed(object sender, KeyEventArgs keyEventArgs);
+        void OnKeyboardDisconnected();
+    }
 
-		void OnKeyDown(object sender, KeyEventArgs keyEventArgs);
+    public interface IMouseControllable : IBaseControllable
+    {
+        void OnMouseButtonPressed(object sender, MouseButton button);
 
-		void OnKeyReleased(object sender, KeyEventArgs keyEventArgs);
+        void OnMouseButtonReleased(object sender, MouseButton button);
 
-		void OnJoystickConnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs);
+        void OnMouseButtonClicked(object sender, MouseButton button);
 
-		void OnJoystickDisconnected(object sender, JoystickConnectEventArgs joystickConnectEventArgs);
+        void OnMouseButtonDoubleClicked(object sender, MouseButton button);
 
-		void OnJoystickButtonPressed(object sender, JoystickButtonEventArgs joystickButtonEventArgs);
+        void OnMouseMoved(object sender, PointF coords);
 
-		void OnJoystickButtonReleased(object sender, JoystickButtonEventArgs joystickButtonEventArgs);
+        void OnMouseScrolled(object sender, ScrollWheel scrollArgs);
 
-		void OnJoystickMoved(object sender, JoystickMoveEventArgs joystickMoveEventArgs);
+        void OnMouseConnected();
 
-		void OnTouchBegan(object sender, TouchEventArgs touchEventArgs);
+        void OnMouseDisconnected();
+    }
 
-		void OnTouchEnded(object sender, TouchEventArgs touchEventArgs);
+    public interface IJoystickControllable : IBaseControllable
+    {
+        void OnJoystickButtonPressed(object sender, Button button);
 
-		void OnTouchMoved(object sender, TouchEventArgs touchEventArgs);
-	}
+        void OnJoystickButtonReleased(object sender, Button button);
+
+        void OnJoystickMoved(object sender, Axis axisArgs);
+
+        void OnJoystickHatMoved(object sender, Hat hatArgs);
+
+        void OnJoystickConnected();
+
+        void OnJoystickDisconnected();
+    }
+
+    public interface IGamepadControllable : IBaseControllable
+    {
+        void OnGamepadButtonPressed(object sender, Button button);
+
+        void OnGamepadButtonReleased(object sender, Button button);
+
+        void OnGamepadThumbstickMoved(object sender, Thumbstick stick);
+
+        void OnGamepadTriggerMoved(object sender, Trigger trigger);
+
+        void OnGamepadConnected();
+
+        void OnGamepadDisconnected();
+    }
+
+	public interface IControllable : IMouseControllable, IKeyboardControllable, IGamepadControllable, IJoystickControllable
+    {
+    }
 }

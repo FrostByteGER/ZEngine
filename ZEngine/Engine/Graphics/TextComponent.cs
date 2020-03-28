@@ -16,7 +16,7 @@ namespace ZEngine.Engine.Graphics
 			{
 				_renderText = value;
 				FloatRect textRect = RenderText.GetLocalBounds();
-				Origin = new SFML.System.Vector2f(textRect.Left + textRect.Width / 2.0f, textRect.Top + textRect.Height / 2.0f);
+				Origin = new SFML.System.Vector2(textRect.Left + textRect.Width / 2.0f, textRect.Top + textRect.Height / 2.0f);
 				ComponentBounds = Origin;
 			}
 		}
@@ -31,7 +31,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f LocalScale
+		public override Vector2 LocalScale
 		{
 			get => RenderText.Scale;
 			set
@@ -41,7 +41,7 @@ namespace ZEngine.Engine.Graphics
 			}
 		}
 
-		public override TVector2f Origin
+		public override Vector2 Origin
 		{
 			get => RenderText.Origin;
 			set

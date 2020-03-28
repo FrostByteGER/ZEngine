@@ -1,11 +1,13 @@
 ﻿using System;
+using ZEngine.Engine.Services;
 
 namespace ZEngine.Engine.Messaging
 {
-    public interface IMessageBus
+    public interface IMessageBus : IEngineService
     {
-        void Subscribe<T>(Action<IMessage> callback) where T : IMessage;
-        void Unsubscribe<T>(Action<IMessage> callback) where T: IMessage;
+        Guid Subscribe<TMessage>(Action<TMessage> callback) where TMessage : IMessage;
+        void Unsubscribe<TMessage>(Guid token) where TMessage: IMessage;
+        void UnsubscribeAll(object target);
         void Publish(IMessage message);
         void Cleanup();
     }

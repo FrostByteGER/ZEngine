@@ -7,8 +7,8 @@ namespace ZEngine.Engine.JUI
 	{
 
 		public JGUI gui { get; private set; }
-		public virtual Vector2f Position { get; set; } = new Vector2f(0, 0);
-		public virtual Vector2f Size { get; set; } = new Vector2f(0, 0);
+		public virtual Vector2 Position { get; set; } = new Vector2(0, 0);
+		public virtual Vector2 Size { get; set; } = new Vector2(0, 0);
 		public Color BackGroundColor { get; set; }
 		public virtual RectangleShape Box { get; set; } = new RectangleShape();
 		public bool IsVisable { get; set; } = true;
@@ -46,12 +46,12 @@ namespace ZEngine.Engine.JUI
 			setBackgroundColor(gui.DefaultBackgroundColor);
 		}
 
-		public virtual void setPosition(Vector2f position)
+		public virtual void setPosition(Vector2 position)
 		{
 			this.Position = position;
 		}
 
-		public virtual void setSize(Vector2f size)
+		public virtual void setSize(Vector2 size)
 		{
 			this.Size = size;
 		}
@@ -75,7 +75,7 @@ namespace ZEngine.Engine.JUI
 			ReSize(Position, Size);
 		}
 
-		public virtual void ReSize(Vector2f position, Vector2f size)
+		public virtual void ReSize(Vector2 position, Vector2 size)
 		{
 
 			Position = position;

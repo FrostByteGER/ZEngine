@@ -8,11 +8,34 @@
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="robocopy &quot;$(SolutionDir)$(ProjectName)\Lib&quot; &quot;$(TargetDir)\&quot; /COPY:DAT /DCOPY:T /E&#xD;&#xA;if %2525errorlevel%2525 leq 3 exit 0 else exit %2525errorlevel%2525" />
+    <Exec Command="robocopy &quot;$(SolutionDir)$(ProjectName)\Lib&quot; &quot;$(TargetDir)\&quot; /COPY:DAT /DCOPY:T /E&#xD;&#xA;if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25" />
   </Target>
+  
+  <ItemGroup>
+    <Compile Remove="Engine\ECS\**" />
+    <Compile Remove="Engine\Graphics\**" />
+    <Compile Remove="Engine\JUI\**" />
+    <Compile Remove="Engine\Physics\**" />
+    <Compile Remove="Engine\UI\**" />
+    <EmbeddedResource Remove="Engine\ECS\**" />
+    <EmbeddedResource Remove="Engine\Graphics\**" />
+    <EmbeddedResource Remove="Engine\JUI\**" />
+    <EmbeddedResource Remove="Engine\Physics\**" />
+    <EmbeddedResource Remove="Engine\UI\**" />
+    <None Remove="Engine\ECS\**" />
+    <None Remove="Engine\Graphics\**" />
+    <None Remove="Engine\JUI\**" />
+    <None Remove="Engine\Physics\**" />
+    <None Remove="Engine\UI\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <Compile Update="EngineInfo.Designer.cs">
@@ -39,19 +62,21 @@
   
   <ItemGroup>
     <Folder Include="Assets\Levels\" />
-    <Folder Include="Engine\Audio\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Silk.NET" Version="1.0.0-preview5" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.13" />
+    <PackageReference Include="Silk.NET" Version="1.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" />
   </ItemGroup>
   
   <ItemGroup>
-    <Reference Include="VelcroPhysics">
-      <HintPath>Lib\VelcroPhysics.dll</HintPath>
-      <Private>true</Private>
+    <Reference Include="Aether.Physics2D">
+      <HintPath>Lib\Aether.Physics2D.dll</HintPath>
     </Reference>
   </ItemGroup>
   

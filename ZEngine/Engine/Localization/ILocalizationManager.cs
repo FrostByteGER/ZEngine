@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using ZEngine.Engine.Services;
 
 namespace ZEngine.Engine.Localization
 {
-    public interface ILocalizationManager
+    public interface ILocalizationManager : IEngineService
     {
         string GetCurrentLanguage();
         void SetCurrentLanguage();

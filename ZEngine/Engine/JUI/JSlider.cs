@@ -39,7 +39,7 @@ namespace ZEngine.Engine.JUI
 					SliderValue = 1;
 				}
 
-				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
+				Slider.Position = new Vector2(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
 			}
 			else if(DisplayTyp == VERTICAL)
 			{
@@ -54,7 +54,7 @@ namespace ZEngine.Engine.JUI
 					SliderValue = 1;
 				}
 
-				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
+				Slider.Position = new Vector2(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
 			}
 			base.Drag(position);
 		}
@@ -67,22 +67,22 @@ namespace ZEngine.Engine.JUI
 			Cross.Draw(target, states);
 		}
 
-		public override void ReSize(Vector2f position, Vector2f size)
+		public override void ReSize(Vector2 position, Vector2 size)
 		{
 			base.ReSize(position, size);
 			if (DisplayTyp == HORIZONTAL)
 			{
-				Slider.Size = new Vector2f(SliderSize, Size.Y);
-				Slider.Position = new Vector2f(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
-				Cross.Size = new Vector2f(Size.X, CrossSize);
-				Cross.Position = new Vector2f(position.X, position.Y + size.Y/2f - Cross.Size.Y);
+				Slider.Size = new Vector2(SliderSize, Size.Y);
+				Slider.Position = new Vector2(Position.X + Size.X * SliderValue - Slider.Size.X / 2f + SliderSize / 2f - (SliderSize * SliderValue), Position.Y);
+				Cross.Size = new Vector2(Size.X, CrossSize);
+				Cross.Position = new Vector2(position.X, position.Y + size.Y/2f - Cross.Size.Y);
 			}
 			else if(DisplayTyp == VERTICAL)
 			{
-				Slider.Size = new Vector2f(Size.X, SliderSize);
-				Slider.Position = new Vector2f(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
-				Cross.Size = new Vector2f(CrossSize, Size.Y);
-				Cross.Position = new Vector2f(position.X + size.X / 2f - Cross.Size.X, position.Y);
+				Slider.Size = new Vector2(Size.X, SliderSize);
+				Slider.Position = new Vector2(Position.X, Position.Y + Size.Y * SliderValue - Slider.Size.Y / 2f + SliderSize / 2f - (SliderSize * SliderValue));
+				Cross.Size = new Vector2(CrossSize, Size.Y);
+				Cross.Position = new Vector2(position.X + size.X / 2f - Cross.Size.X, position.Y);
 			}
 		}
 	}

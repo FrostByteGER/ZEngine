@@ -7,7 +7,7 @@ namespace ZEngine.Engine.Physics
 		float Mass { get; set; }
 		bool HasGravity { get; set; }
 
-		Vector2f Velocity { get; set; }
-		Vector2f Acceleration { get; set; }
+		Vector2 Velocity { get; set; }
+		Vector2 Acceleration { get; set; }
 	}
 }

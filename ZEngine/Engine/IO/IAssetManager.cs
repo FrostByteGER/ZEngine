@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using SFML.Audio;
-using SFML.Graphics;
+using ZEngine.Engine.Audio;
 using ZEngine.Engine.Game;
+using ZEngine.Engine.Rendering;
+using ZEngine.Engine.Services;
 
 namespace ZEngine.Engine.IO
 {
-    public interface IAssetManager
+    public interface IAssetManager : IEngineService
     {
         ReadOnlyDictionary<string, Dictionary<string, string>> EngineAssets { get; }
         ReadOnlyDictionary<string, string> EnginePackages { get; }

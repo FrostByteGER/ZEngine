@@ -138,13 +138,13 @@ namespace ZEngine.Engine.JUI
 
 		private void Renderwindow_Resized(object sender, SizeEventArgs e)
 		{
-			//RootContainer.ReSize(new Vector2f(0, 0), new Vector2f(e.Width,e.Height));
+			//RootContainer.ReSize(new Vector2(0, 0), new Vector2(e.Width,e.Height));
 
-			GuiView.Size = new Vector2f(e.Width, e.Height);
-			GuiView.Center = new Vector2f(e.Width/2f, e.Height/2f);
+			GuiView.Size = new Vector2(e.Width, e.Height);
+			GuiView.Center = new Vector2(e.Width/2f, e.Height/2f);
 
-			RootContainer.Position = new Vector2f(50, 50);
-			RootContainer.Size = new Vector2f(e.Width - 100, e.Height - 100);
+			RootContainer.Position = new Vector2(50, 50);
+			RootContainer.Size = new Vector2(e.Width - 100, e.Height - 100);
 
 		}
 
@@ -235,7 +235,7 @@ namespace ZEngine.Engine.JUI
 
 			Renderwindow.SetView(GuiView);
 
-			SelecterCircel.Position = (Vector2f)SelecterPoint - new Vector2f(SelecterCircel.Radius/2f, SelecterCircel.Radius/2f);
+			SelecterCircel.Position = (Vector2)SelecterPoint - new Vector2(SelecterCircel.Radius/2f, SelecterCircel.Radius/2f);
 
 			if (RootContainer != null)
 			{
@@ -278,7 +278,7 @@ namespace ZEngine.Engine.JUI
 
 			UseSelector = true;
 
-			// new Vector2f(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f))
+			// new Vector2(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f))
 
 			SelecterPoint = new Vector2i(mouseMoveEventArgs.X - (int)(SelecterCircel.Radius / 2f), mouseMoveEventArgs.Y - (int)(SelecterCircel.Radius / 2f));
 

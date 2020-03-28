@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace ZEngine.Engine.Utility
 {
@@ -10,7 +11,10 @@ namespace ZEngine.Engine.Utility
         Error
     }
 
-    public static class DebugCategories
+    /// <summary>
+    /// Inherit from this class to define custom logging categories
+    /// </summary>
+    public static class DebugLogCategories
     {
         public const string Engine = "ENGINE";
 
@@ -32,6 +36,8 @@ namespace ZEngine.Engine.Utility
             get => Instance._printToConsole;
             set
             {
+#if DEBUG
+
                 lock (Instance)
                 {
                     if (value && !Instance._printToConsole)
@@ -40,24 +46,31 @@ namespace ZEngine.Engine.Utility
                         Instance.OnProcessElement -= ProcessToConsole;
                     Instance._printToConsole = value;
                 }
+#endif
             }
         }
 
         private Debug()
         {
+#if DEBUG
+
             _queue = new ConcurrentQueue<Tuple<string, string, LogType>>();
+#endif
         }
 
+        [Conditional("DEBUG")]
         public static void Log(string message, string category = "")
         {
             Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Info));
         }
 
+        [Conditional("DEBUG")]
         public static void LogWarning(string message, string category = "")
         {
             Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Warning));
         }
 
+        [Conditional("DEBUG")]
         public static void LogError(string message, string category = "")
         {
             Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Error));
@@ -66,6 +79,7 @@ namespace ZEngine.Engine.Utility
         /// <summary>
         /// ONLY CALL FROM MAIN THREAD
         /// </summary>
+        [Conditional("DEBUG")]
         internal static void FlushQueue()
         {
             while (!Instance._queue.IsEmpty)
@@ -75,9 +89,11 @@ namespace ZEngine.Engine.Utility
             }
         }
 
+
         private static void ProcessToConsole(Tuple<string, string, LogType> element)
         {
-            switch (element.Item3)
+            var (message, category, type) = element;
+            switch (type)
             {
                 case LogType.Info:
                     Console.ForegroundColor = ConsoleColor.White;
@@ -88,9 +104,12 @@ namespace ZEngine.Engine.Utility
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
             }
 
-            Console.WriteLine($"[{element.Item3.ToString().ToUpperInvariant()}][{element.Item2}]{element.Item1}");
+            Console.WriteLine($"[{type.ToString().ToUpperInvariant()}][{category}]{message}");
             Console.ResetColor();
         }
     }

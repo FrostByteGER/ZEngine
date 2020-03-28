@@ -1,4 +1,4 @@
-﻿using ZEngine.Engine.Utility;
+﻿using System.Numerics;
 
 namespace ZEngine.Engine.Game
 {
@@ -6,30 +6,30 @@ namespace ZEngine.Engine.Game
     {
 	    bool Movable { get; set; }
 
-		TTransformable ComponentTransform { get; set; }
-		TTransformable WorldTransform { get;}
+		Transform ComponentTransform { get; set; }
+		Transform WorldTransform { get;}
 
-	    TVector2f LocalPosition { get; set; }
+	    Vector2 LocalPosition { get; set; }
 
 		float LocalRotation { get; set; }
 
-		TVector2f LocalScale { get; set; }
+		Vector2 LocalScale { get; set; }
 
-		TVector2f Origin { get; set; }
+		Vector2 Origin { get; set; }
 
-		TVector2f WorldPosition { get; set; }
+		Vector2 WorldPosition { get; set; }
 
-		TVector2f ComponentBounds { get; set; }
+		Vector2 ComponentBounds { get; set; }
 
 		// Location
 		void MoveLocal(float x, float y);
-	    void MoveLocal(TVector2f position);
+	    void MoveLocal(Vector2 position);
 		void MoveWorld(float x, float y);
-		void MoveWorld(TVector2f position);
+		void MoveWorld(Vector2 position);
 		void SetLocalPosition(float x, float y);
-		void SetLocalPosition(TVector2f position);
+		void SetLocalPosition(Vector2 position);
 		void SetWorldPosition(float x, float y);
-		void SetWorldPosition(TVector2f position);
+		void SetWorldPosition(Vector2 position);
 
 		// Rotation
 		void RotateLocal(float angle);
@@ -39,13 +39,13 @@ namespace ZEngine.Engine.Game
 
 		// Scale
 		void ScaleLocal(float x, float y);
-	    void ScaleLocal(TVector2f scale);
+	    void ScaleLocal(Vector2 scale);
 		void ScaleWorld(float x, float y);
-		void ScaleWorld(TVector2f scale);
+		void ScaleWorld(Vector2 scale);
 		void SetLocalScale(float x, float y);
-		void SetLocalScale(TVector2f scale);
+		void SetLocalScale(Vector2 scale);
 		void SetWorldScale(float x, float y);
-		void SetWorldScale(TVector2f scale);
+		void SetWorldScale(Vector2 scale);
 
 	}
 }
