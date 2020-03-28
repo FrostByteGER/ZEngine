@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
 
 namespace ZEngine.Engine.IO
 {
@@ -21,19 +19,22 @@ namespace ZEngine.Engine.IO
 			T loadedObject;
 			if (validate)
 			{
-				var schema = GenericIOManager.LoadFileAsString(filename);
-				var dataReader = new JsonTextReader(new StringReader(data));
-				var validatingReader = new JSchemaValidatingReader(dataReader);
-				validatingReader.Schema = JSchema.Parse(schema);
-
-				IList<string> messages = new List<string>();
-				validatingReader.ValidationEventHandler += (o, a) => messages.Add(a.Message);
-				foreach (var message in messages)
-				{
-					Console.WriteLine("ERROR VALIDATING JSON " + filename + ": " + message);
-				}
-				var serializer = new JsonSerializer();
-				loadedObject = serializer.Deserialize<T>(validatingReader);
+				//TODO: Implement
+				/*
+				var schemaString = GenericIOManager.LoadFileAsString(filename);
+				var validatingReader = new JsonSchemaValidator();
+                var schema = JsonSchema.FromJsonAsync(schemaString);
+				var result = validatingReader.Validate(data, schema.Result);
+                if (result.Count != 0)
+                {
+                    foreach (var error in result)
+                    {
+						Console.WriteLine("ERROR VALIDATING JSON " + filename + ": " + error);
+					}
+                }
+				 loadedObject = JsonConvert.DeserializeObject<T>(data);
+				*/
+				throw new NotImplementedException();
 			}
 			else
 			{
