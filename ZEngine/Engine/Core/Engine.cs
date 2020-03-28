@@ -97,7 +97,7 @@ namespace ZEngine.Engine.Core
 
         private void OnEngineWindowLoad()
         {
-            GetService<IMessageBus>(EngineMessageBus.ServiceId).Publish(new EngineWindowLoadedMessage(this));
+            GetService<IEngineMessageBus>().Publish(new EngineWindowLoadedMessage(this));
         }
 
         private void WindowOnUpdate(double deltaTime)

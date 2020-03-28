@@ -74,7 +74,7 @@ namespace ZEngine.Engine.Game
 	    protected internal virtual void InitLevel()
 	    {
 		    Console.WriteLine("Initiating Level " + LevelID);
-            _bus = EngineReference.GetService<IMessageBus>(EngineMessageBus.ServiceId);
+            _bus = EngineReference.GetService<IEngineMessageBus>();
         }
 
 
