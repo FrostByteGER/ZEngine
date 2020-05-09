@@ -286,7 +286,3 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-
-# Custom Ignores
-SFML_Engine/sfmlnet*.dll
-SFML_Engine/sfmlnet*.xml
