@@ -12,6 +12,7 @@ namespace ZEngine.Engine.Services
         internal void SetupInternal(EngineServiceLocator locator)
         {
             Debug.PrintToConsole = true;
+            locator.RegisterService<IEngineClock>(new EngineClock());
             locator.RegisterService<IAssetManager>(new AssetManager());
             locator.RegisterService<ILocalizationManager>(new LocalizationManager());
             var engineMessageBus = new EngineMessageBus();

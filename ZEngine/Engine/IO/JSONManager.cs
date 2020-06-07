@@ -29,7 +29,7 @@ namespace ZEngine.Engine.IO
                 {
                     foreach (var error in result)
                     {
-						Console.WriteLine("ERROR VALIDATING JSON " + filename + ": " + error);
+						Debug.LogError("Failed to validate JSON of file " + filename + ": " + error, DebugLogCategories.Engine);
 					}
                 }
 				 loadedObject = JsonConvert.DeserializeObject<T>(data);

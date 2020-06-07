@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using tainicom.Aether.Physics2D.Dynamics;
 using tainicom.Aether.Physics2D.Dynamics.Contacts;
+using ZEngine.Engine.Utility;
 using Vector2 = System.Numerics.Vector2;
 
 namespace ZEngine.Engine.Game
@@ -256,15 +257,18 @@ namespace ZEngine.Engine.Game
 
 		public bool SetRootComponent(ActorComponent root)
 		{
-			if (root == null && RootComponent == null) return false;
-			if (root == null && RootComponent != null) return RemoveRootComponent();
-			Console.WriteLine("Trying to set Root-ActorComponent " + root.ComponentName + " on Actor " + this);
+			if (root == null && RootComponent == null) 
+                return false;
+			if (root == null && RootComponent != null) 
+                return RemoveRootComponent();
+			Debug.LogDebug("Trying to set Root-ActorComponent " + root.ComponentName + " on Actor " + this, DebugLogCategories.Engine);
 			RemoveRootComponent();
 
 			if (Components.Contains(root))
 			{
 				var comp = Components.Find(x => x.ComponentID == root.ComponentID);
-				if (comp == null) return false;
+				if (comp == null) 
+                    return false;
 				root.ComponentID = 1;
 				RootComponent = comp;
 				comp.IsRootComponent = true;
@@ -280,14 +284,16 @@ namespace ZEngine.Engine.Game
 
 		public bool SetRootComponent(int rootIndex)
 		{
-			if (rootIndex < 0 || rootIndex >= Components.Count) return false;
+			if (rootIndex < 0 || rootIndex >= Components.Count) 
+                return false;
 			return SetRootComponent(Components[rootIndex]);
 		}
 
 		public bool RemoveRootComponent()
 		{
-			if (RootComponent == null) return false;
-			Console.WriteLine("Trying to remove RootComponent " + RootComponent.ComponentName + " from " + this);
+			if (RootComponent == null) 
+                return false;
+			Debug.LogDebug("Trying to remove RootComponent " + RootComponent.ComponentName + " from " + this, DebugLogCategories.Engine);
 			RemoveComponent(RootComponent);
 			RootComponent.IsRootComponent = false;
 			RootComponent = null;
@@ -330,11 +336,13 @@ namespace ZEngine.Engine.Game
 		{
 			if (component == null || component.ComponentName == null)
 			{
-				Console.WriteLine("Break");
-			}
+				Debug.LogError("Failed to add component to Actor: " + this + ". Component is null or has null name!", DebugLogCategories.Engine);
+                return false;
+            }
 
-			Console.WriteLine("Trying to add "+ component.ComponentName + " to " + this);
-			if (Components.Contains(component)) return false;
+			Debug.LogDebug("Trying to add "+ component.ComponentName + " to " + this, DebugLogCategories.Engine);
+			if (Components.Contains(component)) 
+                return false;
 			Components.Add(component);
 			component.ComponentID = ++ComponentIDCounter;
 			component.ParentActor = this;
@@ -343,7 +351,8 @@ namespace ZEngine.Engine.Game
 
 		public void RemoveComponent(ActorComponent component)
 		{
-			if (!Components.Contains(component)) return;
+			if (!Components.Contains(component)) 
+                return;
 			Components.Remove(component);
 			component.ParentActor = null;
 		}
@@ -365,7 +374,7 @@ namespace ZEngine.Engine.Game
 
 		public virtual void OnActorDestroy()
 		{
-			Console.WriteLine("DESTROYING ACTOR: " + GenerateFullName());
+			Debug.LogDebug("Destroying Actor: " + GenerateFullName(), DebugLogCategories.Engine);
 		}
 
 		public string GenerateFullName()

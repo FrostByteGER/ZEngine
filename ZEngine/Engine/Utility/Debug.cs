@@ -6,9 +6,11 @@ namespace ZEngine.Engine.Utility
 {
     public enum LogType
     {
+        Debug,
         Info,
         Warning,
-        Error
+        Error,
+        Fatal
     }
 
     /// <summary>
@@ -37,7 +39,6 @@ namespace ZEngine.Engine.Utility
             set
             {
 #if DEBUG
-
                 lock (Instance)
                 {
                     if (value && !Instance._printToConsole)
@@ -53,9 +54,14 @@ namespace ZEngine.Engine.Utility
         private Debug()
         {
 #if DEBUG
-
             _queue = new ConcurrentQueue<Tuple<string, string, LogType>>();
 #endif
+        }
+
+        [Conditional("DEBUG")]
+        public static void LogDebug(string message, string category = "")
+        {
+            Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Debug));
         }
 
         [Conditional("DEBUG")]
@@ -74,6 +80,12 @@ namespace ZEngine.Engine.Utility
         public static void LogError(string message, string category = "")
         {
             Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Error));
+        }
+
+        [Conditional("DEBUG")]
+        public static void LogFatal(string message, string category = "")
+        {
+            Instance._queue.Enqueue(new Tuple<string, string, LogType>(message, category, LogType.Fatal));
         }
 
         /// <summary>
@@ -95,21 +107,27 @@ namespace ZEngine.Engine.Utility
             var (message, category, type) = element;
             switch (type)
             {
-                case LogType.Info:
+                case LogType.Debug:
                     Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case LogType.Info:
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     break;
                 case LogType.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
                 case LogType.Error:
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    break;
+                case LogType.Fatal:
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
             }
 
-            Console.WriteLine($"[{type.ToString().ToUpperInvariant()}][{category}]{message}");
+            Console.WriteLine(string.Format("[{0}][{1}]{2}", type.ToString().ToUpperInvariant(), category, message));
             Console.ResetColor();
         }
     }

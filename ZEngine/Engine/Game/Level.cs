@@ -73,14 +73,14 @@ namespace ZEngine.Engine.Game
 
 	    protected internal virtual void InitLevel()
 	    {
-		    Console.WriteLine("Initiating Level " + LevelID);
+		    Debug.Log("Initiating Level " + LevelID, DebugLogCategories.Engine);
             _bus = EngineReference.GetService<IEngineMessageBus>();
         }
 
 
         protected internal virtual void LevelTick(float deltaTime)
         {
-	        //Console.WriteLine("Level Tick!");
+	        //Debug.LogDebug("Level Tick!", DebugLogCategories.Engine);
 			foreach (var pc in Players)
 			{
 				if (!pc.CanTick) continue;
@@ -123,7 +123,7 @@ namespace ZEngine.Engine.Game
 	    public virtual void OnLevelLoad()
 	    {
 		    InitLevel();
-			Console.WriteLine("Level #" + LevelID + " Loaded");
+			Debug.Log("Level #" + LevelID + " Loaded", DebugLogCategories.Engine);
 			foreach (var actor in _actors)
 		    {
 			    actor.InitializeActor();
@@ -142,7 +142,8 @@ namespace ZEngine.Engine.Game
 		    GameMode.OnGameStart();
 			foreach (var pc in Players)
 			{
-				if (!pc.IsActive) continue;
+				if (!pc.IsActive) 
+                    continue;
 				pc.OnGameStart();
 			}
 			foreach (var actor in _actors)
@@ -311,13 +312,13 @@ namespace ZEngine.Engine.Game
 			++ActorIDCounter;
 			actor.LevelID = LevelID;
 			actor.LevelReference = this;
-			Console.WriteLine("Trying to register Actor: " + actor);
+			Debug.LogDebug("Trying to register Actor: " + actor, DebugLogCategories.Engine);
 			_actors.Add(actor);
 		}
 
 	    public void UnregisterActors()
 	    {
-			Console.WriteLine("Removing all Actors!");
+			Debug.LogDebug("Removing all Actors!", DebugLogCategories.Engine);
 
 			foreach (var actor in _actors)
 			{
@@ -338,7 +339,7 @@ namespace ZEngine.Engine.Game
 
 		public bool UnregisterActor(Actor actor)
 		{
-			Console.WriteLine("Trying to remove Actor: " + actor);
+			Debug.LogDebug("Trying to remove Actor: " + actor, DebugLogCategories.Engine);
 			actor.OnActorDestroy();
 			var removal = _actors.Remove(actor);
 			foreach (var comp in actor.Components)
@@ -356,7 +357,7 @@ namespace ZEngine.Engine.Game
 
 		public bool UnregisterActor(uint actorID)
 		{
-			Console.WriteLine("Trying to remove Actor with ActorID: #" + actorID);
+			Debug.LogDebug("Trying to remove Actor with ActorID: #" + actorID, DebugLogCategories.Engine);
 			var actor = FindActorInLevel(actorID);
 			return UnregisterActor(actor);
 		}
@@ -445,17 +446,18 @@ namespace ZEngine.Engine.Game
 		/// <param name="pc"></param>
 		public void RegisterPlayer(PlayerController pc, bool active)
 		{
-			if (Players.Contains(pc)) return;
+			if (Players.Contains(pc)) 
+                return;
 			pc.LevelReference = this;
 			pc.ID = Players.Count > 0 ? (uint)Players.Count - 1 : 0;
 			Players.Add(pc);
 			pc.MarkedForInputRegistering = active;
-			Console.WriteLine("Trying to Register Player: " + pc);
+			Debug.LogDebug("Trying to Register Player: " + pc, DebugLogCategories.Engine);
 		}
 
 		public void UnregisterPlayers()
 		{
-			Console.WriteLine("Removing all Players!");
+			Debug.LogDebug("Removing all Players!", DebugLogCategories.Engine);
 			foreach (var pc in Players)
 			{
 				pc.IsActive = false;
@@ -465,14 +467,14 @@ namespace ZEngine.Engine.Game
 
 		public bool UnregisterPlayer(PlayerController pc)
 		{
-			Console.WriteLine("Trying to remove Player with PlayerID: #" + pc.ID);
+			Debug.LogDebug("Trying to remove Player with PlayerID: #" + pc.ID, DebugLogCategories.Engine);
 			pc.IsActive = false;
 			return Players.Remove(pc);
 		}
 
 		public bool UnregisterPlayer(uint playerID)
 		{
-			Console.WriteLine("Trying to remove Player with PlayerID: #" + playerID);
+			Debug.LogDebug("Trying to remove Player with PlayerID: #" + playerID, DebugLogCategories.Engine);
 			var player = FindPlayer(playerID);
 			return UnregisterPlayer(player);
 		}

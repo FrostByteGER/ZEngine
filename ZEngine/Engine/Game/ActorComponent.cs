@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
@@ -63,7 +64,7 @@ namespace ZEngine.Engine.Game
 
 		public virtual void Tick(float deltaTime)
 		{
-			//Console.WriteLine("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale);
+			//Debug.LogDebug("Component Tick | Position: " + Position + " Rotation: " + Rotation + " Scale: " + Scale, DebugLogCategories.Engine);
 		}
 
 
@@ -88,7 +89,7 @@ namespace ZEngine.Engine.Game
 
 		public virtual void OnActorComponentDestroy()
 		{
-			Console.WriteLine("DESTROYING ACTORCOMPONENT: " + ComponentName + "-" + ComponentID);
+			Debug.Log("Destroying Actor-Component: " + ComponentName + "-" + ComponentID, DebugLogCategories.Engine);
 		}
 
 		public virtual void MoveLocal(float x, float y)

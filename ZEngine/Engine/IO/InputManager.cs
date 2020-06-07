@@ -13,22 +13,22 @@ namespace ZEngine.Engine.IO
 {
     public interface IInputManager : IEngineService
     {
-        void RegisterInputReceiver(IInputReceiver receiver);
-        void UnregisterInputReceiver(IInputReceiver receiver);
+        bool RegisterForInputDevice<T>(IInputReceiver receiver) where T : IInputDevice;
+        bool RegisterForAllInputDevices(IInputReceiver receiver);
+        bool UnregisterFromInputDevice<T>(IInputReceiver receiver) where T : IInputDevice;
+        bool UnregisterFromAllInputDevices(IInputReceiver receiver);
     }
 
     public class InputManager : ITickable, IInputManager
     {
         private IInputContext InputContext { get; set; }
 
-        private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
-
         private readonly OrderedDictionary<IInputDevice, IInputReceiver> _devices = new OrderedDictionary<IInputDevice, IInputReceiver>();
         private readonly IMessageBus _bus;
 
         public bool CanTick { get; set; } = true;
 
-        public InputManager(IMessageBus bus)
+        public InputManager([NotNull]IMessageBus bus)
         {
             _bus = bus;
             _bus.Subscribe<EngineWindowLoadedMessage>(OnWindowLoaded);
@@ -84,7 +84,8 @@ namespace ZEngine.Engine.IO
         {
             if (!_devices.TryGetValue(device, out var receiver))
             {
-                //TODO: Log, this should not happen because all devices get added at the start!
+                // this should not happen because all devices get added at the start!
+                Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
                 return;
             }
 
@@ -119,30 +120,43 @@ namespace ZEngine.Engine.IO
                         receiver.OnJoystickDisconnected();
                     break;
                 default:
-                    //TODO: LOG
+                    Debug.LogWarning("Device " + device.Name + " is not supported!", DebugLogCategories.Engine);
                     break;
             }
         }
 
-        public void RegisterInputReceiver(IInputReceiver receiver)
+        public bool RegisterForAllInputDevices([NotNull]IInputReceiver receiver)
         {
-            if (!_receivers.Add(receiver))
-                throw new Exception("InputReceiver already registered for input!");
+            var devices = GetAvailableDevices().ToArray();
+            if (!devices.Any())
+                return false;
 
+            foreach (var device in devices)
+            {
+                try
+                {
+                    RegisterInput(receiver, device);
+                }
+                catch (ArgumentException ae)
+                {
+                    Debug.LogWarning(ae.Message, DebugLogCategories.Engine);
+                }
+            }
+
+            return true;
         }
 
-        public void UnregisterInputReceiver(IInputReceiver receiver)
-        {
-            if(!_receivers.Remove(receiver))
-                throw new Exception("InputReceiver to remove is not registered for input!");
-        }
-
-        public bool RegisterForInputDevice<T>(IInputReceiver receiver) where T : IInputDevice
+        public bool RegisterForInputDevice<T>([NotNull]IInputReceiver receiver) where T : IInputDevice
         {
             var device = GetAvailableDevice<T>();
             if (device == null)
                 return false;
+            RegisterInput(receiver, device);
+            return true;
+        }
 
+        private void RegisterInput(IInputReceiver receiver, IInputDevice device)
+        {
             _devices[device] = receiver;
             switch (device)
             {
@@ -171,14 +185,11 @@ namespace ZEngine.Engine.IO
                     joystick.HatMoved += receiver.OnJoystickHatMoved;
                     break;
                 default:
-                    //TODO: LOG
-                    return false;
+                    throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");
             }
-
-            return true;
         }
 
-        public bool UnregisterFromInputDevice<T>(IInputReceiver receiver) where T : IInputDevice
+        public bool UnregisterFromInputDevice<T>([NotNull]IInputReceiver receiver) where T : IInputDevice
         {
             var device = GetDeviceForInputReceiver<T>(receiver);
             if (device == null)
@@ -190,14 +201,14 @@ namespace ZEngine.Engine.IO
             }
             catch (ArgumentException ae)
             {
-                //TODO: LOG!
+                Debug.LogWarning(ae.Message, DebugLogCategories.Engine);
                 return false;
             }
 
             return true;
         }
 
-        private void UnregisterInput(IControllable receiver, IInputDevice device)
+        private void UnregisterInput(IInputReceiver receiver, IInputDevice device)
         {
             switch (device)
             {
@@ -230,8 +241,6 @@ namespace ZEngine.Engine.IO
             }
 
             _devices[device] = null;
-
-            UnregisterFromAllInputDevices(null);
         }
 
         public bool UnregisterFromAllInputDevices([NotNull]IInputReceiver receiver)
@@ -241,7 +250,7 @@ namespace ZEngine.Engine.IO
 
             if (!inputDevices.Any())
             {
-                //TODO: Log Warning
+                Debug.LogWarning("No devices to unregister!", DebugLogCategories.Engine);
                 return false;
             }
 
@@ -260,6 +269,16 @@ namespace ZEngine.Engine.IO
         private T GetAvailableDevice<T>() where T : IInputDevice
         {
             return (T)_devices.FirstOrDefault(e => e.Key is T && e.Key.IsConnected && e.Value == null).Key;
+        }
+
+        /// <summary>
+        /// Returns the first available, connected device.
+        /// </summary>
+        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
+        /// <returns>The InputDevice or null if none available</returns>
+        private IEnumerable<IInputDevice> GetAvailableDevices()
+        {
+            return _devices.Where(e => e.Key.IsConnected && e.Value == null).Select(f => f.Key);
         }
 
         /// <summary>

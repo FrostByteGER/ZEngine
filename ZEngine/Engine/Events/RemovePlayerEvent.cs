@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Events
 {
@@ -19,7 +19,7 @@ namespace ZEngine.Engine.Events
 				Core.Engine.Instance.ActiveLevel.UnregisterPlayer(player);
 				return;
 			}
-			Console.WriteLine("Failed to Remove Player");
+			Debug.LogError("Failed to Remove Player", DebugLogCategories.Engine);
 		}
 	}
 }

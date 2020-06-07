@@ -70,8 +70,4 @@ namespace ZEngine.Engine.IO
 
         void OnGamepadDisconnected();
     }
-
-	public interface IControllable : IMouseControllable, IKeyboardControllable, IGamepadControllable, IJoystickControllable
-    {
-    }
 }

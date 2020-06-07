@@ -7,10 +7,9 @@ using ZEngine.Engine.IO;
 
 namespace ZEngine.Engine.Game
 {
-    public class PlayerController : Transform, ITickable, IControllable
+    public class PlayerController : Transform, ITickable, IInputReceiver
     {
-
-	    public string Name { get; set; } = "PlayerController";
+        public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; }
 
@@ -20,8 +19,7 @@ namespace ZEngine.Engine.Game
 
 		//public JGUI Hud { get; set; }
 
-	    [JsonIgnore]
-		public InputManager Input { get; set; }
+        private IInputManager InputManager { get; set; }
 	    public bool CanTick { get; set; } = true;
 
 	    internal bool MarkedForInputRegistering { get; set; } = false;
@@ -38,11 +36,11 @@ namespace ZEngine.Engine.Game
 				
 				if (!value && LevelReference != null && LevelReference.LevelLoaded)
 				{
-					//UnregisterInput();
+					
 				}
 				else if (!_isActive && LevelReference != null && LevelReference.LevelLoaded)
 				{
-					//RegisterInput();
+					
 				}
 
 				_isActive = value;
@@ -67,9 +65,10 @@ namespace ZEngine.Engine.Game
         }
 
         protected internal virtual void OnGameStart()
-	    {
-
-	    }
+        {
+            InputManager = LevelReference.EngineReference.GetService<IInputManager>();
+			InputManager.RegisterForInputDevice<IMouse>(this);
+        }
 
         protected internal virtual void OnGamePause()
 	    {
@@ -84,8 +83,9 @@ namespace ZEngine.Engine.Game
 		}
 
         protected internal virtual void OnGameEnd()
-	    {
-		    IsActive = false;
+        {
+            InputManager.UnregisterFromInputDevice<IMouse>(this);
+			IsActive = false;
 	    }
 
         protected internal void SetCameraSize(float x, float y)

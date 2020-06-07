@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Events
 {
@@ -20,7 +20,7 @@ namespace ZEngine.Engine.Events
 				actor.Dispose();
 				return;
 			}
-			Console.WriteLine("Failed to Remove Actor");
+			Debug.LogError("Failed to Remove Actor", DebugLogCategories.Engine);
 		}
 	}
 }

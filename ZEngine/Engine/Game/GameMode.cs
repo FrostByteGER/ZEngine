@@ -1,5 +1,4 @@
-﻿using System;
-using ZEngine.Engine.Utility;
+﻿using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
@@ -9,14 +8,14 @@ namespace ZEngine.Engine.Game
 		public Level LevelReference { get; set; }
         protected internal virtual void Tick(float deltaTime)
         {
-	        //Console.WriteLine("GameMode Tick");
+	        //Debug.LogDebug("GameMode Tick", DebugLogCategories.Engine);
         }
 
 	    public bool CanTick { get; set; } = true;
 
 	    protected internal virtual void OnGameStart()
 	    {
-			Debug.Log("Game Started!");
+			Debug.Log("Game Started!", DebugLogCategories.Engine);
 		}
 
         protected internal virtual void OnGamePause()
@@ -31,7 +30,7 @@ namespace ZEngine.Engine.Game
 
         protected internal virtual void OnGameEnd()
 	    {
-			Console.WriteLine("Game Ended!");
+            Debug.Log("Game Ended!", DebugLogCategories.Engine);
 		}
     }
 }

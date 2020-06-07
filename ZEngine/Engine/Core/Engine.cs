@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Newtonsoft.Json;
 using Silk.NET.Windowing.Common;
 using ZEngine.Engine.Game;
@@ -21,7 +20,7 @@ namespace ZEngine.Engine.Core
         internal IWindow Window { get; private set; }
 
         // Frame and Physics
-		public EngineClock EngineCoreClock;
+		public IClock EngineCoreClock;
 
 
         // Core Engine
@@ -39,26 +38,8 @@ namespace ZEngine.Engine.Core
         // Engine Settings
         public int EngineWindowHeight { get; set; }        = 800;
 	    public int EngineWindowWidth { get; set; }         = 600;
-        public bool EngineInitialized { get; private set; } = false;
-		private bool _pauseEngineOnWindowFocusLose          = false;
-		public bool PauseEngineOnWindowFocusLose
-	    {
-		    get => _pauseEngineOnWindowFocusLose;
-		    set
-		    {
-				if (!value && EngineInitialized)
-				{
-					//_engineWindow.LostFocus -= OnEngineWindowFocusLost;
-					//_engineWindow.GainedFocus -= OnEngineWindowFocusGained;
-				}
-				else if (!_pauseEngineOnWindowFocusLose && EngineInitialized)
-				{
-					//_engineWindow.LostFocus += OnEngineWindowFocusLost;
-					//_engineWindow.GainedFocus += OnEngineWindowFocusGained;
-				}
-				_pauseEngineOnWindowFocusLose = value;
-		    }
-	    }
+        public bool EngineInitialized { get; private set; }
+		public bool PauseEngineOnWindowFocusLose { get; set; }
 
 
         private Engine()
@@ -66,8 +47,15 @@ namespace ZEngine.Engine.Core
 		    
 	    }
 
-        public void InitEngine()
+        public void InitEngine(string[] args)
         {
+            Debug.Log("Initializing Engine!", DebugLogCategories.Engine);
+
+            // Bootstrap before everything else so we have the log and all other services initialized!
+            Bootstrapper.SetupInternal(EngineServiceLocator);
+
+            EngineCoreClock = GetService<IEngineClock>();
+
             var settings = new WindowOptions(true, true, new Point(50, 50), new Size(1280, 720), 0, 0,
                 GraphicsAPI.Default, GameInfo.GenerateFullGameName(), WindowState.Normal, WindowBorder.Resizable, VSyncMode.Off, 5, true,
                 VideoMode.Default);
@@ -77,12 +65,9 @@ namespace ZEngine.Engine.Core
             Window.Resize += OnEngineWindowResized;
 			Window.Render += WindowOnRender;
 			Window.Update += WindowOnUpdate;
+			Window.FocusChanged += WindowOnFocusChanged;
 
-            // Bootstrap before everything else so we have the log and all other services initialized!
-            Bootstrapper.SetupInternal(EngineServiceLocator);
-
-            EngineCoreClock = new EngineClock();
-	        AssetManager = GetService<IAssetManager>();
+            AssetManager = GetService<IAssetManager>();
 			/*
 			AssetManager.TextureFolderName = GameInfo.GameTextureFolderName;
 			AssetManager.SoundFolderName = GameInfo.GameSoundFolderName;
@@ -93,6 +78,38 @@ namespace ZEngine.Engine.Core
 			AssetManager.InitPackages();
 			*/
 			EngineInitialized = true;
+        }
+
+        private void ParseCommandLineArguments(string[] args)
+        {
+            var parserResult = CommandLine.Parser.Default.ParseArguments<Engine>(args);
+        }
+
+        public void StartEngine()
+        {
+            Debug.Log("Starting Engine!", DebugLogCategories.Engine);
+            StartEngineInternal();
+        }
+
+        private void StartEngineInternal()
+        {
+
+            if (ActiveLevel == null)
+            {
+                Debug.LogError("No active level found!", DebugLogCategories.Engine);
+                return;
+            }
+
+            Window.Run();
+        }
+
+        private void ShutdownEngine()
+        {
+            Debug.Log("Shutting down Engine!");
+
+            //Level.CollisionCircle.Dispose();
+            //Level.CollisionRectangle.Dispose();
+            ActiveLevel.ShutdownLevel();
         }
 
         private void OnEngineWindowLoad()
@@ -126,7 +143,18 @@ namespace ZEngine.Engine.Core
 			//ActiveLevel.LevelDraw(ref _engineWindow);
 		}
 
-		private void OnEngineWindowResized(Size s)
+        private void WindowOnFocusChanged(bool state)
+        {
+            if (!PauseEngineOnWindowFocusLose)
+                return;
+
+            if (state)
+                ActiveLevel.OnGameResume();
+            else
+                ActiveLevel.OnGamePause();
+        }
+
+        private void OnEngineWindowResized(Size s)
 		{
 			
             EngineWindowWidth = s.Width;
@@ -137,44 +165,6 @@ namespace ZEngine.Engine.Core
 				//p.PlayerCamera.Size = new Vector2(s.Width, s.Height);
 			}
 			//EngineWindow.SetView(new View(new Vector2(s.Width/2f, s.Height/2f), new Vector2(s.Width, s.Height)));
-			
-		}
-
-		private void OnEngineWindowFocusGained(object sender, EventArgs e)
-		{
-			ActiveLevel.OnGameResume();
-		}
-
-		private void OnEngineWindowFocusLost(object sender, EventArgs e)
-	    {
-			ActiveLevel.OnGamePause();
-		}
-
-		public void StartEngine()
-		{
-			Debug.Log("Starting Engine!");
-			InitEngineLoop();
-		}
-
-		private void InitEngineLoop()
-        {
-            
-			if (ActiveLevel == null)
-	        {
-				Console.WriteLine("FATAL ERROR: NO ACTIVE LEVEL FOUND!");
-				return;
-	        }
-
-            Window.Run();
-		}
-
-	    private void ShutdownEngine()
-        {
-            Debug.Log("Shutting down Engine!");
-
-			//Level.CollisionCircle.Dispose();
-	        //Level.CollisionRectangle.Dispose();
-	        ActiveLevel.ShutdownLevel();
         }
 
         private void OnEngineWindowClose()
