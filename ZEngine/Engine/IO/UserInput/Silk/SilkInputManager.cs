@@ -6,29 +6,28 @@ using Silk.NET.Input;
 using Silk.NET.Input.Common;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Messaging;
-using ZEngine.Engine.Services;
 using ZEngine.Engine.Utility;
 
-namespace ZEngine.Engine.IO
+namespace ZEngine.Engine.IO.UserInput.Silk
 {
-    public interface IInputManager : IEngineService
-    {
-        bool RegisterForInputDevice<T>(IInputReceiver receiver) where T : IInputDevice;
-        bool RegisterForAllInputDevices(IInputReceiver receiver);
-        bool UnregisterFromInputDevice<T>(IInputReceiver receiver) where T : IInputDevice;
-        bool UnregisterFromAllInputDevices(IInputReceiver receiver);
-    }
-
-    public class InputManager : ITickable, IInputManager
+    public class SilkInputManager : ITickable, IInputManager
     {
         private IInputContext InputContext { get; set; }
 
-        private readonly OrderedDictionary<IInputDevice, IInputReceiver> _devices = new OrderedDictionary<IInputDevice, IInputReceiver>();
+        private static Dictionary<Type, Type> _deviceMappings = new Dictionary<Type, Type>
+        {
+            {typeof(IMouse), typeof(global::Silk.NET.Input.Common.IMouse)},
+            {typeof(IKeyboard), typeof(global::Silk.NET.Input.Common.IKeyboard)},
+            {typeof(IGamepad), typeof(global::Silk.NET.Input.Common.IGamepad)},
+            {typeof(IJoystick), typeof(global::Silk.NET.Input.Common.IJoystick)}
+        };
+        private readonly OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, IInputReceiver> _devices = new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, IInputReceiver>();
+        private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
         private readonly IMessageBus _bus;
 
         public bool CanTick { get; set; } = true;
 
-        public InputManager([NotNull]IMessageBus bus)
+        public SilkInputManager([NotNull]IMessageBus bus)
         {
             _bus = bus;
             _bus.Subscribe<EngineWindowLoadedMessage>(OnWindowLoaded);
@@ -80,7 +79,7 @@ namespace ZEngine.Engine.IO
             //InputContext.OtherDevices
         }
 
-        private void OnInputDeviceConnectionChanged(IInputDevice device, bool status)
+        private void OnInputDeviceConnectionChanged(global::Silk.NET.Input.Common.IInputDevice device, bool status)
         {
             if (!_devices.TryGetValue(device, out var receiver))
             {
@@ -148,37 +147,37 @@ namespace ZEngine.Engine.IO
 
         public bool RegisterForInputDevice<T>([NotNull]IInputReceiver receiver) where T : IInputDevice
         {
-            var device = GetAvailableDevice<T>();
+            var mapping = MapInputDeviceToSilkInputDevice(typeof(T));
+            var device = GetAvailableDevice(mapping);
             if (device == null)
                 return false;
             RegisterInput(receiver, device);
             return true;
         }
 
-        private void RegisterInput(IInputReceiver receiver, IInputDevice device)
+        private void RegisterInput(IInputReceiver receiver, global::Silk.NET.Input.Common.IInputDevice device)
         {
             _devices[device] = receiver;
             switch (device)
             {
-                case IMouse mouse:
+                case global::Silk.NET.Input.Common.IMouse mouse:
                     mouse.MouseDown += receiver.OnMouseButtonPressed;
                     mouse.MouseUp += receiver.OnMouseButtonReleased;
                     mouse.Click += receiver.OnMouseButtonClicked;
                     mouse.DoubleClick += receiver.OnMouseButtonDoubleClicked;
                     mouse.MouseMove += receiver.OnMouseMoved;
                     break;
-                case IKeyboard keyboard:
-                    // Wrap the delegates as we dont want the scancode to be passed down
+                case global::Silk.NET.Input.Common.IKeyboard keyboard:
                     keyboard.KeyDown += receiver.OnKeyDown;
                     keyboard.KeyUp += receiver.OnKeyReleased;
                     break;
-                case IGamepad gamepad:
+                case global::Silk.NET.Input.Common.IGamepad gamepad:
                     gamepad.ButtonDown += receiver.OnGamepadButtonPressed;
                     gamepad.ButtonUp += receiver.OnGamepadButtonReleased;
                     gamepad.ThumbstickMoved += receiver.OnGamepadThumbstickMoved;
                     gamepad.TriggerMoved += receiver.OnGamepadTriggerMoved;
                     break;
-                case IJoystick joystick:
+                case global::Silk.NET.Input.Common.IJoystick joystick:
                     joystick.ButtonDown += receiver.OnJoystickButtonPressed;
                     joystick.ButtonUp += receiver.OnJoystickButtonReleased;
                     joystick.AxisMoved += receiver.OnJoystickMoved;
@@ -191,7 +190,8 @@ namespace ZEngine.Engine.IO
 
         public bool UnregisterFromInputDevice<T>([NotNull]IInputReceiver receiver) where T : IInputDevice
         {
-            var device = GetDeviceForInputReceiver<T>(receiver);
+            var mapping = MapInputDeviceToSilkInputDevice(typeof(T));
+            var device = GetDeviceForInputReceiver(mapping, receiver);
             if (device == null)
                 return false;
 
@@ -208,29 +208,29 @@ namespace ZEngine.Engine.IO
             return true;
         }
 
-        private void UnregisterInput(IInputReceiver receiver, IInputDevice device)
+        private void UnregisterInput(IInputReceiver receiver, global::Silk.NET.Input.Common.IInputDevice device)
         {
             switch (device)
             {
-                case IMouse mouse:
+                case global::Silk.NET.Input.Common.IMouse mouse:
                     mouse.MouseDown -= receiver.OnMouseButtonPressed;
                     mouse.MouseUp -= receiver.OnMouseButtonReleased;
                     mouse.Click -= receiver.OnMouseButtonClicked;
                     mouse.DoubleClick -= receiver.OnMouseButtonDoubleClicked;
                     mouse.MouseMove -= receiver.OnMouseMoved;
                     break;
-                case IKeyboard keyboard:
+                case global::Silk.NET.Input.Common.IKeyboard keyboard:
                     // Wrap the delegates as we dont want the scancode to be passed down
                     keyboard.KeyDown -= receiver.OnKeyDown;
                     keyboard.KeyUp -= receiver.OnKeyReleased;
                     break;
-                case IGamepad gamepad:
+                case global::Silk.NET.Input.Common.IGamepad gamepad:
                     gamepad.ButtonDown -= receiver.OnGamepadButtonPressed;
                     gamepad.ButtonUp -= receiver.OnGamepadButtonReleased;
                     gamepad.ThumbstickMoved -= receiver.OnGamepadThumbstickMoved;
                     gamepad.TriggerMoved -= receiver.OnGamepadTriggerMoved;
                     break;
-                case IJoystick joystick:
+                case global::Silk.NET.Input.Common.IJoystick joystick:
                     joystick.ButtonDown -= receiver.OnJoystickButtonPressed;
                     joystick.ButtonUp -= receiver.OnJoystickButtonReleased;
                     joystick.AxisMoved -= receiver.OnJoystickMoved;
@@ -246,7 +246,7 @@ namespace ZEngine.Engine.IO
         public bool UnregisterFromAllInputDevices([NotNull]IInputReceiver receiver)
         {
             var devices = GetAllDevicesForInputReceiver(receiver);
-            var inputDevices = devices as IInputDevice[] ?? devices.ToArray();
+            var inputDevices = devices as global::Silk.NET.Input.Common.IInputDevice[] ?? devices.ToArray();
 
             if (!inputDevices.Any())
             {
@@ -254,7 +254,7 @@ namespace ZEngine.Engine.IO
                 return false;
             }
 
-            // ArgumentException can't happen here as we remove only known devices
+            // ArgumentException can'type happen here as we remove only known devices
             foreach (var device in inputDevices)
                 UnregisterInput(receiver, device);
 
@@ -264,11 +264,11 @@ namespace ZEngine.Engine.IO
         /// <summary>
         /// Returns the first available, connected device.
         /// </summary>
-        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
+        /// <param name="deviceType">Type of the InputDevice, e.g. Mouse</param>
         /// <returns>The InputDevice or null if none available</returns>
-        private T GetAvailableDevice<T>() where T : IInputDevice
+        private global::Silk.NET.Input.Common.IInputDevice GetAvailableDevice(Type deviceType)
         {
-            return (T)_devices.FirstOrDefault(e => e.Key is T && e.Key.IsConnected && e.Value == null).Key;
+            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Key.IsConnected && e.Value == null).Key;
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace ZEngine.Engine.IO
         /// </summary>
         /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
         /// <returns>The InputDevice or null if none available</returns>
-        private IEnumerable<IInputDevice> GetAvailableDevices()
+        private IEnumerable<global::Silk.NET.Input.Common.IInputDevice> GetAvailableDevices()
         {
             return _devices.Where(e => e.Key.IsConnected && e.Value == null).Select(f => f.Key);
         }
@@ -284,19 +284,22 @@ namespace ZEngine.Engine.IO
         /// <summary>
         /// Returns the first available, connected device.
         /// </summary>
-        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
+        /// <param name="deviceType">Type of the InputDevice, e.g. IMouse</param>
         /// <returns>The InputDevice or null if none available</returns>
-        private T GetDeviceForInputReceiver<T>(IBaseControllable receiver) where T : IInputDevice
+        private global::Silk.NET.Input.Common.IInputDevice GetDeviceForInputReceiver(Type deviceType, IBaseControllable receiver)
         {
-            return (T)_devices.FirstOrDefault(e => e.Key is T && e.Value == receiver).Key;
+            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Value == receiver).Key;
         }
 
-        private IEnumerable<IInputDevice> GetAllDevicesForInputReceiver(IBaseControllable receiver)
+        private IEnumerable<global::Silk.NET.Input.Common.IInputDevice> GetAllDevicesForInputReceiver(IBaseControllable receiver)
         {
             return _devices.Where(e => e.Value == receiver).Select(f => f.Key);
         }
 
-
+        private static Type MapInputDeviceToSilkInputDevice(Type type)
+        {
+            return _deviceMappings.TryGetValue(type, out var value) ? value : null;
+        }
 
     }
 }

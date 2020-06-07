@@ -2,8 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 using Newtonsoft.Json;
-using Silk.NET.Input.Common;
-using ZEngine.Engine.IO;
+using ZEngine.Engine.IO.UserInput;
 
 namespace ZEngine.Engine.Game
 {

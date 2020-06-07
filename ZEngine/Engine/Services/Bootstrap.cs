@@ -1,5 +1,7 @@
 ﻿using ZEngine.Engine.Events;
 using ZEngine.Engine.IO;
+using ZEngine.Engine.IO.UserInput;
+using ZEngine.Engine.IO.UserInput.Silk;
 using ZEngine.Engine.Localization;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Services.Locator;
@@ -12,13 +14,13 @@ namespace ZEngine.Engine.Services
         internal void SetupInternal(EngineServiceLocator locator)
         {
             Debug.PrintToConsole = true;
-            locator.RegisterService<IEngineClock>(new EngineClock());
+            locator.RegisterService<IEngineClock>(new SilkEngineClock());
             locator.RegisterService<IAssetManager>(new AssetManager());
             locator.RegisterService<ILocalizationManager>(new LocalizationManager());
             var engineMessageBus = new EngineMessageBus();
             locator.RegisterService<IEngineMessageBus>(engineMessageBus);
             locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
-            locator.RegisterService<IInputManager>(new InputManager(engineMessageBus));
+            locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus));
             Setup(locator);
             InitializeServices(locator);
         }

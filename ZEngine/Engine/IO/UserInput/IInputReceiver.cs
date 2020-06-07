@@ -1,4 +1,4 @@
-﻿namespace ZEngine.Engine.IO
+﻿namespace ZEngine.Engine.IO.UserInput
 {
     public interface IInputReceiver : IMouseControllable, IKeyboardControllable, IGamepadControllable, IJoystickControllable
     {
