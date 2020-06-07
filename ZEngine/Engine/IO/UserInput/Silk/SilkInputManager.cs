@@ -14,14 +14,14 @@ namespace ZEngine.Engine.IO.UserInput.Silk
     {
         private IInputContext InputContext { get; set; }
 
-        private static Dictionary<Type, Type> _deviceMappings = new Dictionary<Type, Type>
+        private static readonly Dictionary<Type, Type> DeviceMappings = new Dictionary<Type, Type>
         {
             {typeof(IMouse), typeof(global::Silk.NET.Input.Common.IMouse)},
             {typeof(IKeyboard), typeof(global::Silk.NET.Input.Common.IKeyboard)},
             {typeof(IGamepad), typeof(global::Silk.NET.Input.Common.IGamepad)},
             {typeof(IJoystick), typeof(global::Silk.NET.Input.Common.IJoystick)}
         };
-        private readonly OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, IInputReceiver> _devices = new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, IInputReceiver>();
+        private readonly OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper> _devices = new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper>();
         private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
         private readonly IMessageBus _bus;
 
@@ -157,31 +157,32 @@ namespace ZEngine.Engine.IO.UserInput.Silk
 
         private void RegisterInput(IInputReceiver receiver, global::Silk.NET.Input.Common.IInputDevice device)
         {
-            _devices[device] = receiver;
+            var wrapper = new SilkInputDelegateWrapper(receiver);
+            _devices[device] = wrapper;
             switch (device)
             {
                 case global::Silk.NET.Input.Common.IMouse mouse:
-                    mouse.MouseDown += receiver.OnMouseButtonPressed;
-                    mouse.MouseUp += receiver.OnMouseButtonReleased;
-                    mouse.Click += receiver.OnMouseButtonClicked;
-                    mouse.DoubleClick += receiver.OnMouseButtonDoubleClicked;
-                    mouse.MouseMove += receiver.OnMouseMoved;
+                    mouse.MouseDown += wrapper.OnMouseButtonPressed;
+                    mouse.MouseUp += wrapper.OnMouseButtonReleased;
+                    mouse.Click += wrapper.OnMouseButtonClicked;
+                    mouse.DoubleClick += wrapper.OnMouseButtonDoubleClicked;
+                    mouse.MouseMove += wrapper.OnMouseMoved;
                     break;
                 case global::Silk.NET.Input.Common.IKeyboard keyboard:
-                    keyboard.KeyDown += receiver.OnKeyDown;
-                    keyboard.KeyUp += receiver.OnKeyReleased;
+                    keyboard.KeyDown += wrapper.OnKeyDown;
+                    keyboard.KeyUp += wrapper.OnKeyReleased;
                     break;
                 case global::Silk.NET.Input.Common.IGamepad gamepad:
-                    gamepad.ButtonDown += receiver.OnGamepadButtonPressed;
-                    gamepad.ButtonUp += receiver.OnGamepadButtonReleased;
-                    gamepad.ThumbstickMoved += receiver.OnGamepadThumbstickMoved;
-                    gamepad.TriggerMoved += receiver.OnGamepadTriggerMoved;
+                    gamepad.ButtonDown += wrapper.OnGamepadButtonPressed;
+                    gamepad.ButtonUp += wrapper.OnGamepadButtonReleased;
+                    gamepad.ThumbstickMoved += wrapper.OnGamepadThumbstickMoved;
+                    gamepad.TriggerMoved += wrapper.OnGamepadTriggerMoved;
                     break;
                 case global::Silk.NET.Input.Common.IJoystick joystick:
-                    joystick.ButtonDown += receiver.OnJoystickButtonPressed;
-                    joystick.ButtonUp += receiver.OnJoystickButtonReleased;
-                    joystick.AxisMoved += receiver.OnJoystickMoved;
-                    joystick.HatMoved += receiver.OnJoystickHatMoved;
+                    joystick.ButtonDown += wrapper.OnJoystickButtonPressed;
+                    joystick.ButtonUp += wrapper.OnJoystickButtonReleased;
+                    joystick.AxisMoved += wrapper.OnJoystickMoved;
+                    joystick.HatMoved += wrapper.OnJoystickHatMoved;
                     break;
                 default:
                     throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");
@@ -195,9 +196,16 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             if (device == null)
                 return false;
 
+            if (!_devices.TryGetValue(device, out var wrapper))
+            {
+                // this should not happen because all devices get added at the start!
+                Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
+                return false;
+            }
+
             try
             {
-                UnregisterInput(receiver, device);
+                UnregisterInput(wrapper, device);
             }
             catch (ArgumentException ae)
             {
@@ -208,33 +216,33 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             return true;
         }
 
-        private void UnregisterInput(IInputReceiver receiver, global::Silk.NET.Input.Common.IInputDevice device)
+        private void UnregisterInput(SilkInputDelegateWrapper receiverWrapper, global::Silk.NET.Input.Common.IInputDevice device)
         {
             switch (device)
             {
                 case global::Silk.NET.Input.Common.IMouse mouse:
-                    mouse.MouseDown -= receiver.OnMouseButtonPressed;
-                    mouse.MouseUp -= receiver.OnMouseButtonReleased;
-                    mouse.Click -= receiver.OnMouseButtonClicked;
-                    mouse.DoubleClick -= receiver.OnMouseButtonDoubleClicked;
-                    mouse.MouseMove -= receiver.OnMouseMoved;
+                    mouse.MouseDown -= receiverWrapper.OnMouseButtonPressed;
+                    mouse.MouseUp -= receiverWrapper.OnMouseButtonReleased;
+                    mouse.Click -= receiverWrapper.OnMouseButtonClicked;
+                    mouse.DoubleClick -= receiverWrapper.OnMouseButtonDoubleClicked;
+                    mouse.MouseMove -= receiverWrapper.OnMouseMoved;
                     break;
                 case global::Silk.NET.Input.Common.IKeyboard keyboard:
                     // Wrap the delegates as we dont want the scancode to be passed down
-                    keyboard.KeyDown -= receiver.OnKeyDown;
-                    keyboard.KeyUp -= receiver.OnKeyReleased;
+                    keyboard.KeyDown -= receiverWrapper.OnKeyDown;
+                    keyboard.KeyUp -= receiverWrapper.OnKeyReleased;
                     break;
                 case global::Silk.NET.Input.Common.IGamepad gamepad:
-                    gamepad.ButtonDown -= receiver.OnGamepadButtonPressed;
-                    gamepad.ButtonUp -= receiver.OnGamepadButtonReleased;
-                    gamepad.ThumbstickMoved -= receiver.OnGamepadThumbstickMoved;
-                    gamepad.TriggerMoved -= receiver.OnGamepadTriggerMoved;
+                    gamepad.ButtonDown -= receiverWrapper.OnGamepadButtonPressed;
+                    gamepad.ButtonUp -= receiverWrapper.OnGamepadButtonReleased;
+                    gamepad.ThumbstickMoved -= receiverWrapper.OnGamepadThumbstickMoved;
+                    gamepad.TriggerMoved -= receiverWrapper.OnGamepadTriggerMoved;
                     break;
                 case global::Silk.NET.Input.Common.IJoystick joystick:
-                    joystick.ButtonDown -= receiver.OnJoystickButtonPressed;
-                    joystick.ButtonUp -= receiver.OnJoystickButtonReleased;
-                    joystick.AxisMoved -= receiver.OnJoystickMoved;
-                    joystick.HatMoved -= receiver.OnJoystickHatMoved;
+                    joystick.ButtonDown -= receiverWrapper.OnJoystickButtonPressed;
+                    joystick.ButtonUp -= receiverWrapper.OnJoystickButtonReleased;
+                    joystick.AxisMoved -= receiverWrapper.OnJoystickMoved;
+                    joystick.HatMoved -= receiverWrapper.OnJoystickHatMoved;
                     break;
                 default:
                     throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");
@@ -256,7 +264,16 @@ namespace ZEngine.Engine.IO.UserInput.Silk
 
             // ArgumentException can'type happen here as we remove only known devices
             foreach (var device in inputDevices)
-                UnregisterInput(receiver, device);
+            {
+                if (!_devices.TryGetValue(device, out var wrapper))
+                {
+                    // this should not happen because all devices get added at the start!
+                    Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
+                    continue;
+                }
+
+                UnregisterInput(wrapper, device);
+            }
 
             return true;
         }
@@ -288,17 +305,17 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// <returns>The InputDevice or null if none available</returns>
         private global::Silk.NET.Input.Common.IInputDevice GetDeviceForInputReceiver(Type deviceType, IBaseControllable receiver)
         {
-            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Value == receiver).Key;
+            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Value.Receiver == receiver).Key;
         }
 
         private IEnumerable<global::Silk.NET.Input.Common.IInputDevice> GetAllDevicesForInputReceiver(IBaseControllable receiver)
         {
-            return _devices.Where(e => e.Value == receiver).Select(f => f.Key);
+            return _devices.Where(e => e.Value.Receiver == receiver).Select(f => f.Key);
         }
 
         private static Type MapInputDeviceToSilkInputDevice(Type type)
         {
-            return _deviceMappings.TryGetValue(type, out var value) ? value : null;
+            return DeviceMappings.TryGetValue(type, out var value) ? value : null;
         }
 
     }
