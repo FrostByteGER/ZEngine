@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-using SFML.Graphics;
-using SFML.System;
+using Silk.NET.Windowing.Common;
 using WeifenLuo.WinFormsUI.Docking;
-using View = SFML.Graphics.View;
 
 namespace AssetForge
 {
     public partial class LevelView : DockContent
     {
-        private RenderWindow _renderWindow;
-        private SFMLRenderControl _renderControl;
+        private IWindow _renderWindow;
+        private SilkRenderControl _renderControl;
 
         private bool _formLoaded;
 
@@ -18,7 +16,7 @@ namespace AssetForge
         {
             InitializeComponent();
 
-            _renderControl = new SFMLRenderControl();
+            _renderControl = new SilkRenderControl();
             keepAlivePanel.Controls.Add(_renderControl);
 
             _renderControl.Dock = DockStyle.Fill;
@@ -28,6 +26,7 @@ namespace AssetForge
 
         private void renderLoopWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            /*
             _renderWindow = new RenderWindow((IntPtr)e.Argument);
             _renderWindow.SetView(new View(new FloatRect(0,0,Size.Width,Size.Height)));
             var RS = new RectangleShape(new Vector2f(50,50))
@@ -45,6 +44,7 @@ namespace AssetForge
                 RS.Rotation += 0.01f;
                 _renderWindow.Display();
             }
+            */
         }
 
         protected override void DestroyHandle()
@@ -71,7 +71,7 @@ namespace AssetForge
 
         private void LevelView_ResizeEnd(object sender, EventArgs e)
         {
-            _renderWindow.SetView(new View(new FloatRect(0, 0, Size.Width, Size.Height)));
+            //_renderWindow.SetView(new View(new FloatRect(0, 0, Size.Width, Size.Height)));
         }
     }
 }

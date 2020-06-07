@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace AssetForge
 {
-    public class SFMLRenderControl : Control
+    public class SilkRenderControl : Control
     {
         protected override void OnPaint(PaintEventArgs e)
         {
