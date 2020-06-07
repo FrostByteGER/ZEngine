@@ -62,6 +62,7 @@
   
   <ItemGroup>
     <Folder Include="Assets\Levels\" />
+    <Folder Include="Engine\Core\Platform\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   
