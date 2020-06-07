@@ -6,8 +6,7 @@ Currently there is no build system for the project itself as Premake doesn't sup
 Therefore a premade visual studio solution is provided.
 
 # Render Backends
-..* Vulkan 1.2
-..* OpenGL 4.6
+* Vulkan 1.2
 
 # AssetForge
 AssetForge is the WIP editor built around ZEngine. Currently it doesn't do much
