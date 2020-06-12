@@ -12,7 +12,7 @@ namespace Sandbox
             engine.EngineWindowHeight = 600;
             engine.Bootstrapper = new SandboxBootstrap();
             engine.GameInfo = new SandboxGameInfo();
-            engine.InitEngine(args);
+            /*
             var level = new Level();
             var actor = new Actor();
             var actor2 = new Actor();
@@ -23,7 +23,8 @@ namespace Sandbox
             level.RegisterPlayer(pc);
             level.RegisterPlayer(pc2);
             engine.LoadLevel(level);
-            engine.StartEngine();
+            */
+            engine.StartEngine(args);
 
 		}
     }

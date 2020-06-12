@@ -4,9 +4,7 @@ namespace ZEngine.Engine.Game
 {
     public class GameMode : ITickable
     {
-
-		public Level LevelReference { get; set; }
-        protected internal virtual void Tick(float deltaTime)
+        public virtual void Tick(float deltaTime)
         {
 	        //Debug.LogDebug("GameMode Tick", DebugLogCategories.Engine);
         }

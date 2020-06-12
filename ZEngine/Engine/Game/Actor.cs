@@ -12,11 +12,11 @@ namespace ZEngine.Engine.Game
 	public class Actor : ITickable, IDestroyable
 	{
 
-		public uint ActorID { get; internal set; } = 0;
-		public uint LevelID { get; internal set; } = 0;
+		public ulong ActorID { get; internal set; } = 0;
+		public ulong LevelID { get; internal set; } = 0;
 		public uint LayerID { get; set; } = 1;
 		public uint ComponentIDCounter { get; private set; }
-		public Level LevelReference { get; internal set; }
+		public Level.Level LevelReference { get; internal set; }
 		public string ActorName { get; set; }
 
 		[JsonIgnore]
@@ -193,7 +193,7 @@ namespace ZEngine.Engine.Game
 			RootComponent.SetLocalScale(scale);
 		}
 
-        protected internal virtual void Tick(float deltaTime)
+        public virtual void Tick(float deltaTime)
 		{
 			for (int i = 0 ; i < Components.Count ; i++)
 			{

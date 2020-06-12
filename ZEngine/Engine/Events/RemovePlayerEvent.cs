@@ -1,4 +1,5 @@
-﻿using ZEngine.Engine.Utility;
+﻿using System;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Events
 {
@@ -12,11 +13,12 @@ namespace ZEngine.Engine.Events
 
 		public override void ExecuteEvent()
 		{
+			throw new NotImplementedException();
 			if (Parameters.RemovablePlayer != null)
 			{
 				var player = Parameters.RemovablePlayer;
 				player.OnGameEnd();
-				Core.Engine.Instance.ActiveLevel.UnregisterPlayer(player);
+				//Core.Engine.Instance.ActiveLevel.UnregisterPlayer(player);
 				return;
 			}
 			Debug.LogError("Failed to Remove Player", DebugLogCategories.Engine);

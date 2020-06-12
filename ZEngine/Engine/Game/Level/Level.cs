@@ -9,14 +9,13 @@ using ZEngine.Engine.Events.Messages;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Utility;
 
-namespace ZEngine.Engine.Game
+namespace ZEngine.Engine.Game.Level
 {
 	public class Level : IDestroyable
     {
+	    public ulong LevelID { get; internal set; } = 0;
 
-	    public uint LevelID { get; internal set; } = 0;
-
-		public uint ActorIDCounter { get; private set; } = 0;
+		public ulong ActorIDCounter { get; private set; } = 0;
 
 	    [JsonProperty()]
 		private List<Actor> _actors = new List<Actor>();
@@ -40,8 +39,6 @@ namespace ZEngine.Engine.Game
 		/// </summary>
 		public static RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2(10.0f,10.0f));
 		*/
-	    [JsonIgnore]
-		public Core.Engine EngineReference { get; set; }
 
         public GameMode GameMode { get; set; } = new GameMode();
 
@@ -74,11 +71,11 @@ namespace ZEngine.Engine.Game
 	    protected internal virtual void InitLevel()
 	    {
 		    Debug.Log("Initiating Level " + LevelID, DebugLogCategories.Engine);
-            _bus = EngineReference.GetService<IEngineMessageBus>();
+            _bus = Core.Engine.Instance.GetService<IEngineMessageBus>();
         }
 
 
-        protected internal virtual void LevelTick(float deltaTime)
+        protected internal virtual void Tick(float deltaTime)
         {
 	        //Debug.LogDebug("Level Tick!", DebugLogCategories.Engine);
 			foreach (var pc in Players)
@@ -138,7 +135,6 @@ namespace ZEngine.Engine.Game
 
         protected internal virtual void OnGameStart()
 	    {
-			GameMode.LevelReference = this;
 		    GameMode.OnGameStart();
 			foreach (var pc in Players)
 			{
@@ -209,7 +205,6 @@ namespace ZEngine.Engine.Game
 		    LevelLoaded = false;
 
 		    UnregisterActors();
-			UnregisterPlayers();
 			//PhysicsWorld.ShutdownPhysicsEngine();
 			Dispose();
 	    }
@@ -226,7 +221,7 @@ namespace ZEngine.Engine.Game
 		    actor.OnGameStart();
 			return actor;
 	    }
-
+		
 		/// <summary>
 		/// Spawns the Actor instantly. Only allowed after LevelTick has finished, otherwise causes crash due to Collection Modification!
 		/// </summary>
@@ -248,9 +243,10 @@ namespace ZEngine.Engine.Game
 		/// <returns></returns>
 		public T SpawnActor<T>() where T : Actor
 		{
-			var actor = Spawner.SpawnObject<T>(this);
-			_bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
-			return actor;
+			//var actor = Spawner.SpawnObject<T>(this);
+			//_bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
+			//return actor;
+            return null;
 		}
 
 		/// <summary>
@@ -260,11 +256,13 @@ namespace ZEngine.Engine.Game
 		/// <returns></returns>
 		public Actor SpawnActor(Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
-			var actor = Spawner.SpawnObject(actorType, this) as Actor;
-            _bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
-			return actor;
-		}
+			//if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+            //    return null;
+			//var actor = Spawner.SpawnObject(actorType, this) as Actor;
+            //_bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
+			//return actor;
+            return null;
+        }
 
 		/// <summary>
 		/// Constructs and spawns the actor at the end of the current Tick. Actor will tick next LevelTick.
@@ -273,12 +271,12 @@ namespace ZEngine.Engine.Game
 		/// <param name="instigator"></param>
 		public void SpawnActorDeferred<T>(Actor instigator) where T : Actor
 		{
-            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this))));
+            //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this))));
 		}
 
 		public void SpawnActorDeferred<T>() where T : Actor
 		{
-            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this))));
+            //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this))));
 		}
 
 		/// <summary>
@@ -288,9 +286,9 @@ namespace ZEngine.Engine.Game
 		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Actor instigator, Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
-                return;
-            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this))));
+			//if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+            //    return;
+            //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, actorType, this))));
 		}
 
 		/// <summary>
@@ -299,9 +297,9 @@ namespace ZEngine.Engine.Game
 		/// <param name="actorType"></param>
 		public void SpawnActorDeferred(Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
-                return;
-            _bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this))));
+			//if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+            //    return;
+            //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this))));
 		}
 
 		public void RegisterActor(Actor actor)
@@ -336,7 +334,6 @@ namespace ZEngine.Engine.Game
 			}
 		    _actors.Clear();
 	    }
-
 		public bool UnregisterActor(Actor actor)
 		{
 			Debug.LogDebug("Trying to remove Actor: " + actor, DebugLogCategories.Engine);
@@ -431,107 +428,7 @@ namespace ZEngine.Engine.Game
             _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor))));
 		}
 
-		/// <summary>
-		/// Registers the given PlayerController in this level and Marks for Input Registering.
-		/// </summary>
-		/// <param name="pc"></param>
-		public void RegisterPlayer(PlayerController pc)
-		{
-			RegisterPlayer(pc, true);
-		}
-
-		/// <summary>
-		/// Registers the given PlayerController in this level and registers its input.
-		/// </summary>
-		/// <param name="pc"></param>
-		public void RegisterPlayer(PlayerController pc, bool active)
-		{
-			if (Players.Contains(pc)) 
-                return;
-			pc.LevelReference = this;
-			pc.ID = Players.Count > 0 ? (uint)Players.Count - 1 : 0;
-			Players.Add(pc);
-			pc.MarkedForInputRegistering = active;
-			Debug.LogDebug("Trying to Register Player: " + pc, DebugLogCategories.Engine);
-		}
-
-		public void UnregisterPlayers()
-		{
-			Debug.LogDebug("Removing all Players!", DebugLogCategories.Engine);
-			foreach (var pc in Players)
-			{
-				pc.IsActive = false;
-			}
-			Players.Clear();
-		}
-
-		public bool UnregisterPlayer(PlayerController pc)
-		{
-			Debug.LogDebug("Trying to remove Player with PlayerID: #" + pc.ID, DebugLogCategories.Engine);
-			pc.IsActive = false;
-			return Players.Remove(pc);
-		}
-
-		public bool UnregisterPlayer(uint playerID)
-		{
-			Debug.LogDebug("Trying to remove Player with PlayerID: #" + playerID, DebugLogCategories.Engine);
-			var player = FindPlayer(playerID);
-			return UnregisterPlayer(player);
-		}
-
-		public PlayerController FindPlayer(uint playerID)
-		{
-			return Players.Find(x => x.ID == playerID);
-		}
-
-		public T FindPlayer<T>(uint playerID) where T : PlayerController
-		{
-			return (T)Players.Find(x => x.ID == playerID);
-		}
-
-	    public void RegisterTimer(Timer timer)
-	    {
-		    TimerManager.AddTimer(timer);
-	    }
-
-		public void UnregisterTimer(Timer timer)
-		{
-			TimerManager.RemoveTimer(timer);
-		}
-
-		public void UnregisterTimer(int index)
-		{
-			TimerManager.RemoveTimer(index);
-		}
-
-		protected bool Equals(Level other)
-	    {
-		    return LevelID == other.LevelID;
-	    }
-
-	    public override bool Equals(object obj)
-	    {
-		    if (obj is null) return false;
-		    if (ReferenceEquals(this, obj)) return true;
-		    return obj.GetType() == this.GetType() && Equals((Level) obj);
-	    }
-
-	    public override int GetHashCode()
-	    {
-		    return (int) LevelID;
-	    }
-
-	    public static bool operator ==(Level left, Level right)
-	    {
-		    return Equals(left, right);
-	    }
-
-	    public static bool operator !=(Level left, Level right)
-	    {
-		    return !Equals(left, right);
-	    }
-
-		private void Dispose(bool disposing)
+        private void Dispose(bool disposing)
 		{
 			Destroy(disposing);
 		}

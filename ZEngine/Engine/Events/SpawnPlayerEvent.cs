@@ -1,4 +1,6 @@
-﻿namespace ZEngine.Engine.Events
+﻿using System;
+
+namespace ZEngine.Engine.Events
 {
 	public class SpawnPlayerEvent<T> : EngineEvent<T> where T : SpawnPlayerParams
 	{
@@ -8,8 +10,9 @@
 
 		public override void ExecuteEvent()
 		{
+            throw new NotImplementedException();
 			var player = Parameters.SpawnablePlayer;
-			Parameters.LevelRef.RegisterPlayer(player);
+			//Parameters.LevelRef.RegisterPlayer(player);
 			player.IsActive = player.MarkedForInputRegistering;
 			player.MarkedForInputRegistering = false;
 			player.OnGameStart();

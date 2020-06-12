@@ -1,4 +1,5 @@
 ﻿using ZEngine.Engine.Events;
+using ZEngine.Engine.Game.Level;
 using ZEngine.Engine.IO;
 using ZEngine.Engine.IO.UserInput;
 using ZEngine.Engine.IO.UserInput.Silk;
@@ -21,6 +22,7 @@ namespace ZEngine.Engine.Services
             locator.RegisterService<IEngineMessageBus>(engineMessageBus);
             locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
             locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus));
+            locator.RegisterService<ILevelManager>(new LevelManager(engineMessageBus));
             Setup(locator);
             InitializeServices(locator);
         }

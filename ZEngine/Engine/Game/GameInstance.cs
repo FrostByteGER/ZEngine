@@ -5,7 +5,7 @@
 
 		public bool CanTick { get; set; } = true;
 
-		protected internal virtual void Tick(float deltaTime)
+		public virtual void Tick(float deltaTime)
 		{
 
 		}

@@ -11,9 +11,6 @@ namespace ZEngine.Engine.Game
         public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; }
-
-		public Level LevelReference { get; set; } = null;
-
         public Actor PlayerPawn { get; set; }
 
 		//public JGUI Hud { get; set; }
@@ -23,28 +20,7 @@ namespace ZEngine.Engine.Game
 
 	    internal bool MarkedForInputRegistering { get; set; } = false;
 	    public bool DisableInputWhenPaused { get; set; } = false;
-
-		private bool _isActive = false;
-
-	    [JsonIgnore]
-		public bool IsActive
-	    {
-		    get => _isActive;
-			set
-			{
-				
-				if (!value && LevelReference != null && LevelReference.LevelLoaded)
-				{
-					
-				}
-				else if (!_isActive && LevelReference != null && LevelReference.LevelLoaded)
-				{
-					
-				}
-
-				_isActive = value;
-			}
-	    }
+        public bool IsActive { get; internal set; }
 
 	    public PlayerController()
         {
@@ -55,7 +31,7 @@ namespace ZEngine.Engine.Game
             PlayerPawn = playerPawn;
         }
 
-        protected internal virtual void Tick(float deltaTime)
+        public virtual void Tick(float deltaTime)
         {
             if (PlayerPawn != null)
             {
@@ -65,7 +41,7 @@ namespace ZEngine.Engine.Game
 
         protected internal virtual void OnGameStart()
         {
-            InputManager = LevelReference.EngineReference.GetService<IInputManager>();
+            InputManager = Core.Engine.Instance.GetService<IInputManager>();
 			InputManager.RegisterForInputDevice<IMouse>(this);
         }
 

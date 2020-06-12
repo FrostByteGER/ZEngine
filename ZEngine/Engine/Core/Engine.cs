@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
-using Newtonsoft.Json;
 using Silk.NET.Windowing.Common;
+using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
+using ZEngine.Engine.Game.Level;
 using ZEngine.Engine.IO;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Services;
@@ -28,12 +29,11 @@ namespace ZEngine.Engine.Core
 		public Bootstrap Bootstrapper { get; set; }
 	    public GameInstance GameInstance { get; set; } = new GameInstance();
 		public GameInfo GameInfo { get; set; } = new GameInfo();
-	    public Level ActiveLevel { get; internal set; }
-		public uint LevelIDCounter { get; private set; } = 0;
 
-
-		// Engine Managers
-        public IAssetManager AssetManager { get; set; }
+        // Engine Managers
+        private IAssetManager AssetManager { get; set; }
+        private ILevelManager LevelManager { get; set; }
+        private IEngineMessageBus MessageBus { get; set; }
 
         // Engine Settings
         public int EngineWindowHeight { get; set; }        = 800;
@@ -130,10 +130,10 @@ namespace ZEngine.Engine.Core
             }
             */
 
-			//if (InputManager.CanTick) 
-			//    InputManager.Tick(FrameDelta);
-			if (ActiveLevel.LevelTicking)
-                ActiveLevel.LevelTick((float) deltaTime);
+            //if (InputManager.CanTick) 
+            //    InputManager.Tick(FrameDelta);
+            if (LevelManager.CanTick)
+                LevelManager.Tick(dt);
 
             Debug.FlushQueue();
 		}
@@ -148,10 +148,7 @@ namespace ZEngine.Engine.Core
             if (!PauseEngineOnWindowFocusLose)
                 return;
 
-            if (state)
-                ActiveLevel.OnGameResume();
-            else
-                ActiveLevel.OnGamePause();
+            MessageBus.Publish(new EngineFocusChangeMessage(this, state));
         }
 
         private void OnEngineWindowResized(Size s)
@@ -159,56 +156,17 @@ namespace ZEngine.Engine.Core
 			
             EngineWindowWidth = s.Width;
 			EngineWindowHeight = s.Height;
-			foreach (var p in ActiveLevel.Players)
-			{
+			//foreach (var p in ActiveLevel.Players)
+			//{
 				//p.PlayerCamera.Center = new Vector2();
 				//p.PlayerCamera.Size = new Vector2(s.Width, s.Height);
-			}
+			//}
 			//EngineWindow.SetView(new View(new Vector2(s.Width/2f, s.Height/2f), new Vector2(s.Width, s.Height)));
         }
 
         private void OnEngineWindowClose()
         {
-            ActiveLevel.OnGameEnd();
             ShutdownEngine();
-		}
-
-		/// <summary>
-		/// Loads the given level and either destroys the previous one or pauses and unloads it.
-		/// </summary>
-		/// <param name="level"></param>
-		/// <param name="destroyPrevious"></param>
-		/// <returns></returns>
-		public bool LoadLevel(Level level, bool destroyPrevious = true)
-		{
-			if (level == null) 
-                return false;
-
-            ActiveLevel?.OnGameEnd();
-            ActiveLevel?.ShutdownLevel();
-            //AssetManager.ClearPools();
-
-            ActiveLevel = level;
-
-			if (level.LevelID == 0)
-			{
-				level.EngineReference = this;
-				level.LevelID = ++LevelIDCounter;
-				level.LevelLoaded = true;
-				level.OnLevelLoad();
-				level.LevelTicking = true;
-			}
-			return true;
-		}
-
-
-		public bool LoadLevel(string levelName, bool destroyPrevious = true)
-		{
-			if (string.IsNullOrWhiteSpace(levelName)) return false;
-
-			var level = JsonConvert.DeserializeObject<Level>(levelName);
-			//TODO: Implement everything
-			return LoadLevel(level, destroyPrevious);
 		}
 
         // TODO: Add Compiled Lambda Dictionary 
@@ -220,6 +178,15 @@ namespace ZEngine.Engine.Core
         public T GetService<T>(string id = null) where T : IEngineService
         {
             return EngineServiceLocator.GetService<T>(id);
+        }
+    }
+
+    internal class EngineFocusChangeMessage : AbstractMessage
+    {
+        public bool NewFocusState { get; private set; }
+        public EngineFocusChangeMessage(object sender, bool newState) : base(sender)
+        {
+            NewFocusState = newState;
         }
     }
 }

@@ -4,13 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Silk.NET.Input;
 using Silk.NET.Input.Common;
-using ZEngine.Engine.Game;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.IO.UserInput.Silk
 {
-    public class SilkInputManager : ITickable, IInputManager
+    public class SilkInputManager : IInputManager
     {
         private IInputContext InputContext { get; set; }
 
@@ -24,8 +23,6 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         private readonly OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper> _devices = new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper>();
         private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
         private readonly IMessageBus _bus;
-
-        public bool CanTick { get; set; } = true;
 
         public SilkInputManager([NotNull]IMessageBus bus)
         {
