@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZEngine.Engine.Services;
 
-namespace ZEngine.Engine.IO
+namespace ZEngine.Engine.IO.Assets
 {
-    public interface IAssetRegistry
+    public interface IAssetRegistry : IEngineService
     {
-        void EstablishAssetRegistryConnection();
-        string GetAsset(Guid guid);
-        string GetAsset(string guid);
+        void EstablishConnection();
+        AssetPointer GetAsset(Guid guid);
+        AssetPointer GetAsset(string guid);
         bool AddAsset(string assetPath);
         bool DeleteAsset(Guid guid);
         bool DeleteAsset(string guid);

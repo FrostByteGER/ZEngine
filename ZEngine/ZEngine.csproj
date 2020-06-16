@@ -47,8 +47,6 @@
   
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Assets\Config.cfg" />
-    <None Include="Assets\Packages.cfg" />
     <None Update="EngineInfo.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>EngineInfo.Designer.cs</LastGenOutput>
@@ -63,6 +61,7 @@
   <ItemGroup>
     <Folder Include="Assets\Levels\" />
     <Folder Include="Engine\Core\Platform\" />
+    <Folder Include="Engine\Networking\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   

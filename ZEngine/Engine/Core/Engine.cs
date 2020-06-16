@@ -3,7 +3,7 @@ using Silk.NET.Windowing.Common;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Game.Level;
-using ZEngine.Engine.IO;
+using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Services;
 using ZEngine.Engine.Services.Locator;
@@ -47,10 +47,19 @@ namespace ZEngine.Engine.Core
 		    
 	    }
 
-        public void InitEngine(string[] args)
+        private void ParseCommandLineArguments(string[] args)
+        {
+            var parserResult = CommandLine.Parser.Default.ParseArguments<Engine>(args);
+        }
+
+        public void StartEngine(string[] args)
         {
             Debug.Log("Initializing Engine!", DebugLogCategories.Engine);
+            StartEngineInternal();
+        }
 
+        private void StartEngineInternal()
+        {
             // Bootstrap before everything else so we have the log and all other services initialized!
             Bootstrapper.SetupInternal(EngineServiceLocator);
 
@@ -60,46 +69,29 @@ namespace ZEngine.Engine.Core
                 GraphicsAPI.Default, GameInfo.GenerateFullGameName(), WindowState.Normal, WindowBorder.Resizable, VSyncMode.Off, 5, true,
                 VideoMode.Default);
             Window = Silk.NET.Windowing.Window.Create(settings);
-			Window.Load += OnEngineWindowLoad;
+            Window.Load += OnEngineWindowLoad;
             Window.Closing += OnEngineWindowClose;
             Window.Resize += OnEngineWindowResized;
-			Window.Render += WindowOnRender;
-			Window.Update += WindowOnUpdate;
-			Window.FocusChanged += WindowOnFocusChanged;
+            Window.Render += WindowOnRender;
+            Window.Update += WindowOnUpdate;
+            Window.FocusChanged += WindowOnFocusChanged;
 
             AssetManager = GetService<IAssetManager>();
-			/*
+            AssetManager.Init();
+            LevelManager = GetService<ILevelManager>();
+            MessageBus = GetService<IEngineMessageBus>();
+            /*
 			AssetManager.TextureFolderName = GameInfo.GameTextureFolderName;
 			AssetManager.SoundFolderName = GameInfo.GameSoundFolderName;
 			AssetManager.ConfigFolderName = GameInfo.GameConfigFolderName;
 			AssetManager.FontFolderName = GameInfo.GameFontFolderName;
 			AssetManager.ShaderFolderName = GameInfo.GameShaderFolderName;
 			AssetManager.LevelFolderName = GameInfo.GameLevelFolderName;
-			AssetManager.InitPackages();
+			AssetManager.Initialize();
 			*/
-			EngineInitialized = true;
-        }
+            EngineInitialized = true;
 
-        private void ParseCommandLineArguments(string[] args)
-        {
-            var parserResult = CommandLine.Parser.Default.ParseArguments<Engine>(args);
-        }
-
-        public void StartEngine()
-        {
-            Debug.Log("Starting Engine!", DebugLogCategories.Engine);
-            StartEngineInternal();
-        }
-
-        private void StartEngineInternal()
-        {
-
-            if (ActiveLevel == null)
-            {
-                Debug.LogError("No active level found!", DebugLogCategories.Engine);
-                return;
-            }
-
+            // Finally initialize the window
             Window.Run();
         }
 
@@ -109,19 +101,20 @@ namespace ZEngine.Engine.Core
 
             //Level.CollisionCircle.Dispose();
             //Level.CollisionRectangle.Dispose();
-            ActiveLevel.ShutdownLevel();
+            MessageBus.Publish(new EngineShutdownMessage(this));
         }
 
         private void OnEngineWindowLoad()
         {
-            GetService<IEngineMessageBus>().Publish(new EngineWindowLoadedMessage(this));
+            MessageBus.Publish(new EngineWindowLoadedMessage(this));
+            //LevelManager.LoadLevel("Default");
         }
 
         private void WindowOnUpdate(double deltaTime)
         {
-
-			// Tick Physics
-			/*
+            var dt = (float) deltaTime;
+            // Tick Physics
+            /*
             if (ActiveLevel.PhysicsWorld.CanTick)
             {
                 EngineCoreClock.StartPhysics();

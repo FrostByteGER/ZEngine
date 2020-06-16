@@ -6,35 +6,49 @@ using System.Linq;
 using ZEngine.Engine.Utility;
 using Debug = ZEngine.Engine.Utility.Debug;
 
-namespace ZEngine.Engine.IO
+namespace ZEngine.Engine.IO.Assets
 {
     public class AssetRegistry : IAssetRegistry
     {
         private SQLiteConnection _registryConnection;
 
-        private const string DatabaseName = "AssetRegistry";
+        protected const string DatabaseName = "AssetRegistry";
         private const string DatabaseFileExtension = ".db";
         private const string AssetCollectionName = "Assets";
 
-        public void EstablishAssetRegistryConnection()
+        public bool AllowNewDatabaseCreation { get; internal set; } = true;
+
+        public void Initialize()
+        {
+            
+        }
+
+        public void Deinitialize()
+        {
+            
+        }
+
+        public void EstablishConnection()
         {
             if (_registryConnection != null)
             {
-                Debug.LogWarning("Connection to Asset Database already established!", DebugLogCategories.Engine);
+                Debug.LogError("Connection to Asset Database already established!", DebugLogCategories.Engine);
                 return;
             }
 
-            var dbMissing = File.Exists(DatabaseName + DatabaseFileExtension);
-
-            if(dbMissing)
-                Debug.LogWarning("Asset Registry Database does not exist!", DebugLogCategories.Engine);
-
-            _registryConnection = new SQLiteConnection($"Data Source = {DatabaseName + DatabaseFileExtension}; Version = 3; FailIfMissing = {dbMissing}");
-            _registryConnection.Open();
+            var dbMissing = !File.Exists(DatabaseName + DatabaseFileExtension);
 
             if (dbMissing)
             {
-                //TODO: Prefill with table data!
+                Debug.LogWarning("Asset Registry Database does not exist, a new one will be created!", DebugLogCategories.Engine);
+            }
+
+
+            _registryConnection = new SQLiteConnection($"Data Source = {DatabaseName + DatabaseFileExtension}; Version = 3; FailIfMissing = {!AllowNewDatabaseCreation}");
+            _registryConnection.Open();
+
+            if (AllowNewDatabaseCreation && dbMissing)
+            {
                 Debug.Log("Sucessfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
             }
             else
@@ -44,19 +58,19 @@ namespace ZEngine.Engine.IO
                 
         }
 
-        public string GetAsset(Guid guid)
+        public AssetPointer GetAsset(Guid guid)
         {
             return GetAsset(guid.ToString());
         }
 
-        public string GetAsset(string guid)
+        public AssetPointer GetAsset(string guid)
         {
             var cmd = _registryConnection.CreateCommand();
             cmd.CommandText = "SELECT path FROM @collection WHERE guid = @guid LIMIT 1";
             cmd.Parameters.AddWithValue("@collection", AssetCollectionName);
             cmd.Parameters.AddWithValue("@guid", guid);
-            
-            return cmd.ExecuteScalar().ToString();
+            var ptr = (AssetPointer) cmd.ExecuteScalar();
+            return ptr;
         }
 
         public bool AddAsset(string assetPath)
@@ -117,7 +131,7 @@ namespace ZEngine.Engine.IO
             cmd.Parameters.AddWithValue("@guid", guid);
             return cmd.ExecuteNonQuery() > 0;
         }
-
+        // TODO: Extract to AssetForge
         internal bool CookDB(string cookPath)
         {
             var fileConnection = new SQLiteConnection($"Data Source = {cookPath + DatabaseName + DatabaseFileExtension}; Version = 3;");
