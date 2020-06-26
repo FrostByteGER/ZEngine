@@ -49,8 +49,7 @@ namespace ZEngine.Engine.IO.Assets
 		}
 
         /// <summary>
-		/// NOTE: This is pure abuse of Generics and is used only as a convenience for Casting. I may delete this in the future and use LoadXXX methods instead.
-		/// </summary>
+        /// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="assetName"></param>
 		public virtual T LoadAsset<T>(string assetName)
