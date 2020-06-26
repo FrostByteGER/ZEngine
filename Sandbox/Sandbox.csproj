@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="robocopy &quot;$(SolutionDir)ZEngine\Lib&quot; &quot;$(TargetDir)\&quot; /COPY:DAT /DCOPY:T /E&#xD;&#xA;rmdir &quot;$(TargetDir)Assets&quot; /s /q&#xD;&#xA;mkdir &quot;$(TargetDir)Assets\Engine&quot;&#xD;&#xA;mkdir &quot;$(TargetDir)Assets\$(ProjectName)&quot;&#xD;&#xA;robocopy &quot;$(SolutionDir)ZEngine\Assets&quot; &quot;$(TargetDir)Assets\Engine&quot; /COPY:DAT /DCOPY:T /E&#xD;&#xA;robocopy &quot;$(ProjectDir)Assets&quot; &quot;$(TargetDir)Assets\Game&quot; /COPY:DAT /DCOPY:T /E&#xD;&#xA;if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25" />
+    <Exec Command="robocopy &quot;$(SolutionDir)ZEngine\Lib&quot; &quot;$(TargetDir)\&quot; /COPY:DAT /DCOPY:T /E" />
   </Target>
 
 </Project>
