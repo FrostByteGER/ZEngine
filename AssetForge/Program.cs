@@ -1,14 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace AssetForge
+﻿namespace AssetForge
 {
     internal class Program
 	{
-	    [STAThread]
+	    
         public static void Main(string[] args)
-		{
-            Application.Run(new MainWindow());
-		}
+        {
+            var main = new MainEditorWindow();
+            main.Initialize();
+            main.Start();
+        }
 	}
 }
