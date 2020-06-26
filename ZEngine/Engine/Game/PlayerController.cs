@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
-using Newtonsoft.Json;
 using ZEngine.Engine.IO.UserInput;
 
 namespace ZEngine.Engine.Game
@@ -17,9 +16,7 @@ namespace ZEngine.Engine.Game
 
         private IInputManager InputManager { get; set; }
 	    public bool CanTick { get; set; } = true;
-
-	    internal bool MarkedForInputRegistering { get; set; } = false;
-	    public bool DisableInputWhenPaused { get; set; } = false;
+        public bool DisableInputWhenPaused { get; set; } = false;
         public bool IsActive { get; internal set; }
 
 	    public PlayerController()

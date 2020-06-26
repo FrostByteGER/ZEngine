@@ -13,9 +13,7 @@ namespace ZEngine.Engine.Events
             throw new NotImplementedException();
 			var player = Parameters.SpawnablePlayer;
 			//Parameters.LevelRef.RegisterPlayer(player);
-			player.IsActive = player.MarkedForInputRegistering;
-			player.MarkedForInputRegistering = false;
-			player.OnGameStart();
+            player.OnGameStart();
 		}
 	}
 }

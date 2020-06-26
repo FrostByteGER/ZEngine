@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
-using Newtonsoft.Json;
 using ZEngine.Engine.Events;
 using ZEngine.Engine.Events.Messages;
 using ZEngine.Engine.Messaging;
@@ -17,76 +16,73 @@ namespace ZEngine.Engine.Game.Level
 
 		public ulong ActorIDCounter { get; private set; } = 0;
 
-	    [JsonProperty()]
-		private List<Actor> _actors = new List<Actor>();
+		private readonly List<Actor> _actors = new List<Actor>();
 
         private IMessageBus _bus;
 
-        [JsonIgnore]
 	    internal ReadOnlyCollection<Actor> Actors => new ReadOnlyCollection<Actor>(_actors);
 
 	    /// <summary>
 	    /// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
 	    /// </summary>
-	    public Vector2 LevelBounds { get; set; } = new Vector2(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
-		/*
-		/// <summary>
-		/// Dummy Object for efficient Collision Debug Drawing.
-		/// </summary>
-	    public static CircleShape CollisionCircle { get; set; } = new CircleShape(10.0f);
-		/// <summary>
-		/// Dummy Object for efficient Collision Debug Drawing.
-		/// </summary>
-		public static RectangleShape CollisionRectangle { get; set; } = new RectangleShape(new Vector2(10.0f,10.0f));
-		*/
+	    public Vector2 Bounds { get; set; } = new Vector2(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
 
         public GameMode GameMode { get; set; } = new GameMode();
 
-		/*
-	    [JsonIgnore]
-		public PhysicsWorld PhysicsWorld { get; private set; } = new PhysicsWorld();
-		*/
+	    public bool Loaded { get; set; }
+		internal bool Ticking { get; set; }
 
-	    public bool LevelLoaded { get; set; } = false;
-		internal bool LevelTicking { get; set; } = false;
-	    public bool LevelPaused { get; private set; } = false;
+		public List<PlayerController> Players { get; } = new List<PlayerController>();
 
-		public List<PlayerController> Players { get; private set; } = new List<PlayerController>();
+	    public TimerManager TimerManager { get; } = new TimerManager();
 
-	    public TimerManager TimerManager { get; private set; } = new TimerManager();
+        public ActorSpawner Spawner { get; } = new ActorSpawner();
 
-		/// <summary>
-		/// Count of Layers. ZERO-BASED! ACTUAL LAYER COUNT IS LAYERS+1.
-		/// <para>Layers are sorted from front to back. So 0 is the front and Layers.MaxValue is the back. Usually the most front layer(0) is the UI layer.</para>
-		/// </summary>
-	    public uint Layers { get; set; } = 2;
+        protected internal virtual void OnLevelLoad()
+        {
+            InitLevel();
+            Debug.Log("Level #" + LevelID + " Loaded", DebugLogCategories.Engine);
+            foreach (var actor in _actors)
+            {
+                actor.InitializeActor();
+            }
+            OnGameStart();
+        }
 
-	    public ActorSpawner Spawner { get; } = new ActorSpawner();
-
-
-		public Level()
-		{
-		}
-
-	    protected internal virtual void InitLevel()
-	    {
-		    Debug.Log("Initiating Level " + LevelID, DebugLogCategories.Engine);
+        protected internal virtual void InitLevel()
+        {
+            Debug.Log("Initiating Level " + LevelID, DebugLogCategories.Engine);
             _bus = Core.Engine.Instance.GetService<IEngineMessageBus>();
         }
 
+		protected internal virtual void OnGameStart()
+        {
+            GameMode.OnGameStart();
+            foreach (var actor in _actors)
+            {
+                actor.OnGameStart();
+            }
+
+            foreach (var pc in Players)
+            {
+                pc.OnGameStart();
+            }
+		}
 
         protected internal virtual void Tick(float deltaTime)
         {
 	        //Debug.LogDebug("Level Tick!", DebugLogCategories.Engine);
 			foreach (var pc in Players)
 			{
-				if (!pc.CanTick) continue;
+				if (!pc.CanTick) 
+                    continue;
 				pc.Tick(deltaTime);
 			    //pc.Hud?.Tick(deltaTime);
 			}
 			foreach (var actor in _actors)
             {
-	            if (!actor.CanTick) continue;
+	            if (!actor.CanTick) 
+                    continue;
 				actor.Tick(deltaTime);
             }
 	        if (GameMode.CanTick) GameMode.Tick(deltaTime);
@@ -117,47 +113,13 @@ namespace ZEngine.Engine.Game.Level
 			}
 		}
 
-	    public virtual void OnLevelLoad()
-	    {
-		    InitLevel();
-			Debug.Log("Level #" + LevelID + " Loaded", DebugLogCategories.Engine);
-			foreach (var actor in _actors)
-		    {
-			    actor.InitializeActor();
-		    }
-		    foreach (var pc in Players)
-		    {
-			    pc.IsActive = pc.MarkedForInputRegistering; // If Player Controllers were marked for Input Registration, register their input now.
-			    pc.MarkedForInputRegistering = false;
-		    }
-		    OnGameStart();
-	    }
-
-        protected internal virtual void OnGameStart()
-	    {
-		    GameMode.OnGameStart();
-			foreach (var pc in Players)
-			{
-				if (!pc.IsActive) 
-                    continue;
-				pc.OnGameStart();
-			}
-			foreach (var actor in _actors)
-		    {
-			    actor.OnGameStart();
-		    }
-	    }
-
         protected internal virtual void OnGamePause()
 	    {
-		    LevelTicking = false;
-		    LevelPaused = true;
-		    //PhysicsWorld.CanTick = false;
+		    Ticking = false;
 			GameMode.OnGamePause();
 			foreach (var pc in Players)
 			{
-				if (!pc.IsActive) continue;
-				pc.OnGamePause();
+                pc.OnGamePause();
 			}
 			foreach (var actor in _actors)
 			{
@@ -167,14 +129,10 @@ namespace ZEngine.Engine.Game.Level
 
         protected internal virtual void OnGameResume()
 	    {
-		    LevelPaused = false;
-		    LevelTicking = true;
-		    //PhysicsWorld.CanTick = true;
-			GameMode.OnGameResume();
+            GameMode.OnGameResume();
 			foreach (var pc in Players)
 			{
-				if (!pc.IsActive) continue;
-				pc.OnGameResume();
+                pc.OnGameResume();
 			}
 			foreach (var actor in _actors)
 			{
@@ -185,7 +143,7 @@ namespace ZEngine.Engine.Game.Level
         protected internal virtual void OnGameEnd()
 	    {
 			GameMode.OnGameEnd();
-			LevelTicking = false;
+			Ticking = false;
 			foreach (var pc in Players)
 			{
 				pc.OnGameEnd();
@@ -202,8 +160,7 @@ namespace ZEngine.Engine.Game.Level
 
 	    internal virtual void ShutdownLevel()
 	    {
-		    LevelLoaded = false;
-
+		    Loaded = false;
 		    UnregisterActors();
 			//PhysicsWorld.ShutdownPhysicsEngine();
 			Dispose();
@@ -229,7 +186,8 @@ namespace ZEngine.Engine.Game.Level
 		/// <returns></returns>
 		internal Actor SpawnActorInternal(Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) return null;
+			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+                return null;
 			var actor = Spawner.SpawnObject(actorType, this) as Actor;
 			RegisterActor(actor);
 			actor?.OnGameStart();
@@ -352,14 +310,7 @@ namespace ZEngine.Engine.Game.Level
 			return removal;
 		}
 
-		public bool UnregisterActor(uint actorID)
-		{
-			Debug.LogDebug("Trying to remove Actor with ActorID: #" + actorID, DebugLogCategories.Engine);
-			var actor = FindActorInLevel(actorID);
-			return UnregisterActor(actor);
-		}
-
-	    public bool ContainsActorInLevel(string name)
+        public bool ContainsActorInLevel(string name)
 	    {
 		    return FindActorInLevel(name) != null;
 	    }
@@ -409,16 +360,7 @@ namespace ZEngine.Engine.Game.Level
 			return _actors.FindAll(x => x is T).Cast<T>();
 		}
 
-		public void PauseActor(Actor instigator, Actor actor)
-		{
-
-		}
-		public void PauseActor(Actor actor)
-		{
-
-		}
-
-		public void DestroyActor(Actor instigator, Actor actor)
+        public void DestroyActor(Actor instigator, Actor actor)
 	    {
             _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actor))));
 		}

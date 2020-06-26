@@ -7,7 +7,7 @@ namespace ZEngine.Engine.Events
 		public SwitchLevelEvent(T parameters) : base(parameters)
 		{
             throw new NotImplementedException();
-			//Core.Engine.Instance.ActiveLevel.LevelTicking = false;
+			//Core.Engine.Instance.ActiveLevel.Ticking = false;
 		}
 
 		public override void ExecuteEvent()
