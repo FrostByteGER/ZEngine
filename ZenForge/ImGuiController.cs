@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using AssetForge.Extensions;
 using ImGuiNET;
 using Silk.NET.Input.Common;
 using Silk.NET.Input.Extensions;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing.Common;
+using ZenForge.Extensions;
 
-namespace AssetForge
+namespace ZenForge
 {
     public class ImGuiController : IDisposable
     {

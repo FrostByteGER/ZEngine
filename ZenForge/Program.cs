@@ -1,4 +1,4 @@
-﻿namespace AssetForge
+﻿namespace ZenForge
 {
     internal class Program
 	{

@@ -4,7 +4,7 @@ using Silk.NET.Input.Common;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing.Common;
 
-namespace AssetForge
+namespace ZenForge
 {
     public class MainEditorWindow
     {

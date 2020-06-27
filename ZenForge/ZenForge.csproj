@@ -6,6 +6,8 @@
 	<UseWindowsForms>true</UseWindowsForms>
 	<Platforms>x64</Platforms>
 	<LangVersion>latest</LangVersion>
+	<Company />
+	<Authors>Kevin Kuegler</Authors>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

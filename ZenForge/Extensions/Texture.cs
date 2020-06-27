@@ -1,7 +1,7 @@
 ﻿using System;
 using Silk.NET.OpenGL;
 
-namespace AssetForge.Extensions
+namespace ZenForge.Extensions
 {
     public enum TextureCoordinate
     {

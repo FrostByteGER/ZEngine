@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Silk.NET.OpenGL;
 
-namespace AssetForge.Extensions
+namespace ZenForge.Extensions
 {
     struct UniformFieldInfo
         {

@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Silk.NET.OpenGL;
 
-namespace AssetForge.Extensions
+namespace ZenForge.Extensions
 {
     static class Util
     {

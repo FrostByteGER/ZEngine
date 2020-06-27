@@ -131,7 +131,7 @@ namespace ZEngine.Engine.IO.Assets
             cmd.Parameters.AddWithValue("@guid", guid);
             return cmd.ExecuteNonQuery() > 0;
         }
-        // TODO: Extract to AssetForge
+        // TODO: Extract to ZenForge
         internal bool CookDB(string cookPath)
         {
             var fileConnection = new SQLiteConnection($"Data Source = {cookPath + DatabaseName + DatabaseFileExtension}; Version = 3;");
