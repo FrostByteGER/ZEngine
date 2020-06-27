@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using Silk.NET.Windowing;
-using Silk.NET.Windowing.Common;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Game.Level;
