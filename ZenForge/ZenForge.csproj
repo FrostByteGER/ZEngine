@@ -8,6 +8,8 @@
 	<LangVersion>latest</LangVersion>
 	<Company />
 	<Authors>Kevin Kuegler</Authors>
+	<Win32Resource></Win32Resource>
+	<ApplicationIcon>ZENgine.ico</ApplicationIcon>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
