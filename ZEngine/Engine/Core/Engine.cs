@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
+using Silk.NET.Windowing;
 using Silk.NET.Windowing.Common;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Game.Level;
 using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.Messaging;
+using ZEngine.Engine.Rendering.Window;
 using ZEngine.Engine.Services;
 using ZEngine.Engine.Services.Locator;
 using ZEngine.Engine.Services.Provider;
@@ -17,8 +19,6 @@ namespace ZEngine.Engine.Core
     {
 
 		public static Engine Instance { get; } = new Engine();
-
-        internal IWindow Window { get; private set; }
 
         // Frame and Physics
 		public IClock EngineCoreClock;
@@ -33,6 +33,7 @@ namespace ZEngine.Engine.Core
         // Engine Managers
         private IAssetManager AssetManager { get; set; }
         private ILevelManager LevelManager { get; set; }
+        private IWindowManager WindowManager { get; set; }
         private IEngineMessageBus MessageBus { get; set; }
 
         // Engine Settings
@@ -62,24 +63,20 @@ namespace ZEngine.Engine.Core
         {
             // Bootstrap before everything else so we have the log and all other services initialized!
             Bootstrapper.SetupInternal(EngineServiceLocator);
-
             EngineCoreClock = GetService<IEngineClock>();
-
-            var settings = new WindowOptions(true, true, new Point(50, 50), new Size(1280, 720), 0, 0,
-                GraphicsAPI.Default, GameInfo.GenerateFullGameName(), WindowState.Normal, WindowBorder.Resizable, VSyncMode.Off, 5, true,
-                VideoMode.Default);
-            Window = Silk.NET.Windowing.Window.Create(settings);
-            Window.Load += OnEngineWindowLoad;
-            Window.Closing += OnEngineWindowClose;
-            Window.Resize += OnEngineWindowResized;
-            Window.Render += WindowOnRender;
-            Window.Update += WindowOnUpdate;
-            Window.FocusChanged += WindowOnFocusChanged;
 
             AssetManager = GetService<IAssetManager>();
             AssetManager.Init();
             LevelManager = GetService<ILevelManager>();
+            WindowManager = GetService<IWindowManager>();
             MessageBus = GetService<IEngineMessageBus>();
+            WindowManager.InitWindow();
+            WindowManager.Window.Load += OnEngineWindowLoad;
+            WindowManager.Window.Closing += OnEngineWindowClose;
+            WindowManager.Window.Resize += OnEngineWindowResized;
+            WindowManager.Window.Render += WindowOnRender;
+            WindowManager.Window.Update += WindowOnUpdate;
+            WindowManager.Window.FocusChanged += WindowOnFocusChanged;
             /*
 			AssetManager.TextureFolderName = GameInfo.GameTextureFolderName;
 			AssetManager.SoundFolderName = GameInfo.GameSoundFolderName;
@@ -90,9 +87,7 @@ namespace ZEngine.Engine.Core
 			AssetManager.Initialize();
 			*/
             EngineInitialized = true;
-
-            // Finally initialize the window
-            Window.Run();
+            WindowManager.RunWindow();
         }
 
         private void ShutdownEngine()
@@ -134,6 +129,7 @@ namespace ZEngine.Engine.Core
         private void WindowOnRender(double deltaTime)
         {
 			//ActiveLevel.LevelDraw(ref _engineWindow);
+            WindowManager.RHI.DrawFrame(deltaTime);
 		}
 
         private void WindowOnFocusChanged(bool state)

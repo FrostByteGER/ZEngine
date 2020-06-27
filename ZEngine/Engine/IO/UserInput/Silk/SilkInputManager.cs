@@ -6,6 +6,7 @@ using Silk.NET.Input;
 using Silk.NET.Input.Common;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Messaging;
+using ZEngine.Engine.Rendering.Window;
 using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.IO.UserInput.Silk
@@ -21,32 +22,34 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             {typeof(IGamepad), typeof(global::Silk.NET.Input.Common.IGamepad)},
             {typeof(IJoystick), typeof(global::Silk.NET.Input.Common.IJoystick)}
         };
-        private readonly OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper> _devices = new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper>();
-        private readonly HashSet<IInputReceiver> _receivers = new HashSet<IInputReceiver>();
-        private readonly IMessageBus _bus;
+        private OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper> Devices { get; }= new OrderedDictionary<global::Silk.NET.Input.Common.IInputDevice, SilkInputDelegateWrapper>();
+        private HashSet<IInputReceiver> Receivers { get; }= new HashSet<IInputReceiver>();
+        private IMessageBus Bus { get; }
+        private IWindowManager WindowManager { get; } 
 
-        public SilkInputManager([NotNull]IMessageBus bus)
+        public SilkInputManager([NotNull]IMessageBus bus, [NotNull] IWindowManager windowManager)
         {
-            _bus = bus;
-            _bus.Subscribe<EngineWindowLoadedMessage>(OnWindowLoaded);
+            WindowManager = windowManager;
+            Bus = bus;
+            Bus.Subscribe<EngineWindowLoadedMessage>(OnWindowLoaded);
         }
 
-        private void OnWindowLoaded(IMessage msg)
+        private void OnWindowLoaded(EngineWindowLoadedMessage msg)
         {
-            InputContext = ((Core.Engine) msg.Sender).Window.CreateInput();
+            InputContext = WindowManager.Window.CreateInput();
             InputContext.ConnectionChanged += OnInputDeviceConnectionChanged;
 
             foreach (var mouse in InputContext.Mice)
-                _devices.Add(mouse, null);
+                Devices.Add(mouse, null);
 
             foreach (var keyboard in InputContext.Keyboards)
-                _devices.Add(keyboard, null);
+                Devices.Add(keyboard, null);
 
             foreach (var gamepad in InputContext.Gamepads)
-                _devices.Add(gamepad, null);
+                Devices.Add(gamepad, null);
 
             foreach (var joystick in InputContext.Joysticks)
-                _devices.Add(joystick, null);
+                Devices.Add(joystick, null);
 
             //TODO: Implement other device support when Silk.NET adds support for them(Currently the list is always 0)
             //InputContext.OtherDevices
@@ -62,16 +65,16 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             InputContext.ConnectionChanged -= OnInputDeviceConnectionChanged;
 
             foreach (var mouse in InputContext.Mice)
-                _devices.Remove(mouse);
+                Devices.Remove(mouse);
 
             foreach (var keyboard in InputContext.Keyboards)
-                _devices.Remove(keyboard);
+                Devices.Remove(keyboard);
 
             foreach (var gamepad in InputContext.Gamepads)
-                _devices.Remove(gamepad);
+                Devices.Remove(gamepad);
 
             foreach (var joystick in InputContext.Joysticks)
-                _devices.Remove(joystick);
+                Devices.Remove(joystick);
 
             //TODO: Implement other device support when Silk.NET adds support for them(Currently the list is always 0)
             //InputContext.OtherDevices
@@ -79,7 +82,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
 
         private void OnInputDeviceConnectionChanged(global::Silk.NET.Input.Common.IInputDevice device, bool status)
         {
-            if (!_devices.TryGetValue(device, out var receiver))
+            if (!Devices.TryGetValue(device, out var receiver))
             {
                 // this should not happen because all devices get added at the start!
                 Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
@@ -156,7 +159,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         private void RegisterInput(IInputReceiver receiver, global::Silk.NET.Input.Common.IInputDevice device)
         {
             var wrapper = new SilkInputDelegateWrapper(receiver);
-            _devices[device] = wrapper;
+            Devices[device] = wrapper;
             switch (device)
             {
                 case global::Silk.NET.Input.Common.IMouse mouse:
@@ -194,7 +197,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             if (device == null)
                 return false;
 
-            if (!_devices.TryGetValue(device, out var wrapper))
+            if (!Devices.TryGetValue(device, out var wrapper))
             {
                 // this should not happen because all devices get added at the start!
                 Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
@@ -246,7 +249,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                     throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");
             }
 
-            _devices[device] = null;
+            Devices[device] = null;
         }
 
         public bool UnregisterFromAllInputDevices([NotNull]IInputReceiver receiver)
@@ -263,7 +266,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             // ArgumentException can'type happen here as we remove only known devices
             foreach (var device in inputDevices)
             {
-                if (!_devices.TryGetValue(device, out var wrapper))
+                if (!Devices.TryGetValue(device, out var wrapper))
                 {
                     // this should not happen because all devices get added at the start!
                     Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
@@ -283,7 +286,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// <returns>The InputDevice or null if none available</returns>
         private global::Silk.NET.Input.Common.IInputDevice GetAvailableDevice(Type deviceType)
         {
-            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Key.IsConnected && e.Value == null).Key;
+            return Devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Key.IsConnected && e.Value == null).Key;
         }
 
         /// <summary>
@@ -293,7 +296,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// <returns>The InputDevice or null if none available</returns>
         private IEnumerable<global::Silk.NET.Input.Common.IInputDevice> GetAvailableDevices()
         {
-            return _devices.Where(e => e.Key.IsConnected && e.Value == null).Select(f => f.Key);
+            return Devices.Where(e => e.Key.IsConnected && e.Value == null).Select(f => f.Key);
         }
 
         /// <summary>
@@ -303,12 +306,12 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// <returns>The InputDevice or null if none available</returns>
         private global::Silk.NET.Input.Common.IInputDevice GetDeviceForInputReceiver(Type deviceType, IBaseControllable receiver)
         {
-            return _devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Value.Receiver == receiver).Key;
+            return Devices.FirstOrDefault(e => e.Key.GetType() == deviceType && e.Value.Receiver == receiver).Key;
         }
 
         private IEnumerable<global::Silk.NET.Input.Common.IInputDevice> GetAllDevicesForInputReceiver(IBaseControllable receiver)
         {
-            return _devices.Where(e => e.Value.Receiver == receiver).Select(f => f.Key);
+            return Devices.Where(e => e.Value.Receiver == receiver).Select(f => f.Key);
         }
 
         private static Type MapInputDeviceToSilkInputDevice(Type type)

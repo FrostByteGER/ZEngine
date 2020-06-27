@@ -5,6 +5,7 @@ using ZEngine.Engine.IO.UserInput;
 using ZEngine.Engine.IO.UserInput.Silk;
 using ZEngine.Engine.Localization;
 using ZEngine.Engine.Messaging;
+using ZEngine.Engine.Rendering.Window;
 using ZEngine.Engine.Services.Locator;
 using ZEngine.Engine.Utility;
 
@@ -23,8 +24,10 @@ namespace ZEngine.Engine.Services
             locator.RegisterService<ILocalizationManager>(new LocalizationManager());
             var engineMessageBus = new EngineMessageBus();
             locator.RegisterService<IEngineMessageBus>(engineMessageBus);
+            var windowManager = new SilkWindowManager();
+            locator.RegisterService<IWindowManager>(windowManager);
             locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
-            locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus));
+            locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus, windowManager));
             locator.RegisterService<ILevelManager>(new LevelManager(engineMessageBus, assetManager));
             Setup(locator);
             InitializeServices(locator);
