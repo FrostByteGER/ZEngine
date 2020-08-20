@@ -10,8 +10,8 @@ Therefore a premade visual studio solution is provided.
 ## Render Backends
 * Vulkan 1.2
 
-## AssetForge
-AssetForge is the WIP editor built around ZEngine. Currently it doesn't do much
+## ZenForge
+ZenForge is the WIP editor built around ZEngine. Currently it doesn't do much
 
 ### Libraries
  - [Silk.NET](https://github.com/Ultz/Silk.NET "Silk.NET")
