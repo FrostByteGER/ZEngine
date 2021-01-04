@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System.Numerics;
 
 namespace ZEngine.Engine.IO.UserInput
 {
@@ -27,13 +27,13 @@ namespace ZEngine.Engine.IO.UserInput
 
         void OnMouseButtonReleased(object sender, MouseButton button);
 
-        void OnMouseButtonClicked(object sender, MouseButton button);
+        void OnMouseButtonClicked(object sender, MouseButton button, Vector2 position);
 
-        void OnMouseButtonDoubleClicked(object sender, MouseButton button);
+        void OnMouseButtonDoubleClicked(object sender, MouseButton button, Vector2 position);
 
-        void OnMouseMoved(object sender, PointF coords);
+        void OnMouseMoved(object sender, Vector2 coords);
 
-        void OnMouseScrolled(object sender, ScrollWheel scrollArgs);
+        void OnMouseScrolled(object sender, ScrollWheel scrollPosition);
 
         void OnMouseConnected();
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Numerics;
 using ZEngine.Engine.IO.UserInput;
 
@@ -85,22 +84,22 @@ namespace ZEngine.Engine.Game
 			throw new NotImplementedException();
 		}
 
-		public void OnMouseButtonClicked(object sender, MouseButton button)
+		public void OnMouseButtonClicked(object sender, MouseButton button, Vector2 position)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void OnMouseButtonDoubleClicked(object sender, MouseButton button)
+		public void OnMouseButtonDoubleClicked(object sender, MouseButton button, Vector2 position)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void OnMouseMoved(object sender, PointF coords)
+		public void OnMouseMoved(object sender, Vector2 position)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void OnMouseScrolled(object sender, ScrollWheel scrollArgs)
+		public void OnMouseScrolled(object sender, ScrollWheel scrollPosition)
 		{
 			throw new NotImplementedException();
 		}
