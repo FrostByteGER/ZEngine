@@ -167,6 +167,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                     mouse.Click += wrapper.OnMouseButtonClicked;
                     mouse.DoubleClick += wrapper.OnMouseButtonDoubleClicked;
                     mouse.MouseMove += wrapper.OnMouseMoved;
+                    mouse.Scroll += wrapper.OnMouseScrolled;
                     break;
                 case global::Silk.NET.Input.IKeyboard keyboard:
                     keyboard.KeyDown += wrapper.OnKeyDown;
@@ -216,33 +217,34 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             return true;
         }
 
-        private void UnregisterInput(SilkInputDelegateWrapper receiverWrapper, global::Silk.NET.Input.IInputDevice device)
+        private void UnregisterInput(SilkInputDelegateWrapper wrapper, global::Silk.NET.Input.IInputDevice device)
         {
             switch (device)
             {
                 case global::Silk.NET.Input.IMouse mouse:
-                    mouse.MouseDown -= receiverWrapper.OnMouseButtonPressed;
-                    mouse.MouseUp -= receiverWrapper.OnMouseButtonReleased;
-                    mouse.Click -= receiverWrapper.OnMouseButtonClicked;
-                    mouse.DoubleClick -= receiverWrapper.OnMouseButtonDoubleClicked;
-                    mouse.MouseMove -= receiverWrapper.OnMouseMoved;
+                    mouse.MouseDown -= wrapper.OnMouseButtonPressed;
+                    mouse.MouseUp -= wrapper.OnMouseButtonReleased;
+                    mouse.Click -= wrapper.OnMouseButtonClicked;
+                    mouse.DoubleClick -= wrapper.OnMouseButtonDoubleClicked;
+                    mouse.MouseMove -= wrapper.OnMouseMoved;
+                    mouse.Scroll -= wrapper.OnMouseScrolled;
                     break;
                 case global::Silk.NET.Input.IKeyboard keyboard:
                     // Wrap the delegates as we dont want the scancode to be passed down
-                    keyboard.KeyDown -= receiverWrapper.OnKeyDown;
-                    keyboard.KeyUp -= receiverWrapper.OnKeyReleased;
+                    keyboard.KeyDown -= wrapper.OnKeyDown;
+                    keyboard.KeyUp -= wrapper.OnKeyReleased;
                     break;
                 case global::Silk.NET.Input.IGamepad gamepad:
-                    gamepad.ButtonDown -= receiverWrapper.OnGamepadButtonPressed;
-                    gamepad.ButtonUp -= receiverWrapper.OnGamepadButtonReleased;
-                    gamepad.ThumbstickMoved -= receiverWrapper.OnGamepadThumbstickMoved;
-                    gamepad.TriggerMoved -= receiverWrapper.OnGamepadTriggerMoved;
+                    gamepad.ButtonDown -= wrapper.OnGamepadButtonPressed;
+                    gamepad.ButtonUp -= wrapper.OnGamepadButtonReleased;
+                    gamepad.ThumbstickMoved -= wrapper.OnGamepadThumbstickMoved;
+                    gamepad.TriggerMoved -= wrapper.OnGamepadTriggerMoved;
                     break;
                 case global::Silk.NET.Input.IJoystick joystick:
-                    joystick.ButtonDown -= receiverWrapper.OnJoystickButtonPressed;
-                    joystick.ButtonUp -= receiverWrapper.OnJoystickButtonReleased;
-                    joystick.AxisMoved -= receiverWrapper.OnJoystickMoved;
-                    joystick.HatMoved -= receiverWrapper.OnJoystickHatMoved;
+                    joystick.ButtonDown -= wrapper.OnJoystickButtonPressed;
+                    joystick.ButtonUp -= wrapper.OnJoystickButtonReleased;
+                    joystick.AxisMoved -= wrapper.OnJoystickMoved;
+                    joystick.HatMoved -= wrapper.OnJoystickHatMoved;
                     break;
                 default:
                     throw new ArgumentException($"Removing input from InputDevice {device.GetType()} is not supported");

@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Numerics;
+using Silk.NET.Maths;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Game.Level;
@@ -138,11 +140,11 @@ namespace ZEngine.Engine.Core
             MessageBus.Publish(new EngineFocusChangeMessage(this, state));
         }
 
-        private void OnEngineWindowResized(Size s)
+        private void OnEngineWindowResized(Vector2D<int> s)
 		{
 			
-            EngineWindowWidth = s.Width;
-			EngineWindowHeight = s.Height;
+            EngineWindowWidth = s.X;
+			EngineWindowHeight = s.Y;
 			//foreach (var p in ActiveLevel.Players)
 			//{
 				//p.PlayerCamera.Center = new Vector2();

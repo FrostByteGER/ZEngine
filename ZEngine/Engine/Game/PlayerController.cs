@@ -114,17 +114,7 @@ namespace ZEngine.Engine.Game
             throw new NotImplementedException();
         }
 
-        public void OnKeyDown(object sender, Key key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnKeyReleased(object sender, Key key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnGamepadButtonPressed(object sender, Button button)
+        public void OnGamepadButtonPressed(object sender, Button button)
 		{
 			throw new NotImplementedException();
 		}
