@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Silk.NET.Core;
 using Silk.NET.Core.Contexts;
 using Silk.NET.Core.Native;
 using Silk.NET.Vulkan;
 using Silk.NET.Vulkan.Extensions.EXT;
 using Silk.NET.Vulkan.Extensions.KHR;
-using Silk.NET.Windowing.Common;
+using Silk.NET.Windowing;
+using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Rendering.RHI.Vulkan
 {
-    public unsafe class VulkanRenderer : AbstractRenderHardwareInterface
+    public unsafe class VulkanRHI : AbstractRenderHardwareInterface
     {
-        public struct QueueFamilyIndices
+        private struct QueueFamilyIndices
         {
             public uint? GraphicsFamily { get; set; }
             public uint? PresentFamily { get; set; }
@@ -25,7 +27,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             }
         }
 
-        public struct SwapChainSupportDetails
+        private struct SwapChainSupportDetails
         {
             public SurfaceCapabilitiesKHR Capabilities { get; set; }
             public SurfaceFormatKHR[] Formats { get; set; }
@@ -34,6 +36,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
         public const int MaxFramesInFlight = 8;
 
+        // Per Renderer state
         private Instance _instance;
         private Vk _vk;
         private SurfaceKHR _surface;
@@ -52,7 +55,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private ImageView[] _swapchainImageViews;
         private RenderPass _renderPass;
         private PipelineLayout _pipelineLayout;
-        private Pipeline _graphicsPipeline;
+        
         private Framebuffer[] _swapchainFramebuffers;
         private CommandPool _commandPool;
         private CommandBuffer[] _commandBuffers;
@@ -62,6 +65,9 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private Fence[] _imagesInFlight;
         private uint _currentFrame;
 
+        // Per Object/Instance state
+        private Pipeline _graphicsPipeline;
+
         private bool EnableValidationLayers { get; set; } = true;
         private IVkSurface VulkanSurface { get; }
         private string[] ValidationLayers { get; set; } = { "VK_LAYER_KHRONOS_validation" };
@@ -69,7 +75,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private string[] DeviceExtensions { get; set; }= { KhrSwapchain.ExtensionName };
 
 
-        public VulkanRenderer(IWindow window) : base(window)
+        public VulkanRHI(IWindow window) : base(window)
         {
             VulkanSurface = window.VkSurface;
         }
@@ -94,7 +100,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         public override void DrawFrame(double deltaTime)
         {
             var fence = _inFlightFences[_currentFrame];
-            _vk.WaitForFences(_device, 1, ref fence, Vk.True, ulong.MaxValue);
+            _vk.WaitForFences(_device, 1, in fence, Vk.True, ulong.MaxValue);
 
             uint imageIndex;
             _vkSwapchain.AcquireNextImage
@@ -102,7 +108,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
             if (_imagesInFlight[imageIndex].Handle != 0)
             {
-                _vk.WaitForFences(_device, 1, ref _imagesInFlight[imageIndex], Vk.True, ulong.MaxValue);
+                _vk.WaitForFences(_device, 1, in _imagesInFlight[imageIndex], Vk.True, ulong.MaxValue);
             }
 
             _imagesInFlight[imageIndex] = _inFlightFences[_currentFrame];
@@ -306,16 +312,29 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             createInfo.PfnUserCallback = FuncPtr.Of<DebugUtilsMessengerCallbackFunctionEXT>(DebugCallback);
         }
 
-        private uint DebugCallback
-        (
-            DebugUtilsMessageSeverityFlagsEXT messageSeverity,
-            DebugUtilsMessageTypeFlagsEXT messageTypes,
-            DebugUtilsMessengerCallbackDataEXT* pCallbackData,
-            void* pUserData
-        )
+        private uint DebugCallback(DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, DebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
         {
-            Console.WriteLine
-                ($"{messageSeverity} {messageTypes}" + Marshal.PtrToStringAnsi((IntPtr)pCallbackData->PMessage));
+            var message = $"{messageSeverity} {messageTypes} {Marshal.PtrToStringAnsi((IntPtr)pCallbackData->PMessage)}";
+            switch (messageSeverity)
+            {
+                case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityVerboseBitExt:
+                    Debug.LogDebug(message, DebugLogCategories.Engine);
+                    break;
+                case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityInfoBitExt:
+                    Debug.Log(message, DebugLogCategories.Engine);
+                    break;
+                case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityWarningBitExt:
+                    Debug.LogWarning(message, DebugLogCategories.Engine);
+                    break;
+                case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityErrorBitExt:
+                    Debug.LogError(message, DebugLogCategories.Engine);
+                    break;
+                default:
+                    Debug.Log(message, DebugLogCategories.Engine);
+                    break;
+            }
+            
+            // Vulkan expects us to always return false.
             return Vk.False;
         }
 
@@ -437,15 +456,15 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             for (var i = 0u; i < queryFamilyCount; i++)
             {
                 var queueFamily = queueFamilies[i];
-                // note: HasFlag is slow on .NET Core 2.1 and below.
-                // if you're targeting these versions, use ((queueFamily.QueueFlags & QueueFlags.QueueGraphicsBit) != 0)
+
+                // Support basic graphics operations
                 if (queueFamily.QueueFlags.HasFlag(QueueFlags.QueueGraphicsBit))
                 {
                     indices.GraphicsFamily = i;
                 }
 
                 _vkSurface.GetPhysicalDeviceSurfaceSupport(device, i, _surface, out var presentSupport);
-
+                // Support Image presentation aka render to an image/screen
                 if (presentSupport == Vk.True)
                 {
                     indices.PresentFamily = i;
@@ -481,12 +500,14 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
             var deviceFeatures = new PhysicalDeviceFeatures();
 
-            var createInfo = new DeviceCreateInfo();
-            createInfo.SType = StructureType.DeviceCreateInfo;
-            createInfo.QueueCreateInfoCount = (uint)uniqueQueueFamilies.Length;
-            createInfo.PQueueCreateInfos = queueCreateInfos;
-            createInfo.PEnabledFeatures = &deviceFeatures;
-            createInfo.EnabledExtensionCount = (uint)DeviceExtensions.Length;
+            var createInfo = new DeviceCreateInfo
+            {
+                SType = StructureType.DeviceCreateInfo,
+                QueueCreateInfoCount = (uint) uniqueQueueFamilies.Length,
+                PQueueCreateInfos = queueCreateInfos,
+                PEnabledFeatures = &deviceFeatures,
+                EnabledExtensionCount = (uint) DeviceExtensions.Length
+            };
 
             var enabledExtensionNames = SilkMarshal.MarshalStringArrayToPtr(DeviceExtensions);
             createInfo.PpEnabledExtensionNames = (byte**)enabledExtensionNames;
@@ -531,8 +552,8 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             var extent = ChooseSwapExtent(swapChainSupport.Capabilities);
 
             var imageCount = swapChainSupport.Capabilities.MinImageCount + 1;
-            if (swapChainSupport.Capabilities.MaxImageCount > 0 &&
-                imageCount > swapChainSupport.Capabilities.MaxImageCount)
+            // Cap the maximum image count if needed
+            if (swapChainSupport.Capabilities.MaxImageCount > 0 && imageCount > swapChainSupport.Capabilities.MaxImageCount)
             {
                 imageCount = swapChainSupport.Capabilities.MaxImageCount;
             }
@@ -600,7 +621,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             }
 
             var actualExtent = new Extent2D
-            { Height = (uint)Window.Size.Height, Width = (uint)Window.Size.Width };
+            { Height = (uint)Window.Size.Y, Width = (uint)Window.Size.X };
             actualExtent.Width = new[]
             {
                 capabilities.MinImageExtent.Width,
@@ -625,14 +646,14 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 }
             }
 
-            return PresentModeKHR.PresentModeFifoKhr;
+            return PresentModeKHR.PresentModeImmediateKhr;
         }
 
         private SurfaceFormatKHR ChooseSwapSurfaceFormat(SurfaceFormatKHR[] formats)
         {
             foreach (var format in formats)
             {
-                if (format.Format == Format.B8G8R8A8Unorm)
+                if (format.Format == Format.B8G8R8A8Srgb)
                 {
                     return format;
                 }
