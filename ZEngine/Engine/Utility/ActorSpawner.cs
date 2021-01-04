@@ -15,8 +15,8 @@ namespace ZEngine.Engine.Utility
 	/// </summary>
 	public class ActorSpawner
 	{
-		public List<Type> ObjectTypes { get; set; } = new List<Type>();
-		public Dictionary<Type, Creator<Actor>> ObjectConstructors { get; set; } = new Dictionary<Type, Creator<Actor>>();
+		public List<Type> ObjectTypes { get; set; } = new();
+		public Dictionary<Type, Creator<Actor>> ObjectConstructors { get; set; } = new();
 
 		public delegate T Creator<out T>(params object[] args);
 

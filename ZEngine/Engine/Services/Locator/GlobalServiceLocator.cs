@@ -6,7 +6,7 @@
     public class GlobalServiceLocator : AbstractServiceLocator<IGlobalService>
     {
 
-        public static GlobalServiceLocator Instance { get; } = new GlobalServiceLocator();
+        public static GlobalServiceLocator Instance { get; } = new();
 
         public static T GetService<T>(string id = null) where T : IGlobalService
         {

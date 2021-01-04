@@ -27,7 +27,7 @@ namespace ZEngine.Engine.Game
 		}
 
 		[JsonIgnore]
-		public List<ActorComponent> Components { get; set; } = new List<ActorComponent>();
+		public List<ActorComponent> Components { get; set; } = new();
 		[JsonIgnore]
 		public virtual ActorComponent RootComponent { get; private set; }
 

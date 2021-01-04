@@ -16,27 +16,27 @@ namespace ZEngine.Engine.Game.Level
 
 		public ulong ActorIDCounter { get; private set; } = 0;
 
-		private readonly List<Actor> _actors = new List<Actor>();
+		private readonly List<Actor> _actors = new();
 
         private IMessageBus _bus;
 
-	    internal ReadOnlyCollection<Actor> Actors => new ReadOnlyCollection<Actor>(_actors);
+	    internal ReadOnlyCollection<Actor> Actors => new(_actors);
 
 	    /// <summary>
 	    /// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
 	    /// </summary>
-	    public Vector2 Bounds { get; set; } = new Vector2(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
+	    public Vector2 Bounds { get; set; } = new(float.MaxValue / 2.0f, float.MaxValue / 2.0f);
 
-        public GameMode GameMode { get; set; } = new GameMode();
+        public GameMode GameMode { get; set; } = new();
 
 	    public bool Loaded { get; set; }
 		internal bool Ticking { get; set; }
 
-		public List<PlayerController> Players { get; } = new List<PlayerController>();
+		public List<PlayerController> Players { get; } = new();
 
-	    public TimerManager TimerManager { get; } = new TimerManager();
+	    public TimerManager TimerManager { get; } = new();
 
-        public ActorSpawner Spawner { get; } = new ActorSpawner();
+        public ActorSpawner Spawner { get; } = new();
 
         protected internal virtual void OnLevelLoad()
         {

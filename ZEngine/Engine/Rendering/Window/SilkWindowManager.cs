@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Silk.NET.Maths;
+﻿using Silk.NET.Maths;
 using Silk.NET.Windowing;
 using ZEngine.Engine.Rendering.RHI;
 using ZEngine.Engine.Rendering.RHI.Vulkan;

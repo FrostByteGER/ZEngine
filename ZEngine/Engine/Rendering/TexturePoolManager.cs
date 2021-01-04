@@ -10,8 +10,8 @@ namespace ZEngine.Engine.Rendering
 	{
 		public static string TexturesPath { get; } = AssetManager.GameAssetsPath + "Textures/";
 
-		private readonly Dictionary<string, Texture> _texturePool = new Dictionary<string, Texture>();
-		public ReadOnlyDictionary<string, Texture> TexturePool => new ReadOnlyDictionary<string, Texture>(_texturePool);
+		private readonly Dictionary<string, Texture> _texturePool = new();
+		public ReadOnlyDictionary<string, Texture> TexturePool => new(_texturePool);
 
 		public uint PoolSize { get; set; } = 256;
 		public uint PoolSizeAutoIncrementSize { get; set; } = 32;

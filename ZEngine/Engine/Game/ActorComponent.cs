@@ -11,7 +11,7 @@ namespace ZEngine.Engine.Game
 		public Actor ParentActor { get; internal set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
-		public Transform ComponentTransform { get; set; } = new Transform();
+		public Transform ComponentTransform { get; set; } = new();
 
 		public Transform WorldTransform { get; } //=> IsRootComponent ? ComponentTransform : ParentActor.ActorTransform + ComponentTransform;
 

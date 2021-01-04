@@ -6,7 +6,7 @@ namespace ZEngine.Engine.Utility
 	public static class EngineMath
     {
         public static float Epsilon { get; } = 0.00001f;
-		public static Random EngineRandom { get; set; } = new Random();
+		public static Random EngineRandom { get; set; } = new();
 
 
 		public static Vector2 VInterpTo(Vector2 currentPosition, Vector2 targetPosition, float deltaTime, float interpSpeed)

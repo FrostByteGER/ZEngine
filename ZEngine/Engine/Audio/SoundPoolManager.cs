@@ -10,8 +10,8 @@ namespace ZEngine.Engine.Audio
 	{
 		public static string SFXPath { get; } = AssetManager.GameAssetsPath + "SFX/";
 
-		private readonly Dictionary<string, SoundBuffer> _soundBufferPool = new Dictionary<string, SoundBuffer>();
-		public ReadOnlyDictionary<string, SoundBuffer> SoundBufferPool => new ReadOnlyDictionary<string, SoundBuffer>(_soundBufferPool);
+		private readonly Dictionary<string, SoundBuffer> _soundBufferPool = new();
+		public ReadOnlyDictionary<string, SoundBuffer> SoundBufferPool => new(_soundBufferPool);
 
 		public uint PoolSize { get; set; } = 64;
 		public uint PoolSizeAutoIncrementSize { get; set; } = 32;
@@ -88,7 +88,7 @@ namespace ZEngine.Engine.Audio
 		*/
 		public Music LoadMusic(string musicName)
 		{
-			return new Music(musicName);
+			return new(musicName);
 		}
 	}
 }

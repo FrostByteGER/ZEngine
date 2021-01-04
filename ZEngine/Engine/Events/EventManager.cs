@@ -6,7 +6,7 @@ namespace ZEngine.Engine.Events
 {
     internal class EventManager : IEventManager
     {
-        private Queue<EngineEvent> EngineEvents { get; set; } = new Queue<EngineEvent>();
+        private Queue<EngineEvent> EngineEvents { get; set; } = new();
         private uint EventIDCounter { get; set; } = 0;
 
         private IMessageBus _bus;

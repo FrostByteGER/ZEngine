@@ -211,7 +211,7 @@ void main()
         }
 
         MouseState _prevMouseState;
-        readonly List<char> _pressedChars = new List<char>();
+        readonly List<char> _pressedChars = new();
         private IKeyboard _keyboard;
 
         private void UpdateImGuiInput()

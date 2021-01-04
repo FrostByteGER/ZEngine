@@ -25,7 +25,7 @@ namespace ZEngine.Engine.Utility
     public class Debug
     {
         private readonly ConcurrentQueue<Tuple<string, string, LogType>> _queue;
-        private static Debug Instance { get; } = new Debug();
+        private static Debug Instance { get; } = new();
 
         public delegate void ProcessElement(Tuple<string, string, LogType> element);
 

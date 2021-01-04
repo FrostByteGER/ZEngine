@@ -6,7 +6,7 @@ namespace ZEngine.Engine.Services.Locator
 {
     public abstract class AbstractServiceLocator<T> where T : IAbstractService
     {
-        protected readonly Dictionary<ServiceData, T> Services = new Dictionary<ServiceData, T>();
+        protected readonly Dictionary<ServiceData, T> Services = new();
 
         protected class ServiceData
         {

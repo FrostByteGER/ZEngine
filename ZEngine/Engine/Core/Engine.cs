@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Numerics;
-using Silk.NET.Maths;
+﻿using Silk.NET.Maths;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
 using ZEngine.Engine.Game.Level;
@@ -18,17 +16,17 @@ namespace ZEngine.Engine.Core
 	public class Engine : IEngineServiceProvider
     {
 
-		public static Engine Instance { get; } = new Engine();
+		public static Engine Instance { get; } = new();
 
         // Frame and Physics
 		public IClock EngineCoreClock;
 
 
         // Core Engine
-        public EngineServiceLocator EngineServiceLocator { get; } = new EngineServiceLocator();
+        public EngineServiceLocator EngineServiceLocator { get; } = new();
 		public Bootstrap Bootstrapper { get; set; }
-	    public GameInstance GameInstance { get; set; } = new GameInstance();
-		public GameInfo GameInfo { get; set; } = new GameInfo();
+	    public GameInstance GameInstance { get; set; } = new();
+		public GameInfo GameInfo { get; set; } = new();
 
         // Engine Managers
         private IAssetManager AssetManager { get; set; }

@@ -5,7 +5,7 @@ namespace ZEngine.Engine.Game
 	public class TimerManager : ITickable
 	{
 
-		private List<Timer> Timers { get; set; } = new List<Timer>();
+		private List<Timer> Timers { get; set; } = new();
 		internal uint TimerIDCounter { get; set; } = 0;
 
 		public bool CanTick { get; set; } = true;

@@ -6,9 +6,9 @@ namespace ZEngine.Engine.IO.Configs
 {
 	public class Config
 	{
-		private readonly Dictionary<string, string> _configData = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _configData = new();
 
-		public ReadOnlyDictionary<string, string> ConfigData => new ReadOnlyDictionary<string, string>(_configData);
+		public ReadOnlyDictionary<string, string> ConfigData => new(_configData);
 
 		public Config()
 		{

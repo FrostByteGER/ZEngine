@@ -15,10 +15,10 @@ namespace ZEngine.Engine.Utility
 	/// </summary>
 	public class SilkEngineClock : IEngineClock
 	{
-        private Stopwatch _physicsTimer = new Stopwatch();
-		private Stopwatch _updateTimer = new Stopwatch();
-		private Stopwatch _renderTimer = new Stopwatch();
-		private Stopwatch _frameTimer = new Stopwatch();
+        private Stopwatch _physicsTimer = new();
+		private Stopwatch _updateTimer = new();
+		private Stopwatch _renderTimer = new();
+		private Stopwatch _frameTimer = new();
 
 		public long FrameCount { get; private set; }
 

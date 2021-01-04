@@ -18,7 +18,7 @@ namespace ZenForge.Extensions
         {
             public readonly string Name;
             public uint Program { get; private set; }
-            private readonly Dictionary<string, int> _uniformToLocation = new Dictionary<string, int>();
+            private readonly Dictionary<string, int> _uniformToLocation = new();
             private bool _initialized = false;
             private GL _gl;
             private (ShaderType Type, string Path)[] _files;
