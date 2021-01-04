@@ -10,7 +10,7 @@ namespace ZEngine.Engine.Game.Level
     {
         public ulong LevelIDCounter { get; set; }
         public Level ActiveLevel { get; private set; }
-        public bool CanTick { get; set; }
+        public bool CanTick { get; set; } = true;
         private IEngineMessageBus Bus { get; }
         private IAssetManager AssetManager { get; }
 
@@ -43,7 +43,7 @@ namespace ZEngine.Engine.Game.Level
         public void Tick(float deltaTime)
         {
             if(CanTick)
-                ActiveLevel.Tick(deltaTime);
+                ActiveLevel?.Tick(deltaTime);
         }
 
         /// <summary>

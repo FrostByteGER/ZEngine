@@ -48,12 +48,13 @@ namespace ZEngine.Engine.Core
 
         private void ParseCommandLineArguments(string[] args)
         {
-            var parserResult = CommandLine.Parser.Default.ParseArguments<Engine>(args);
+            //var parserResult = CommandLine.Parser.Default.ParseArguments<Engine>(args);
         }
 
         public void StartEngine(string[] args)
         {
             Debug.Log("Initializing Engine!", DebugLogCategories.Engine);
+            ParseCommandLineArguments(args);
             StartEngineInternal();
         }
 
