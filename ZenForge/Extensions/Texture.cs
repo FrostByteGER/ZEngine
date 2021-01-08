@@ -15,7 +15,7 @@ namespace ZenForge.Extensions
         public const InternalFormat Srgb8Alpha8 = (InternalFormat)GLEnum.Srgb8Alpha8;
         public const InternalFormat Rgb32F = (InternalFormat)GLEnum.Rgb32f;
 
-        public const GetPName MaxTextureMaxAnisotropy = (GetPName)0x84FF;
+        public const GLEnum MaxTextureMaxAnisotropy = (GLEnum)0x84FF;
 
         public static float? MaxAniso;
         private readonly GL _gl;

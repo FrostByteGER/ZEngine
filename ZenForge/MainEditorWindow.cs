@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using Silk.NET.Input;
-using Silk.NET.Input.Common;
+using Silk.NET.Maths;
 using Silk.NET.OpenGL;
-using Silk.NET.Windowing.Common;
+using Silk.NET.Windowing;
 
 namespace ZenForge
 {
@@ -45,7 +45,7 @@ namespace ZenForge
             Controller.Render();
         }
 
-        private void WindowOnResize(Size s)
+        private void WindowOnResize(Vector2D<int> s)
         {
             Gl.Viewport(s);
         }
