@@ -1,5 +1,5 @@
 # ZEngine
-![.NET Core](https://github.com/FrostByteGER/ZEngine/workflows/.NET%20Core/badge.svg)
+![.NET 5](https://github.com/FrostByteGER/ZEngine/workflows/.NET%205/badge.svg)
 
 Portable Game Engine written in C# .NET 5 with Vulkan and OpenGL backends.
 
