@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Silk.NET.Core;
 using Silk.NET.Core.Contexts;
@@ -74,6 +75,9 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private string[] InstanceExtensions { get; set; }= { ExtDebugUtils.ExtensionName };
         private string[] DeviceExtensions { get; set; }= { KhrSwapchain.ExtensionName };
 
+        private static readonly ConcurrentDictionary<PhysicalDevice, SwapChainSupportDetails> SwapChainSupportDetailsCache = new();
+        private static readonly ConcurrentDictionary<PhysicalDevice, QueueFamilyIndices> QueueFamilyIndicesCache = new();
+
 
         public VulkanRHI(IWindow window) : base(window)
         {
@@ -138,7 +142,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                     if (_vk.QueueSubmit
                             (_graphicsQueue, 1, &submitInfo, _inFlightFences[_currentFrame]) != Result.Success)
                     {
-                        throw new Exception("Failed to submit draw command buffer!");
+                        throw new Exception("failed to submit draw command buffer!");
                     }
                 }
             }
@@ -226,7 +230,9 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 PApplicationInfo = &appInfo
             };
 
-            var extensions = (byte**)VulkanSurface.GetRequiredExtensions(out var extCount);
+            var extensions = Window.VkSurface!.GetRequiredExtensions(out var extCount);
+            // TODO Review that this count doesn't realistically exceed 1k (recommended max for stackalloc)
+            // Should probably be allocated on heap anyway as this isn't super performance critical.
             var newExtensions = stackalloc byte*[(int)(extCount + InstanceExtensions.Length)];
             for (var i = 0; i < extCount; i++)
             {
@@ -235,7 +241,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
             for (var i = 0; i < InstanceExtensions.Length; i++)
             {
-                newExtensions[extCount + i] = (byte*)SilkMarshal.MarshalStringToPtr(InstanceExtensions[i]);
+                newExtensions[extCount + i] = (byte*)SilkMarshal.StringToPtr(InstanceExtensions[i]);
             }
 
             extCount += (uint)InstanceExtensions.Length;
@@ -245,7 +251,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             if (EnableValidationLayers)
             {
                 createInfo.EnabledLayerCount = (uint)ValidationLayers.Length;
-                createInfo.PpEnabledLayerNames = (byte**)SilkMarshal.MarshalStringArrayToPtr(ValidationLayers);
+                createInfo.PpEnabledLayerNames = (byte**)SilkMarshal.StringArrayToPtr(ValidationLayers);
             }
             else
             {
@@ -268,17 +274,12 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 throw new NotSupportedException("KHR_surface extension not found.");
             }
 
-            if (!_vk.TryGetDeviceExtension(_instance, _device, out _vkSwapchain))
-            {
-                throw new NotSupportedException("KHR_swapchain extension not found.");
-            }
-
-            Marshal.FreeHGlobal((IntPtr)appInfo.PApplicationName);
-            Marshal.FreeHGlobal((IntPtr)appInfo.PEngineName);
+            Marshal.FreeHGlobal((nint)appInfo.PApplicationName);
+            Marshal.FreeHGlobal((nint)appInfo.PEngineName);
 
             if (EnableValidationLayers)
             {
-                SilkMarshal.FreeStringArrayPtr((IntPtr)createInfo.PpEnabledLayerNames, ValidationLayers.Length);
+                SilkMarshal.Free((nint)createInfo.PpEnabledLayerNames);
             }
         }
 
@@ -293,7 +294,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             fixed (DebugUtilsMessengerEXT* debugMessenger = &_debugMessenger)
             {
                 if (_debugUtils.CreateDebugUtilsMessenger
-                        (_instance, &createInfo, null, debugMessenger) != Result.Success)
+                    (_instance, &createInfo, null, debugMessenger) != Result.Success)
                 {
                     throw new Exception("Failed to create debug messenger.");
                 }
@@ -309,7 +310,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             createInfo.MessageType = DebugUtilsMessageTypeFlagsEXT.DebugUtilsMessageTypeGeneralBitExt |
                                      DebugUtilsMessageTypeFlagsEXT.DebugUtilsMessageTypePerformanceBitExt |
                                      DebugUtilsMessageTypeFlagsEXT.DebugUtilsMessageTypeValidationBitExt;
-            createInfo.PfnUserCallback = FuncPtr.Of<DebugUtilsMessengerCallbackFunctionEXT>(DebugCallback);
+            createInfo.PfnUserCallback = (DebugUtilsMessengerCallbackFunctionEXT)DebugCallback;
         }
 
         private uint DebugCallback(DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, DebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
@@ -345,28 +346,31 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
         private void PickGraphicsDevice()
         {
-            var deviceCount = 0u;
-            _vk.EnumeratePhysicalDevices(_instance, &deviceCount, null);
+            var devices = _vk.GetPhysicalDevices(_instance);
 
-            if (deviceCount == 0)
+            if (!devices.Any())
             {
                 throw new NotSupportedException("Failed to find GPUs with Vulkan support.");
             }
 
-            var devices = stackalloc PhysicalDevice[(int)deviceCount];
-            _vk.EnumeratePhysicalDevices(_instance, &deviceCount, devices);
-
-            for (var i = 0; i < deviceCount; i++)
+            _physicalDevice = devices.FirstOrDefault(device =>
             {
-                var device = devices[i];
-                if (IsDeviceSuitable(device))
-                {
-                    _physicalDevice = device;
-                    return;
-                }
-            }
+                var indices = FindQueueFamilies(device);
 
-            throw new Exception("No suitable device.");
+                var extensionsSupported = CheckDeviceExtensionSupport(device);
+
+                var swapChainAdequate = false;
+                if (extensionsSupported)
+                {
+                    var swapChainSupport = QuerySwapChainSupport(device);
+                    swapChainAdequate = swapChainSupport.Formats.Length != 0 && swapChainSupport.PresentModes.Length != 0;
+                }
+
+                return indices.IsComplete() && extensionsSupported && swapChainAdequate;
+            });
+
+            if (_physicalDevice.Handle == 0)
+                throw new Exception("No suitable device.");
         }
 
         private bool IsDeviceSuitable(PhysicalDevice device)
@@ -387,103 +391,104 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
         private SwapChainSupportDetails QuerySwapChainSupport(PhysicalDevice device)
         {
-            var details = new SwapChainSupportDetails();
-            _vkSurface.GetPhysicalDeviceSurfaceCapabilities(device, _surface, out var surfaceCapabilities);
-            details.Capabilities = surfaceCapabilities;
-
-            var formatCount = 0u;
-            _vkSurface.GetPhysicalDeviceSurfaceFormats(device, _surface, &formatCount, null);
-
-            if (formatCount != 0)
+            return SwapChainSupportDetailsCache.GetOrAdd(device, d =>
             {
-                details.Formats = new SurfaceFormatKHR[formatCount];
-                var formats = stackalloc SurfaceFormatKHR[(int)formatCount];
-                _vkSurface.GetPhysicalDeviceSurfaceFormats(device, _surface, &formatCount, formats);
+                var details = new SwapChainSupportDetails();
+                _vkSurface.GetPhysicalDeviceSurfaceCapabilities(d, _surface, out var surfaceCapabilities);
+                details.Capabilities = surfaceCapabilities;
 
-                for (var i = 0; i < formatCount; i++)
+                var formatCount = 0u;
+                _vkSurface.GetPhysicalDeviceSurfaceFormats(d, _surface, &formatCount, null);
+
+                if (formatCount != 0)
                 {
-                    details.Formats[i] = formats[i];
+                    details.Formats = new SurfaceFormatKHR[formatCount];
+
+                    using var mem = GlobalMemory.Allocate((int)formatCount * sizeof(SurfaceFormatKHR));
+                    var formats = (SurfaceFormatKHR*)Unsafe.AsPointer(ref mem.GetPinnableReference());
+
+                    _vkSurface.GetPhysicalDeviceSurfaceFormats(d, _surface, &formatCount, formats);
+
+                    for (var i = 0; i < formatCount; i++)
+                    {
+                        details.Formats[i] = formats[i];
+                    }
                 }
-            }
 
-            var presentModeCount = 0u;
-            _vkSurface.GetPhysicalDeviceSurfacePresentModes(device, _surface, &presentModeCount, null);
+                var presentModeCount = 0u;
+                _vkSurface.GetPhysicalDeviceSurfacePresentModes(d, _surface, &presentModeCount, null);
 
-            if (presentModeCount != 0)
-            {
-                details.PresentModes = new PresentModeKHR[presentModeCount];
-                var modes = stackalloc PresentModeKHR[(int)presentModeCount];
-                _vkSurface.GetPhysicalDeviceSurfacePresentModes(device, _surface, &presentModeCount, modes);
-
-                for (var i = 0; i < formatCount; i++)
+                if (presentModeCount != 0)
                 {
-                    details.PresentModes[i] = modes[i];
-                }
-            }
+                    details.PresentModes = new PresentModeKHR[presentModeCount];
 
-            return details;
+                    using var mem = GlobalMemory.Allocate((int)presentModeCount * sizeof(PresentModeKHR));
+                    var modes = (PresentModeKHR*)Unsafe.AsPointer(ref mem.GetPinnableReference());
+
+                    _vkSurface.GetPhysicalDeviceSurfacePresentModes(d, _surface, &presentModeCount, modes);
+
+                    for (var i = 0; i < presentModeCount; i++)
+                    {
+                        details.PresentModes[i] = modes[i];
+                    }
+                }
+
+                return details;
+            });
         }
 
         private bool CheckDeviceExtensionSupport(PhysicalDevice device)
         {
-            uint extensionCount;
-            _vk.EnumerateDeviceExtensionProperties(device, (byte*)null, &extensionCount, null);
-
-            var availableExtensions = stackalloc ExtensionProperties[(int)extensionCount];
-            _vk.EnumerateDeviceExtensionProperties(device, (byte*)null, &extensionCount, availableExtensions);
-
-            var requiredExtensions = new List<string>();
-            requiredExtensions.AddRange(DeviceExtensions);
-
-            for (var i = 0u; i < extensionCount; i++)
-            {
-                requiredExtensions.Remove(Marshal.PtrToStringAnsi((IntPtr)availableExtensions[i].ExtensionName));
-            }
-
-            return requiredExtensions.Count == 0;
+            return DeviceExtensions.All(ext => _vk.IsDeviceExtensionPresent(device, ext));
         }
 
         private QueueFamilyIndices FindQueueFamilies(PhysicalDevice device)
         {
-            var indices = new QueueFamilyIndices();
-
-            uint queryFamilyCount = 0;
-            _vk.GetPhysicalDeviceQueueFamilyProperties(device, &queryFamilyCount, null);
-
-            var queueFamilies = stackalloc QueueFamilyProperties[(int)queryFamilyCount];
-
-            _vk.GetPhysicalDeviceQueueFamilyProperties(device, &queryFamilyCount, queueFamilies);
-            for (var i = 0u; i < queryFamilyCount; i++)
+            return QueueFamilyIndicesCache.GetOrAdd(device, d =>
             {
-                var queueFamily = queueFamilies[i];
+                var indices = new QueueFamilyIndices();
 
-                // Support basic graphics operations
-                if (queueFamily.QueueFlags.HasFlag(QueueFlags.QueueGraphicsBit))
+                uint queryFamilyCount = 0;
+                _vk.GetPhysicalDeviceQueueFamilyProperties(d, &queryFamilyCount, null);
+
+                using var mem = GlobalMemory.Allocate((int)queryFamilyCount * sizeof(QueueFamilyProperties));
+                var queueFamilies = (QueueFamilyProperties*)Unsafe.AsPointer(ref mem.GetPinnableReference());
+
+                _vk.GetPhysicalDeviceQueueFamilyProperties(d, &queryFamilyCount, queueFamilies);
+                for (var i = 0u; i < queryFamilyCount; i++)
                 {
-                    indices.GraphicsFamily = i;
+                    var queueFamily = queueFamilies[i];
+                    // note: HasFlag is slow on .NET Core 2.1 and below.
+                    // if you're targeting these versions, use ((queueFamily.QueueFlags & QueueFlags.QueueGraphicsBit) != 0)
+                    if (queueFamily.QueueFlags.HasFlag(QueueFlags.QueueGraphicsBit))
+                    {
+                        indices.GraphicsFamily = i;
+                    }
+
+                    _vkSurface.GetPhysicalDeviceSurfaceSupport(d, i, _surface, out var presentSupport);
+
+                    if (presentSupport == Vk.True)
+                    {
+                        indices.PresentFamily = i;
+                    }
+
+                    if (indices.IsComplete())
+                    {
+                        break;
+                    }
                 }
 
-                _vkSurface.GetPhysicalDeviceSurfaceSupport(device, i, _surface, out var presentSupport);
-                // Support Image presentation aka render to an image/screen
-                if (presentSupport == Vk.True)
-                {
-                    indices.PresentFamily = i;
-                }
-
-                if (indices.IsComplete())
-                {
-                    break;
-                }
-            }
-
-            return indices;
+                return indices;
+            });
         }
 
         private void CreateLogicalGraphicsDevice()
         {
             var indices = FindQueueFamilies(_physicalDevice);
             var uniqueQueueFamilies = new[] { indices.GraphicsFamily.Value, indices.PresentFamily.Value };
-            var queueCreateInfos = stackalloc DeviceQueueCreateInfo[uniqueQueueFamilies.Length];
+
+            using var mem = GlobalMemory.Allocate((int)uniqueQueueFamilies.Length * sizeof(DeviceQueueCreateInfo));
+            var queueCreateInfos = (DeviceQueueCreateInfo*)Unsafe.AsPointer(ref mem.GetPinnableReference());
 
             var queuePriority = 1f;
             for (var i = 0; i < uniqueQueueFamilies.Length; i++)
@@ -500,22 +505,20 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
             var deviceFeatures = new PhysicalDeviceFeatures();
 
-            var createInfo = new DeviceCreateInfo
-            {
-                SType = StructureType.DeviceCreateInfo,
-                QueueCreateInfoCount = (uint) uniqueQueueFamilies.Length,
-                PQueueCreateInfos = queueCreateInfos,
-                PEnabledFeatures = &deviceFeatures,
-                EnabledExtensionCount = (uint) DeviceExtensions.Length
-            };
+            var createInfo = new DeviceCreateInfo();
+            createInfo.SType = StructureType.DeviceCreateInfo;
+            createInfo.QueueCreateInfoCount = (uint)uniqueQueueFamilies.Length;
+            createInfo.PQueueCreateInfos = queueCreateInfos;
+            createInfo.PEnabledFeatures = &deviceFeatures;
+            createInfo.EnabledExtensionCount = (uint)DeviceExtensions.Length;
 
-            var enabledExtensionNames = SilkMarshal.MarshalStringArrayToPtr(DeviceExtensions);
+            var enabledExtensionNames = SilkMarshal.StringArrayToPtr(DeviceExtensions);
             createInfo.PpEnabledExtensionNames = (byte**)enabledExtensionNames;
 
             if (EnableValidationLayers)
             {
                 createInfo.EnabledLayerCount = (uint)ValidationLayers.Length;
-                createInfo.PpEnabledLayerNames = (byte**)SilkMarshal.MarshalStringArrayToPtr(ValidationLayers);
+                createInfo.PpEnabledLayerNames = (byte**)SilkMarshal.StringArrayToPtr(ValidationLayers);
             }
             else
             {
@@ -541,6 +544,13 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             }
 
             _vk.CurrentDevice = _device;
+
+            if (!_vk.TryGetDeviceExtension(_instance, _device, out _vkSwapchain))
+            {
+                throw new NotSupportedException("KHR_swapchain extension not found.");
+            }
+
+            Console.WriteLine($"{_vk.CurrentInstance?.Handle} {_vk.CurrentDevice?.Handle}");
         }
 
         private void CreateSwapChain()
@@ -552,8 +562,8 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             var extent = ChooseSwapExtent(swapChainSupport.Capabilities);
 
             var imageCount = swapChainSupport.Capabilities.MinImageCount + 1;
-            // Cap the maximum image count if needed
-            if (swapChainSupport.Capabilities.MaxImageCount > 0 && imageCount > swapChainSupport.Capabilities.MaxImageCount)
+            if (swapChainSupport.Capabilities.MaxImageCount > 0 &&
+                imageCount > swapChainSupport.Capabilities.MaxImageCount)
             {
                 imageCount = swapChainSupport.Capabilities.MaxImageCount;
             }
@@ -593,11 +603,16 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
                 createInfo.OldSwapchain = default;
 
+                if (!_vk.TryGetDeviceExtension(_instance, _vk.CurrentDevice.Value, out _vkSwapchain))
+                {
+                    throw new NotSupportedException("KHR_swapchain extension not found.");
+                }
+
                 fixed (SwapchainKHR* swapchain = &_swapchain)
                 {
                     if (_vkSwapchain.CreateSwapchain(_device, &createInfo, null, swapchain) != Result.Success)
                     {
-                        throw new Exception("Failed to create swap chain!");
+                        throw new Exception("failed to create swap chain!");
                     }
                 }
             }
@@ -621,7 +636,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             }
 
             var actualExtent = new Extent2D
-            { Height = (uint)Window.Size.Y, Width = (uint)Window.Size.X };
+                { Height = (uint)Window.Size.Y, Width = (uint)Window.Size.X };
             actualExtent.Width = new[]
             {
                 capabilities.MinImageExtent.Width,
@@ -646,14 +661,14 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 }
             }
 
-            return PresentModeKHR.PresentModeImmediateKhr;
+            return PresentModeKHR.PresentModeFifoKhr;
         }
 
         private SurfaceFormatKHR ChooseSwapSurfaceFormat(SurfaceFormatKHR[] formats)
         {
             foreach (var format in formats)
             {
-                if (format.Format == Format.B8G8R8A8Srgb)
+                if (format.Format == Format.B8G8R8A8Unorm)
                 {
                     return format;
                 }
@@ -694,7 +709,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 ImageView imageView = default;
                 if (_vk.CreateImageView(_device, &createInfo, null, &imageView) != Result.Success)
                 {
-                    throw new Exception("Failed to create image views!");
+                    throw new Exception("failed to create image views!");
                 }
 
                 _swapchainImageViews[i] = imageView;
@@ -753,7 +768,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             {
                 if (_vk.CreateRenderPass(_device, &renderPassInfo, null, renderPass) != Result.Success)
                 {
-                    throw new Exception("Failed to create render pass!");
+                    throw new Exception("failed to create render pass!");
                 }
             }
         }
@@ -776,7 +791,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 SType = StructureType.PipelineShaderStageCreateInfo,
                 Stage = ShaderStageFlags.ShaderStageVertexBit,
                 Module = vertShaderModule,
-                PName = (byte*)SilkMarshal.MarshalStringToPtr("main")
+                PName = (byte*)SilkMarshal.StringToPtr("main")
             };
 
             var fragShaderStageInfo = new PipelineShaderStageCreateInfo
@@ -784,7 +799,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 SType = StructureType.PipelineShaderStageCreateInfo,
                 Stage = ShaderStageFlags.ShaderStageFragmentBit,
                 Module = fragShaderModule,
-                PName = (byte*)SilkMarshal.MarshalStringToPtr("main")
+                PName = (byte*)SilkMarshal.StringToPtr("main")
             };
 
             var shaderStages = stackalloc PipelineShaderStageCreateInfo[2];
@@ -879,7 +894,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             {
                 if (_vk.CreatePipelineLayout(_device, &pipelineLayoutInfo, null, pipelineLayout) != Result.Success)
                 {
-                    throw new Exception("Failed to create pipeline layout!");
+                    throw new Exception("failed to create pipeline layout!");
                 }
             }
 
@@ -905,7 +920,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 if (_vk.CreateGraphicsPipelines
                         (_device, default, 1, &pipelineInfo, null, graphicsPipeline) != Result.Success)
                 {
-                    throw new Exception("Failed to create graphics pipeline!");
+                    throw new Exception("failed to create graphics pipeline!");
                 }
             }
 
@@ -918,7 +933,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             var createInfo = new ShaderModuleCreateInfo
             {
                 SType = StructureType.ShaderModuleCreateInfo,
-                CodeSize = new UIntPtr((uint)code.Length)
+                CodeSize = (nuint)code.Length
             };
             fixed (byte* codePtr = code)
             {
@@ -928,7 +943,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             var shaderModule = new ShaderModule();
             if (_vk.CreateShaderModule(_device, &createInfo, null, &shaderModule) != Result.Success)
             {
-                throw new Exception("Failed to create shader module!");
+                throw new Exception("failed to create shader module!");
             }
 
             return shaderModule;
@@ -955,7 +970,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 var framebuffer = new Framebuffer();
                 if (_vk.CreateFramebuffer(_device, &framebufferInfo, null, &framebuffer) != Result.Success)
                 {
-                    throw new Exception("Failed to create framebuffer!");
+                    throw new Exception("failed to create framebuffer!");
                 }
 
                 _swapchainFramebuffers[i] = framebuffer;
@@ -976,7 +991,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             {
                 if (_vk.CreateCommandPool(_device, &poolInfo, null, commandPool) != Result.Success)
                 {
-                    throw new Exception("Failed to create command pool!");
+                    throw new Exception("failed to create command pool!");
                 }
             }
         }
@@ -997,7 +1012,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             {
                 if (_vk.AllocateCommandBuffers(_device, &allocInfo, commandBuffers) != Result.Success)
                 {
-                    throw new Exception("Failed to allocate command buffers!");
+                    throw new Exception("failed to allocate command buffers!");
                 }
             }
 
@@ -1007,7 +1022,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
                 if (_vk.BeginCommandBuffer(_commandBuffers[i], &beginInfo) != Result.Success)
                 {
-                    throw new Exception("Failed to begin recording command buffer!");
+                    throw new Exception("failed to begin recording command buffer!");
                 }
 
                 var renderPassInfo = new RenderPassBeginInfo
@@ -1033,7 +1048,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
                 if (_vk.EndCommandBuffer(_commandBuffers[i]) != Result.Success)
                 {
-                    throw new Exception("Failed to record command buffer!");
+                    throw new Exception("failed to record command buffer!");
                 }
             }
         }
@@ -1060,7 +1075,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                     _vk.CreateSemaphore(_device, &semaphoreInfo, null, &renderFinSema) != Result.Success ||
                     _vk.CreateFence(_device, &fenceInfo, null, &inFlightFence) != Result.Success)
                 {
-                    throw new Exception("Failed to create synchronization objects for a frame!");
+                    throw new Exception("failed to create synchronization objects for a frame!");
                 }
 
                 _imageAvailableSemaphores[i] = imgAvSema;
@@ -1084,7 +1099,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
                 foreach (var layerProperties in availableLayers)
                 {
-                    if (layerName == Marshal.PtrToStringAnsi((IntPtr)layerProperties.LayerName))
+                    if (layerName == Marshal.PtrToStringAnsi((nint)layerProperties.LayerName))
                     {
                         layerFound = true;
                         break;
