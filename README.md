@@ -4,7 +4,7 @@
 Portable Game Engine written in C# .NET 5 with Vulkan and OpenGL backends.
 
 ## Visual Studio
-Currently there is no build system for the project itself as Premake doesn't support .NET Core 3.1 yet. 
+Currently there is no build system for the project itself as Premake doesn't support .NET 5 yet. 
 Therefore a premade visual studio solution is provided.
 
 ## Render Backends
