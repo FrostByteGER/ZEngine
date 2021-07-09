@@ -68,9 +68,9 @@
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-    <PackageReference Include="NJsonSchema" Version="10.3.2" />
-    <PackageReference Include="Silk.NET" Version="2.0.0" />
-    <PackageReference Include="Silk.NET.Vulkan.Extensions.EXT" Version="2.0.0" />
+    <PackageReference Include="NJsonSchema" Version="10.3.7" />
+    <PackageReference Include="Silk.NET" Version="2.1.0" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.EXT" Version="2.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
   </ItemGroup>

@@ -29,7 +29,7 @@ namespace ZEngine.Engine.Rendering.Window
                 GraphicsAPI.DefaultVulkan, "ZEngine v0.1", WindowState.Normal, WindowBorder.Resizable, false, false, VideoMode.Default, 
                 null, null, null, false, false, null );
             Window = Silk.NET.Windowing.Window.Create(WindowOptions.DefaultVulkan);
-            RHI = new VulkanRHI(Window);
+            RHI = new ExampleVkRHI(Window); //new VulkanRHI(Window);
             Window.Initialize();
             RHI.Initialize();
         }

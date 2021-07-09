@@ -15,7 +15,7 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Rendering.RHI.Vulkan
 {
-    public unsafe class VulkanRHI : AbstractRenderHardwareInterface
+    public unsafe class ExampleVkRHI : AbstractRenderHardwareInterface
     {
         private struct QueueFamilyIndices
         {
@@ -37,7 +37,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
 
         public const int MaxFramesInFlight = 8;
 
-        // Per Renderer state aka vulkan application state
+        // Per Renderer state
         private Instance _instance;
         private Vk _vk;
         private SurfaceKHR _surface;
@@ -56,7 +56,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private ImageView[] _swapchainImageViews;
         private RenderPass _renderPass;
         private PipelineLayout _pipelineLayout;
-        
+
         private Framebuffer[] _swapchainFramebuffers;
         private CommandPool _commandPool;
         private CommandBuffer[] _commandBuffers;
@@ -72,14 +72,14 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
         private bool EnableValidationLayers { get; set; } = true;
         private IVkSurface VulkanSurface { get; }
         private string[] ValidationLayers { get; set; } = { "VK_LAYER_KHRONOS_validation" };
-        private string[] InstanceExtensions { get; set; }= { ExtDebugUtils.ExtensionName };
-        private string[] DeviceExtensions { get; set; }= { KhrSwapchain.ExtensionName };
+        private string[] InstanceExtensions { get; set; } = { ExtDebugUtils.ExtensionName };
+        private string[] DeviceExtensions { get; set; } = { KhrSwapchain.ExtensionName };
 
         private static readonly ConcurrentDictionary<PhysicalDevice, SwapChainSupportDetails> SwapChainSupportDetailsCache = new();
         private static readonly ConcurrentDictionary<PhysicalDevice, QueueFamilyIndices> QueueFamilyIndicesCache = new();
 
 
-        public VulkanRHI(IWindow window) : base(window)
+        public ExampleVkRHI(IWindow window) : base(window)
         {
             VulkanSurface = window.VkSurface;
         }
@@ -230,23 +230,23 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                 PApplicationInfo = &appInfo
             };
 
-            var requiredInstanceExtensions = Window.VkSurface!.GetRequiredExtensions(out var extCount);
+            var extensions = Window.VkSurface!.GetRequiredExtensions(out var extCount);
             // TODO Review that this count doesn't realistically exceed 1k (recommended max for stackalloc)
             // Should probably be allocated on heap anyway as this isn't super performance critical.
-            var totalInstanceExtensions = stackalloc byte*[(int)(extCount + InstanceExtensions.Length)];
+            var newExtensions = stackalloc byte*[(int)(extCount + InstanceExtensions.Length)];
             for (var i = 0; i < extCount; i++)
             {
-                totalInstanceExtensions[i] = requiredInstanceExtensions[i];
+                newExtensions[i] = extensions[i];
             }
 
             for (var i = 0; i < InstanceExtensions.Length; i++)
             {
-                totalInstanceExtensions[extCount + i] = (byte*)SilkMarshal.StringToPtr(InstanceExtensions[i]);
+                newExtensions[extCount + i] = (byte*)SilkMarshal.StringToPtr(InstanceExtensions[i]);
             }
 
             extCount += (uint)InstanceExtensions.Length;
             createInfo.EnabledExtensionCount = extCount;
-            createInfo.PpEnabledExtensionNames = totalInstanceExtensions;
+            createInfo.PpEnabledExtensionNames = newExtensions;
 
             if (EnableValidationLayers)
             {
@@ -335,7 +335,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
                     Debug.Log(message, DebugLogCategories.Engine);
                     break;
             }
-            
+
             // Vulkan expects us to always return false.
             return Vk.False;
         }
@@ -623,7 +623,7 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             }
 
             var actualExtent = new Extent2D
-                { Height = (uint)Window.Size.Y, Width = (uint)Window.Size.X };
+            { Height = (uint)Window.Size.Y, Width = (uint)Window.Size.X };
             actualExtent.Width = new[]
             {
                 capabilities.MinImageExtent.Width,
