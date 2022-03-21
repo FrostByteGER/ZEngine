@@ -12,7 +12,7 @@ namespace ZenForge.Extensions
 
     class Texture : IDisposable
     {
-        public const InternalFormat Srgb8Alpha8 = (InternalFormat)GLEnum.Srgb8Alpha8;
+        public const SizedInternalFormat Srgb8Alpha8 = (SizedInternalFormat)GLEnum.Srgb8Alpha8;
         public const InternalFormat Rgb32F = (InternalFormat)GLEnum.Rgb32f;
 
         public const GLEnum MaxTextureMaxAnisotropy = (GLEnum)0x84FF;
@@ -23,7 +23,7 @@ namespace ZenForge.Extensions
         public readonly uint GlTexture;
         public readonly uint Width, Height;
         public readonly uint MipmapLevels;
-        public readonly InternalFormat InternalFormat;
+        public readonly SizedInternalFormat InternalFormat;
         public unsafe Texture(GL gl, string name, int width, int height, IntPtr data, bool generateMipmaps = false, bool srgb = false)
         {
             _gl = gl;
@@ -31,7 +31,7 @@ namespace ZenForge.Extensions
             Name = name;
             Width = (uint)width;
             Height = (uint)height;
-            InternalFormat = srgb ? Srgb8Alpha8 : InternalFormat.Rgba8;
+            InternalFormat = srgb ? Srgb8Alpha8 : SizedInternalFormat.Rgba8;
             MipmapLevels = (uint)(generateMipmaps == false ? 1 : (int)Math.Floor(Math.Log(Math.Max(Width, Height), 2)));
 
             _gl.CreateTexture(TextureTarget.Texture2D, Name, out GlTexture);
