@@ -27,7 +27,7 @@ namespace ZEngine.Engine.Rendering.Window
             // TODO: Pull parameters from config
             var settings = new WindowOptions(true, new Vector2D<int>(50, 50), new Vector2D<int>(1280, 720), 0, 0,
                 GraphicsAPI.DefaultVulkan, "ZEngine v0.1", WindowState.Normal, WindowBorder.Resizable, false, false, VideoMode.Default, 
-                null, null, null, false, false, null );
+                null, null, null, false, false, false );
             Window = Silk.NET.Windowing.Window.Create(WindowOptions.DefaultVulkan);
             RHI = new ExampleVkRHI(Window); //new VulkanRHI(Window);
             Window.Initialize();
