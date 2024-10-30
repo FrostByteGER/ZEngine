@@ -1,4 +1,4 @@
-name: .NET 5
+name: Build
 
 on:
   push:
@@ -6,20 +6,69 @@ on:
   pull_request:
     branches: [ master ]
 
-jobs:
-  build:
+env:
+  # Configuration type to build.
+  # You can convert this to a build matrix if you need coverage of multiple configuration types.
+  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+  BUILD_CONFIGURATION: Release
 
+jobs:
+  build-windows:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 5.0.101
+        dotnet-version: 8
+
     - name: Install dependencies
       run: dotnet restore
+
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration ${{env.BUILD_CONFIGURATION}} --no-restore
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+
+    - name: Cleanup
+      shell: cmd
+      run: cd "./Sandbox/bin/x64/${{env.BUILD_CONFIGURATION}}/net8.0/" && del /s /q *.pdb
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZEngine_${{env.BUILD_CONFIGURATION}}-windows-x64
+        path: ./Sandbox/bin/x64/${{env.BUILD_CONFIGURATION}}/net8.0/
+
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8
+
+    - name: Install dependencies
+      run: dotnet restore ./Sandbox/Sandbox.csproj --runtime linux-x64
+
+    - name: Build
+      run: dotnet build ./Sandbox/Sandbox.csproj --configuration ${{env.BUILD_CONFIGURATION}} --no-restore --runtime linux-x64 --self-contained -p:PublishTrimmed=True -p:AllowUnsafeBlocks=true
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Cleanup
+      shell: bash
+      run: cd "./Sandbox/bin/${{env.BUILD_CONFIGURATION}}/net8.0/linux-x64/" && rm -f *.pdb **/*pdb
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZEngine_${{env.BUILD_CONFIGURATION}}-linux-x64
+        path: ./Sandbox/bin/${{env.BUILD_CONFIGURATION}}/net8.0/linux-x64/

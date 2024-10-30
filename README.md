@@ -1,5 +1,5 @@
 # ZEngine
-![.NET 5](https://github.com/FrostByteGER/ZEngine/workflows/.NET%205/badge.svg)
+[![Build](https://github.com/FrostByteGER/ZEngine/workflows/Build/badge.svg)](https://github.com/FrostByteGER/ZEngine/actions?query=Build)
 
 Portable Game Engine written in C# .NET 8 with Vulkan and OpenGL backends.
 
@@ -8,7 +8,7 @@ Portable Game Engine written in C# .NET 8 with Vulkan and OpenGL backends.
 - Visual Studio 2022 or later or Rider 2024.2 or later. Other IDEs may be used but are not officially supported
 
 ## ZenForge
-ZenForge is the WIP editor built around ZEngine. Currently it doesn't do much
+ZenForge is the WIP editor built around ZEngine. Currently it is only buildable under Windows.
 
 ## Render Backends
 * Vulkan 1.3

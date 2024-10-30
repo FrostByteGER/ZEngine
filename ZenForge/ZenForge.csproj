@@ -12,6 +12,13 @@
 	<ApplicationIcon>ZENgine.ico</ApplicationIcon>
   </PropertyGroup>
   
+  <!-- Skip building on non-Windows environments -->
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <BuildProject>false</BuildProject>
+    <IsPackable>false</IsPackable>
+	<EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>  
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
