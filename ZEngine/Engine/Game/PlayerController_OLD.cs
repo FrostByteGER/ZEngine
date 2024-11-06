@@ -4,12 +4,12 @@ using ZEngine.Engine.IO.UserInput;
 
 namespace ZEngine.Engine.Game
 {
-    public class PlayerController : Transform, ITickable, IInputReceiver
+    public class PlayerController_OLD : Transform, ITickable, IInputReceiver
     {
         public string Name { get; set; } = "PlayerController";
         public uint ID { get; internal set; } = 0;
         public View PlayerCamera { get; set; }
-        public Actor PlayerPawn { get; set; }
+        public Actor_OLD PlayerPawn { get; set; }
 
 		//public JGUI Hud { get; set; }
 
@@ -18,11 +18,11 @@ namespace ZEngine.Engine.Game
         public bool DisableInputWhenPaused { get; set; } = false;
         public bool IsActive { get; internal set; }
 
-	    public PlayerController()
+	    public PlayerController_OLD()
         {
         }
 
-        public PlayerController(Actor playerPawn)
+        public PlayerController_OLD(Actor_OLD playerPawn)
         {
             PlayerPawn = playerPawn;
         }

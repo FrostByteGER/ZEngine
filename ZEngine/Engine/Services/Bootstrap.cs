@@ -16,7 +16,7 @@ namespace ZEngine.Engine.Services
         internal void SetupInternal(EngineServiceLocator locator)
         {
             Debug.PrintToConsole = true;
-            locator.RegisterService<IEngineClock>(new SilkEngineClock());
+            locator.RegisterService<IClock>(new SilkEngineClock());
             var assetRegistry = new AssetRegistry();
             locator.RegisterService<IAssetRegistry>(assetRegistry);
             var assetManager = new AssetManager(assetRegistry);
@@ -28,7 +28,7 @@ namespace ZEngine.Engine.Services
             locator.RegisterService<IWindowManager>(windowManager);
             locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
             locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus, windowManager));
-            locator.RegisterService<ILevelManager>(new LevelManager(engineMessageBus, assetManager));
+            locator.RegisterService<ILevelManager_OLD>(new LevelManager_OLD(engineMessageBus, assetManager));
             Setup(locator);
             InitializeServices(locator);
         }

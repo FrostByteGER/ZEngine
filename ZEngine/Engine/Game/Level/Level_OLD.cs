@@ -10,17 +10,17 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game.Level
 {
-	public class Level : IDestroyable
+	public class Level_OLD : IDestroyable
     {
 	    public ulong LevelID { get; internal set; } = 0;
 
 		public ulong ActorIDCounter { get; private set; } = 0;
 
-		private readonly List<Actor> _actors = new();
+		private readonly List<Actor_OLD> _actors = new();
 
         private IMessageBus _bus;
 
-	    internal ReadOnlyCollection<Actor> Actors => new(_actors);
+	    internal ReadOnlyCollection<Actor_OLD> Actors => new(_actors);
 
 	    /// <summary>
 	    /// Bounds of this level. To get actual height and width, multiply the X and Y value by 2.
@@ -32,7 +32,7 @@ namespace ZEngine.Engine.Game.Level
 	    public bool Loaded { get; set; }
 		internal bool Ticking { get; set; }
 
-		public List<PlayerController> Players { get; } = new();
+		public List<PlayerController_OLD> Players { get; } = new();
 
 	    public TimerManager TimerManager { get; } = new();
 
@@ -171,7 +171,7 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-	    internal T SpawnActorInternal<T>() where T : Actor
+	    internal T SpawnActorInternal<T>() where T : Actor_OLD
 	    {
 			var actor = Spawner.SpawnObject<T>(this);
 		    RegisterActor(actor);
@@ -184,11 +184,11 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <param name="actorType"></param>
 		/// <returns></returns>
-		internal Actor SpawnActorInternal(Type actorType)
+		internal Actor_OLD SpawnActorInternal(Type actorType)
 		{
-			if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
+			if (!actorType.IsSubclassOf(typeof(Actor_OLD)) && actorType != typeof(Actor_OLD)) 
                 return null;
-			var actor = Spawner.SpawnObject(actorType, this) as Actor;
+			var actor = Spawner.SpawnObject(actorType, this) as Actor_OLD;
 			RegisterActor(actor);
 			actor?.OnGameStart();
 			return actor;
@@ -199,7 +199,7 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public T SpawnActor<T>() where T : Actor
+		public T SpawnActor<T>() where T : Actor_OLD
 		{
 			//var actor = Spawner.SpawnObject<T>(this);
 			//_bus.Publish(new RegisterEventMessage(this, new RegisterActorEvent<RegisterActorParams>(new RegisterActorParams(this, actor, this))));
@@ -212,7 +212,7 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <param name="actorType"></param>
 		/// <returns></returns>
-		public Actor SpawnActor(Type actorType)
+		public Actor_OLD SpawnActor(Type actorType)
 		{
 			//if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
             //    return null;
@@ -227,12 +227,12 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="instigator"></param>
-		public void SpawnActorDeferred<T>(Actor instigator) where T : Actor
+		public void SpawnActorDeferred<T>(Actor_OLD instigator) where T : Actor_OLD
 		{
             //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(instigator, typeof(T), this))));
 		}
 
-		public void SpawnActorDeferred<T>() where T : Actor
+		public void SpawnActorDeferred<T>() where T : Actor_OLD
 		{
             //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, typeof(T), this))));
 		}
@@ -242,7 +242,7 @@ namespace ZEngine.Engine.Game.Level
 		/// </summary>
 		/// <param name="instigator"></param>
 		/// <param name="actorType"></param>
-		public void SpawnActorDeferred(Actor instigator, Type actorType)
+		public void SpawnActorDeferred(Actor_OLD instigator, Type actorType)
 		{
 			//if (!actorType.IsSubclassOf(typeof(Actor)) && actorType != typeof(Actor)) 
             //    return;
@@ -260,16 +260,16 @@ namespace ZEngine.Engine.Game.Level
             //_bus.Publish(new RegisterEventMessage(this, new SpawnActorEvent<SpawnActorParams>(new SpawnActorParams(this, actorType, this))));
 		}
 
-		public void RegisterActor(Actor actor)
+		public void RegisterActor(Actor_OLD actorOld)
 		{
-			if (ContainsActorInLevel(actor)) 
+			if (ContainsActorInLevel(actorOld)) 
                 return;
-			actor.ActorID = ActorIDCounter;
+			actorOld.ActorID = ActorIDCounter;
 			++ActorIDCounter;
-			actor.LevelID = LevelID;
-			actor.LevelReference = this;
-			Debug.LogDebug("Trying to register Actor: " + actor, DebugLogCategories.Engine);
-			_actors.Add(actor);
+			actorOld.LevelID = LevelID;
+			actorOld.LevelOldReference = this;
+			Debug.LogDebug("Trying to register Actor: " + actorOld, DebugLogCategories.Engine);
+			_actors.Add(actorOld);
 		}
 
 	    public void UnregisterActors()
@@ -292,12 +292,12 @@ namespace ZEngine.Engine.Game.Level
 			}
 		    _actors.Clear();
 	    }
-		public bool UnregisterActor(Actor actor)
+		public bool UnregisterActor(Actor_OLD actorOld)
 		{
-			Debug.LogDebug("Trying to remove Actor: " + actor, DebugLogCategories.Engine);
-			actor.OnActorDestroy();
-			var removal = _actors.Remove(actor);
-			foreach (var comp in actor.Components)
+			Debug.LogDebug("Trying to remove Actor: " + actorOld, DebugLogCategories.Engine);
+			actorOld.OnActorDestroy();
+			var removal = _actors.Remove(actorOld);
+			foreach (var comp in actorOld.Components)
 			{
 				/*
 				var physComp = comp as PhysicsComponent;
@@ -315,59 +315,59 @@ namespace ZEngine.Engine.Game.Level
 		    return FindActorInLevel(name) != null;
 	    }
 
-	    public bool ContainsActorInLevel(Actor actor)
+	    public bool ContainsActorInLevel(Actor_OLD actorOld)
 	    {
-		    return _actors.Contains(actor);
+		    return _actors.Contains(actorOld);
 	    }
 
-		public Actor FindActorInLevel(string name)
+		public Actor_OLD FindActorInLevel(string name)
 	    {
 		    return _actors.Find(x => x.ActorName == name);
 	    }
 
-		public T FindActorInLevel<T>(string name) where T : Actor
+		public T FindActorInLevel<T>(string name) where T : Actor_OLD
 		{
 			return (T)_actors.Find(x => x.ActorName == name);
 		}
 
-		public Actor FindActorInLevel(uint id)
+		public Actor_OLD FindActorInLevel(uint id)
 	    {
 		    return _actors.Find(x => x.ActorID == id);
 		}
 
-		public T FindActorInLevel<T>(uint id) where T : Actor
+		public T FindActorInLevel<T>(uint id) where T : Actor_OLD
 		{
 			return (T)_actors.Find(x => x.ActorID == id);
 		}
 
-		public IEnumerable<Actor> FindActorsInLevel(string name)
+		public IEnumerable<Actor_OLD> FindActorsInLevel(string name)
 	    {
 		    return _actors.FindAll(x => x.ActorName == name);
 		}
 
-		public IEnumerable<T> FindActorsInLevel<T>(string name) where T : Actor
+		public IEnumerable<T> FindActorsInLevel<T>(string name) where T : Actor_OLD
 		{
 			return _actors.FindAll(x => x.ActorName == name).Cast<T>();
 		}
 
-		public IEnumerable<Actor> FindActorsInLevel(Type actor)
+		public IEnumerable<Actor_OLD> FindActorsInLevel(Type actor)
 	    {
 		    return _actors.FindAll(x => x.GetType() == actor);
 		}
 
-		public IEnumerable<T> FindActorsInLevel<T>() where T : Actor
+		public IEnumerable<T> FindActorsInLevel<T>() where T : Actor_OLD
 		{
 			return _actors.FindAll(x => x is T).Cast<T>();
 		}
 
-        public void DestroyActor(Actor instigator, Actor actor)
+        public void DestroyActor(Actor_OLD instigator, Actor_OLD actorOld)
 	    {
-            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actor))));
+            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actorOld))));
 		}
 
-		public void DestroyActor(Actor actor)
+		public void DestroyActor(Actor_OLD actorOld)
 		{
-            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actor))));
+            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actorOld))));
 		}
 
         private void Dispose(bool disposing)

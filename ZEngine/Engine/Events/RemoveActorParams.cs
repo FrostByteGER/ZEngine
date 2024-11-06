@@ -5,11 +5,11 @@ namespace ZEngine.Engine.Events
 {
 	public class RemoveActorParams : EngineEventParams
 	{
-		public Actor RemovableActor { get; }
+		public Actor_OLD RemovableActorOld { get; }
 
-		public RemoveActorParams(object instigator, Actor removableActor) : base(instigator)
+		public RemoveActorParams(object instigator, Actor_OLD removableActorOld) : base(instigator)
 		{
-			RemovableActor = removableActor ?? throw new ArgumentNullException(nameof(removableActor));
+			RemovableActorOld = removableActorOld ?? throw new ArgumentNullException(nameof(removableActorOld));
 		}
 	}
 }

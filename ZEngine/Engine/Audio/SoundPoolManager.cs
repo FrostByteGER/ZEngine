@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Audio
 {
 	public class SoundPoolManager
 	{
-		public static string SFXPath { get; } = AssetManager.GameAssetsPath + "SFX/";
-
 		private readonly Dictionary<string, SoundBuffer> _soundBufferPool = new();
 		public ReadOnlyDictionary<string, SoundBuffer> SoundBufferPool => new(_soundBufferPool);
 

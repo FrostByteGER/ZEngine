@@ -4,11 +4,11 @@ using ZEngine.Engine.Utility;
 
 namespace ZEngine.Engine.Game
 {
-	public class ActorComponent : ITickable, ITransformable, IDestroyable
+	public class ActorComponent_OLD : ITickable, ITransformable, IDestroyable
 	{
 		public uint ComponentID { get; internal set; } = 0;
 		public string ComponentName { get; set; } = "Component";
-		public Actor ParentActor { get; internal set; } = null;
+		public Actor_OLD ParentActorOld { get; internal set; } = null;
 		public bool IsRootComponent { get; internal set; } = false;
 
 		public Transform ComponentTransform { get; set; } = new();
@@ -45,19 +45,19 @@ namespace ZEngine.Engine.Game
 
 		public Vector2 WorldPosition
 		{
-			get => IsRootComponent ? (Vector2)ComponentTransform.Position : ParentActor.Position + ComponentTransform.Position;
+			get => IsRootComponent ? (Vector2)ComponentTransform.Position : ParentActorOld.Position + ComponentTransform.Position;
             set => LocalPosition = new Vector2(); //ComponentTransform.InverseTransform * value;
         }
 
 		public virtual bool Movable { get; set; }
 
 
-		public ActorComponent()
+		public ActorComponent_OLD()
 		{
 			ComponentName = GetType().Name;
 		}
 
-		public ActorComponent(string componentName)
+		public ActorComponent_OLD(string componentName)
 		{
 			ComponentName = componentName;
 		}
@@ -68,16 +68,16 @@ namespace ZEngine.Engine.Game
 		}
 
 
-		public void SwapParentActor(Actor newParent)
+		public void SwapParentActor(Actor_OLD newParent)
 		{
-			if (ParentActor == null || newParent == null) return;
+			if (ParentActorOld == null || newParent == null) return;
 			if (IsRootComponent)
 			{
-				ParentActor.RemoveRootComponent();
+				ParentActorOld.RemoveRootComponent();
 			}
 			else
 			{
-				ParentActor.RemoveComponent(this);
+				ParentActorOld.RemoveComponent(this);
 			}
 			newParent.AddComponent(this);
 		}
@@ -210,10 +210,10 @@ namespace ZEngine.Engine.Game
 
 		public override string ToString()
 		{
-			return ParentActor + "|" + ComponentName + "-" + ComponentID;
+			return ParentActorOld + "|" + ComponentName + "-" + ComponentID;
 		}
 
-		protected bool Equals(ActorComponent other)
+		protected bool Equals(ActorComponent_OLD other)
 		{
 			return ComponentID == other.ComponentID;
 		}
@@ -223,7 +223,7 @@ namespace ZEngine.Engine.Game
 			if (obj is null) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
-			return Equals((ActorComponent) obj);
+			return Equals((ActorComponent_OLD) obj);
 		}
 
 		public override int GetHashCode()
@@ -231,12 +231,12 @@ namespace ZEngine.Engine.Game
 			return (int) ComponentID;
 		}
 
-		public static bool operator ==(ActorComponent left, ActorComponent right)
+		public static bool operator ==(ActorComponent_OLD left, ActorComponent_OLD right)
 		{
 			return Equals(left, right);
 		}
 
-		public static bool operator !=(ActorComponent left, ActorComponent right)
+		public static bool operator !=(ActorComponent_OLD left, ActorComponent_OLD right)
 		{
 			return !Equals(left, right);
 		}

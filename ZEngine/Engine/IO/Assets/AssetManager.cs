@@ -57,7 +57,7 @@ namespace ZEngine.Engine.IO.Assets
 			throw new NotImplementedException();
 		}
 
-        public T LoadLevel<T>(string levelName) where T : Level
+        public T LoadLevel<T>(string levelName) where T : Level_OLD
 		{
             throw new NotImplementedException();
 			//return JSONManager.LoadObject<T>(LevelsPath + levelName);

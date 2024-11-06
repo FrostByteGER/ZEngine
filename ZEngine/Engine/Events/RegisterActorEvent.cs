@@ -9,9 +9,9 @@
 		public override void ExecuteEvent()
 		{
 			//var actor = Parameters.LevelRef.SpawnActorInternal(Parameters.SpawnableActorType);
-			Parameters.LevelRef.RegisterActor(Parameters.RegisterableActor);
-			Parameters.RegisterableActor.InitializeActor();
-			Parameters.RegisterableActor.OnGameStart();
+			Parameters.LevelOldRef.RegisterActor(Parameters.RegisterableActorOld);
+			Parameters.RegisterableActorOld.InitializeActor();
+			Parameters.RegisterableActorOld.OnGameStart();
 		}
 	}
 }

@@ -2,134 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using nkast.Aether.Physics2D.Dynamics;
-using nkast.Aether.Physics2D.Dynamics.Contacts;
 using ZEngine.Engine.Utility;
 using Vector2 = System.Numerics.Vector2;
 
 namespace ZEngine.Engine.Game
 {
-	public class Actor : ITickable, IDestroyable
+	public class Actor_OLD : ITickable, IDestroyable
 	{
 
 		public ulong ActorID { get; internal set; } = 0;
 		public ulong LevelID { get; internal set; } = 0;
 		public uint LayerID { get; set; } = 1;
 		public uint ComponentIDCounter { get; private set; }
-		public Level.Level LevelReference { get; internal set; }
+		public Level.Level_OLD LevelOldReference { get; internal set; }
 		public string ActorName { get; set; }
 
 		[JsonIgnore]
-		public virtual Vector2 ActorBounds
-		{
-			get => RootComponent.ComponentBounds;
-			set => RootComponent.ComponentBounds = value;
-		}
-
+		public List<ActorComponent_OLD> Components { get; } = [];
 		[JsonIgnore]
-		public List<ActorComponent> Components { get; set; } = new();
-		[JsonIgnore]
-		public virtual ActorComponent RootComponent { get; private set; }
+		public virtual ActorComponent_OLD RootComponentOld { get; private set; }
 
 		public bool MarkedForRemoval { get; internal set; } = false;
 		public virtual bool Visible { get; set; } = true;
 		public bool CanTick { get; set; } = true;
-		private bool _collisionCallbacksEnabled = true;
-		/*
-		[JsonIgnore]
-		public bool CollisionCallbacksEnabled
-		{
-			get => _collisionCallbacksEnabled;
-			set
-			{
-				_collisionCallbacksEnabled = value;
-				foreach (var comp in Components)
-				{
-					var physComp = comp as PhysicsComponent;
-					if (physComp != null) physComp.CollisionCallbacksEnabled = value;
-				}
-			}
-		}
 
-		[JsonIgnore]
-		public bool CanOverlap
-		{
-			get
-			{
-				var canoverlap = false;
-				foreach (var comp in Components)
-				{
-					var physComp = comp as PhysicsComponent;
-					if (physComp == null) continue;
-					canoverlap = physComp.CanOverlap;
-					if (canoverlap) break;
-				}
-				return canoverlap;
-			}
-			set
-			{
-				foreach (var comp in Components)
-				{
-					var physComp = comp as PhysicsComponent;
-					if (physComp != null) physComp.CanOverlap = value;
-				}
-			}
-		}
-
-		[JsonIgnore]
-		public bool CanOverlapAll
-		{
-			get
-			{
-				var canoverlap = false;
-				foreach (var comp in Components)
-				{
-					var physComp = comp as PhysicsComponent;
-					if (physComp == null) continue;
-					canoverlap = physComp.CanOverlap;
-					if (!canoverlap) break;
-				}
-				return canoverlap;
-			}
-			set => CanOverlap = value;
-		}
-		*/
 		[JsonIgnore]
 		public virtual Vector2 Position
 		{
-			get => RootComponent.LocalPosition;
-			set => RootComponent.LocalPosition = value;
+			get => RootComponentOld.LocalPosition;
+			set => RootComponentOld.LocalPosition = value;
 		}
 
 		[JsonIgnore]
 		public virtual float Rotation
 		{
-			get => RootComponent.LocalRotation;
-			set => RootComponent.LocalRotation = value;
+			get => RootComponentOld.LocalRotation;
+			set => RootComponentOld.LocalRotation = value;
 		}
 
 		[JsonIgnore]
 		public virtual Vector2 Scale
 		{
-			get => RootComponent.LocalScale;
-			set => RootComponent.LocalScale = value;
+			get => RootComponentOld.LocalScale;
+			set => RootComponentOld.LocalScale = value;
 		}
 
 		[JsonIgnore]
 		public virtual Vector2 Origin
 		{
-			get => RootComponent.Origin;
-			set => RootComponent.Origin = value;
+			get => RootComponentOld.Origin;
+			set => RootComponentOld.Origin = value;
 		}
 
 		[JsonIgnore]
 		public virtual Transform ActorTransform
 		{
-			get => RootComponent.ComponentTransform;
-			set => RootComponent.ComponentTransform = value;
+			get => RootComponentOld.ComponentTransform;
+			set => RootComponentOld.ComponentTransform = value;
 		}
 
-		public Actor()
+		public Actor_OLD()
 		{
 			ActorName = GetType().Name;
 		}
@@ -149,48 +81,48 @@ namespace ZEngine.Engine.Game
 
 		public virtual void Move(float x, float y)
 		{
-			RootComponent.MoveLocal(new Vector2(x, y));
+			RootComponentOld.MoveLocal(new Vector2(x, y));
 		}
 
 		public void MoveAbsolute(float x, float y)
 		{
-			RootComponent.SetLocalPosition(new Vector2(x, y));
+			RootComponentOld.SetLocalPosition(new Vector2(x, y));
 		}
 
 		public virtual void Move(Vector2 position)
 		{
-			RootComponent.MoveLocal(position);
+			RootComponentOld.MoveLocal(position);
 		}
 
 
 		public void Rotate(float angle)
 		{
-			RootComponent.RotateLocal(angle);
+			RootComponentOld.RotateLocal(angle);
 		}
 
 		public void RotateAbsolute(float angle)
 		{
-			RootComponent.SetLocalRotation(angle);
+			RootComponentOld.SetLocalRotation(angle);
 		}
 
 		public void ScaleActor(float x, float y)
 		{
-			RootComponent.ScaleLocal(new Vector2(x, y));
+			RootComponentOld.ScaleLocal(new Vector2(x, y));
 		}
 
 		public void ScaleActor(Vector2 scale)
 		{
-			RootComponent.ScaleLocal(scale);
+			RootComponentOld.ScaleLocal(scale);
 		}
 
 		public void ScaleAbsolute(float x, float y)
 		{
-			RootComponent.SetLocalScale(new Vector2(x, y));
+			RootComponentOld.SetLocalScale(new Vector2(x, y));
 		}
 
 		public void ScaleAbsolute(Vector2 scale)
 		{
-			RootComponent.SetLocalScale(scale);
+			RootComponentOld.SetLocalScale(scale);
 		}
 
         public virtual void Tick(float deltaTime)
@@ -207,27 +139,6 @@ namespace ZEngine.Engine.Game
 				}
 			}
 		}
-
-		public virtual void OnCollide(Fixture self, Fixture other, Contact contactInfo)
-		{
-
-		}
-
-		public virtual void OnCollideEnd(Fixture self, Fixture other, Contact contactInfo)
-		{
-
-		}
-
-		public virtual void OnOverlapBegin(Fixture self, Fixture other, Contact contactInfo)
-		{
-
-		}
-
-		public virtual void OnOverlapEnd(Fixture self, Fixture other, Contact contactInfo)
-		{
-
-		}
-
         protected internal virtual void OnGameStart()
 		{
 		}
@@ -255,11 +166,11 @@ namespace ZEngine.Engine.Game
 			
 		}
 
-		public bool SetRootComponent(ActorComponent root)
+		public bool SetRootComponent(ActorComponent_OLD root)
 		{
-			if (root == null && RootComponent == null) 
+			if (root == null && RootComponentOld == null) 
                 return false;
-			if (root == null && RootComponent != null) 
+			if (root == null && RootComponentOld != null) 
                 return RemoveRootComponent();
 			Debug.LogDebug("Trying to set Root-ActorComponent " + root.ComponentName + " on Actor " + this, DebugLogCategories.Engine);
 			RemoveRootComponent();
@@ -270,14 +181,14 @@ namespace ZEngine.Engine.Game
 				if (comp == null) 
                     return false;
 				root.ComponentID = 1;
-				RootComponent = comp;
+				RootComponentOld = comp;
 				comp.IsRootComponent = true;
 				return true;
 			}
 			Components.Add(root);
 			root.ComponentID = 1;
-			root.ParentActor = this;
-			RootComponent = root;
+			root.ParentActorOld = this;
+			RootComponentOld = root;
 			root.IsRootComponent = true;
 			return true;
 		}
@@ -291,21 +202,21 @@ namespace ZEngine.Engine.Game
 
 		public bool RemoveRootComponent()
 		{
-			if (RootComponent == null) 
+			if (RootComponentOld == null) 
                 return false;
-			Debug.LogDebug("Trying to remove RootComponent " + RootComponent.ComponentName + " from " + this, DebugLogCategories.Engine);
-			RemoveComponent(RootComponent);
-			RootComponent.IsRootComponent = false;
-			RootComponent = null;
+			Debug.LogDebug("Trying to remove RootComponent " + RootComponentOld.ComponentName + " from " + this, DebugLogCategories.Engine);
+			RemoveComponent(RootComponentOld);
+			RootComponentOld.IsRootComponent = false;
+			RootComponentOld = null;
 			return true;
 		}
 
-		public T GetRootComponent<T>() where T : ActorComponent
+		public T GetRootComponent<T>() where T : ActorComponent_OLD
 		{
-			return (T)RootComponent;
+			return (T)RootComponentOld;
 		}
 
-		public ActorComponent GetComponent(uint componentID)
+		public ActorComponent_OLD GetComponent(uint componentID)
 		{
 			return Components.Find(comp => comp.ComponentID == componentID);
 		}
@@ -316,50 +227,50 @@ namespace ZEngine.Engine.Game
 		/// <typeparam name="T"></typeparam>
 		/// <param name="componentID"></param>
 		/// <returns></returns>
-		public T GetComponent<T>(uint componentID) where T : ActorComponent
+		public T GetComponent<T>(uint componentID) where T : ActorComponent_OLD
 		{
 			return (T)Components.Find(comp => comp.ComponentID == componentID);
 		}
 
-		public T GetComponent<T>() where T : ActorComponent
+		public T GetComponent<T>() where T : ActorComponent_OLD
 		{
 			return (T)Components.Find(comp => comp is T);
 		}
 
-		public IEnumerable<T> GetComponents<T>() where T : ActorComponent
+		public IEnumerable<T> GetComponents<T>() where T : ActorComponent_OLD
 		{
 			return Components.FindAll(comp => comp is T).Cast<T>();
 		}
 
 
-		public bool AddComponent(ActorComponent component)
+		public bool AddComponent(ActorComponent_OLD componentOld)
 		{
-			if (component == null || component.ComponentName == null)
+			if (componentOld == null || componentOld.ComponentName == null)
 			{
 				Debug.LogError("Failed to add component to Actor: " + this + ". Component is null or has null name!", DebugLogCategories.Engine);
                 return false;
             }
 
-			Debug.LogDebug("Trying to add "+ component.ComponentName + " to " + this, DebugLogCategories.Engine);
-			if (Components.Contains(component)) 
+			Debug.LogDebug("Trying to add "+ componentOld.ComponentName + " to " + this, DebugLogCategories.Engine);
+			if (Components.Contains(componentOld)) 
                 return false;
-			Components.Add(component);
-			component.ComponentID = ++ComponentIDCounter;
-			component.ParentActor = this;
+			Components.Add(componentOld);
+			componentOld.ComponentID = ++ComponentIDCounter;
+			componentOld.ParentActorOld = this;
 			return true;
 		}
 
-		public void RemoveComponent(ActorComponent component)
+		public void RemoveComponent(ActorComponent_OLD componentOld)
 		{
-			if (!Components.Contains(component)) 
+			if (!Components.Contains(componentOld)) 
                 return;
-			Components.Remove(component);
-			component.ParentActor = null;
+			Components.Remove(componentOld);
+			componentOld.ParentActorOld = null;
 		}
 
 		public void RemoveComponent(int index)
 		{
-			Components[index].ParentActor = null;
+			Components[index].ParentActorOld = null;
 			Components.RemoveAt(index);
 		}
 
@@ -367,7 +278,7 @@ namespace ZEngine.Engine.Game
 		{
 			foreach (var component in Components)
 			{
-				component.ParentActor = null;
+				component.ParentActorOld = null;
 			}
 			Components.Clear();
 		}
@@ -411,10 +322,10 @@ namespace ZEngine.Engine.Game
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
-			return Equals((Actor)obj);
+			return Equals((Actor_OLD)obj);
 		}
 
-		protected bool Equals(Actor other)
+		protected bool Equals(Actor_OLD other)
 		{
 			return ActorID == other.ActorID;
 		}
@@ -424,12 +335,12 @@ namespace ZEngine.Engine.Game
 			return (int)ActorID;
 		}
 
-		public static bool operator ==(Actor left, Actor right)
+		public static bool operator ==(Actor_OLD left, Actor_OLD right)
 		{
 			return Equals(left, right);
 		}
 
-		public static bool operator !=(Actor left, Actor right)
+		public static bool operator !=(Actor_OLD left, Actor_OLD right)
 		{
 			return !Equals(left, right);
 		}

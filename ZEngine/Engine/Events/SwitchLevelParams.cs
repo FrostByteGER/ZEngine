@@ -5,12 +5,12 @@ namespace ZEngine.Engine.Events
 	public class SwitchLevelParams : EngineEventParams
 	{
 
-		public Level NewLevel { get; set; }
+		public Level_OLD NewLevelOld { get; set; }
 		public bool DestroyPrevious { get; set; } = true;
 
-		public SwitchLevelParams(object instigator, Level newLevel, bool destroyPrevious) : base(instigator)
+		public SwitchLevelParams(object instigator, Level_OLD newLevelOld, bool destroyPrevious) : base(instigator)
 		{
-			NewLevel = newLevel;
+			NewLevelOld = newLevelOld;
 			DestroyPrevious = destroyPrevious;
 		}
 	}

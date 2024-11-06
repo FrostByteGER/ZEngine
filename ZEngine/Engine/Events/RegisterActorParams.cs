@@ -6,13 +6,13 @@ namespace ZEngine.Engine.Events
 {
 	public class RegisterActorParams : EngineEventParams
 	{
-		public Actor RegisterableActor { get; set; }
-		public Level LevelRef { get; set; }
+		public Actor_OLD RegisterableActorOld { get; set; }
+		public Level_OLD LevelOldRef { get; set; }
 
-		public RegisterActorParams(object instigator, Actor registerableActor, Level level) : base(instigator)
+		public RegisterActorParams(object instigator, Actor_OLD registerableActorOld, Level_OLD levelOld) : base(instigator)
 		{
-			RegisterableActor = registerableActor ?? throw new ArgumentNullException(nameof(registerableActor));
-			LevelRef = level;
+			RegisterableActorOld = registerableActorOld ?? throw new ArgumentNullException(nameof(registerableActorOld));
+			LevelOldRef = levelOld;
 		}
 	}
 }

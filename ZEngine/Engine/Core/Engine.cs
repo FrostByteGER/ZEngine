@@ -30,7 +30,7 @@ namespace ZEngine.Engine.Core
 
         // Engine Managers
         private IAssetManager AssetManager { get; set; }
-        private ILevelManager LevelManager { get; set; }
+        private ILevelManager_OLD LevelManagerOld { get; set; }
         private IWindowManager WindowManager { get; set; }
         private IEngineMessageBus MessageBus { get; set; }
 
@@ -62,11 +62,11 @@ namespace ZEngine.Engine.Core
         {
             // Bootstrap before everything else so we have the log and all other services initialized!
             Bootstrapper.SetupInternal(EngineServiceLocator);
-            EngineCoreClock = GetService<IEngineClock>();
+            EngineCoreClock = GetService<IClock>();
 
             AssetManager = GetService<IAssetManager>();
             AssetManager.Init();
-            LevelManager = GetService<ILevelManager>();
+            LevelManagerOld = GetService<ILevelManager_OLD>();
             WindowManager = GetService<IWindowManager>();
             MessageBus = GetService<IEngineMessageBus>();
             WindowManager.InitWindow();
@@ -119,8 +119,8 @@ namespace ZEngine.Engine.Core
 
             //if (InputManager.CanTick) 
             //    InputManager.Tick(FrameDelta);
-            if (LevelManager.CanTick)
-                LevelManager.Tick(dt);
+            if (LevelManagerOld.CanTick)
+                LevelManagerOld.Tick(dt);
 
             Debug.FlushQueue();
 		}

@@ -5,11 +5,11 @@ namespace ZEngine.Engine.Events
 {
 	public class UnpauseActorParams : EngineEventParams
 	{
-		public Actor UnpausableActor { get; set; }
+		public Actor_OLD UnpausableActorOld { get; set; }
 
-		public UnpauseActorParams(object instigator, Actor unpausableActor) : base(instigator)
+		public UnpauseActorParams(object instigator, Actor_OLD unpausableActorOld) : base(instigator)
 		{
-			UnpausableActor = unpausableActor ?? throw new ArgumentNullException(nameof(unpausableActor));
+			UnpausableActorOld = unpausableActorOld ?? throw new ArgumentNullException(nameof(unpausableActorOld));
 		}
 	}
 }

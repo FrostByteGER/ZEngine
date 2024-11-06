@@ -7,7 +7,7 @@ namespace ZEngine.Engine.IO.Assets
     {
         void Init();
         T LoadAsset<T>(string assetName);
-        T LoadLevel<T>(string levelName) where T : Level;
+        T LoadLevel<T>(string levelName) where T : Level_OLD;
 
     }
 }

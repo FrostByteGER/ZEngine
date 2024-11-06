@@ -8,7 +8,7 @@
 
 		public override void ExecuteEvent()
 		{
-			Parameters.PausableActor.OnGamePause();
+			Parameters.PausableActorOld.OnGamePause();
 		}
 
 

@@ -17,12 +17,12 @@
 		public virtual string GameShaderFolderName { get; protected set; } = "Shaders";
 		public virtual string GameLevelFolderName { get; protected set; } = "Levels";
 
-		public string GameFullName = "GENERATE_ME";
+		private string _gameFullName = "GENERATE_ME";
 
 		public virtual string GenerateFullGameName()
 		{
-			GameFullName = GameName + " " + GameVersionPrefix + GameMajorVersion + "." + GameMinorVersion + "." + GameHotfixVersion + GameVersionSuffix;
-			return GameFullName;
+			_gameFullName = GameName + " " + GameVersionPrefix + GameMajorVersion + "." + GameMinorVersion + "." + GameHotfixVersion + GameVersionSuffix;
+			return _gameFullName;
 		}
 
 	}

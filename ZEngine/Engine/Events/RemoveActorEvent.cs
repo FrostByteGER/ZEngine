@@ -6,17 +6,17 @@ namespace ZEngine.Engine.Events
 	{
 		public RemoveActorEvent(T parameters) : base(parameters)
 		{
-			parameters.RemovableActor.MarkedForRemoval = true;
-			parameters.RemovableActor.Visible = false;
+			parameters.RemovableActorOld.MarkedForRemoval = true;
+			parameters.RemovableActorOld.Visible = false;
 		}
 
 		public override void ExecuteEvent()
 		{
-			if (Parameters.RemovableActor != null)
+			if (Parameters.RemovableActorOld != null)
 			{
-				var actor = Parameters.RemovableActor;
-				Parameters.RemovableActor.OnGameEnd();
-				actor.LevelReference.UnregisterActor(actor);
+				var actor = Parameters.RemovableActorOld;
+				Parameters.RemovableActorOld.OnGameEnd();
+				actor.LevelOldReference.UnregisterActor(actor);
 				actor.Dispose();
 				return;
 			}

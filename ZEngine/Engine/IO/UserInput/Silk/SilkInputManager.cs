@@ -22,7 +22,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             {typeof(IJoystick), typeof(global::Silk.NET.Input.IJoystick)}
         };
         private OrderedDictionary<global::Silk.NET.Input.IInputDevice, SilkInputDelegateWrapper> Devices { get; } = new();
-        private HashSet<IInputReceiver> Receivers { get; } = new();
+        private HashSet<IInputReceiver> Receivers { get; } = [];
         private IMessageBus Bus { get; }
         private IWindowManager WindowManager { get; } 
 
@@ -127,7 +127,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         public bool RegisterForAllInputDevices([NotNull]IInputReceiver receiver)
         {
             var devices = GetAvailableDevices().ToArray();
-            if (!devices.Any())
+            if (devices.Length == 0)
                 return false;
 
             foreach (var device in devices)
@@ -230,7 +230,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                     mouse.Scroll -= wrapper.OnMouseScrolled;
                     break;
                 case global::Silk.NET.Input.IKeyboard keyboard:
-                    // Wrap the delegates as we dont want the scancode to be passed down
+                    // Wrap the delegates as we don't want the scancode to be passed down
                     keyboard.KeyDown -= wrapper.OnKeyDown;
                     keyboard.KeyUp -= wrapper.OnKeyReleased;
                     break;
@@ -293,7 +293,6 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// <summary>
         /// Returns the first available, connected device.
         /// </summary>
-        /// <typeparam name="T">Type of the InputDevice, e.g. Mouse</typeparam>
         /// <returns>The InputDevice or null if none available</returns>
         private IEnumerable<global::Silk.NET.Input.IInputDevice> GetAvailableDevices()
         {
@@ -304,6 +303,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
         /// Returns the first available, connected device.
         /// </summary>
         /// <param name="deviceType">Type of the InputDevice, e.g. IMouse</param>
+        /// <param name="receiver">TODO</param>
         /// <returns>The InputDevice or null if none available</returns>
         private global::Silk.NET.Input.IInputDevice GetDeviceForInputReceiver(Type deviceType, IBaseControllable receiver)
         {

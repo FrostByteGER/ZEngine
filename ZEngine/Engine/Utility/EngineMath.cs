@@ -83,8 +83,8 @@ namespace ZEngine.Engine.Utility
 		/// <returns></returns>
 		public static Vector2 DegreesToRadians(Vector2 degAngles)
 		{
-			float x = (float)Math.PI * degAngles.X / 180.0f;
-			float y = (float)Math.PI * degAngles.Y / 180.0f;
+			var x = (float)Math.PI * degAngles.X / 180.0f;
+			var y = (float)Math.PI * degAngles.Y / 180.0f;
 			return new Vector2(x, y);
 		}
 
@@ -105,8 +105,8 @@ namespace ZEngine.Engine.Utility
 		/// <returns></returns>
 		public static Vector2 RadiansToDegrees(Vector2 radAngles)
 		{
-			float x = (float) (radAngles.X * (180.0 / Math.PI));
-			float y = (float) (radAngles.Y * (180.0 / Math.PI));
+			var x = (float) (radAngles.X * (180.0 / Math.PI));
+			var y = (float) (radAngles.Y * (180.0 / Math.PI));
 			return new Vector2(x, y);
 		}
 
@@ -118,93 +118,10 @@ namespace ZEngine.Engine.Utility
 		/// <returns></returns>
 		public static Vector2 RadiansToDegrees(float radX, float radY)
 		{
-			float x = (float)(radX * (180.0 / Math.PI));
-			float y = (float)(radY * (180.0 / Math.PI));
+			var x = (float)(radX * (180.0 / Math.PI));
+			var y = (float)(radY * (180.0 / Math.PI));
 			return new Vector2(x, y);
 		}
-
-		/*
-		/// <summary>
-		/// TODO: Implement!
-		/// Generates a transform matrix from a SFML Vector2 position, scale and a angle in degrees.
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="angle"></param>
-		/// <param name="scale"></param>
-		/// <returns></returns>
-		public static Matrix TransformFromPosRotScaleVc(Vector2 position, float angle, Vector2 scale)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Generates a SFML transform matrix from a SFML Vector2 position, scale and a angle in degrees.
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="angle"></param>
-		/// <param name="scale"></param>
-		/// <returns></returns>
-		public static Transform TransformFromPosRotScale(Vector2 position, float angle, Vector2 scale)
-		{
-			var t = new Transform();
-			t.Translate(position);
-			t.Rotate(angle);
-			t.Scale(scale);
-			return t;
-		}
-
-		/// <summary>
-		/// Generates a SFML transform matrix from a Vector2 position, scale and a angle in degrees.
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="angle"></param>
-		/// <param name="scale"></param>
-		/// <returns></returns>
-		public static Transform TransformFromPosRotScale(Vector2 position, float angle, Vector2 scale)
-		{
-			var t = new Transform();
-			t.Translate(position);
-			t.Rotate(angle);
-			t.Scale(scale);
-			return t;
-		}
-
-		/// <summary>
-		/// Generates a SFML transformable from a SFML Vector2 position, scale and a angle in degrees.
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="angle"></param>
-		/// <param name="scale"></param>
-		/// <returns></returns>
-		public static Transformable TransformableFromPosRotScale(Vector2 position, float angle, Vector2 scale)
-		{
-			var t = new Transformable
-			{
-				Position = position,
-				Rotation = angle,
-				Scale = scale
-			};
-			return t;
-		}
-
-		/// <summary>
-		/// Generates a SFML transformable from a Vector2 position, scale and a angle in degrees.
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="angle"></param>
-		/// <param name="scale"></param>
-		/// <returns></returns>
-		public static Transformable TransformableFromPosRotScale(Vector2 position, float angle, Vector2 scale)
-		{
-			var t = new Transformable
-			{
-				Position = position,
-				Rotation = angle,
-				Scale = scale
-			};
-			return t;
-		}
-		*/
 	}
 }
  

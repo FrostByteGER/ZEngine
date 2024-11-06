@@ -6,15 +6,15 @@ using ZEngine.Engine.Messaging;
 
 namespace ZEngine.Engine.Game.Level
 {
-    internal class LevelManager : ILevelManager
+    internal class LevelManager_OLD : ILevelManager_OLD
     {
         public ulong LevelIDCounter { get; set; }
-        public Level ActiveLevel { get; private set; }
+        public Level_OLD ActiveLevelOld { get; private set; }
         public bool CanTick { get; set; } = true;
         private IEngineMessageBus Bus { get; }
         private IAssetManager AssetManager { get; }
 
-        internal LevelManager(IEngineMessageBus bus, IAssetManager assetManager)
+        internal LevelManager_OLD(IEngineMessageBus bus, IAssetManager assetManager)
         {
             Bus = bus;
             Bus.Subscribe<EngineFocusChangeMessage>(OnFocusChanged);
@@ -24,43 +24,43 @@ namespace ZEngine.Engine.Game.Level
 
         private void OnEngineShutdown(EngineShutdownMessage msg)
         {
-            ActiveLevel?.OnGameEnd();
-            ActiveLevel?.ShutdownLevel();
+            ActiveLevelOld?.OnGameEnd();
+            ActiveLevelOld?.ShutdownLevel();
         }
 
         private void OnFocusChanged(EngineFocusChangeMessage msg)
         {
             if (msg.NewFocusState)
             {
-                ActiveLevel?.OnGameResume();
+                ActiveLevelOld?.OnGameResume();
             }
             else
             {
-                ActiveLevel?.OnGamePause();
+                ActiveLevelOld?.OnGamePause();
             }
         }
 
         public void Tick(float deltaTime)
         {
             if(CanTick)
-                ActiveLevel?.Tick(deltaTime);
+                ActiveLevelOld?.Tick(deltaTime);
         }
 
         /// <summary>
         /// Loads the given level.
         /// </summary>
-        /// <param name="level"></param>
-        public void LoadLevel([NotNull]Level level)
+        /// <param name="levelOld"></param>
+        public void LoadLevel([NotNull]Level_OLD levelOld)
         {
-            ActiveLevel?.OnGameEnd();
-            ActiveLevel?.ShutdownLevel();
+            ActiveLevelOld?.OnGameEnd();
+            ActiveLevelOld?.ShutdownLevel();
 
-            ActiveLevel = level;
+            ActiveLevelOld = levelOld;
 
-            level.LevelID = ++LevelIDCounter;
-            level.Loaded = true;
-            level.OnLevelLoad();
-            level.Ticking = true;
+            levelOld.LevelID = ++LevelIDCounter;
+            levelOld.Loaded = true;
+            levelOld.OnLevelLoad();
+            levelOld.Ticking = true;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace ZEngine.Engine.Game.Level
             if (string.IsNullOrWhiteSpace(levelName))
                 return false;
 
-            var lvl = AssetManager.LoadLevel<Level>(levelName);
+            var lvl = AssetManager.LoadLevel<Level_OLD>(levelName);
             if (lvl == null)
                 return false;
 

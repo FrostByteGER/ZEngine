@@ -6,7 +6,6 @@ namespace ZEngine.Engine.Game
     {
         public virtual void Tick(float deltaTime)
         {
-	        //Debug.LogDebug("GameMode Tick", DebugLogCategories.Engine);
         }
 
 	    public bool CanTick { get; set; } = true;

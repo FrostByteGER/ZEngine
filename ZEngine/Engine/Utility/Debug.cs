@@ -105,29 +105,17 @@ namespace ZEngine.Engine.Utility
         private static void ProcessToConsole(Tuple<string, string, LogType> element)
         {
             var (message, category, type) = element;
-            switch (type)
+            Console.ForegroundColor = type switch
             {
-                case LogType.Debug:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-                case LogType.Info:
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    break;
-                case LogType.Warning:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    break;
-                case LogType.Error:
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    break;
-                case LogType.Fatal:
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-            }
+                LogType.Debug => ConsoleColor.White,
+                LogType.Info => ConsoleColor.Gray,
+                LogType.Warning => ConsoleColor.Yellow,
+                LogType.Error => ConsoleColor.DarkRed,
+                LogType.Fatal => ConsoleColor.Magenta,
+                _ => ConsoleColor.White
+            };
 
-            Console.WriteLine(string.Format("[{0}][{1}]{2}", type.ToString().ToUpperInvariant(), category, message));
+            Console.WriteLine($"[{type.ToString().ToUpperInvariant()}][{category}]{message}");
             Console.ResetColor();
         }
     }

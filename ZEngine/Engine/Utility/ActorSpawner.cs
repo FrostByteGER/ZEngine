@@ -15,14 +15,14 @@ namespace ZEngine.Engine.Utility
 	/// </summary>
 	public class ActorSpawner
 	{
-		public List<Type> ObjectTypes { get; set; } = new();
-		public Dictionary<Type, Creator<Actor>> ObjectConstructors { get; set; } = new();
+		private List<Type> ObjectTypes { get; } = [];
+		private Dictionary<Type, Creator<Actor_OLD>> ObjectConstructors { get; } = new();
 
-		public delegate T Creator<out T>(params object[] args);
+		private delegate T Creator<out T>(params object[] args);
 
 		public ActorSpawner()
 		{
-			ObjectTypes.Add(typeof(Actor));
+			ObjectTypes.Add(typeof(Actor_OLD));
 			FindObjectSubTypes();
 			SpawnTypeCreator();
 		}
@@ -34,7 +34,7 @@ namespace ZEngine.Engine.Utility
 		{
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
-				foreach (var type in assembly.GetTypes().Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Actor))))
+				foreach (var type in assembly.GetTypes().Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Actor_OLD))))
 				{
 					ObjectTypes.Add(type);
 				}
@@ -67,24 +67,24 @@ namespace ZEngine.Engine.Utility
 
 						NewExpression newExpression = Expression.New(constructor, argsExpressions);
 
-						LambdaExpression lambda = Expression.Lambda(typeof(Creator<Actor>), newExpression, param);
+						LambdaExpression lambda = Expression.Lambda(typeof(Creator<Actor_OLD>), newExpression, param);
 
-						Creator<Actor> compiled = (Creator<Actor>)lambda.Compile();
+						Creator<Actor_OLD> compiled = (Creator<Actor_OLD>)lambda.Compile();
 						ObjectConstructors.Add(objectType, compiled);
 					}
 				}
 			}
 		}
 
-		public T SpawnObject<T>(params object[] args) where T : Actor
+		public T SpawnObject<T>(params object[] args) where T : Actor_OLD
 		{
-			Creator<Actor> createdActivator = ObjectConstructors[typeof(T)];
+			Creator<Actor_OLD> createdActivator = ObjectConstructors[typeof(T)];
 			return createdActivator(args) as T;
 		}
 
 		public object SpawnObject(Type actorType, params object[] args)
 		{
-			Creator<Actor> createdActivator = ObjectConstructors[actorType];
+			Creator<Actor_OLD> createdActivator = ObjectConstructors[actorType];
 			return createdActivator(args);
 		}
 	}

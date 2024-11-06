@@ -8,7 +8,7 @@
 
 		public override void ExecuteEvent()
 		{
-			var actor = Parameters.LevelRef.SpawnActorInternal(Parameters.SpawnableActorType);
+			var actor = Parameters.LevelOldRef.SpawnActorInternal(Parameters.SpawnableActorType);
 		}
 	}
 }
