@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
-using ZEngine.Engine.Events;
-using ZEngine.Engine.Events.Messages;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Utility;
 
@@ -52,7 +50,7 @@ namespace ZEngine.Engine.Game.Level
         protected internal virtual void InitLevel()
         {
             Debug.Log("Initiating Level " + LevelID, DebugLogCategories.Engine);
-            _bus = Core.Engine.Instance.GetService<IEngineMessageBus>();
+            //_bus = Core.Engine.Instance.GetService<IEngineMessageBus>();
         }
 
 		protected internal virtual void OnGameStart()
@@ -362,12 +360,12 @@ namespace ZEngine.Engine.Game.Level
 
         public void DestroyActor(Actor_OLD instigator, Actor_OLD actorOld)
 	    {
-            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(instigator, actorOld))));
+            
 		}
 
 		public void DestroyActor(Actor_OLD actorOld)
 		{
-            _bus.Publish(new RegisterEventMessage(this, new RemoveActorEvent<RemoveActorParams>(new RemoveActorParams(this, actorOld))));
+            
 		}
 
         private void Dispose(bool disposing)

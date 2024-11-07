@@ -49,19 +49,19 @@ namespace ZEngine.Engine.Services.Locator
                 Services.Remove(key);
         }
 
-        public void InitializeServices()
+        protected void BaseInitializeServices()
         {
             foreach (var service in Services.Values)
             {
-                service.Initialize();
+                service.InitializeService();
             }
         }
 
-        public void DeinitializeServices()
+        protected void BaseDeinitializeServices()
         {
             foreach (var service in Services.Values)
             {
-                service.Deinitialize();
+                service.DeinitializeService();
             }
         }
     }

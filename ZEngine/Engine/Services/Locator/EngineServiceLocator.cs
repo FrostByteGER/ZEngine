@@ -5,20 +5,32 @@
     /// </summary>
     public class EngineServiceLocator : AbstractServiceLocator<IEngineService>
     {
+        
+        private static EngineServiceLocator Instance { get; } = new();
 
-        public T GetService<T>(string id = null) where T : IEngineService
+        public static T GetService<T>(string id = null) where T : IEngineService
         {
-            return BaseGetService<T>(id);
+            return Instance.BaseGetService<T>(id);
         }
 
-        public void RegisterService<T>(IEngineService service, string id = null) where T : IEngineService
+        public static void RegisterService<T>(IEngineService service, string id = null) where T : IEngineService
         {
-            BaseRegisterService<T>(service, id);
+            Instance.BaseRegisterService<T>(service, id);
         }
 
-        public void UnregisterService<T>(string id = null) where T : IEngineService
+        public static void UnregisterService<T>(string id = null) where T : IEngineService
         {
-            BaseUnregisterService<T>(id);
+            Instance.BaseUnregisterService<T>(id);
+        }
+        
+        public static void InitializeServices()
+        {
+            Instance.BaseInitializeServices();
+        }
+
+        public static void DeinitializeServices()
+        {
+            Instance.BaseDeinitializeServices();
         }
     }
 }

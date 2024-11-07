@@ -4,7 +4,7 @@
     {
         public object Sender { get; private set; }
 
-        public AbstractMessage(object sender)
+        protected AbstractMessage(object sender)
         {
             this.Sender = sender;
         }

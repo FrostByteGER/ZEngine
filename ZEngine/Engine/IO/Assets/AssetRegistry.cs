@@ -18,12 +18,12 @@ namespace ZEngine.Engine.IO.Assets
 
         public bool AllowNewDatabaseCreation { get; internal set; } = true;
 
-        public void Initialize()
+        public void InitializeService()
         {
             
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             
         }
@@ -49,11 +49,11 @@ namespace ZEngine.Engine.IO.Assets
 
             if (AllowNewDatabaseCreation && dbMissing)
             {
-                Debug.Log("Sucessfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
+                Debug.Log("Successfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
             }
             else
             {
-                Debug.Log("Sucessfully connected to Asset Registry Database", DebugLogCategories.Engine);
+                Debug.Log("Successfully connected to Asset Registry Database", DebugLogCategories.Engine);
             }
                 
         }

@@ -4,12 +4,12 @@ namespace ZEngine.Engine.IO.Configs
 {
 	public class ConfigManager : IConfigManager
 	{
-        public void Initialize()
+        public void InitializeService()
         {
 
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
 
         }

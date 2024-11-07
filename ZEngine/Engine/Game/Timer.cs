@@ -2,8 +2,6 @@
 {
 	public class Timer
 	{
-
-		public uint TimerID { get; set; }
 		public bool AutoReset { get; set; } = false;
 
 		public bool Enabled { get; set; } = false;

@@ -54,12 +54,12 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             //InputContext.OtherDevices
         }
 
-        public void Initialize()
+        public void InitializeService()
         {
 
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             InputContext.ConnectionChanged -= OnInputDeviceConnectionChanged;
 

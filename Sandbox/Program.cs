@@ -7,8 +7,8 @@ namespace Sandbox
         public static void Main(string[] args)
         {
             var engine = Engine.Instance;
-            engine.EngineWindowWidth = 800;
-            engine.EngineWindowHeight = 600;
+            engine.WindowWidth = 800;
+            engine.WindowHeight = 600;
             engine.Bootstrapper = new SandboxBootstrap();
             engine.GameInfo = new SandboxGameInfo();
             /*

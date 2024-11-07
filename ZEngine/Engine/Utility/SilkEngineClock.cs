@@ -127,12 +127,12 @@ namespace ZEngine.Engine.Utility
 			_renderTimer.Reset();
 		}
 
-        public void Initialize()
+        public void InitializeService()
         {
             
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             
         }

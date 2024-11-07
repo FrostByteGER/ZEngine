@@ -29,8 +29,8 @@ namespace ZEngine.Engine.Rendering.Window
                 GraphicsAPI.DefaultVulkan, "ZEngine v0.1", WindowState.Normal, WindowBorder.Resizable, false, false, VideoMode.Default, 
                 null, null, null, false, false, false );
             Window = Silk.NET.Windowing.Window.Create(WindowOptions.DefaultVulkan);
-            RHI = new ExampleVkRHI(Window); //new VulkanRHI(Window);
             Window.Initialize();
+            RHI = new ExampleVkRHI(Window); //new VulkanRHI(Window);
             RHI.Initialize();
         }
 
@@ -45,12 +45,12 @@ namespace ZEngine.Engine.Rendering.Window
             RHI.Deinitialize();
         }
 
-        public void Initialize()
+        public void InitializeService()
         {
             
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             
         }

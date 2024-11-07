@@ -37,7 +37,7 @@ namespace ZEngine.Engine.Game
 
         protected internal virtual void OnGameStart()
         {
-            InputManager = Core.Engine.Instance.GetService<IInputManager>();
+            //InputManager = Core.Engine.Instance.GetService<IInputManager>();
 			InputManager.RegisterForInputDevice<IMouse>(this);
         }
 

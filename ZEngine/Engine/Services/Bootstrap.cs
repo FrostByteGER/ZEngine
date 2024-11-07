@@ -1,5 +1,4 @@
-﻿using ZEngine.Engine.Events;
-using ZEngine.Engine.Game.Level;
+﻿using ZEngine.Engine.Game.Level;
 using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.IO.UserInput;
 using ZEngine.Engine.IO.UserInput.Silk;
@@ -13,34 +12,33 @@ namespace ZEngine.Engine.Services
 {
     public class Bootstrap
     {
-        internal void SetupInternal(EngineServiceLocator locator)
+        internal void SetupInternal()
         {
             Debug.PrintToConsole = true;
-            locator.RegisterService<IClock>(new SilkEngineClock());
+            EngineServiceLocator.RegisterService<IClock>(new SilkEngineClock());
             var assetRegistry = new AssetRegistry();
-            locator.RegisterService<IAssetRegistry>(assetRegistry);
+            EngineServiceLocator.RegisterService<IAssetRegistry>(assetRegistry);
             var assetManager = new AssetManager(assetRegistry);
-            locator.RegisterService<IAssetManager>(assetManager);
-            locator.RegisterService<ILocalizationManager>(new LocalizationManager());
-            var engineMessageBus = new EngineMessageBus();
-            locator.RegisterService<IEngineMessageBus>(engineMessageBus);
+            EngineServiceLocator.RegisterService<IAssetManager>(assetManager);
+            EngineServiceLocator.RegisterService<ILocalizationManager>(new LocalizationManager());
+            var engineMessageBus = new MessageBus();
+            EngineServiceLocator.RegisterService<IMessageBus>(engineMessageBus);
             var windowManager = new SilkWindowManager();
-            locator.RegisterService<IWindowManager>(windowManager);
-            locator.RegisterService<IEventManager>(new EventManager(engineMessageBus));
-            locator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus, windowManager));
-            locator.RegisterService<ILevelManager_OLD>(new LevelManager_OLD(engineMessageBus, assetManager));
-            Setup(locator);
-            InitializeServices(locator);
+            EngineServiceLocator.RegisterService<IWindowManager>(windowManager);
+            EngineServiceLocator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus, windowManager));
+            EngineServiceLocator.RegisterService<ILevelManager_OLD>(new LevelManager_OLD(engineMessageBus, assetManager));
+            Setup();
+            InitializeServices();
         }
 
-        protected virtual void Setup(EngineServiceLocator locator)
+        protected virtual void Setup()
         {
 
         }
 
-        private void InitializeServices(EngineServiceLocator locator)
+        private void InitializeServices()
         {
-            locator.InitializeServices();
+            EngineServiceLocator.InitializeServices();
         }
     }
 }

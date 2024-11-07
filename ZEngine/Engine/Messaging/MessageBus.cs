@@ -37,6 +37,16 @@ namespace ZEngine.Engine.Messaging
         {
             _messageTable = new Dictionary<Type, List<IMessageSubscription>>();
         }
+        
+        public void InitializeService()
+        {
+            
+        }
+
+        public void DeinitializeService()
+        {
+            
+        }
 
         public Guid Subscribe<TMessage>(Action<TMessage> callback) where TMessage : IMessage
         {

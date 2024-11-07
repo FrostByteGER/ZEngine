@@ -2,7 +2,7 @@
 {
     public interface IAbstractService
     {
-        void Initialize();
-        void Deinitialize();
+        void InitializeService();
+        void DeinitializeService();
     }
 }

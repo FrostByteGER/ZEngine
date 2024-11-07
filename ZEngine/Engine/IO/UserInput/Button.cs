@@ -16,7 +16,7 @@
         public int Index { get; }
 
         /// <summary>
-        /// Whether or not this button is currently pressed.
+        /// Whether this button is currently pressed.
         /// </summary>
         public bool Pressed { get; }
 
@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="name">The name of this button.</param>
         /// <param name="index">The index of this button.</param>
-        /// <param name="pressed">Whether or not this button is currently pressed.</param>
+        /// <param name="pressed">Whether this button is currently pressed.</param>
         public Button(ButtonType name, int index, bool pressed)
         {
             Name = name;

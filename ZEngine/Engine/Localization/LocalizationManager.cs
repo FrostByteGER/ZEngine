@@ -31,12 +31,12 @@ namespace ZEngine.Engine.Localization
             throw new System.NotImplementedException();
         }
 
-        public void Initialize()
+        public void InitializeService()
         {
             
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             
         }

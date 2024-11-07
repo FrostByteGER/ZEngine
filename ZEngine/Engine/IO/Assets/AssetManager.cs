@@ -33,12 +33,12 @@ namespace ZEngine.Engine.IO.Assets
             Registry = registry;
         }
 
-        public void Initialize()
+        public void InitializeService()
         {
             
         }
 
-        public void Deinitialize()
+        public void DeinitializeService()
         {
             
         }

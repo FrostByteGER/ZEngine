@@ -4,9 +4,7 @@ namespace ZEngine.Engine.Game
 {
 	public class TimerManager : ITickable
 	{
-
-		private List<Timer> Timers { get; set; } = new();
-		internal uint TimerIDCounter { get; set; } = 0;
+		private List<Timer> Timers { get; set; } = [];
 
 		public bool CanTick { get; set; } = true;
 
@@ -33,9 +31,8 @@ namespace ZEngine.Engine.Game
 
 		public void AddTimer(Timer t)
 		{
-			if (Timers.Find(x => x.TimerID == t.TimerID) != null) return;
+			if (Timers.Find(x => x == t) != null) return;
 			Timers.Add(t);
-			t.TimerID = ++TimerIDCounter;
 		}
 
 		public void Tick(float deltaTime)

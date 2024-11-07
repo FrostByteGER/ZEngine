@@ -5,7 +5,7 @@ namespace Sandbox
 {
     public class SandboxBootstrap : Bootstrap
     {
-        protected override void Setup(EngineServiceLocator locator)
+        protected override void Setup()
         {
 
         }
