@@ -18,21 +18,12 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Remove="Engine\ECS\**" />
-    <Compile Remove="Engine\Graphics\**" />
-    <Compile Remove="Engine\JUI\**" />
-    <Compile Remove="Engine\Physics\**" />
-    <Compile Remove="Engine\UI\**" />
-    <EmbeddedResource Remove="Engine\ECS\**" />
-    <EmbeddedResource Remove="Engine\Graphics\**" />
-    <EmbeddedResource Remove="Engine\JUI\**" />
-    <EmbeddedResource Remove="Engine\Physics\**" />
-    <EmbeddedResource Remove="Engine\UI\**" />
-    <None Remove="Engine\ECS\**" />
-    <None Remove="Engine\Graphics\**" />
-    <None Remove="Engine\JUI\**" />
-    <None Remove="Engine\Physics\**" />
-    <None Remove="Engine\UI\**" />
+    <Compile Remove="Engine\Graphics_LEGACY\**" />
+    <EmbeddedResource Remove="Engine\Graphics_LEGACY\**" />
+    <None Remove="Engine\Graphics_LEGACY\**" />
+    <Compile Remove="Engine\Physics_LEGACY\**" />
+    <EmbeddedResource Remove="Engine\Physics_LEGACY\**" />
+    <None Remove="Engine\Physics_LEGACY\**" />
   </ItemGroup>
   
   <ItemGroup>
