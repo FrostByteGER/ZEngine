@@ -4,7 +4,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using ZEngine.Engine.Utility;
-using Debug = ZEngine.Engine.Utility.Debug;
 
 namespace ZEngine.Engine.IO.Assets
 {
@@ -32,7 +31,7 @@ namespace ZEngine.Engine.IO.Assets
         {
             if (_registryConnection != null)
             {
-                Debug.LogError("Connection to Asset Database already established!", DebugLogCategories.Engine);
+                Log.Error("Connection to Asset Database already established!", DebugLogCategories.Engine);
                 return;
             }
 
@@ -40,7 +39,7 @@ namespace ZEngine.Engine.IO.Assets
 
             if (dbMissing)
             {
-                Debug.LogWarning("Asset Registry Database does not exist, a new one will be created!", DebugLogCategories.Engine);
+                Log.Warning("Asset Registry Database does not exist, a new one will be created!", DebugLogCategories.Engine);
             }
 
 
@@ -49,11 +48,11 @@ namespace ZEngine.Engine.IO.Assets
 
             if (AllowNewDatabaseCreation && dbMissing)
             {
-                Debug.Log("Successfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
+                Log.Info("Successfully created and connected to Asset Registry Database", DebugLogCategories.Engine);
             }
             else
             {
-                Debug.Log("Successfully connected to Asset Registry Database", DebugLogCategories.Engine);
+                Log.Info("Successfully connected to Asset Registry Database", DebugLogCategories.Engine);
             }
                 
         }

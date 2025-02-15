@@ -13,7 +13,7 @@ namespace ZEngine.Engine.Services
     {
         internal void SetupInternal()
         {
-            Debug.PrintToConsole = true;
+            Log.PrintToConsole = true;
             EngineServiceLocator.RegisterService<IClock>(new SilkEngineClock());
             var assetRegistry = new AssetRegistry();
             EngineServiceLocator.RegisterService<IAssetRegistry>(assetRegistry);

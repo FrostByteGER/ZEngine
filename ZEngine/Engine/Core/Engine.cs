@@ -47,7 +47,7 @@ namespace ZEngine.Engine.Core
 
         public void StartEngine(string[] args)
         {
-            Debug.Log("Initializing Engine!", DebugLogCategories.Engine);
+            Log.Info("Initializing Engine!", DebugLogCategories.Engine);
             ParseCommandLineArguments(args);
             StartEngineInternal();
         }
@@ -84,11 +84,11 @@ namespace ZEngine.Engine.Core
 
         private void ShutdownEngine()
         {
-            Debug.Log("Shutting down Engine!", DebugLogCategories.Engine);
+            Log.Info("Shutting down Engine!", DebugLogCategories.Engine);
 
             MessageBus.Publish(new EngineShutdownMessage(this));
-            
-            Debug.FlushQueue();
+            Log.Info("Engine Shutdown successful!", DebugLogCategories.Engine);
+            Log.FlushQueue();
         }
 
         private void OnEngineWindowLoad()
@@ -99,8 +99,7 @@ namespace ZEngine.Engine.Core
         private void WindowOnUpdate(double deltaTime)
         {
             var dt = (float) deltaTime;
-
-            Debug.FlushQueue();
+            Log.FlushQueue();
 		}
 
         private void WindowOnRender(double deltaTime)

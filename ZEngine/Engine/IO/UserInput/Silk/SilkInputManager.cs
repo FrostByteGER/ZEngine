@@ -84,7 +84,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             if (!Devices.TryGetValue(device, out var receiver))
             {
                 // this should not happen because all devices get added at the start!
-                Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
+                Log.Error("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                         receiver.OnJoystickDisconnected();
                     break;
                 default:
-                    Debug.LogWarning("Device " + device.Name + " is not supported!", DebugLogCategories.Engine);
+                    Log.Warning("Device " + device.Name + " is not supported!", DebugLogCategories.Engine);
                     break;
             }
         }
@@ -138,7 +138,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                 }
                 catch (ArgumentException ae)
                 {
-                    Debug.LogWarning(ae.Message, DebugLogCategories.Engine);
+                    Log.Warning(ae.Message, DebugLogCategories.Engine);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             if (!Devices.TryGetValue(device, out var wrapper))
             {
                 // this should not happen because all devices get added at the start!
-                Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
+                Log.Error("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
                 return false;
             }
 
@@ -210,7 +210,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
             }
             catch (ArgumentException ae)
             {
-                Debug.LogWarning(ae.Message, DebugLogCategories.Engine);
+                Log.Warning(ae.Message, DebugLogCategories.Engine);
                 return false;
             }
 
@@ -260,7 +260,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
 
             if (!inputDevices.Any())
             {
-                Debug.LogWarning("No devices to unregister!", DebugLogCategories.Engine);
+                Log.Warning("No devices to unregister!", DebugLogCategories.Engine);
                 return false;
             }
 
@@ -270,7 +270,7 @@ namespace ZEngine.Engine.IO.UserInput.Silk
                 if (!Devices.TryGetValue(device, out var wrapper))
                 {
                     // this should not happen because all devices get added at the start!
-                    Debug.LogError("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
+                    Log.Error("Failed to get receiver for device " + device.Name, DebugLogCategories.Engine);
                     continue;
                 }
 

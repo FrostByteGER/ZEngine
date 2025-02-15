@@ -12,7 +12,7 @@ namespace ZEngine.Engine.Game
 
 	    protected internal virtual void OnGameStart()
 	    {
-			Debug.Log("Game Started!", DebugLogCategories.Engine);
+			Log.Info("Game Started!", DebugLogCategories.Engine);
 		}
 
         protected internal virtual void OnGamePause()
@@ -27,7 +27,7 @@ namespace ZEngine.Engine.Game
 
         protected internal virtual void OnGameEnd()
 	    {
-            Debug.Log("Game Ended!", DebugLogCategories.Engine);
+            Log.Info("Game Ended!", DebugLogCategories.Engine);
 		}
     }
 }

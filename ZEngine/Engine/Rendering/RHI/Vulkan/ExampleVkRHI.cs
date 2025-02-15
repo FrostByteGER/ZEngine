@@ -320,19 +320,19 @@ namespace ZEngine.Engine.Rendering.RHI.Vulkan
             switch (messageSeverity)
             {
                 case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityVerboseBitExt:
-                    Debug.LogDebug(message, DebugLogCategories.Engine);
+                    Log.Debug(message, DebugLogCategories.Engine);
                     break;
                 case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityInfoBitExt:
-                    Debug.Log(message, DebugLogCategories.Engine);
+                    Log.Info(message, DebugLogCategories.Engine);
                     break;
                 case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityWarningBitExt:
-                    Debug.LogWarning(message, DebugLogCategories.Engine);
+                    Log.Warning(message, DebugLogCategories.Engine);
                     break;
                 case DebugUtilsMessageSeverityFlagsEXT.DebugUtilsMessageSeverityErrorBitExt:
-                    Debug.LogError(message, DebugLogCategories.Engine);
+                    Log.Error(message, DebugLogCategories.Engine);
                     break;
                 default:
-                    Debug.Log(message, DebugLogCategories.Engine);
+                    Log.Info(message, DebugLogCategories.Engine);
                     break;
             }
 
