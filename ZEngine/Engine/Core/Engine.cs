@@ -13,7 +13,6 @@ namespace ZEngine.Engine.Core
 
 	public class Engine
     {
-
 		public static Engine Instance { get; } = new();
 
         // Frame and Physics
@@ -85,9 +84,11 @@ namespace ZEngine.Engine.Core
 
         private void ShutdownEngine()
         {
-            Debug.Log("Shutting down Engine!");
+            Debug.Log("Shutting down Engine!", DebugLogCategories.Engine);
 
             MessageBus.Publish(new EngineShutdownMessage(this));
+            
+            Debug.FlushQueue();
         }
 
         private void OnEngineWindowLoad()

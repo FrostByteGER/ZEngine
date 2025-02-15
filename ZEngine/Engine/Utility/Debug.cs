@@ -114,8 +114,15 @@ namespace ZEngine.Engine.Utility
                 LogType.Fatal => ConsoleColor.Magenta,
                 _ => ConsoleColor.White
             };
-
-            Console.WriteLine($"[{type.ToString().ToUpperInvariant()}][{category}]{message}");
+            if (category != string.Empty)
+            {
+                Console.WriteLine($"[{type.ToString().ToUpperInvariant()}][{category}]{message}");
+            }
+            else
+            {
+                Console.WriteLine($"[{type.ToString().ToUpperInvariant()}]{message}");
+            }
+            
             Console.ResetColor();
         }
     }
