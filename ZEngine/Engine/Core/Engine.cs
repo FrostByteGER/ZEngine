@@ -27,6 +27,7 @@ namespace ZEngine.Engine.Core
         private IAssetManager AssetManager { get; set; }
         private IWindowManager WindowManager { get; set; }
         private IMessageBus MessageBus { get; set; }
+        private ILevelManager LevelManager { get; set; }
 
         // Engine Settings
         public int WindowHeight { get; set; }        = 800;
@@ -60,6 +61,9 @@ namespace ZEngine.Engine.Core
 
             AssetManager = EngineServiceLocator.GetService<IAssetManager>();
             AssetManager.Init();
+            LevelManager = EngineServiceLocator.GetService<ILevelManager>();
+            //TODO: Replace with actual level loading
+            LevelManager.LoadLevel(new Level());
             WindowManager = EngineServiceLocator.GetService<IWindowManager>();
             MessageBus = EngineServiceLocator.GetService<IMessageBus>();
             WindowManager.InitWindow();
@@ -99,6 +103,8 @@ namespace ZEngine.Engine.Core
         private void WindowOnUpdate(double deltaTime)
         {
             var dt = (float) deltaTime;
+            if (LevelManager.CanTick)
+	            LevelManager.Tick(dt);
             Log.FlushQueue();
 		}
 
