@@ -13,6 +13,7 @@ namespace ZEngine.Engine.Utility
 	/// <para/>See <see href="http://mattgabriel.co.uk/2016/02/10/object-creation-using-lambda-expression/">Matt Gabriel's Blog Entry</see> for details.
 	/// <para/>Tip: This class could be made generic with a non-generic ActorSpawner wrapper class. This requires the actual spawning to be exported to the wrapper class.
 	/// </summary>
+	/*
 	public class ActorSpawner
 	{
 		private List<Type> ObjectTypes { get; } = [];
@@ -88,4 +89,5 @@ namespace ZEngine.Engine.Utility
 			return createdActivator(args);
 		}
 	}
+	*/
 }

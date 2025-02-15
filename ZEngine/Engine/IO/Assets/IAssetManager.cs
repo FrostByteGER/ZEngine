@@ -1,5 +1,4 @@
-﻿using ZEngine.Engine.Game.Level;
-using ZEngine.Engine.Services;
+﻿using ZEngine.Engine.Services;
 
 namespace ZEngine.Engine.IO.Assets
 {
@@ -7,7 +6,7 @@ namespace ZEngine.Engine.IO.Assets
     {
         void Init();
         T LoadAsset<T>(string assetName);
-        T LoadLevel<T>(string levelName) where T : Level_OLD;
+        T LoadLevel<T>(string levelName);
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using ZEngine.Engine.Game.Level;
 
 namespace ZEngine.Engine.IO.Assets
 {
@@ -57,7 +56,7 @@ namespace ZEngine.Engine.IO.Assets
 			throw new NotImplementedException();
 		}
 
-        public T LoadLevel<T>(string levelName) where T : Level_OLD
+        public T LoadLevel<T>(string levelName)
 		{
             throw new NotImplementedException();
 			//return JSONManager.LoadObject<T>(LevelsPath + levelName);

@@ -1,7 +1,6 @@
 ﻿using Silk.NET.Maths;
 using ZEngine.Engine.Core.Messages;
 using ZEngine.Engine.Game;
-using ZEngine.Engine.Game.Level;
 using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.Messaging;
 using ZEngine.Engine.Rendering.Window;
@@ -27,7 +26,6 @@ namespace ZEngine.Engine.Core
 
         // Engine Managers
         private IAssetManager AssetManager { get; set; }
-        private ILevelManager_OLD LevelManagerOld { get; set; }
         private IWindowManager WindowManager { get; set; }
         private IMessageBus MessageBus { get; set; }
 
@@ -63,7 +61,6 @@ namespace ZEngine.Engine.Core
 
             AssetManager = EngineServiceLocator.GetService<IAssetManager>();
             AssetManager.Init();
-            LevelManagerOld = EngineServiceLocator.GetService<ILevelManager_OLD>();
             WindowManager = EngineServiceLocator.GetService<IWindowManager>();
             MessageBus = EngineServiceLocator.GetService<IMessageBus>();
             WindowManager.InitWindow();
@@ -101,9 +98,6 @@ namespace ZEngine.Engine.Core
         private void WindowOnUpdate(double deltaTime)
         {
             var dt = (float) deltaTime;
-
-            if (LevelManagerOld.CanTick)
-                LevelManagerOld.Tick(dt);
 
             Debug.FlushQueue();
 		}

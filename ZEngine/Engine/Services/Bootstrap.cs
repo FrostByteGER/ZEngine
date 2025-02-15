@@ -1,5 +1,4 @@
-﻿using ZEngine.Engine.Game.Level;
-using ZEngine.Engine.IO.Assets;
+﻿using ZEngine.Engine.IO.Assets;
 using ZEngine.Engine.IO.UserInput;
 using ZEngine.Engine.IO.UserInput.Silk;
 using ZEngine.Engine.Localization;
@@ -26,7 +25,6 @@ namespace ZEngine.Engine.Services
             var windowManager = new SilkWindowManager();
             EngineServiceLocator.RegisterService<IWindowManager>(windowManager);
             EngineServiceLocator.RegisterService<IInputManager>(new SilkInputManager(engineMessageBus, windowManager));
-            EngineServiceLocator.RegisterService<ILevelManager_OLD>(new LevelManager_OLD(engineMessageBus, assetManager));
             Setup();
             InitializeServices();
         }

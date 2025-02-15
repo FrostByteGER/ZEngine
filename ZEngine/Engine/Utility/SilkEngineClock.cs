@@ -15,12 +15,12 @@ namespace ZEngine.Engine.Utility
 	/// </summary>
 	public class SilkEngineClock : IClock
 	{
-        private Stopwatch _physicsTimer = new();
-		private Stopwatch _updateTimer = new();
-		private Stopwatch _renderTimer = new();
-		private Stopwatch _frameTimer = new();
+        private readonly Stopwatch _physicsTimer = new();
+		private readonly Stopwatch _updateTimer = new();
+		private readonly Stopwatch _renderTimer = new();
+		private readonly Stopwatch _frameTimer = new();
 
-		public long FrameCount { get; private set; }
+		private long FrameCount { get; set; }
 
 		public float EngineElapsedSeconds => (float)GlfwProvider.GLFW.Value.GetTime();
 		public float EngineElapsedMilliseconds => (float)GlfwProvider.GLFW.Value.GetTime() * 1000;
